@@ -758,8 +758,15 @@ export default function Home() {
                         <>Your property has <strong style={{ color: C.navy }}>{results.agEligibleAcres.toFixed(1)} ag-eligible acres</strong>, but {selectedCounty?.name} County requires at least <strong style={{ color: C.navy }}>{selectedCounty?.minAcres} acres</strong> beyond your 1-acre homestead to qualify.</>
                       )}
                     </p>
-                    <p style={{ fontSize: 14, color: C.gray, marginBottom: 24 }}>
-                      Do you have another property you&apos;d like to check?
+                    <p style={{ fontSize: 13, color: '#92400E', background: '#FFFBEB', border: '1px solid #FDE68A', borderRadius: 10, padding: '10px 16px', maxWidth: 420, margin: '0 auto 20px', lineHeight: 1.5 }}>
+                      💡 Our data may not be 100% accurate — if you know your actual acreage, use the form below to get a better estimate.
+                    </p>
+                    <div style={{ maxWidth: 300, margin: '0 auto 16px' }}>
+                      <input type="number" value={acres} onChange={(e) => setAcres(e.target.value)} placeholder="Enter your actual acres"
+                        style={{ width: '100%', padding: '14px 16px', border: '2px solid #D5EAFF', borderRadius: 10, fontSize: 18, fontWeight: 600, color: C.navy, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box', textAlign: 'center' }} />
+                    </div>
+                    <p style={{ fontSize: 14, color: C.gray, marginBottom: 16 }}>
+                      Or try a different address:
                     </p>
                     <button onClick={startOver} style={{ background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, padding: '14px 32px', borderRadius: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
                       Search Another Property →
