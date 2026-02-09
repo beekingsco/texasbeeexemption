@@ -433,16 +433,19 @@ export default function Home() {
           <a href="/" onClick={(e) => { e.preventDefault(); startOver(); }} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
             <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 40 }} />
           </a>
-          <nav className="r-nav">
-            {step === 'search' && (
-              <>
-                <a href="#how-it-works" style={{ fontSize: 14, fontWeight: 600, color: C.navy, textDecoration: 'none' }}>How It Works</a>
-                <a href="#faq" style={{ fontSize: 14, fontWeight: 600, color: C.navy, textDecoration: 'none' }}>FAQ</a>
-              </>
-            )}
-            <a href="https://beekings.com" style={{ fontSize: 14, fontWeight: 600, color: C.navy, textDecoration: 'none' }}>BeeKings.com</a>
-            <a href="mailto:info@beekings.com" style={{ background: C.blue, color: C.white, fontSize: 14, fontWeight: 700, padding: '10px 20px', borderRadius: 8, textDecoration: 'none' }}>Contact Us</a>
-          </nav>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <nav className="r-nav">
+              {step === 'search' && (
+                <>
+                  <a href="#how-it-works" style={{ fontSize: 14, fontWeight: 600, color: C.navy, textDecoration: 'none' }}>How It Works</a>
+                  <a href="#faq" style={{ fontSize: 14, fontWeight: 600, color: C.navy, textDecoration: 'none' }}>FAQ</a>
+                </>
+              )}
+              <a href="https://beekings.com" style={{ fontSize: 14, fontWeight: 600, color: C.navy, textDecoration: 'none' }}>BeeKings.com</a>
+              <a href="mailto:info@beekings.com" style={{ background: C.blue, color: C.white, fontSize: 14, fontWeight: 700, padding: '10px 20px', borderRadius: 8, textDecoration: 'none' }}>Contact Us</a>
+            </nav>
+            <img src="/texas-bees-badge.jpg" alt="Texas Bees Save You Money" style={{ height: 48, borderRadius: 8 }} />
+          </div>
         </div>
       </header>
 
