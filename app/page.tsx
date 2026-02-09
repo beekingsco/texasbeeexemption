@@ -264,9 +264,14 @@ export default function Home() {
     const landValue = parcelData?.landValue || (totalValue - improvValue);
     const hasHomestead = improvValue > 0 || totalAcres > 2; // assume homestead if improvements exist
 
-    // Homestead: 1 acre + structure stays taxed at market rate (can't get ag on that)
+    // Homestead: up to 1 acre + structure stays taxed at market rate (can't get ag on that)
     const homesteadAcres = hasHomestead ? Math.min(1, totalAcres) : 0;
     const agEligibleAcres = Math.max(0, totalAcres - homesteadAcres);
+
+    // If total property is under the minimum + homestead, it simply doesn't qualify
+    if (totalAcres > 0 && totalAcres < selectedCounty.minAcres + homesteadAcres) {
+      // Still calculate so we can show the message, but savings will be 0
+    }
 
     // Value of the homestead portion (structure + 1 acre of land)
     const perAcreLand = totalAcres > 0 ? landValue / totalAcres : 0;
@@ -746,10 +751,12 @@ export default function Home() {
                 ) : (
                   <>
                     <h2 style={{ fontSize: 22, fontWeight: 800, color: C.navy, marginBottom: 12 }}>Not Enough Land to Qualify</h2>
-                    <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.6, maxWidth: 400, margin: '0 auto 20px' }}>
-                      Your property has <strong style={{ color: C.navy }}>{results.agEligibleAcres.toFixed(1)} ag-eligible acres</strong>, but 
-                      {' '}{selectedCounty?.name} County requires at least <strong style={{ color: C.navy }}>{selectedCounty?.minAcres} acres</strong> beyond 
-                      your 1-acre homestead to qualify for a beekeeping ag exemption.
+                    <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.6, maxWidth: 420, margin: '0 auto 20px' }}>
+                      {results.totalAcres <= 1 ? (
+                        <>Your property is only <strong style={{ color: C.navy }}>{results.totalAcres < 1 ? 'under 1 acre' : '1 acre'}</strong> — you&apos;d need at least <strong style={{ color: C.navy }}>{selectedCounty?.minAcres} acres</strong> (plus your homestead) to qualify for a beekeeping ag exemption in {selectedCounty?.name} County.</>
+                      ) : (
+                        <>Your property has <strong style={{ color: C.navy }}>{results.agEligibleAcres.toFixed(1)} ag-eligible acres</strong>, but {selectedCounty?.name} County requires at least <strong style={{ color: C.navy }}>{selectedCounty?.minAcres} acres</strong> beyond your 1-acre homestead to qualify.</>
+                      )}
                     </p>
                     <p style={{ fontSize: 14, color: C.gray, marginBottom: 24 }}>
                       Do you have another property you&apos;d like to check?
