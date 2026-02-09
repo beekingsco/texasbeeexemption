@@ -56,8 +56,8 @@ export default function DeadlineCountdown({
   const nextYear = deadlineYear + 1;
 
   const barStyle: React.CSSProperties = {
-    background: 'linear-gradient(90deg, #92400E 0%, #B45309 100%)',
-    color: '#FEF3C7',
+    background: '#2D2D2D',
+    color: '#FFFFFF',
     padding: '10px 16px',
     display: 'flex',
     alignItems: 'center',
@@ -67,12 +67,10 @@ export default function DeadlineCountdown({
     fontSize: 14,
     fontWeight: 600,
     width: '100%',
-    maxWidth: '100%',
-    boxSizing: 'border-box' as const,
   };
 
   const numberStyle: React.CSSProperties = {
-    background: 'rgba(254, 243, 199, 0.2)',
+    background: 'rgba(255, 255, 255, 0.15)',
     padding: '2px 8px',
     borderRadius: 6,
     fontWeight: 900,
@@ -82,6 +80,7 @@ export default function DeadlineCountdown({
     minWidth: 32,
     textAlign: 'center' as const,
     display: 'inline-block',
+    color: '#F59E0B',
   };
 
   if (hasPassed) {
@@ -100,13 +99,13 @@ export default function DeadlineCountdown({
       <span>⏰ {deadlineText}</span>
       <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
         <span style={numberStyle}>{timeLeft.days}</span>
-        <span style={{ opacity: 0.7, fontSize: 11 }}>d</span>
+        <span style={{ opacity: 0.5, fontSize: 11 }}>d</span>
         <span style={numberStyle}>{pad(timeLeft.hours)}</span>
-        <span style={{ opacity: 0.7, fontSize: 11 }}>h</span>
+        <span style={{ opacity: 0.5, fontSize: 11 }}>h</span>
         <span style={numberStyle}>{pad(timeLeft.minutes)}</span>
-        <span style={{ opacity: 0.7, fontSize: 11 }}>m</span>
+        <span style={{ opacity: 0.5, fontSize: 11 }}>m</span>
         <span style={numberStyle}>{pad(timeLeft.seconds)}</span>
-        <span style={{ opacity: 0.7, fontSize: 11 }}>s</span>
+        <span style={{ opacity: 0.5, fontSize: 11 }}>s</span>
       </span>
     </div>
   );

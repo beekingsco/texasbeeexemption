@@ -475,7 +475,7 @@ export default function Home() {
       </header>
 
       {/* COUNTDOWN BANNER */}
-      <div style={{ padding: '20px 24px 0', maxWidth: 1200, margin: '0 auto' }}>
+      <div style={{ width: '100%' }}>
         <DeadlineCountdown
           deadlineISO="2026-04-30T23:59:59-05:00"
           timezone="America/Chicago"
