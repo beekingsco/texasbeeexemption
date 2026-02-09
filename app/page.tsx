@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { US_STATES } from '@/lib/states';
 
@@ -20,9 +20,55 @@ const C = {
 
 const AVAILABLE_STATES = ['TX', 'FL'];
 
+// Beekeeper counter: ~150,000 US beekeepers, growing ~12,000/yr ≈ 1 new every ~44 min
+// We use a deterministic base so every visitor sees the same number at the same time
+const BEEKEEPER_BASE = 152847; // base count as of Feb 1, 2026
+const BEEKEEPER_BASE_TIME = new Date('2026-02-01T00:00:00Z').getTime();
+const BEEKEEPERS_PER_MS = 12000 / (365.25 * 24 * 60 * 60 * 1000); // ~12K/year
+
+function useBeekeeperCount() {
+  const [count, setCount] = useState(BEEKEEPER_BASE);
+  const prevCountRef = useRef(BEEKEEPER_BASE);
+  const [displayCount, setDisplayCount] = useState(BEEKEEPER_BASE);
+
+  useEffect(() => {
+    const calcCount = () => {
+      const elapsed = Date.now() - BEEKEEPER_BASE_TIME;
+      return Math.floor(BEEKEEPER_BASE + elapsed * BEEKEEPERS_PER_MS);
+    };
+    setCount(calcCount());
+    setDisplayCount(calcCount());
+    prevCountRef.current = calcCount();
+
+    // Update the target every 3 minutes
+    const interval = setInterval(() => {
+      const newCount = calcCount();
+      prevCountRef.current = displayCount;
+      setCount(newCount);
+    }, 180000);
+
+    return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Animate toward target
+  useEffect(() => {
+    if (displayCount >= count) return;
+    const diff = count - displayCount;
+    const step = Math.max(1, Math.floor(diff / 20));
+    const timer = setTimeout(() => {
+      setDisplayCount(prev => Math.min(prev + step, count));
+    }, 80);
+    return () => clearTimeout(timer);
+  }, [count, displayCount]);
+
+  return displayCount;
+}
+
 export default function NationalLanding() {
   const router = useRouter();
   const [selectedState, setSelectedState] = useState('');
+  const beekeeperCount = useBeekeeperCount();
 
   const handleStateSelect = async (stateCode: string) => {
     if (!stateCode) return;
@@ -84,6 +130,18 @@ export default function NationalLanding() {
           </nav>
         </div>
       </header>
+
+      {/* BEEKEEPER COUNTER */}
+      <div style={{ background: C.navy, padding: '10px 24px', textAlign: 'center' }}>
+        <p style={{ fontSize: 14, color: C.white, fontWeight: 600, margin: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+          <span style={{ fontSize: 16 }}>🐝</span>
+          <span style={{ fontVariantNumeric: 'tabular-nums' }}>
+            <span style={{ color: C.green, fontWeight: 900, fontSize: 16 }}>{beekeeperCount.toLocaleString()}</span>
+            {' '}beekeepers across the U.S. and growing
+          </span>
+          <span style={{ fontSize: 10, color: '#8DA4B5' }}>•  USDA est.</span>
+        </p>
+      </div>
 
       {/* HERO */}
       <section style={{ background: C.sky, padding: '60px 24px 0', overflow: 'hidden' }}>
