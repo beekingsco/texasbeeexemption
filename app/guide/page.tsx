@@ -31,7 +31,7 @@ function GuideContent() {
 
   if (!county) {
     return (
-      <div style={{ padding: 60, textAlign: 'center', fontFamily: 'Georgia, serif' }}>
+      <div style={{ padding: 60, textAlign: 'center' }}>
         <h1>County not found</h1>
         <p>Please provide a valid county name, e.g., <code>?county=Van Zandt</code></p>
       </div>
@@ -42,7 +42,7 @@ function GuideContent() {
   const agValue = county.agProductivityValue;
 
   return (
-    <div style={{ maxWidth: 800, margin: '0 auto', padding: '40px 48px', fontFamily: 'Georgia, serif', color: '#1a1a1a', lineHeight: 1.7, fontSize: 15 }}>
+    <div style={{ maxWidth: 800, margin: '0 auto', padding: '40px 48px', color: '#1a1a1a', lineHeight: 1.7, fontSize: 15 }}>
       <style>{`
         @media print {
           body { margin: 0; }
