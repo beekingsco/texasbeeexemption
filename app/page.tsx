@@ -465,8 +465,8 @@ export default function Home() {
               <h1 className="r-hero-h1" style={{ fontWeight: 900, color: C.navy, lineHeight: 1.05, marginBottom: 16, letterSpacing: '-0.03em', maxWidth: '100%' }}>
                 Save Money on<br />Property Taxes<br /><span style={{ color: C.blue }}>with Bees</span> 🐝
               </h1>
-              <p style={{ fontSize: 17, color: '#5A7A8A', marginBottom: 32, fontWeight: 500 }}>
-                Free Texas beekeeping ag exemption calculator — enter your address to see your savings
+              <p style={{ fontSize: 16, color: '#5A7A8A', marginBottom: 32, fontWeight: 500 }}>
+                See how much you could save with a Texas bee exemption
               </p>
 
               <div style={{ maxWidth: 640, margin: '0 auto', position: 'relative' }} ref={searchRef}>
@@ -475,11 +475,12 @@ export default function Home() {
                   display: 'flex', alignItems: 'center',
                   border: searchError ? '2px solid #EF4444' : '2px solid #e2e8f0',
                 }}>
-                  <svg width="24" height="24" viewBox="0 0 33 33" fill={C.blue} style={{ flexShrink: 0, marginRight: 12 }}>
-                    <path d="M16.5 32.168a7.028 7.028 0 0 1-5.748-2.933c-5.081-7.01-7.659-12.278-7.659-15.662A13.405 13.405 0 0 1 25.98 4.094a13.405 13.405 0 0 1 3.927 9.48c0 3.383-2.578 8.652-7.66 15.66a7.028 7.028 0 0 1-5.747 2.934Zm0-29.09A10.511 10.511 0 0 0 6 13.576c0 2.68 2.524 7.635 7.106 13.953a4.194 4.194 0 0 0 6.786 0C24.475 21.211 27 16.256 27 13.576a10.51 10.51 0 0 0-10.5-10.498Z" />
-                    <path d="M16.5 8.17a5.333 5.333 0 1 0 0 10.667 5.333 5.333 0 0 0 0-10.667Zm0 7.999a2.667 2.667 0 1 1 0-5.333 2.667 2.667 0 0 1 0 5.333Z" />
-                  </svg>
-                  <input
+                  <div style={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: 0 }}>
+                    <svg width="20" height="20" viewBox="0 0 33 33" fill={C.blue} style={{ flexShrink: 0, marginRight: 8 }}>
+                      <path d="M16.5 32.168a7.028 7.028 0 0 1-5.748-2.933c-5.081-7.01-7.659-12.278-7.659-15.662A13.405 13.405 0 0 1 25.98 4.094a13.405 13.405 0 0 1 3.927 9.48c0 3.383-2.578 8.652-7.66 15.66a7.028 7.028 0 0 1-5.747 2.934Zm0-29.09A10.511 10.511 0 0 0 6 13.576c0 2.68 2.524 7.635 7.106 13.953a4.194 4.194 0 0 0 6.786 0C24.475 21.211 27 16.256 27 13.576a10.51 10.51 0 0 0-10.5-10.498Z" />
+                      <path d="M16.5 8.17a5.333 5.333 0 1 0 0 10.667 5.333 5.333 0 0 0 0-10.667Zm0 7.999a2.667 2.667 0 1 1 0-5.333 2.667 2.667 0 0 1 0 5.333Z" />
+                    </svg>
+                    <input
                     type="text" value={searchInput}
                     onChange={(e) => handleInputChange(e.target.value)}
                     onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
@@ -487,6 +488,7 @@ export default function Home() {
                     placeholder="Enter your address"
                     style={{ flex: 1, fontSize: 16, fontWeight: 500, color: C.navy, border: 'none', outline: 'none', background: 'transparent', padding: '14px 0', fontFamily: 'inherit', minWidth: 0 }}
                   />
+                  </div>
                   <button onClick={handleSearch} disabled={!searchInput.trim() || isSearching} className="r-pill-btn" style={{
                     background: searchInput.trim() && !isSearching ? C.blue : '#93C5FD', color: C.white, fontWeight: 700, border: 'none',
                     cursor: searchInput.trim() && !isSearching ? 'pointer' : 'not-allowed', fontFamily: 'inherit',
