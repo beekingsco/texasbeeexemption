@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import countiesData from '@/data/florida-counties.json';
+import DeadlineCountdown from '@/app/components/DeadlineCountdown';
 
 interface County {
   name: string;
@@ -424,6 +425,17 @@ export default function FloridaCalculator() {
           </div>
         </div>
       </header>
+
+      {/* COUNTDOWN BANNER */}
+      <div style={{ padding: '20px 24px 0', maxWidth: 1200, margin: '0 auto' }}>
+        <DeadlineCountdown
+          deadlineISO="2026-03-01T23:59:59-05:00"
+          timezone="America/New_York"
+          deadlineText="March 1st is your deadline to file for your 2026 Florida Agricultural Classification"
+          stateName="Florida"
+          programName="Agricultural Classification"
+        />
+      </div>
 
       {/* ===== STEP 1: SEARCH ===== */}
       {step === 'search' && (

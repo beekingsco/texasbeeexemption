@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import countiesData from '@/data/texas-counties.json';
+import DeadlineCountdown from '@/app/components/DeadlineCountdown';
 
 interface County {
   name: string;
@@ -472,6 +473,17 @@ export default function Home() {
           </div>
         </div>
       </header>
+
+      {/* COUNTDOWN BANNER */}
+      <div style={{ padding: '20px 24px 0', maxWidth: 1200, margin: '0 auto' }}>
+        <DeadlineCountdown
+          deadlineISO="2026-04-30T23:59:59-05:00"
+          timezone="America/Chicago"
+          deadlineText="April 30th is your deadline to file for your 2026 Texas Ag Exemption"
+          stateName="Texas"
+          programName="Ag Exemption"
+        />
+      </div>
 
       {/* ===== STEP 1: SEARCH ===== */}
       {step === 'search' && (
