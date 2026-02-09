@@ -7,6 +7,7 @@ export async function GET(request: NextRequest) {
   const q = request.nextUrl.searchParams.get('q');
   const magicKey = request.nextUrl.searchParams.get('magicKey');
   const mode = request.nextUrl.searchParams.get('mode') || 'suggest'; // 'suggest' or 'geocode'
+  const state = request.nextUrl.searchParams.get('state') || 'TX'; // 'TX', 'FL', etc.
 
   if (!q || q.trim().length < 4) {
     return NextResponse.json({ results: [] });
@@ -14,7 +15,7 @@ export async function GET(request: NextRequest) {
 
   try {
     if (mode === 'suggest') {
-      return await suggestAddresses(q);
+      return await suggestAddresses(q, state);
     } else {
       return await geocodeAddress(q, magicKey || undefined);
     }
@@ -24,15 +25,32 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function suggestAddresses(query: string) {
+// State config for geocoding bias
+const STATE_CONFIG: Record<string, { lat: number; lng: number; regex: RegExp }> = {
+  TX: { lat: 31.5, lng: -99.5, regex: /\bTX\b|Texas/i },
+  FL: { lat: 28.5, lng: -82.0, regex: /\bFL\b|Florida/i },
+  NJ: { lat: 40.2, lng: -74.7, regex: /\bNJ\b|New Jersey/i },
+  GA: { lat: 32.7, lng: -83.5, regex: /\bGA\b|Georgia/i },
+  NC: { lat: 35.5, lng: -80.0, regex: /\bNC\b|North Carolina/i },
+  AL: { lat: 32.8, lng: -86.8, regex: /\bAL\b|Alabama/i },
+  SC: { lat: 34.0, lng: -81.0, regex: /\bSC\b|South Carolina/i },
+  OH: { lat: 40.4, lng: -82.7, regex: /\bOH\b|Ohio/i },
+  WA: { lat: 47.4, lng: -120.5, regex: /\bWA\b|Washington/i },
+  AR: { lat: 34.7, lng: -92.3, regex: /\bAR\b|Arkansas/i },
+  LA: { lat: 31.0, lng: -92.0, regex: /\bLA\b|Louisiana/i },
+};
+
+async function suggestAddresses(query: string, state: string) {
+  const config = STATE_CONFIG[state] || STATE_CONFIG.TX;
+
   // ArcGIS Suggest endpoint - fast autocomplete
   const url = new URL('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest');
   url.searchParams.set('f', 'json');
   url.searchParams.set('text', query);
   url.searchParams.set('maxSuggestions', '6');
   url.searchParams.set('countryCode', 'US');
-  // Bias toward Texas center
-  url.searchParams.set('location', '-99.5,31.5');
+  // Bias toward target state center
+  url.searchParams.set('location', `${config.lng},${config.lat}`);
   url.searchParams.set('distance', '500000'); // 500km radius preference
   // Only return addresses (not POIs)
   url.searchParams.set('category', 'Address');
@@ -46,7 +64,7 @@ async function suggestAddresses(query: string) {
   const data = await resp.json();
 
   const suggestions = (data.suggestions || [])
-    .filter((s: { text: string }) => /\bTX\b|Texas/i.test(s.text))
+    .filter((s: { text: string }) => config.regex.test(s.text))
     .map((s: { text: string; magicKey: string }) => ({
       text: s.text,
       magicKey: s.magicKey,

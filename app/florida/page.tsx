@@ -131,7 +131,7 @@ export default function FloridaCalculator() {
   const fetchSuggestions = useCallback(async (query: string) => {
     if (query.length < 5) { setSuggestions([]); return; }
     try {
-      const resp = await fetch(`/api/geocode?q=${encodeURIComponent(query)}&mode=suggest`);
+      const resp = await fetch(`/api/geocode?q=${encodeURIComponent(query)}&mode=suggest&state=FL`);
       const data = await resp.json();
       if (data.suggestions?.length > 0) {
         setSuggestions(data.suggestions);
