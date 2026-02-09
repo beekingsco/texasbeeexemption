@@ -15,6 +15,24 @@ interface County {
   notes: string;
 }
 
+interface Suggestion {
+  text: string;
+  magicKey: string;
+}
+
+interface GeocodedAddress {
+  address: string;
+  lat: number;
+  lng: number;
+  score: number;
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+  county: string;
+  addrType: string;
+}
+
 interface LeadData {
   firstName: string;
   lastName: string;
@@ -45,6 +63,16 @@ export default function FloridaCalculator() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchError, setSearchError] = useState('');
 
+  // Address search state
+  const [searchInput, setSearchInput] = useState('');
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+  const [geocodedAddress, setGeocodedAddress] = useState<GeocodedAddress | null>(null);
+  const [addressMode, setAddressMode] = useState(true); // true = address search, false = manual county
+
+  const searchRef = useRef<HTMLDivElement>(null);
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
   const resultsTimeRef = useRef<number>(0);
   const sessionIdRef = useRef<string>(`s_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`);
   const counties = useMemo(() => countiesData as County[], []);
@@ -88,6 +116,94 @@ export default function FloridaCalculator() {
   useEffect(() => {
     track('page_view', { referrer: document.referrer, page: 'florida' });
   }, [track]);
+
+  // Close suggestions on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) setShowSuggestions(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  // ArcGIS autocomplete — same API as Texas
+  const fetchSuggestions = useCallback(async (query: string) => {
+    if (query.length < 5) { setSuggestions([]); return; }
+    try {
+      const resp = await fetch(`/api/geocode?q=${encodeURIComponent(query)}&mode=suggest`);
+      const data = await resp.json();
+      if (data.suggestions?.length > 0) {
+        setSuggestions(data.suggestions);
+        setShowSuggestions(true);
+      } else {
+        setSuggestions([]);
+      }
+    } catch { setSuggestions([]); }
+  }, []);
+
+  const handleAddressInput = (value: string) => {
+    setSearchInput(value);
+    setSearchError('');
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => fetchSuggestions(value), 300);
+  };
+
+  const processAddress = async (addressText: string, magicKey?: string) => {
+    setIsSearching(true);
+    setSearchError('');
+    setShowSuggestions(false);
+    setSearchInput(addressText.replace(/, USA$/, ''));
+
+    try {
+      const geoUrl = `/api/geocode?q=${encodeURIComponent(addressText)}&mode=geocode${magicKey ? `&magicKey=${encodeURIComponent(magicKey)}` : ''}`;
+      const geoResp = await fetch(geoUrl);
+      const geoData = await geoResp.json();
+
+      if (!geoData.results?.length) {
+        setSearchError('We couldn\'t verify that address. Try entering your full street address.');
+        setIsSearching(false);
+        return;
+      }
+
+      const geo: GeocodedAddress = geoData.results[0];
+
+      // Check it's Florida
+      if (geo.state && !['FL', 'Florida'].includes(geo.state)) {
+        setSearchError(`That address is in ${geo.state}, not Florida. Try our Texas calculator or select another state from the homepage.`);
+        setIsSearching(false);
+        return;
+      }
+
+      // Match county
+      const countyClean = (geo.county || '').replace(/ County$/i, '').trim();
+      const matchedCounty = counties.find(c => c.name.toLowerCase() === countyClean.toLowerCase());
+
+      if (!matchedCounty) {
+        setSearchError(`Couldn't identify the county for this address. Please select your county manually below.`);
+        setIsSearching(false);
+        setAddressMode(false);
+        return;
+      }
+
+      setGeocodedAddress(geo);
+      setSelectedCountyName(matchedCounty.name);
+      setSearchInput(geo.address.replace(/, USA$/, ''));
+      track('address_searched', { county: matchedCounty.name, address: geo.address, state: 'FL' });
+      trackContact('search', { address: geo.address, county: countyClean, lat: geo.lat, lng: geo.lng, referrer: document.referrer });
+    } catch {
+      setSearchError('Something went wrong. Please try again.');
+    }
+    setIsSearching(false);
+  };
+
+  const handleSuggestionSelect = (s: Suggestion) => {
+    setShowSuggestions(false);
+    processAddress(s.text, s.magicKey);
+  };
+
+  const handleAddressSearch = () => {
+    if (searchInput.trim()) processAddress(searchInput);
+  };
 
   // Calculate results
   const calculateResults = () => {
@@ -291,6 +407,15 @@ export default function FloridaCalculator() {
               <a href="https://beekings.com" style={{ fontSize: 14, fontWeight: 600, color: C.navy, textDecoration: 'none' }}>BeeKings.com</a>
               <a href="mailto:info@beekings.com" style={{ background: C.blue, color: C.white, fontSize: 14, fontWeight: 700, padding: '10px 20px', borderRadius: 8, textDecoration: 'none' }}>Contact Us</a>
             </nav>
+            {/* Florida Bees Badge */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#FFF8F0', border: '1px solid #FDE68A', borderRadius: 8, padding: '6px 12px' }}>
+              <span style={{ fontSize: 20 }}>🌴</span>
+              <div style={{ lineHeight: 1.1 }}>
+                <p style={{ fontSize: 11, fontWeight: 800, color: C.navy, letterSpacing: '0.02em' }}>FLORIDA BEES</p>
+                <p style={{ fontSize: 10, fontWeight: 600, color: '#B45309' }}>Save You Money</p>
+              </div>
+              <span style={{ fontSize: 16 }}>🐝</span>
+            </div>
           </div>
         </div>
       </header>
@@ -331,33 +456,122 @@ export default function FloridaCalculator() {
                   Enter your property details below — takes about 30 seconds.
                 </p>
 
-                {/* County selector */}
-                <div style={{ marginBottom: 20 }}>
-                  <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 8 }}>
-                    County
-                  </label>
-                  <select
-                    value={selectedCountyName}
-                    onChange={(e) => { setSelectedCountyName(e.target.value); setSearchError(''); }}
+                {/* Toggle: Address search vs Manual county */}
+                <div style={{ display: 'flex', gap: 0, marginBottom: 20, background: C.lightGray, borderRadius: 10, padding: 3 }}>
+                  <button
+                    onClick={() => setAddressMode(true)}
                     style={{
-                      width: '100%', padding: '14px 16px', border: '2px solid #e2e8f0', borderRadius: 10,
-                      fontSize: 16, fontWeight: 500, color: selectedCountyName ? C.navy : C.gray,
-                      fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
-                      background: C.white, cursor: 'pointer', appearance: 'none',
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
-                      backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center',
+                      flex: 1, padding: '10px 16px', borderRadius: 8, border: 'none', fontSize: 14, fontWeight: 700,
+                      background: addressMode ? C.white : 'transparent', color: addressMode ? C.navy : C.gray,
+                      cursor: 'pointer', fontFamily: 'inherit', boxShadow: addressMode ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
                     }}
                   >
-                    <option value="">Select your Florida county…</option>
-                    {regionGroups.map(group => (
-                      <optgroup key={group.region} label={group.region}>
-                        {group.counties.map(c => (
-                          <option key={c.name} value={c.name}>{c.name} County</option>
-                        ))}
-                      </optgroup>
-                    ))}
-                  </select>
+                    🔍 Search by Address
+                  </button>
+                  <button
+                    onClick={() => setAddressMode(false)}
+                    style={{
+                      flex: 1, padding: '10px 16px', borderRadius: 8, border: 'none', fontSize: 14, fontWeight: 700,
+                      background: !addressMode ? C.white : 'transparent', color: !addressMode ? C.navy : C.gray,
+                      cursor: 'pointer', fontFamily: 'inherit', boxShadow: !addressMode ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+                    }}
+                  >
+                    📋 Select County
+                  </button>
                 </div>
+
+                {/* Address Search */}
+                {addressMode && (
+                  <div style={{ marginBottom: 20, position: 'relative' }} ref={searchRef}>
+                    <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 8 }}>
+                      Property Address
+                    </label>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <div style={{ flex: 1, position: 'relative' }}>
+                        <input
+                          type="text" value={searchInput}
+                          onChange={(e) => handleAddressInput(e.target.value)}
+                          onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
+                          onKeyDown={(e) => { if (e.key === 'Enter' && searchInput.trim()) handleAddressSearch(); }}
+                          placeholder="Enter your Florida address..."
+                          style={{
+                            width: '100%', padding: '14px 16px', border: '2px solid #e2e8f0', borderRadius: 10,
+                            fontSize: 16, fontWeight: 500, color: C.navy, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
+                          }}
+                        />
+                        {/* Suggestions dropdown */}
+                        {showSuggestions && suggestions.length > 0 && (
+                          <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, marginTop: 4, background: C.white, border: '1px solid #e2e8f0', borderRadius: 12, boxShadow: '0 8px 24px rgba(0,0,0,0.12)', maxHeight: 280, overflowY: 'auto', zIndex: 50 }}>
+                            {suggestions.map((s, i) => {
+                              const parts = s.text.split(',').map(p => p.trim());
+                              const street = parts[0] || '';
+                              const rest = parts.slice(1).join(', ');
+                              return (
+                                <button key={i} onClick={() => handleSuggestionSelect(s)}
+                                  style={{ width: '100%', padding: '12px 16px', textAlign: 'left', background: 'transparent', border: 'none', borderBottom: '1px solid #f1f5f9', cursor: 'pointer', fontFamily: 'inherit' }}
+                                  onMouseEnter={(e) => (e.currentTarget.style.background = C.sky)}
+                                  onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
+                                  <div style={{ fontWeight: 700, color: C.navy, fontSize: 15 }}>{street}</div>
+                                  <div style={{ fontSize: 12, color: '#6B7280', marginTop: 2 }}>{rest}</div>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                      <button onClick={handleAddressSearch} disabled={!searchInput.trim() || isSearching}
+                        style={{
+                          padding: '14px 20px', borderRadius: 10, border: 'none', fontWeight: 700, fontSize: 14,
+                          background: searchInput.trim() && !isSearching ? C.blue : '#93C5FD', color: C.white,
+                          cursor: searchInput.trim() && !isSearching ? 'pointer' : 'not-allowed', fontFamily: 'inherit',
+                          whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 6,
+                        }}>
+                        {isSearching ? <span className="spinner" /> : 'Find'}
+                      </button>
+                    </div>
+
+                    {/* Show matched county after address search */}
+                    {geocodedAddress && selectedCountyName && (
+                      <div style={{ marginTop: 12, padding: '10px 14px', background: '#F0FDF4', borderRadius: 10, border: '1px solid #BBF7D0', display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
+                          <circle cx="12" cy="12" r="12" fill={C.green} />
+                          <path d="M7 12l3 3 7-7" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        <p style={{ fontSize: 14, fontWeight: 600, color: C.navy }}>{selectedCountyName} County, Florida</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* County selector (manual mode or fallback) */}
+                {!addressMode && (
+                  <div style={{ marginBottom: 20 }}>
+                    <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 8 }}>
+                      County
+                    </label>
+                    <select
+                      value={selectedCountyName}
+                      onChange={(e) => { setSelectedCountyName(e.target.value); setSearchError(''); }}
+                      style={{
+                        width: '100%', padding: '14px 16px', border: '2px solid #e2e8f0', borderRadius: 10,
+                        fontSize: 16, fontWeight: 500, color: selectedCountyName ? C.navy : C.gray,
+                        fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
+                        background: C.white, cursor: 'pointer', appearance: 'none' as const,
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
+                        backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center',
+                      }}
+                    >
+                      <option value="">Select your Florida county…</option>
+                      {regionGroups.map(group => (
+                        <optgroup key={group.region} label={group.region}>
+                          {group.counties.map(c => (
+                            <option key={c.name} value={c.name}>{c.name} County</option>
+                          ))}
+                        </optgroup>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
                 {/* Acreage */}
                 <div style={{ marginBottom: 20 }}>
@@ -574,18 +788,29 @@ export default function FloridaCalculator() {
               ))}
             </div>
 
+            {/* Satellite Map — if we have geocoded coordinates */}
+            {geocodedAddress && (
+              <div style={{ borderRadius: '16px 16px 0 0', overflow: 'hidden', marginBottom: 0, boxShadow: '0 2px 12px rgba(0,0,0,0.08)', height: 160, background: '#1a2e1a' }}>
+                <img
+                  src={`https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=${geocodedAddress.lng - 0.003},${geocodedAddress.lat - 0.0015},${geocodedAddress.lng + 0.003},${geocodedAddress.lat + 0.0015}&bboxSR=4326&imageSR=4326&size=800,320&format=jpg&f=image`}
+                  alt="Satellite view of property"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
+              </div>
+            )}
+
             {/* County info */}
-            <div style={{ background: C.white, borderRadius: '16px 16px 0 0', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12, border: '1px solid #D5EAFF' }}>
+            <div style={{ background: C.white, borderRadius: geocodedAddress ? 0 : '16px 16px 0 0', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12, border: '1px solid #D5EAFF', borderTop: geocodedAddress ? 'none' : '1px solid #D5EAFF' }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
                 <circle cx="12" cy="12" r="12" fill={C.green} />
                 <path d="M7 12l3 3 7-7" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               <div style={{ flex: 1 }}>
                 <p style={{ fontSize: 14, fontWeight: 700, color: C.navy }}>
-                  {selectedCounty.name} County, Florida — {acres} acres
+                  {geocodedAddress ? geocodedAddress.address.replace(/, USA$/, '') : `${selectedCounty.name} County, Florida`} — {acres} acres
                 </p>
                 <p style={{ fontSize: 13, color: C.gray }}>
-                  Assessed value: {fmtMoney(parseFloat(appraisedValue))} · Millage rate: {selectedCounty.avgMillageRate} mills
+                  {geocodedAddress ? `${selectedCounty.name} County · ` : ''}Assessed value: {fmtMoney(parseFloat(appraisedValue))} · Millage rate: {selectedCounty.avgMillageRate} mills
                 </p>
               </div>
               <button onClick={startOver} style={{ fontSize: 13, fontWeight: 600, color: C.blue, background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>Change</button>
