@@ -400,9 +400,16 @@ export default function FloridaCalculator() {
       {/* HEADER */}
       <header style={{ background: C.white, borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+          {/* Left: US flag + back arrow */}
+          <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 700, color: C.navy }}>
+            <span style={{ fontSize: 18 }}>◀</span>
+            <span style={{ fontSize: 24 }}>🇺🇸</span>
+          </a>
+          {/* Center: BeeKings logo */}
+          <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
             <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 40 }} />
           </a>
+          {/* Right: state badge */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <nav className="r-nav">
               {step === 'search' && (
