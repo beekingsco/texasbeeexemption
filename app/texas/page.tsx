@@ -452,7 +452,7 @@ export default function Home() {
       `}</style>
 
       {/* HEADER */}
-      <header style={{ background: C.sky, borderBottom: '1px solid #D5EAFF' }}>
+      <header style={{ background: C.white, borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <a href="/" onClick={(e) => { e.preventDefault(); startOver(); }} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
             <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 40 }} />
