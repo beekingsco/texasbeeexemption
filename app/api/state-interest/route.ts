@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { sql } from '@vercel/postgres';
+import { ensureDB, isPostgresConfigured } from '@/lib/db';
 import { readJSON, writeJSON, forwardToWebhook } from '@/lib/storage';
 
 interface StateInterest {
@@ -19,27 +21,25 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const interest: StateInterest = {
-      state,
-      timestamp: new Date().toISOString(),
-      userAgent: req.headers.get('user-agent') || undefined,
-    };
+    const usePg = isPostgresConfigured();
+    if (usePg) await ensureDB();
 
-    // Read existing interests
-    const interests = await readJSON<StateInterest[]>('state-interest.json', []);
-    
-    // Add new interest
-    interests.push(interest);
-    
-    // Save to file
-    await writeJSON('state-interest.json', interests);
-    
-    // Forward to webhook for permanent storage
-    await forwardToWebhook('state_interest', {
-      state: interest.state,
-      timestamp: interest.timestamp,
-      userAgent: interest.userAgent,
-    });
+    const timestamp = new Date().toISOString();
+    const userAgent = req.headers.get('user-agent') || undefined;
+
+    if (usePg) {
+      await sql`
+        INSERT INTO state_interest (state, user_agent, timestamp)
+        VALUES (${state}, ${userAgent || null}, ${timestamp})
+      `;
+    } else {
+      const interest: StateInterest = { state, timestamp, userAgent };
+      const interests = await readJSON<StateInterest[]>('state-interest.json', []);
+      interests.push(interest);
+      await writeJSON('state-interest.json', interests);
+    }
+
+    await forwardToWebhook('state_interest', { state, timestamp, userAgent });
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -60,11 +60,24 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const interests = await readJSON<StateInterest[]>('state-interest.json', []);
-    
+    const usePg = isPostgresConfigured();
+    if (usePg) await ensureDB();
+
+    let interests: StateInterest[];
+
+    if (usePg) {
+      const result = await sql`SELECT state, timestamp, user_agent FROM state_interest ORDER BY timestamp DESC`;
+      interests = result.rows.map(r => ({
+        state: r.state as string,
+        timestamp: new Date(r.timestamp as string).toISOString(),
+        userAgent: (r.user_agent as string) || undefined,
+      }));
+    } else {
+      interests = await readJSON<StateInterest[]>('state-interest.json', []);
+    }
+
     // Count by state and sort by popularity
     const counts: Record<string, number> = {};
-    
     for (const interest of interests) {
       counts[interest.state] = (counts[interest.state] || 0) + 1;
     }

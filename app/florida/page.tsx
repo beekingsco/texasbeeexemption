@@ -424,7 +424,7 @@ export default function FloridaCalculator() {
         <DeadlineCountdown
           deadlineISO="2026-03-01T23:59:59-05:00"
           timezone="America/New_York"
-          deadlineText="March 1st is your deadline to file for your 2026 Florida Agricultural Classification"
+          deadlineText="File by March 1 for 2026 Florida Ag Classification"
           stateName="Florida"
           programName="Agricultural Classification"
         />

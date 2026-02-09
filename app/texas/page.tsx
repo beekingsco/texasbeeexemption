@@ -479,7 +479,7 @@ export default function Home() {
         <DeadlineCountdown
           deadlineISO="2026-04-30T23:59:59-05:00"
           timezone="America/Chicago"
-          deadlineText="April 30th is your deadline to file for your 2026 Texas Ag Exemption"
+          deadlineText="File by April 30 for 2026 Texas Ag Exemption"
           stateName="Texas"
           programName="Ag Exemption"
         />

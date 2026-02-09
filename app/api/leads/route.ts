@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { sql } from '@vercel/postgres';
+import { ensureDB, isPostgresConfigured } from '@/lib/db';
 import { readJSON, writeJSON, forwardToWebhook } from '@/lib/storage';
 
 // Telegram lead alert
@@ -47,6 +49,27 @@ interface Lead {
   createdAt: string;
 }
 
+function rowToLead(row: Record<string, unknown>): Lead {
+  return {
+    id: row.id as string,
+    firstName: (row.first_name as string) || '',
+    lastName: (row.last_name as string) || '',
+    email: (row.email as string) || '',
+    phone: (row.phone as string) || '',
+    address: (row.address as string) || '',
+    county: (row.county as string) || '',
+    lat: row.lat as number | null,
+    lng: row.lng as number | null,
+    acres: row.acres as number | null,
+    appraisedValue: row.appraised_value as number | null,
+    estimatedSavings: row.estimated_savings as number | null,
+    parcelData: row.parcel_data as Record<string, unknown> | null,
+    source: (row.source as string) || 'calculator',
+    createdAt: row.created_at ? new Date(row.created_at as string).toISOString() : new Date().toISOString(),
+  };
+}
+
+// JSON file fallback
 async function readLeads(): Promise<Lead[]> {
   return readJSON<Lead[]>('leads.json', []);
 }
@@ -65,7 +88,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'First name, last name, and email are required' }, { status: 400 });
     }
 
-    const leads = await readLeads();
+    const usePg = isPostgresConfigured();
+    if (usePg) await ensureDB();
 
     const lead: Lead = {
       id: `lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
@@ -85,8 +109,22 @@ export async function POST(req: NextRequest) {
       createdAt: new Date().toISOString(),
     };
 
-    leads.push(lead);
-    await writeLeads(leads);
+    if (usePg) {
+      await sql`
+        INSERT INTO leads (id, first_name, last_name, email, phone, address, county, lat, lng,
+          acres, appraised_value, estimated_savings, parcel_data, source, created_at)
+        VALUES (${lead.id}, ${lead.firstName}, ${lead.lastName}, ${lead.email}, ${lead.phone},
+          ${lead.address}, ${lead.county}, ${lead.lat}, ${lead.lng}, ${lead.acres},
+          ${lead.appraisedValue}, ${lead.estimatedSavings},
+          ${lead.parcelData ? JSON.stringify(lead.parcelData) : null},
+          ${lead.source}, ${lead.createdAt})
+      `;
+    } else {
+      const leads = await readLeads();
+      leads.push(lead);
+      await writeLeads(leads);
+    }
+
     await forwardToWebhook('lead', lead as unknown as Record<string, unknown>);
     await sendLeadAlert(lead);
 
@@ -97,17 +135,27 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// GET — retrieve leads (simple admin endpoint, no auth for now)
+// GET — retrieve leads (admin endpoint)
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const apiKey = searchParams.get('key');
 
-  // Simple protection — require a key to view leads
   if (apiKey !== 'beekings2026') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const leads = await readLeads();
+  const usePg = isPostgresConfigured();
+  if (usePg) await ensureDB();
+
+  let leads: Lead[];
+
+  if (usePg) {
+    const result = await sql`SELECT * FROM leads ORDER BY created_at DESC`;
+    leads = result.rows.map(rowToLead);
+  } else {
+    leads = await readLeads();
+  }
+
   const county = searchParams.get('county');
   const filtered = county ? leads.filter(l => l.county.toLowerCase() === county.toLowerCase()) : leads;
 

@@ -5,10 +5,8 @@ const IS_VERCEL = process.env.VERCEL === '1';
 
 function getFilePath(filename: string): string {
   if (IS_VERCEL) {
-    // Vercel: use /tmp (ephemeral but works per invocation)
     return path.join('/tmp', filename);
   }
-  // Local: use data/ directory
   return path.join(process.cwd(), 'data', filename);
 }
 

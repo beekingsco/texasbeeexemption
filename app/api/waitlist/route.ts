@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { sql } from '@vercel/postgres';
+import { ensureDB, isPostgresConfigured } from '@/lib/db';
 import { readJSON, writeJSON, forwardToWebhook } from '@/lib/storage';
 
 interface WaitlistEntry {
@@ -20,29 +22,24 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const entry: WaitlistEntry = {
-      email,
-      name,
-      state,
-      timestamp: new Date().toISOString(),
-    };
+    const usePg = isPostgresConfigured();
+    if (usePg) await ensureDB();
 
-    // Read existing waitlist
-    const waitlist = await readJSON<WaitlistEntry[]>('waitlist.json', []);
-    
-    // Add new entry
-    waitlist.push(entry);
-    
-    // Save to file
-    await writeJSON('waitlist.json', waitlist);
-    
-    // Forward to webhook for permanent storage
-    await forwardToWebhook('waitlist_signup', {
-      email: entry.email,
-      name: entry.name,
-      state: entry.state,
-      timestamp: entry.timestamp,
-    });
+    const timestamp = new Date().toISOString();
+
+    if (usePg) {
+      await sql`
+        INSERT INTO waitlist (email, name, state, timestamp)
+        VALUES (${email}, ${name}, ${state}, ${timestamp})
+      `;
+    } else {
+      const entry: WaitlistEntry = { email, name, state, timestamp };
+      const waitlist = await readJSON<WaitlistEntry[]>('waitlist.json', []);
+      waitlist.push(entry);
+      await writeJSON('waitlist.json', waitlist);
+    }
+
+    await forwardToWebhook('waitlist_signup', { email, name, state, timestamp });
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -63,12 +60,26 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const waitlist = await readJSON<WaitlistEntry[]>('waitlist.json', []);
-    
+    const usePg = isPostgresConfigured();
+    if (usePg) await ensureDB();
+
+    let entries: WaitlistEntry[];
+
+    if (usePg) {
+      const result = await sql`SELECT email, name, state, timestamp FROM waitlist ORDER BY timestamp DESC`;
+      entries = result.rows.map(r => ({
+        email: r.email as string,
+        name: r.name as string,
+        state: r.state as string,
+        timestamp: new Date(r.timestamp as string).toISOString(),
+      }));
+    } else {
+      entries = await readJSON<WaitlistEntry[]>('waitlist.json', []);
+    }
+
     // Group by state and count
     const byState: Record<string, { count: number; entries: WaitlistEntry[] }> = {};
-    
-    for (const entry of waitlist) {
+    for (const entry of entries) {
       if (!byState[entry.state]) {
         byState[entry.state] = { count: 0, entries: [] };
       }
@@ -77,9 +88,9 @@ export async function GET(req: NextRequest) {
     }
 
     return NextResponse.json({
-      total: waitlist.length,
+      total: entries.length,
       byState,
-      entries: waitlist,
+      entries,
     });
   } catch (error) {
     console.error('Waitlist GET error:', error);

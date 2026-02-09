@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { sql } from '@vercel/postgres';
+import { ensureDB, isPostgresConfigured } from '@/lib/db';
 import { readJSON, writeJSON } from '@/lib/storage';
 
 interface AnalyticsEvent {
@@ -12,6 +14,7 @@ interface AnalyticsEvent {
   timestamp: string;
 }
 
+// JSON file fallback
 async function readEvents(): Promise<AnalyticsEvent[]> {
   return readJSON<AnalyticsEvent[]>('analytics.json', []);
 }
@@ -31,18 +34,33 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Event name required' }, { status: 400 });
     }
 
-    const events = await readEvents();
-    events.push({
-      event,
-      county: county || undefined,
-      savings: savings || undefined,
-      step: step || undefined,
-      address: address || undefined,
-      referrer: req.headers.get('referer') || undefined,
-      userAgent: (req.headers.get('user-agent') || '').slice(0, 200),
-      timestamp: new Date().toISOString(),
-    });
-    await writeEvents(events);
+    const usePg = isPostgresConfigured();
+    if (usePg) await ensureDB();
+
+    const timestamp = new Date().toISOString();
+    const referrer = req.headers.get('referer') || undefined;
+    const userAgent = (req.headers.get('user-agent') || '').slice(0, 200);
+
+    if (usePg) {
+      await sql`
+        INSERT INTO analytics (event, county, savings, step, address, referrer, user_agent, timestamp)
+        VALUES (${event}, ${county || null}, ${savings || null}, ${step || null},
+          ${address || null}, ${referrer || null}, ${userAgent || null}, ${timestamp})
+      `;
+    } else {
+      const events = await readEvents();
+      events.push({
+        event,
+        county: county || undefined,
+        savings: savings || undefined,
+        step: step || undefined,
+        address: address || undefined,
+        referrer,
+        userAgent,
+        timestamp,
+      });
+      await writeEvents(events);
+    }
 
     return NextResponse.json({ ok: true });
   } catch {
@@ -57,7 +75,27 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const events = await readEvents();
+  const usePg = isPostgresConfigured();
+  if (usePg) await ensureDB();
+
+  let events: AnalyticsEvent[];
+
+  if (usePg) {
+    const result = await sql`SELECT event, county, savings, step, address, referrer, user_agent, timestamp FROM analytics ORDER BY timestamp DESC LIMIT 10000`;
+    events = result.rows.map(r => ({
+      event: r.event as string,
+      county: (r.county as string) || undefined,
+      savings: r.savings as number | undefined,
+      step: (r.step as string) || undefined,
+      address: (r.address as string) || undefined,
+      referrer: (r.referrer as string) || undefined,
+      userAgent: (r.user_agent as string) || undefined,
+      timestamp: new Date(r.timestamp as string).toISOString(),
+    }));
+  } else {
+    events = await readEvents();
+  }
+
   const now = new Date();
   const today = events.filter(e => new Date(e.timestamp).toDateString() === now.toDateString());
   const week = events.filter(e => now.getTime() - new Date(e.timestamp).getTime() < 7 * 86400000);
