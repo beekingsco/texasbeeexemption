@@ -284,6 +284,9 @@ export default function Home() {
     const annualSavings = Math.max(0, currentTaxes - totalWithAg);
     const savingsPercent = currentTaxes > 0 ? (annualSavings / currentTaxes) * 100 : 0;
 
+    // Check if property qualifies
+    const qualifies = agEligibleAcres >= selectedCounty.minAcres;
+
     // Hive requirements based on ag-eligible acres
     let requiredHives = selectedCounty.minHives;
     if (agEligibleAcres > selectedCounty.minAcres) {
@@ -328,6 +331,7 @@ export default function Home() {
       honeyLbsPerHive,
       totalHoneyLbs,
       honeyRevenue,
+      qualifies,
     };
   };
 
@@ -720,8 +724,25 @@ export default function Home() {
               <button onClick={startOver} style={{ fontSize: 13, fontWeight: 600, color: C.blue, background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>Change</button>
             </div>
 
-            {/* Savings Summary - Ownwell style */}
-            {results && (
+            {/* Savings Summary or Not Qualified Message */}
+            {results && !results.qualifies && (
+              <div style={{ background: C.white, borderRadius: '0 0 16px 16px', padding: '32px 24px', textAlign: 'center', marginBottom: 24, border: '1px solid #D5EAFF', borderTop: '1px solid #e2e8f0' }}>
+                <div style={{ fontSize: 48, marginBottom: 16 }}>🐝</div>
+                <h2 style={{ fontSize: 22, fontWeight: 800, color: C.navy, marginBottom: 12 }}>Not Enough Land to Qualify</h2>
+                <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.6, marginBottom: 16, maxWidth: 400, margin: '0 auto 20px' }}>
+                  Your property has <strong style={{ color: C.navy }}>{results.agEligibleAcres.toFixed(1)} ag-eligible acres</strong>, but 
+                  {selectedCounty?.name} County requires at least <strong style={{ color: C.navy }}>{selectedCounty?.minAcres} acres</strong> beyond 
+                  your 1-acre homestead to qualify for a beekeeping ag exemption.
+                </p>
+                <p style={{ fontSize: 14, color: C.gray, marginBottom: 24 }}>
+                  Do you have another property you&apos;d like to check?
+                </p>
+                <button onClick={startOver} style={{ background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, padding: '14px 32px', borderRadius: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                  Search Another Property →
+                </button>
+              </div>
+            )}
+            {results && results.qualifies && (
               <div style={{ background: C.white, borderRadius: '0 0 16px 16px', padding: '24px 20px', textAlign: 'center', marginBottom: 24, border: '1px solid #D5EAFF', borderTop: '1px solid #e2e8f0' }}>
                 <p style={{ fontSize: 15, fontWeight: 700, color: C.navy, marginBottom: 4 }}>Estimated Annual Savings</p>
                 <div className="r-result-num" style={{ ...gradientText, fontWeight: 900, lineHeight: 1 }}>
@@ -781,8 +802,8 @@ export default function Home() {
               </div>
             )}
 
-            {/* Details */}
-            {results && (
+            {/* Details — only show when property qualifies */}
+            {results && results.qualifies && (
               <>
                 {/* Visual Tax Comparison */}
                 <div style={{ background: C.white, borderRadius: 20, boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: 32, marginBottom: 24, border: '1px solid #e2e8f0' }}>
