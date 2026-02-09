@@ -1,6 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readJSON, writeJSON, forwardToWebhook } from '@/lib/storage';
 
+// Telegram lead alert
+const TG_BOT_TOKEN = process.env.TG_BOT_TOKEN || '';
+const TG_CHAT_ID = process.env.TG_ALERT_CHAT_ID || '';
+
+async function sendLeadAlert(lead: Lead): Promise<void> {
+  if (!TG_BOT_TOKEN || !TG_CHAT_ID) return;
+  try {
+    const savings = lead.estimatedSavings ? `$${lead.estimatedSavings.toLocaleString()}` : 'N/A';
+    const text = `🐝 *New Lead!*\n\n` +
+      `*${lead.firstName} ${lead.lastName}*\n` +
+      `📧 ${lead.email}\n` +
+      (lead.phone ? `📱 ${lead.phone}\n` : '') +
+      `📍 ${lead.county || 'Unknown county'}${lead.source ? ` (${lead.source})` : ''}\n` +
+      (lead.acres ? `🏡 ${lead.acres} acres\n` : '') +
+      (lead.appraisedValue ? `💰 Appraised: $${lead.appraisedValue.toLocaleString()}\n` : '') +
+      `💵 Est. savings: ${savings}\n` +
+      `\n⏰ ${new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' })}`;
+
+    await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TG_CHAT_ID, text, parse_mode: 'Markdown' }),
+    });
+  } catch {
+    // Silent fail — don't block lead capture
+  }
+}
+
 interface Lead {
   id: string;
   firstName: string;
@@ -60,6 +88,7 @@ export async function POST(req: NextRequest) {
     leads.push(lead);
     await writeLeads(leads);
     await forwardToWebhook('lead', lead as unknown as Record<string, unknown>);
+    await sendLeadAlert(lead);
 
     return NextResponse.json({ success: true, id: lead.id });
   } catch (error) {
