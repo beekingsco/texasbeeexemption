@@ -109,15 +109,21 @@ export default function NationalLanding() {
           .r-grid2 { grid-template-columns: 1fr; }
           .r-grid3 { grid-template-columns: 1fr; gap: 24px; }
           .r-nav { display: none; }
-          .hero-layout { flex-direction: column-reverse !important; text-align: center !important; }
-          .hero-text { align-items: center !important; }
-          .hero-img { max-width: 280px !important; }
+          .hero-section { padding-top: 20px !important; }
+          .hero-layout { flex-direction: row !important; text-align: left !important; gap: 12px !important; align-items: flex-end !important; }
+          .hero-text { align-items: flex-start !important; padding-bottom: 24px !important; }
+          .hero-text h1 { font-size: 28px !important; margin-bottom: 8px !important; }
+          .hero-text p { font-size: 15px !important; margin-bottom: 16px !important; }
+          .hero-img { max-width: 140px !important; flex: 0 0 140px !important; }
+          .counter-bar { padding: 8px 16px !important; }
+          .counter-bar p { font-size: 13px !important; }
+          .header-bar { height: 50px !important; }
         }
       `}</style>
 
       {/* HEADER */}
       <header style={{ background: C.white, borderBottom: '1px solid #e2e8f0' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="header-bar" style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
             <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 36 }} />
             <span style={{ fontWeight: 900, fontSize: 20, color: C.navy, letterSpacing: '-0.02em' }}>BEE EXEMPTION</span>
@@ -131,7 +137,7 @@ export default function NationalLanding() {
       </header>
 
       {/* BEEKEEPER COUNTER */}
-      <div style={{ background: C.navy, padding: '12px 24px', textAlign: 'center', position: 'relative' }}>
+      <div className="counter-bar" style={{ background: C.navy, padding: '12px 24px', textAlign: 'center', position: 'relative' }}>
         <p style={{ fontSize: 15, color: C.white, fontWeight: 700, margin: 0, fontVariantNumeric: 'tabular-nums' }}>
           <span style={{ fontSize: 16, marginRight: 6 }}>🐝</span>
           <span className={countBump ? 'count-bump' : ''} style={{ color: C.green, fontWeight: 900, fontSize: 17, display: 'inline-block' }}>{beekeeperCount.toLocaleString()}</span>
@@ -160,10 +166,10 @@ export default function NationalLanding() {
       </div>
 
       {/* HERO */}
-      <section style={{ background: C.sky, padding: '60px 24px 0', overflow: 'hidden' }}>
+      <section className="hero-section" style={{ background: C.sky, padding: '60px 24px 0', overflow: 'hidden' }}>
         <div className="hero-layout" style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'flex-end', gap: 40 }}>
           <div className="hero-text fade-in" style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingBottom: 60 }}>
-            <h1 style={{ fontSize: 'clamp(32px, 5vw, 52px)', fontWeight: 900, color: C.navy, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: 16 }}>
+            <h1 style={{ fontSize: 'clamp(28px, 5vw, 52px)', fontWeight: 900, color: C.navy, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: 16 }}>
               Could bees lower<br />your property taxes?
             </h1>
             <p style={{ fontSize: 18, color: '#5A7A8A', lineHeight: 1.6, marginBottom: 32, maxWidth: 480 }}>
@@ -216,7 +222,7 @@ export default function NationalLanding() {
           </div>
 
           {/* Beekeeper illustration */}
-          <div className="hero-img" style={{ flex: '0 0 auto', maxWidth: 340, alignSelf: 'flex-end' }}>
+          <div className="hero-img" style={{ flex: '0 0 auto', maxWidth: 300, alignSelf: 'flex-end' }}>
             <img
               src="/hero-beekeeper.png"
               alt="Friendly beekeeper illustration"
