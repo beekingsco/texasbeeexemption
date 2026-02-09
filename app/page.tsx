@@ -14,210 +14,348 @@ const C = {
   white: '#FFFFFF',
   gray: '#6B7280',
   lightGray: '#F8FAFC',
+  warm: '#FFF8F0',
+  amber: '#F59E0B',
 };
+
+const AVAILABLE_STATES = ['TX', 'FL'];
 
 export default function NationalLanding() {
   const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedState, setSelectedState] = useState('');
 
-  const filteredStates = US_STATES.filter((state) =>
-    state.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleStateSelect = async (stateCode: string) => {
+    if (!stateCode) return;
 
-  const handleStateClick = async (stateCode: string, stateName: string) => {
     // Track interest
+    const state = US_STATES.find(s => s.code === stateCode);
     try {
       await fetch('/api/state-interest', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ state: stateName }),
+        body: JSON.stringify({ state: state?.name || stateCode }),
       });
     } catch (e) {
       console.error('Failed to track state interest:', e);
     }
 
-    // Route to appropriate page
     if (stateCode === 'TX') {
       router.push('/texas');
+    } else if (stateCode === 'FL') {
+      router.push('/florida');
     } else {
       router.push(`/state/${stateCode.toLowerCase()}`);
     }
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: C.sky }}>
-      {/* Header */}
-      <header
-        style={{
-          background: `linear-gradient(135deg, ${C.navy} 0%, ${C.blue} 100%)`,
-          padding: '1.5rem 1rem',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-        }}
-      >
-        <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-          <h1
-            style={{
-              color: C.white,
-              fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
-              fontWeight: 700,
-              margin: 0,
-            }}
-          >
-            Save Money on Property Taxes with Bees 🐝
-          </h1>
-          <p
-            style={{
-              color: C.white,
-              fontSize: 'clamp(1rem, 3vw, 1.25rem)',
-              margin: '0.75rem 0 0 0',
-              opacity: 0.95,
-            }}
-          >
-            Select your state to see how much you could save
-          </p>
+    <div style={{ minHeight: '100vh', background: C.white }}>
+      <style>{`
+        * { box-sizing: border-box; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+        .hover-lift { transition: transform 0.2s, box-shadow 0.2s; }
+        .hover-lift:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+        .r-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .r-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+        .r-nav { display: flex; align-items: center; gap: 24px; }
+        @media (max-width: 768px) {
+          .r-grid2 { grid-template-columns: 1fr; }
+          .r-grid3 { grid-template-columns: 1fr; gap: 24px; }
+          .r-nav { display: none; }
+          .hero-layout { flex-direction: column-reverse !important; text-align: center !important; }
+          .hero-text { align-items: center !important; }
+          .hero-img { max-width: 280px !important; }
+        }
+      `}</style>
+
+      {/* HEADER */}
+      <header style={{ background: C.white, borderBottom: '1px solid #e2e8f0' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ fontSize: 24 }}>🐝</span>
+            <span style={{ fontWeight: 900, fontSize: 20, color: C.navy, letterSpacing: '-0.02em' }}>Bee Exemption</span>
+          </a>
+          <nav className="r-nav">
+            <a href="#how-it-works" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>How It Works</a>
+            <a href="#about" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>About</a>
+            <a href="https://beekings.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>BeeKings</a>
+          </nav>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main style={{ maxWidth: '900px', margin: '0 auto', padding: '2rem 1rem' }}>
-        {/* Search Box */}
-        <div style={{ marginBottom: '2rem' }}>
-          <input
-            type="text"
-            placeholder="Search for your state..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '1rem',
-              fontSize: '1.125rem',
-              border: `2px solid ${C.blue}`,
-              borderRadius: '12px',
-              outline: 'none',
-              transition: 'all 0.2s',
-            }}
-            onFocus={(e) => {
-              e.target.style.borderColor = C.navy;
-              e.target.style.boxShadow = `0 0 0 3px ${C.sky}`;
-            }}
-            onBlur={(e) => {
-              e.target.style.borderColor = C.blue;
-              e.target.style.boxShadow = 'none';
-            }}
-          />
-        </div>
+      {/* HERO */}
+      <section style={{ background: C.sky, padding: '60px 24px 0', overflow: 'hidden' }}>
+        <div className="hero-layout" style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'flex-end', gap: 40 }}>
+          <div className="hero-text fade-in" style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingBottom: 60 }}>
+            <h1 style={{ fontSize: 'clamp(32px, 5vw, 52px)', fontWeight: 900, color: C.navy, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: 16 }}>
+              Could bees lower<br />your property taxes?
+            </h1>
+            <p style={{ fontSize: 18, color: '#5A7A8A', lineHeight: 1.6, marginBottom: 32, maxWidth: 480 }}>
+              In many states, keeping a few beehives on your land qualifies you for an agricultural 
+              exemption — reducing your property taxes by thousands of dollars a year.
+            </p>
 
-        {/* State Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-            gap: '1rem',
-          }}
-        >
-          {filteredStates.map((state) => (
-            <button
-              key={state.code}
-              onClick={() => handleStateClick(state.code, state.name)}
-              style={{
-                backgroundColor: C.white,
-                border: `2px solid ${C.blue}`,
-                borderRadius: '12px',
-                padding: '1.5rem 1rem',
-                fontSize: '1.125rem',
-                fontWeight: 600,
-                color: C.navy,
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                textAlign: 'center',
-                position: 'relative',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = C.blue;
-                e.currentTarget.style.color = C.white;
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(28, 124, 229, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = C.white;
-                e.currentTarget.style.color = C.navy;
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
-            >
-              {state.name}
-              {state.code === 'TX' && (
-                <span
+            {/* State Selector */}
+            <div style={{ width: '100%', maxWidth: 400 }}>
+              <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 8 }}>
+                Select your state to get started
+              </label>
+              <div style={{ display: 'flex', gap: 12 }}>
+                <select
+                  value={selectedState}
+                  onChange={(e) => setSelectedState(e.target.value)}
                   style={{
-                    display: 'block',
-                    fontSize: '0.75rem',
-                    marginTop: '0.25rem',
-                    color: C.green,
-                    fontWeight: 700,
+                    flex: 1, padding: '14px 44px 14px 16px', fontSize: 16, fontWeight: 600,
+                    color: selectedState ? C.navy : C.gray, border: '2px solid #D5EAFF',
+                    borderRadius: 12, background: C.white, cursor: 'pointer', fontFamily: 'inherit',
+                    outline: 'none',
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = C.blue}
+                  onBlur={(e) => e.target.style.borderColor = '#D5EAFF'}
+                >
+                  <option value="">Choose your state...</option>
+                  {US_STATES.map(state => (
+                    <option key={state.code} value={state.code}>
+                      {state.name}{AVAILABLE_STATES.includes(state.code) ? ' ✓' : ''}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  onClick={() => handleStateSelect(selectedState)}
+                  disabled={!selectedState}
+                  style={{
+                    padding: '14px 24px', borderRadius: 12, border: 'none', fontWeight: 700, fontSize: 16,
+                    background: selectedState ? C.blue : '#93C5FD', color: C.white,
+                    cursor: selectedState ? 'pointer' : 'not-allowed', fontFamily: 'inherit',
+                    whiteSpace: 'nowrap',
                   }}
                 >
-                  ✓ Available Now
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
-
-        {filteredStates.length === 0 && (
-          <div
-            style={{
-              textAlign: 'center',
-              padding: '3rem 1rem',
-              color: C.gray,
-              fontSize: '1.125rem',
-            }}
-          >
-            No states found matching &quot;{searchTerm}&quot;
+                  Go →
+                </button>
+              </div>
+              <p style={{ fontSize: 13, color: '#8DA4B5', marginTop: 8 }}>
+                <span style={{ color: C.green, fontWeight: 700 }}>✓</span> Texas &amp; Florida calculators live — more states coming soon
+              </p>
+            </div>
           </div>
-        )}
 
-        {/* Footer Info */}
-        <div
-          style={{
-            marginTop: '4rem',
-            padding: '2rem',
-            backgroundColor: C.white,
-            borderRadius: '12px',
-            textAlign: 'center',
-          }}
-        >
-          <h2 style={{ color: C.navy, fontSize: '1.5rem', marginBottom: '1rem' }}>
-            How It Works
+          {/* Beekeeper illustration */}
+          <div className="hero-img" style={{ flex: '0 0 auto', maxWidth: 340, alignSelf: 'flex-end' }}>
+            <img
+              src="/hero-beekeeper.png"
+              alt="Friendly beekeeper illustration"
+              style={{ width: '100%', display: 'block', objectFit: 'contain' }}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* QUICK FACTS */}
+      <section style={{ padding: '64px 24px', background: C.white }}>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+          <div className="r-grid3">
+            {[
+              { icon: '🏡', title: 'For Landowners', desc: 'If you own 5+ acres of rural or semi-rural land, you may already qualify for an agricultural property tax exemption through beekeeping.' },
+              { icon: '🐝', title: 'Low Maintenance', desc: 'Honeybees are gentle and largely self-sufficient. Most beekeepers spend just 15-30 minutes per hive per month during active season.' },
+              { icon: '💰', title: 'Real Savings', desc: 'Agricultural appraisal typically reduces taxable land value by 90-98%, saving most qualifying landowners $2,000-$8,000+ per year.' },
+            ].map(item => (
+              <div key={item.title} style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 40, marginBottom: 16 }}>{item.icon}</div>
+                <h3 style={{ fontSize: 18, fontWeight: 700, color: C.navy, marginBottom: 8 }}>{item.title}</h3>
+                <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.7 }}>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section id="how-it-works" style={{ padding: '64px 24px', background: C.sky }}>
+        <div style={{ maxWidth: 700, margin: '0 auto' }}>
+          <h2 style={{ fontSize: 32, fontWeight: 800, color: C.navy, textAlign: 'center', marginBottom: 12 }}>
+            How it works
           </h2>
-          <p style={{ color: C.gray, lineHeight: 1.7, fontSize: '1rem', margin: 0 }}>
-            Beekeeping can qualify as agricultural use in most states, potentially reducing your
-            property taxes by thousands of dollars per year. Select your state above to see
-            available resources, requirements, and calculate your potential savings.
+          <p style={{ fontSize: 16, color: C.gray, textAlign: 'center', marginBottom: 48 }}>
+            Getting an agricultural exemption through beekeeping is simpler than most people think.
+          </p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            {[
+              { n: '1', title: 'Check your property', desc: 'Enter your address and we\'ll pull your real property data — acreage, assessed value, and county-specific requirements.' },
+              { n: '2', title: 'See your estimated savings', desc: 'Our calculator compares your current taxes to what you\'d pay with an agricultural appraisal. Most landowners are surprised by the difference.' },
+              { n: '3', title: 'Get your county guide', desc: 'Download a free guide with your county\'s specific requirements, application deadlines, and step-by-step filing instructions.' },
+              { n: '4', title: 'Set up your hives', desc: 'BeeKings can provide everything you need — hives, bees, equipment, and hands-on training. Or bring your own if you\'re already a beekeeper.' },
+            ].map(step => (
+              <div key={step.n} style={{ display: 'flex', gap: 20, alignItems: 'flex-start', background: C.white, borderRadius: 16, padding: '24px 28px', border: '1px solid #D5EAFF' }}>
+                <div style={{ width: 44, height: 44, borderRadius: '50%', background: C.blue, color: C.white, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 900, flexShrink: 0 }}>{step.n}</div>
+                <div>
+                  <h3 style={{ fontSize: 17, fontWeight: 700, color: C.navy, marginBottom: 4 }}>{step.title}</h3>
+                  <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.6 }}>{step.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* AVAILABLE STATES */}
+      <section style={{ padding: '64px 24px', background: C.white }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{ fontSize: 28, fontWeight: 800, color: C.navy, marginBottom: 12 }}>Available calculators</h2>
+          <p style={{ fontSize: 16, color: C.gray, marginBottom: 40 }}>
+            Select a state to calculate your potential savings. More states launching soon.
+          </p>
+
+          <div className="r-grid2" style={{ maxWidth: 500, margin: '0 auto' }}>
+            {[
+              { code: 'TX', name: 'Texas', counties: 254, desc: 'All 254 counties with real property data', ready: true },
+              { code: 'FL', name: 'Florida', counties: 67, desc: 'No minimum acreage — great for small properties', ready: true },
+            ].map(state => (
+              <button
+                key={state.code}
+                onClick={() => handleStateSelect(state.code)}
+                className="hover-lift"
+                style={{
+                  background: C.white, border: '2px solid #D5EAFF', borderRadius: 16,
+                  padding: '28px 24px', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+                  <span style={{ fontSize: 28 }}>{state.code === 'TX' ? '🤠' : '🌴'}</span>
+                  <div>
+                    <p style={{ fontSize: 20, fontWeight: 800, color: C.navy }}>{state.name}</p>
+                    <p style={{ fontSize: 13, color: C.green, fontWeight: 700 }}>{state.counties} counties • Live now</p>
+                  </div>
+                </div>
+                <p style={{ fontSize: 14, color: C.gray, lineHeight: 1.5 }}>{state.desc}</p>
+              </button>
+            ))}
+          </div>
+
+          <p style={{ fontSize: 14, color: C.gray, marginTop: 32 }}>
+            Don&apos;t see your state? <a href="#" onClick={(e) => { e.preventDefault(); setSelectedState(''); const el = document.querySelector('select'); el?.focus(); }} style={{ color: C.blue, fontWeight: 600, textDecoration: 'none' }}>Select it above</a> to join the waitlist — we&apos;ll notify you when we launch.
           </p>
         </div>
-      </main>
+      </section>
 
-      {/* Footer */}
-      <footer
-        style={{
-          backgroundColor: C.navy,
-          color: C.white,
-          padding: '2rem 1rem',
-          marginTop: '4rem',
-          textAlign: 'center',
-        }}
-      >
-        <p style={{ margin: 0, opacity: 0.9 }}>
-          &copy; {new Date().getFullYear()} Bee Exemption — Powered by{' '}
-          <a
-            href="https://beekings.com"
-            style={{ color: C.green, textDecoration: 'none' }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            BeeKings
-          </a>
-        </p>
+      {/* ABOUT / TRUST */}
+      <section id="about" style={{ padding: '64px 24px', background: C.sky }}>
+        <div style={{ maxWidth: 700, margin: '0 auto' }}>
+          <h2 style={{ fontSize: 28, fontWeight: 800, color: C.navy, textAlign: 'center', marginBottom: 12 }}>
+            Built by beekeepers, for landowners
+          </h2>
+          <p style={{ fontSize: 16, color: C.gray, textAlign: 'center', lineHeight: 1.7, marginBottom: 40 }}>
+            Bee Exemption is a free tool from <a href="https://beekings.com" target="_blank" rel="noopener noreferrer" style={{ color: C.blue, fontWeight: 600, textDecoration: 'none' }}>BeeKings</a>, 
+            a family-owned beekeeping company in Canton, Texas. We&apos;ve helped landowners across the state 
+            set up beekeeping operations that qualify for agricultural exemptions — saving them thousands 
+            on property taxes while supporting pollinator health.
+          </p>
+
+          <div style={{ background: C.white, borderRadius: 16, padding: '28px 32px', border: '1px solid #D5EAFF' }}>
+            <h3 style={{ fontSize: 17, fontWeight: 700, color: C.navy, marginBottom: 16 }}>Why we built this</h3>
+            <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.7, marginBottom: 12 }}>
+              Most landowners don&apos;t realize they&apos;re overpaying on property taxes. Agricultural exemptions 
+              exist in nearly every state, and beekeeping is one of the easiest ways to qualify — but the 
+              process can be confusing. County requirements vary, paperwork is scattered, and bad information 
+              is everywhere.
+            </p>
+            <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.7 }}>
+              We built Bee Exemption to give landowners a clear, honest answer: <em>does my property qualify, 
+              and how much could I save?</em> No hard sells, no inflated numbers. Just real data from your 
+              county&apos;s appraisal district.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section style={{ padding: '64px 24px', background: C.white }}>
+        <div style={{ maxWidth: 700, margin: '0 auto' }}>
+          <h2 style={{ fontSize: 28, fontWeight: 800, color: C.navy, textAlign: 'center', marginBottom: 40 }}>
+            Common questions
+          </h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {[
+              { q: 'Is this legal?', a: 'Absolutely. Agricultural property tax exemptions are established by state law. Many states, including Texas and Florida, explicitly recognize beekeeping as a qualifying agricultural use. Thousands of landowners use beekeeping to maintain their agricultural classification every year.' },
+              { q: 'How much land do I need?', a: 'It depends on your state and county. In Texas, most counties require 5-20 acres. Florida has no state-mandated minimum acreage. Our calculator checks your specific county\'s requirements automatically.' },
+              { q: 'Do I need beekeeping experience?', a: 'No. Honeybees are gentle and low-maintenance. BeeKings provides hives, bees, equipment, training, and ongoing support. Many of our customers had zero experience before starting.' },
+              { q: 'How much does it cost to get started?', a: 'A typical setup runs about $450 per hive (equipment + bees). Most properties need 6-12 hives. Annual maintenance is roughly $75 per hive. The investment usually pays for itself within the first year through tax savings alone — plus you get honey.' },
+              { q: 'How long until I start saving?', a: 'If your land already has agricultural history, you may qualify the same tax year. For new agricultural use, most states require a few years of qualifying activity. The sooner you start, the sooner you save — and your savings compound every year you maintain the exemption.' },
+              { q: 'Is the calculator really free?', a: 'Yes. No catches, no hidden fees. We built it to help landowners understand their options. If you decide you want help getting set up with hives, BeeKings is here — but there\'s zero obligation.' },
+            ].map(faq => (
+              <details key={faq.q} style={{ background: C.lightGray, borderRadius: 12, border: '1px solid #e2e8f0' }}>
+                <summary style={{ padding: '16px 24px', fontWeight: 700, color: C.navy, fontSize: 16, cursor: 'pointer', listStyle: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  {faq.q}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.blue} strokeWidth="2.5" style={{ flexShrink: 0, marginLeft: 16 }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <p style={{ padding: '0 24px 16px', color: C.gray, lineHeight: 1.7, fontSize: 15 }}>{faq.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* GENTLE CTA */}
+      <section style={{ padding: '64px 24px', background: C.sky, textAlign: 'center' }}>
+        <div style={{ maxWidth: 500, margin: '0 auto' }}>
+          <div style={{ fontSize: 48, marginBottom: 16 }}>🐝</div>
+          <h2 style={{ fontSize: 28, fontWeight: 800, color: C.navy, marginBottom: 12 }}>
+            See what you could save
+          </h2>
+          <p style={{ fontSize: 16, color: C.gray, marginBottom: 32, lineHeight: 1.6 }}>
+            It takes 60 seconds to check your property. No signup required.
+          </p>
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button
+              onClick={() => router.push('/texas')}
+              style={{ padding: '14px 28px', borderRadius: 12, background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+            >
+              Texas Calculator
+            </button>
+            <button
+              onClick={() => router.push('/florida')}
+              style={{ padding: '14px 28px', borderRadius: 12, background: C.white, color: C.navy, fontWeight: 700, fontSize: 16, border: '2px solid #D5EAFF', cursor: 'pointer', fontFamily: 'inherit' }}
+            >
+              Florida Calculator
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer style={{ background: C.navy, padding: '48px 24px' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 32, marginBottom: 32 }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                <span style={{ fontSize: 20 }}>🐝</span>
+                <span style={{ fontWeight: 800, fontSize: 18, color: C.white }}>Bee Exemption</span>
+              </div>
+              <p style={{ color: '#8DA4B5', fontSize: 14 }}>A free tool by BeeKings</p>
+              <p style={{ color: '#8DA4B5', fontSize: 14 }}>Canton, Texas</p>
+            </div>
+            <div>
+              <p style={{ fontWeight: 700, color: C.white, marginBottom: 8, fontSize: 14 }}>Calculators</p>
+              <p style={{ marginBottom: 4 }}><a href="/texas" style={{ color: '#8DA4B5', fontSize: 14, textDecoration: 'none' }}>Texas</a></p>
+              <p><a href="/florida" style={{ color: '#8DA4B5', fontSize: 14, textDecoration: 'none' }}>Florida</a></p>
+            </div>
+            <div>
+              <p style={{ fontWeight: 700, color: C.white, marginBottom: 8, fontSize: 14 }}>Resources</p>
+              <p style={{ marginBottom: 4 }}><a href="https://beekings.com" target="_blank" rel="noopener noreferrer" style={{ color: '#8DA4B5', fontSize: 14, textDecoration: 'none' }}>BeeKings.com</a></p>
+              <p><a href="mailto:info@beekings.com" style={{ color: '#8DA4B5', fontSize: 14, textDecoration: 'none' }}>info@beekings.com</a></p>
+            </div>
+          </div>
+          <div style={{ borderTop: '1px solid #1A3A4F', paddingTop: 20 }}>
+            <p style={{ fontSize: 12, color: '#5A7A8A', lineHeight: 1.6, marginBottom: 12 }}>
+              <strong style={{ color: '#8DA4B5' }}>Disclaimer:</strong> Estimates are based on publicly available county tax data and property records. Actual savings depend on your specific property, county approval, and current tax rates. This tool provides estimates only — not tax or legal advice.
+            </p>
+            <p style={{ fontSize: 12, color: '#5A7A8A', textAlign: 'center' }}>© {new Date().getFullYear()} BeeKings. All rights reserved.</p>
+          </div>
+        </div>
       </footer>
     </div>
   );
