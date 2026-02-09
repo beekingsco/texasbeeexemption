@@ -413,14 +413,13 @@ export default function FloridaCalculator() {
               <a href="https://beekings.com" style={{ fontSize: 14, fontWeight: 600, color: C.navy, textDecoration: 'none' }}>BeeKings.com</a>
               <a href="mailto:info@beekings.com" style={{ background: C.blue, color: C.white, fontSize: 14, fontWeight: 700, padding: '10px 20px', borderRadius: 8, textDecoration: 'none' }}>Contact Us</a>
             </nav>
-            {/* Florida Bees Badge */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#FFF8F0', border: '1px solid #FDE68A', borderRadius: 8, padding: '6px 12px' }}>
-              <span style={{ fontSize: 20 }}>🌴</span>
-              <div style={{ lineHeight: 1.1 }}>
-                <p style={{ fontSize: 11, fontWeight: 800, color: C.navy, letterSpacing: '0.02em' }}>FLORIDA BEES</p>
-                <p style={{ fontSize: 10, fontWeight: 600, color: '#B45309' }}>Save You Money</p>
+            {/* Florida Bees Badge — flag + text, matching Texas style */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: C.white, border: '1px solid #e2e8f0', borderRadius: 8, padding: '4px 10px' }}>
+              <img src="/florida-flag.png" alt="Florida Flag" style={{ height: 32, borderRadius: 3, border: '1px solid #e2e8f0' }} />
+              <div style={{ lineHeight: 1.15 }}>
+                <p style={{ fontSize: 10, fontWeight: 900, color: C.navy, letterSpacing: '0.04em', textTransform: 'uppercase' }}>Florida Bees</p>
+                <p style={{ fontSize: 9, fontWeight: 700, color: C.green }}>Save You Money</p>
               </div>
-              <span style={{ fontSize: 16 }}>🐝</span>
             </div>
           </div>
         </div>
