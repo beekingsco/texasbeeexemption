@@ -59,15 +59,15 @@ interface LeadData {
 }
 
 const C = {
-  sky: '#EDF6FF',
-  blue: '#1C7CE5',
-  blueDark: '#1A5CA3',
-  navy: '#053249',
-  green: '#57C975',
-  greenDark: '#249241',
+  sky: '#F0F4FA',
+  blue: '#1A3A6B',
+  blueDark: '#122B52',
+  navy: '#0D1B2A',
+  green: '#D4A843',
+  greenDark: '#B8912E',
   white: '#FFFFFF',
-  gray: '#6B7280',
-  lightGray: '#F8FAFC',
+  gray: '#5A6A7A',
+  lightGray: '#F5F7FB',
 };
 
 type Step = 'search' | 'results' | 'signup' | 'thankyou';
@@ -544,7 +544,7 @@ export default function Home() {
                           </svg>
                           <div>
                             <div style={{ fontWeight: 700, color: C.navy, fontSize: 16 }}>{street}</div>
-                            <div style={{ fontSize: 13, color: '#6B7280', marginTop: 2 }}>{rest}</div>
+                            <div style={{ fontSize: 13, color: '#5A6A7A', marginTop: 2 }}>{rest}</div>
                           </div>
                         </button>
                       );
@@ -646,7 +646,7 @@ export default function Home() {
                         <p style={{ fontWeight: 700, color: C.navy, fontSize: 15 }}>{t.name}</p>
                         <p style={{ fontSize: 13, color: C.gray }}>{t.loc}</p>
                       </div>
-                      <div style={{ background: '#ECFDF5', padding: '4px 10px', borderRadius: 8 }}>
+                      <div style={{ background: '#FFF8EE', padding: '4px 10px', borderRadius: 8 }}>
                         <p style={{ fontSize: 14, fontWeight: 700, color: C.greenDark }}>Saving {t.savings}</p>
                       </div>
                     </div>
@@ -693,7 +693,7 @@ export default function Home() {
               <p style={{ color: '#8DA4B5', fontSize: 16, marginBottom: 32 }}>
                 Join thousands of Texas landowners saving money with a beekeeping ag exemption
               </p>
-              <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ background: C.green, color: C.white, fontWeight: 700, fontSize: 18, padding: '16px 40px', borderRadius: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(87,201,117,0.4)' }}>
+              <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ background: C.green, color: C.navy, fontWeight: 700, fontSize: 18, padding: '16px 40px', borderRadius: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.4)' }}>
                 Get My Free Savings Estimate →
               </button>
               <p style={{ color: '#5A7A8A', fontSize: 13, marginTop: 12 }}>Free • Instant • No spam</p>
@@ -873,12 +873,12 @@ export default function Home() {
                         <span style={{ fontSize: 14, fontWeight: 600, color: C.gray }}>With Ag Exemption</span>
                         <span style={{ fontSize: 16, fontWeight: 900, color: C.green }}>{fmtMoney(results.totalWithAg)}/yr</span>
                       </div>
-                      <div style={{ height: 32, background: '#DCFCE7', borderRadius: 8, overflow: 'hidden' }}>
+                      <div style={{ height: 32, background: '#FFF0D1', borderRadius: 8, overflow: 'hidden' }}>
                         <div style={{ height: '100%', width: `${Math.max(5, (results.totalWithAg / results.currentTaxes) * 100)}%`, background: C.green, borderRadius: 8, transition: 'width 0.8s ease-out' }} />
                       </div>
                     </div>
                     {/* Savings callout */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px', background: '#F0FDF4', borderRadius: 10, border: '1px solid #BBF7D0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px', background: '#FFF8EE', borderRadius: 10, border: '1px solid #F0DBA8' }}>
                       <span style={{ fontSize: 20 }}>💰</span>
                       <span style={{ fontSize: 15, fontWeight: 700, color: C.greenDark }}>You save {fmtMoney(results.annualSavings)}/yr ({results.savingsPercent.toFixed(0)}% reduction)</span>
                     </div>
@@ -937,7 +937,7 @@ export default function Home() {
                   </div>
 
                   {results.netAnnualSavings > 0 && (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 16px', background: '#F0FDF4', borderRadius: 10, border: '1px solid #BBF7D0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 16px', background: '#FFF8EE', borderRadius: 10, border: '1px solid #F0DBA8' }}>
                       <span style={{ fontSize: 20 }}>📈</span>
                       <div>
                         <p style={{ fontSize: 15, fontWeight: 700, color: C.greenDark }}>
@@ -1002,7 +1002,7 @@ export default function Home() {
 
                 {/* CTA */}
                 <button onClick={() => { setStep('signup'); track('signup_started', { county: selectedCounty.name, savings: results?.annualSavings }); trackContact('engage', { event: 'started_signup' }); if (resultsTimeRef.current) { trackContact('engage', { event: 'time_on_results', timeMs: Date.now() - resultsTimeRef.current }); } window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  style={{ width: '100%', background: C.green, color: C.white, fontWeight: 700, fontSize: 18, padding: '18px 32px', borderRadius: 16, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(87,201,117,0.4)' }}>
+                  style={{ width: '100%', background: C.green, color: C.navy, fontWeight: 700, fontSize: 18, padding: '18px 32px', borderRadius: 16, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.4)' }}>
                   Get Your Free {selectedCounty.name} County Guide →
                 </button>
                 <p style={{ textAlign: 'center', fontSize: 13, color: C.gray, marginTop: 12 }}>
@@ -1096,7 +1096,7 @@ export default function Home() {
             <p style={{ fontSize: 17, color: C.gray, lineHeight: 1.6, marginBottom: 32, maxWidth: 420, margin: '0 auto 32px' }}>
               Your <strong style={{ color: C.navy }}>{selectedCounty.name} County Ag Exemption Guide</strong> is ready! We&apos;ll also send a copy to <strong style={{ color: C.navy }}>{lead.email}</strong>.
             </p>
-            <a href={`/guide?county=${encodeURIComponent(selectedCounty.name)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: C.green, color: C.white, fontWeight: 700, fontSize: 16, padding: '14px 28px', borderRadius: 12, textDecoration: 'none', marginBottom: 32, boxShadow: '0 4px 12px rgba(87,201,117,0.3)' }}>
+            <a href={`/guide?county=${encodeURIComponent(selectedCounty.name)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: C.green, color: C.navy, fontWeight: 700, fontSize: 16, padding: '14px 28px', borderRadius: 12, textDecoration: 'none', marginBottom: 32, boxShadow: '0 4px 12px rgba(212,168,67,0.3)' }}>
               📋 View Your Guide Now
             </a>
 
@@ -1183,7 +1183,7 @@ export default function Home() {
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <div className="r-footer-grid" style={{ marginBottom: 40 }}>
             <div>
-              <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 36, marginBottom: 12, filter: 'brightness(0) invert(1)' }} />
+              <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 36, marginBottom: 12 }} />
               <p style={{ color: '#8DA4B5', fontSize: 14 }}>Canton, Texas</p>
               <p style={{ marginTop: 8 }}><a href="mailto:info@beekings.com" style={{ color: '#8DA4B5', fontSize: 14, textDecoration: 'none' }}>info@beekings.com</a></p>
             </div>
