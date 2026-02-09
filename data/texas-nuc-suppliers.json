@@ -1,0 +1,386 @@
+[
+  {
+    "name": "The Bee Supply",
+    "county": "Collin County",
+    "region": "North Central",
+    "city": "Blue Ridge",
+    "contact": {
+      "phone": "(800) 356-4229",
+      "email": "",
+      "website": "https://thebeesupply.com",
+      "facebook": ""
+    },
+    "nucTypes": ["Carniolan/Italian Blend (Texas 5000)"],
+    "priceRange": "$249-274",
+    "season": "Spring 2026 (pre-order now)",
+    "notes": "Full retail store. Also pickup in Round Rock TX. Rated 4.8/5 (190 reviews). Offers beekeeping classes."
+  },
+  {
+    "name": "JC's Honey Bees",
+    "county": "Parker County",
+    "region": "North Central",
+    "city": "Weatherford",
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://jcshoneybees.com",
+      "facebook": ""
+    },
+    "nucTypes": ["Italian"],
+    "priceRange": "$250",
+    "season": "May 2026",
+    "notes": "$150 deposit required. Pickup first weekend of May. Deposits nonrefundable."
+  },
+  {
+    "name": "Sabine Creek Honey Farm",
+    "county": "Rockwall County",
+    "region": "North Central",
+    "city": "Royse City",
+    "contact": {
+      "phone": "(214) 532-9241",
+      "email": "",
+      "website": "https://www.sabinecreekhoney.com",
+      "facebook": ""
+    },
+    "nucTypes": [],
+    "priceRange": "Contact for pricing",
+    "season": "Spring",
+    "notes": "Hobbyist education focus. PO Box 6, Josephine TX 75164. Call ahead. Rated 4.8/5."
+  },
+  {
+    "name": "Ames Farm",
+    "county": "Rusk County",
+    "region": "East",
+    "city": "Mt. Enterprise",
+    "contact": {
+      "phone": "",
+      "email": "webstore@amesfarm.com",
+      "website": "https://www.amesfarm.com",
+      "facebook": ""
+    },
+    "nucTypes": ["VSH (Varroa Sensitive Hygiene)"],
+    "priceRange": "$195-220",
+    "season": "April 25, 2026",
+    "notes": "Best value in East TX. F1 VSH hybrids from VP Queens breeder stock. 4 deep frames + queen + feeder in Pro Nuc box. 10-day replacement guarantee. Cancellation refund before March 1."
+  },
+  {
+    "name": "BeeWeaver Honey Farm",
+    "county": "Grimes County",
+    "region": "Southeast",
+    "city": "Navasota",
+    "contact": {
+      "phone": "(737) 230-3435",
+      "email": "",
+      "website": "https://beeweaver.com",
+      "facebook": ""
+    },
+    "nucTypes": ["BeeWeaver Genetics (varroa-resistant)"],
+    "priceRange": "Contact for pricing",
+    "season": "Spring 2026 (queens available for pre-order)",
+    "notes": "Texas' most historic bee operation — since 1888. Treatment-free breeding program. Farm tours available. 668 reviews, 4.8/5 rating."
+  },
+  {
+    "name": "SweetNes Honey Apiaries & Beetique",
+    "county": "Fort Bend County",
+    "region": "Gulf Coast",
+    "city": "Needville",
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://sweetneshoney.com",
+      "facebook": "https://www.facebook.com/SweetNesHoneyBeetique/"
+    },
+    "nucTypes": ["Standard"],
+    "priceRange": "$150",
+    "season": "Late April 2026",
+    "notes": "Lowest price in Texas. 50% deposit required. Family-owned farm and bee rescue. Also offers bee removals, pollination, ag exemptions. Retail shop in Needville."
+  },
+  {
+    "name": "Mann Lake — Conroe TX Pickup",
+    "county": "Montgomery County",
+    "region": "Southeast",
+    "city": "Conroe",
+    "contact": {
+      "phone": "(800) 880-7694",
+      "email": "",
+      "website": "https://www.mannlakeltd.com/honey-bees/live-nucs/pickup-in-texas/",
+      "facebook": ""
+    },
+    "nucTypes": ["VSH", "VSH Cordovan", "Purebred Russian"],
+    "priceRange": "$195.95-225.95",
+    "season": "April 25, 2026",
+    "notes": "National supplier with local TX pickup. First-order ~10% discount. VSH $195.95, Cordovan $199.95, Russian $225.95."
+  },
+  {
+    "name": "Mann Lake — Marquez TX Pickup",
+    "county": "Leon County",
+    "region": "Central",
+    "city": "Marquez",
+    "contact": {
+      "phone": "(800) 880-7694",
+      "email": "",
+      "website": "https://www.mannlakeltd.com/honey-bees/live-nucs/pickup-in-texas/",
+      "facebook": ""
+    },
+    "nucTypes": ["VSH Cordovan"],
+    "priceRange": "$199.95",
+    "season": "April 25, 2026",
+    "notes": "Second TX pickup location for Mann Lake. VSH Cordovan nucs."
+  },
+  {
+    "name": "Lockhart Honey Farms",
+    "county": "Burleson County",
+    "region": "Central",
+    "city": "Caldwell",
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://lockharthoneyfarms.com",
+      "facebook": ""
+    },
+    "nucTypes": ["Minnesota Hygienic"],
+    "priceRange": "$125-215",
+    "season": "April 25, 2026",
+    "notes": "Best bulk pricing in TX. 5-pack: $200/ea, 10-pack: $175/ea, 25-pack: $175/ea, 50-pack: $150/ea, 100-pack: $125/ea. Commercial operation (2,800+ hives, 5 states). All sales final."
+  },
+  {
+    "name": "Two Hives Honey",
+    "county": "Travis County",
+    "region": "Central",
+    "city": "Austin",
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://www.twohiveshoney.com",
+      "facebook": ""
+    },
+    "nucTypes": ["VSH", "Selective Breeding"],
+    "priceRange": "$350-385",
+    "season": "April-June 2026",
+    "notes": "Premium option. 5-frame $350, 6-frame $385 (in reusable wooden box). Wall-to-wall bees. Multiple pickup dates. Also runs hive tours. No refunds on nucs."
+  },
+  {
+    "name": "McKane Apiaries",
+    "county": "Travis County",
+    "region": "Central",
+    "city": "Austin",
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://www.mckaneapiaries.com",
+      "facebook": ""
+    },
+    "nucTypes": ["VSH/Poline"],
+    "priceRange": "$250",
+    "season": "Spring 2026",
+    "notes": "Full-service Austin apiary. Also offers hive management ($115/visit), ag valuation hive leases ($275), and queens ($45)."
+  },
+  {
+    "name": "Bee Mindful",
+    "county": "Hays County",
+    "region": "Central",
+    "city": "Driftwood",
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://www.bee-mindful.com",
+      "facebook": ""
+    },
+    "nucTypes": ["Certified Russian (Treatment-Free)"],
+    "priceRange": "$360",
+    "season": "May-June 2026",
+    "notes": "Unique: only certified Russian treatment-free top-bar nucs in Central TX. 4-5 drawn comb bars. Compatible only with horizontal top-bar hives. Also offers apprenticeships and workshops."
+  },
+  {
+    "name": "Walker Honey Farm",
+    "county": "Bell County",
+    "region": "Central",
+    "city": "Rogers",
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://www.walkerhoneyfarm.com",
+      "facebook": ""
+    },
+    "nucTypes": ["Italian"],
+    "priceRange": "$250",
+    "season": "Spring 2026",
+    "notes": "Pickup at 8060 E US Hwy 190, Rogers TX. Well-reviewed — repeat customers. Staff loads nucs into your vehicle. 3 frames brood, frames of food, marked Italian queen."
+  },
+  {
+    "name": "Ross Creek Organic Farm",
+    "county": "Fayette County",
+    "region": "Central",
+    "city": "Ellinger",
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://rosscreek.farm",
+      "facebook": ""
+    },
+    "nucTypes": ["Italian"],
+    "priceRange": "$275",
+    "season": "May 15, 2026 (tentative)",
+    "notes": "$100 deposit, $175 balance at pickup. Cash/Zelle accepted. Organic approach with essential oil health treatments. Bees wintered in East TX."
+  },
+  {
+    "name": "Prime Bees",
+    "county": "Brazos County",
+    "region": "Central",
+    "city": "Bryan",
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://primebees.com",
+      "facebook": ""
+    },
+    "nucTypes": ["Texas-Raised Selective Breeding"],
+    "priceRange": "Check website",
+    "season": "Mid April - Early May 2026",
+    "notes": "Pickup in San Marcos, College Station, or professional installation available. 60-day guarantee. Includes online beginner course access. 2025 mated/marked queen."
+  },
+  {
+    "name": "The Bee Place",
+    "county": "Varies",
+    "region": "Hill Country",
+    "city": "South Central Texas",
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://www.thebeeplace.com",
+      "facebook": ""
+    },
+    "nucTypes": ["Italian", "Texan (locally bred VSH line)"],
+    "priceRange": "$245-295",
+    "season": "March-June 2026",
+    "notes": "Early bird $245, standard $295. Includes mite strip and transport tote. Texan bees available from April 11+. Also sells complete hives and runs beekeeping classes."
+  },
+  {
+    "name": "Charlie Bee Company",
+    "county": "Guadalupe County",
+    "region": "Hill Country",
+    "city": "Seguin",
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://charliebee.com",
+      "facebook": ""
+    },
+    "nucTypes": ["VSH"],
+    "priceRange": "$325",
+    "season": "Late April 2026",
+    "notes": "$150 deposit, balance at pickup. Marked, mated VSH queen from East TX breeder. 1-month spring warranty. Currently sold out — order early."
+  },
+  {
+    "name": "Northeast Texas Beekeepers Association (NETBA)",
+    "county": "Van Zandt County",
+    "region": "East",
+    "city": "Canton",
+    "contact": {
+      "phone": "(575) 693-9711",
+      "email": "contactnetba@gmail.com",
+      "website": "https://NETBACanton.org",
+      "facebook": "https://www.facebook.com/netbabeeks/"
+    },
+    "nucTypes": [],
+    "priceRange": "Varies by member",
+    "season": "Spring",
+    "notes": "Key bee club for Van Zandt County area. Members frequently sell nucs to each other. 2nd Monday, 6:30pm at First Baptist Church, Canton. Best resource for local East TX nuc connections."
+  },
+  {
+    "name": "Kaufman Area Beekeepers Association",
+    "county": "Kaufman County",
+    "region": "East",
+    "city": "Kaufman",
+    "contact": {
+      "phone": "(214) 686-8585",
+      "email": "kaufmanbeekeepers@gmail.com",
+      "website": "",
+      "facebook": ""
+    },
+    "nucTypes": [],
+    "priceRange": "Varies by member",
+    "season": "Spring",
+    "notes": "Active club in high-traffic county for our calculator. 2nd Tuesday, 6:30pm at Kaufman UMC. Good source for local nuc recommendations."
+  },
+  {
+    "name": "Rusk County Beekeepers Association",
+    "county": "Rusk County",
+    "region": "East",
+    "city": "Henderson",
+    "contact": {
+      "phone": "(410) 917-6113",
+      "email": "ruskcobees@gmail.com",
+      "website": "",
+      "facebook": "https://facebook.com/ruskcobees"
+    },
+    "nucTypes": [],
+    "priceRange": "Varies by member",
+    "season": "Spring",
+    "notes": "Henderson County club. 3rd Tuesday, 6:30pm. Same county as Ames Farm."
+  },
+  {
+    "name": "Houston Beekeepers Association",
+    "county": "Harris County",
+    "region": "Gulf Coast",
+    "city": "Houston",
+    "contact": {
+      "phone": "(713) 459-4583",
+      "email": "info@houstonbeekeepers.org",
+      "website": "https://www.houstonbeekeepers.org",
+      "facebook": "https://www.facebook.com/groups/houstonbeekeepers/"
+    },
+    "nucTypes": [],
+    "priceRange": "Varies by member",
+    "season": "Spring",
+    "notes": "Largest Houston-area club. 3rd Tuesday, 7-8:30pm. Great resource for finding local nuc sellers."
+  },
+  {
+    "name": "Alamo Area Beekeepers Association",
+    "county": "Bexar County",
+    "region": "South",
+    "city": "San Antonio",
+    "contact": {
+      "phone": "",
+      "email": "president@alamobees.org",
+      "website": "https://www.alamobees.org",
+      "facebook": ""
+    },
+    "nucTypes": [],
+    "priceRange": "Varies by member",
+    "season": "Spring",
+    "notes": "Primary San Antonio area bee club. 3rd Tuesday of odd months, 6:30-8:30pm at SA Botanical Gardens."
+  },
+  {
+    "name": "Caprock Beekeepers Association",
+    "county": "Lubbock County",
+    "region": "Panhandle",
+    "city": "Lubbock",
+    "contact": {
+      "phone": "(806) 392-2355",
+      "email": "caprockbeekeepersassociation@gmail.com",
+      "website": "https://caprockbeekeepersassociation.com",
+      "facebook": "https://www.facebook.com/groups/502217926623080"
+    },
+    "nucTypes": [],
+    "priceRange": "Varies — most order from Central TX",
+    "season": "Spring",
+    "notes": "Only TBA-affiliated club in the Panhandle. Limited local nuc production. 3rd Thursday, 6:30-8pm."
+  },
+  {
+    "name": "Permian Basin Beekeeping Association",
+    "county": "Gaines County",
+    "region": "West",
+    "city": "Seminole",
+    "contact": {
+      "phone": "(701) 590-2608",
+      "email": "permianbasinbeekeeping@gmail.com",
+      "website": "https://permianbasinbeekeeping.org",
+      "facebook": ""
+    },
+    "nucTypes": [],
+    "priceRange": "Varies — most source from Central/East TX",
+    "season": "Spring",
+    "notes": "3rd Monday, 6:30pm. Limited local nuc availability in West Texas."
+  }
+]
