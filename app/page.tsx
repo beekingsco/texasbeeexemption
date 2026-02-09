@@ -460,7 +460,7 @@ export default function Home() {
             </div>
             <div style={{ position: 'relative', zIndex: 10, maxWidth: 800, margin: '0 auto', padding: '24px 24px 280px', textAlign: 'center' }}>
               <h1 className="r-hero-h1" style={{ fontWeight: 900, color: C.navy, lineHeight: 1.05, marginBottom: 16, letterSpacing: '-0.03em', maxWidth: '100%' }}>
-                Save Money on<br />Property Taxes
+                Save Money on<br />Property Taxes<br /><span style={{ color: C.blue }}>with Bees</span> 🐝
               </h1>
               <p style={{ fontSize: 17, color: '#5A7A8A', marginBottom: 32, fontWeight: 500 }}>
                 Free Texas beekeeping ag exemption calculator — enter your address to see your savings
