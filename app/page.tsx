@@ -119,8 +119,8 @@ export default function NationalLanding() {
       <header style={{ background: C.white, borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ fontSize: 24 }}>🐝</span>
-            <span style={{ fontWeight: 900, fontSize: 20, color: C.navy, letterSpacing: '-0.02em' }}>Bee Exemption</span>
+            <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 36 }} />
+            <span style={{ fontWeight: 900, fontSize: 20, color: C.navy, letterSpacing: '-0.02em' }}>BEE EXEMPTION</span>
           </a>
           <nav className="r-nav">
             <a href="#how-it-works" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>How It Works</a>
@@ -410,8 +410,8 @@ export default function NationalLanding() {
           <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 32, marginBottom: 32 }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                <span style={{ fontSize: 20 }}>🐝</span>
-                <span style={{ fontWeight: 800, fontSize: 18, color: C.white }}>Bee Exemption</span>
+                <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 28, filter: 'brightness(0) invert(1)' }} />
+                <span style={{ fontWeight: 800, fontSize: 18, color: C.white }}>BEE EXEMPTION</span>
               </div>
               <p style={{ color: '#8DA4B5', fontSize: 14 }}>A free tool by BeeKings</p>
               <p style={{ color: '#8DA4B5', fontSize: 14 }}>Canton, Texas</p>
