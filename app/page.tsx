@@ -208,28 +208,32 @@ export default function NationalLanding() {
             Select a state to calculate your potential savings. More states launching soon.
           </p>
 
-          <div className="r-grid2" style={{ maxWidth: 500, margin: '0 auto' }}>
+          <div style={{ maxWidth: 480, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
             {[
-              { code: 'TX', name: 'Texas', counties: 254, desc: 'All 254 counties with real property data', ready: true },
-              { code: 'FL', name: 'Florida', counties: 67, desc: 'No minimum acreage — great for small properties', ready: true },
+              { code: 'TX', name: 'Texas', emoji: '🤠', counties: 254, desc: 'Real property data' },
+              { code: 'FL', name: 'Florida', emoji: '🌴', counties: 67, desc: 'No min acreage' },
             ].map(state => (
               <button
                 key={state.code}
                 onClick={() => handleStateSelect(state.code)}
                 className="hover-lift"
                 style={{
-                  background: C.white, border: '2px solid #D5EAFF', borderRadius: 16,
-                  padding: '28px 24px', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit',
+                  background: C.white, border: '2px solid #D5EAFF', borderRadius: 12,
+                  padding: '14px 20px', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit',
+                  display: 'flex', alignItems: 'center', gap: 14,
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-                  <span style={{ fontSize: 28 }}>{state.code === 'TX' ? '🤠' : '🌴'}</span>
-                  <div>
-                    <p style={{ fontSize: 20, fontWeight: 800, color: C.navy }}>{state.name}</p>
-                    <p style={{ fontSize: 13, color: C.green, fontWeight: 700 }}>{state.counties} counties • Live now</p>
+                <span style={{ fontSize: 24 }}>{state.emoji}</span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <p style={{ fontSize: 17, fontWeight: 800, color: C.navy }}>{state.name}</p>
+                    <span style={{ fontSize: 12, color: C.green, fontWeight: 700 }}>{state.counties} counties • Live</span>
                   </div>
+                  <p style={{ fontSize: 13, color: C.gray }}>{state.desc}</p>
                 </div>
-                <p style={{ fontSize: 14, color: C.gray, lineHeight: 1.5 }}>{state.desc}</p>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={C.blue} strokeWidth="2.5" style={{ flexShrink: 0 }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
               </button>
             ))}
           </div>
