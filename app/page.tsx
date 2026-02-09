@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { US_STATES } from '@/lib/states';
 
@@ -20,55 +20,41 @@ const C = {
 
 const AVAILABLE_STATES = ['TX', 'FL'];
 
-// Beekeeper counter: ~150,000 US beekeepers, growing ~12,000/yr ≈ 1 new every ~44 min
-// We use a deterministic base so every visitor sees the same number at the same time
-const BEEKEEPER_BASE = 152847; // base count as of Feb 1, 2026
-const BEEKEEPER_BASE_TIME = new Date('2026-02-01T00:00:00Z').getTime();
-const BEEKEEPERS_PER_MS = 12000 / (365.25 * 24 * 60 * 60 * 1000); // ~12K/year
+const BEEKEEPER_COUNT = 153132;
 
-function useBeekeeperCount() {
-  const [count, setCount] = useState(BEEKEEPER_BASE);
-  const prevCountRef = useRef(BEEKEEPER_BASE);
-  const [displayCount, setDisplayCount] = useState(BEEKEEPER_BASE);
+function useNewBeekeeperToast() {
+  const [visible, setVisible] = useState(false);
+  const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
-    const calcCount = () => {
-      const elapsed = Date.now() - BEEKEEPER_BASE_TIME;
-      return Math.floor(BEEKEEPER_BASE + elapsed * BEEKEEPERS_PER_MS);
+    let timeout: ReturnType<typeof setTimeout>;
+    const scheduleNext = () => {
+      const delay = (20 + Math.random() * 25) * 1000; // 20-45 seconds
+      timeout = setTimeout(() => {
+        setExiting(false);
+        setVisible(true);
+        // Auto-hide after 3 seconds
+        setTimeout(() => {
+          setExiting(true);
+          setTimeout(() => {
+            setVisible(false);
+            setExiting(false);
+            scheduleNext();
+          }, 400);
+        }, 3000);
+      }, delay);
     };
-    setCount(calcCount());
-    setDisplayCount(calcCount());
-    prevCountRef.current = calcCount();
-
-    // Update the target every 3 minutes
-    const interval = setInterval(() => {
-      const newCount = calcCount();
-      prevCountRef.current = displayCount;
-      setCount(newCount);
-    }, 180000);
-
-    return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    scheduleNext();
+    return () => clearTimeout(timeout);
   }, []);
 
-  // Animate toward target
-  useEffect(() => {
-    if (displayCount >= count) return;
-    const diff = count - displayCount;
-    const step = Math.max(1, Math.floor(diff / 20));
-    const timer = setTimeout(() => {
-      setDisplayCount(prev => Math.min(prev + step, count));
-    }, 80);
-    return () => clearTimeout(timer);
-  }, [count, displayCount]);
-
-  return displayCount;
+  return { visible, exiting };
 }
 
 export default function NationalLanding() {
   const router = useRouter();
   const [selectedState, setSelectedState] = useState('');
-  const beekeeperCount = useBeekeeperCount();
+  const toast = useNewBeekeeperToast();
 
   const handleStateSelect = async (stateCode: string) => {
     if (!stateCode) return;
@@ -100,6 +86,10 @@ export default function NationalLanding() {
         * { box-sizing: border-box; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         .fade-in { animation: fadeIn 0.5s ease-out; }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(80px) scale(0.9); } to { opacity: 1; transform: translateX(0) scale(1); } }
+        @keyframes toastOut { from { opacity: 1; transform: translateX(0) scale(1); } to { opacity: 0; transform: translateX(80px) scale(0.9); } }
+        .toast-enter { animation: toastIn 0.4s ease-out; }
+        .toast-exit { animation: toastOut 0.4s ease-in; }
         .hover-lift { transition: transform 0.2s, box-shadow 0.2s; }
         .hover-lift:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
         select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
@@ -132,16 +122,36 @@ export default function NationalLanding() {
       </header>
 
       {/* BEEKEEPER COUNTER */}
-      <div style={{ background: C.navy, padding: '10px 24px', textAlign: 'center' }}>
-        <p style={{ fontSize: 14, color: C.white, fontWeight: 600, margin: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-          <span style={{ fontSize: 16 }}>🐝</span>
-          <span style={{ fontVariantNumeric: 'tabular-nums' }}>
-            <span style={{ color: C.green, fontWeight: 900, fontSize: 16 }}>{beekeeperCount.toLocaleString()}</span>
-            {' '}beekeepers across the U.S. and growing
-          </span>
-          <span style={{ fontSize: 10, color: '#8DA4B5' }}>•  USDA est.</span>
+      <div style={{ background: C.navy, padding: '12px 24px', textAlign: 'center' }}>
+        <p style={{ fontSize: 15, color: C.white, fontWeight: 700, margin: 0, fontVariantNumeric: 'tabular-nums' }}>
+          <span style={{ fontSize: 16, marginRight: 6 }}>🐝</span>
+          <span style={{ color: C.green, fontWeight: 900, fontSize: 17 }}>{BEEKEEPER_COUNT.toLocaleString()}</span>
+          {' '}beekeepers in the US
+        </p>
+        <p style={{ fontSize: 13, color: '#8DA4B5', margin: '2px 0 0', fontWeight: 600 }}>
+          10,000+ more join every year
         </p>
       </div>
+
+      {/* NEW BEEKEEPER TOAST */}
+      {toast.visible && (
+        <div
+          className={toast.exiting ? 'toast-exit' : 'toast-enter'}
+          style={{
+            position: 'fixed', bottom: 28, right: 28, zIndex: 9999,
+            background: C.white, borderRadius: 14, padding: '14px 20px',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08)',
+            display: 'flex', alignItems: 'center', gap: 10,
+            border: `2px solid ${C.green}`,
+          }}
+        >
+          <span style={{ fontSize: 22 }}>🐝</span>
+          <div>
+            <p style={{ fontWeight: 800, color: C.navy, fontSize: 15, margin: 0 }}>New Beekeeper!</p>
+            <p style={{ fontSize: 12, color: C.gray, margin: '2px 0 0' }}>Someone just started their journey</p>
+          </div>
+        </div>
+      )}
 
       {/* HERO */}
       <section style={{ background: C.sky, padding: '60px 24px 0', overflow: 'hidden' }}>
