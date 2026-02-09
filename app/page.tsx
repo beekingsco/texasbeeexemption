@@ -5,17 +5,17 @@ import { useRouter } from 'next/navigation';
 import { US_STATES } from '@/lib/states';
 
 const C = {
-  sky: '#EDF6FF',
-  blue: '#1C7CE5',
-  blueDark: '#1A5CA3',
-  navy: '#053249',
-  green: '#57C975',
-  greenDark: '#249241',
+  sky: '#F0F4FA',
+  blue: '#1A3A6B',
+  blueDark: '#122B52',
+  navy: '#0D1B2A',
+  green: '#D4A843',
+  greenDark: '#B8912E',
   white: '#FFFFFF',
-  gray: '#6B7280',
-  lightGray: '#F8FAFC',
-  warm: '#FFF8F0',
-  amber: '#F59E0B',
+  gray: '#5A6A7A',
+  lightGray: '#F5F7FB',
+  warm: '#FFF8EE',
+  amber: '#D4A843',
 };
 
 const AVAILABLE_STATES = ['TX', 'FL'];
@@ -101,7 +101,7 @@ export default function NationalLanding() {
         .count-bump { animation: countBump 0.5s ease-out; }
         .hover-lift { transition: transform 0.2s, box-shadow 0.2s; }
         .hover-lift:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
-        select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+        select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A6A7A' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
         .r-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         .r-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
         .r-nav { display: flex; align-items: center; gap: 24px; }
@@ -109,12 +109,12 @@ export default function NationalLanding() {
           .r-grid2 { grid-template-columns: 1fr; }
           .r-grid3 { grid-template-columns: 1fr; gap: 24px; }
           .r-nav { display: none; }
-          .hero-section { padding-top: 20px !important; }
-          .hero-layout { flex-direction: row !important; text-align: left !important; gap: 12px !important; align-items: flex-end !important; }
-          .hero-text { align-items: flex-start !important; padding-bottom: 24px !important; }
-          .hero-text h1 { font-size: 28px !important; margin-bottom: 8px !important; }
-          .hero-text p { font-size: 15px !important; margin-bottom: 16px !important; }
-          .hero-img { max-width: 140px !important; flex: 0 0 140px !important; }
+          .hero-section { padding-top: 16px !important; padding-bottom: 0 !important; }
+          .hero-layout { flex-direction: column-reverse !important; text-align: center !important; gap: 0 !important; align-items: center !important; }
+          .hero-text { align-items: center !important; padding-bottom: 20px !important; }
+          .hero-text h1 { font-size: 26px !important; margin-bottom: 8px !important; }
+          .hero-text p { font-size: 14px !important; margin-bottom: 14px !important; display: none !important; }
+          .hero-img { max-width: 160px !important; margin-bottom: -8px !important; }
           .counter-bar { padding: 8px 16px !important; }
           .counter-bar p { font-size: 13px !important; }
           .header-bar { height: 50px !important; }
@@ -416,7 +416,7 @@ export default function NationalLanding() {
           <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 32, marginBottom: 32 }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 28, filter: 'brightness(0) invert(1)' }} />
+                <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 28 }} />
                 <span style={{ fontWeight: 800, fontSize: 18, color: C.white }}>BEE EXEMPTION</span>
               </div>
               <p style={{ color: '#8DA4B5', fontSize: 14 }}>A free tool by BeeKings</p>
