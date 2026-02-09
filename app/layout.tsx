@@ -9,9 +9,21 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: 'Texas Bee Exemption Calculator — Save Thousands on Property Taxes | TexasBeeExemption.com',
-  description: 'Free Texas agricultural exemption calculator for beekeeping. See how much you can save on property taxes with a bee ag exemption. Real data from all 254 Texas counties. Enter your address for an instant savings estimate.',
+  title: 'Bee Exemption — Save on Property Taxes with Beekeeping',
+  description: 'Discover how beekeeping can reduce your property taxes across the United States. Agricultural exemptions through beekeeping can save you thousands per year. Select your state to learn more about bee ag exemption requirements and savings.',
   keywords: [
+    'bee exemption',
+    'beekeeping tax exemption',
+    'agricultural exemption beekeeping',
+    'property tax savings beekeeping',
+    'ag exemption calculator',
+    'beekeeping ag valuation',
+    'property tax reduction',
+    'bee hive tax exemption',
+    'agricultural appraisal beekeeping',
+    'save money on property taxes',
+    'beekeeping tax benefits',
+    'bee farm tax exemption',
     'Texas bee exemption',
     'Texas ag exemption beekeeping',
     'Texas agricultural exemption calculator',
@@ -23,10 +35,8 @@ export const metadata: Metadata = {
     'Texas beekeeping property tax',
     'save money on property taxes Texas',
     'Texas land tax reduction',
-    'bee hive tax exemption',
     'Texas agricultural appraisal',
     'Texas homestead ag exemption',
-    'property tax reduction beekeeping',
     'how many hives for ag exemption Texas',
     'Texas ag exemption requirements',
     'Van Zandt County ag exemption',
@@ -36,16 +46,12 @@ export const metadata: Metadata = {
     'Tarrant County ag exemption',
     'Texas rural property tax savings',
     'Texas acreage tax break',
-    'beekeeping tax benefits Texas',
-    'Texas property tax relief',
-    'reduce property taxes with bees Texas',
-    'Texas bee farm tax exemption',
-    'ag exemption 5 acres Texas',
-    'ag exemption 10 acres Texas',
+    'reduce property taxes with bees',
+    'ag exemption requirements by state',
   ].join(', '),
   openGraph: {
-    title: 'Texas Bee Exemption — Free Property Tax Savings Calculator',
-    description: 'Discover how much you could save on Texas property taxes with a beekeeping agricultural exemption. Free instant estimate using real county appraisal data for all 254 Texas counties.',
+    title: 'Bee Exemption — Save on Property Taxes with Beekeeping',
+    description: 'Learn how beekeeping can qualify for agricultural exemptions and reduce your property taxes. Resources and calculators available for property owners across America.',
     type: 'website',
     siteName: 'Bee Exemption',
     url: 'https://beeexemption.com',
@@ -55,19 +61,19 @@ export const metadata: Metadata = {
         url: 'https://beeexemption.com/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Texas Bees Save You Money — Free Bee Exemption Calculator',
+        alt: 'Bee Exemption — Save on Property Taxes with Beekeeping',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Save Thousands on Texas Property Taxes with Bees 🐝',
-    description: 'Free calculator shows your exact ag exemption savings. Real property data from all 254 Texas counties. Enter your address — instant results.',
+    title: 'Save on Property Taxes with Bees 🐝',
+    description: 'Beekeeping can qualify for agricultural exemptions and save you thousands on property taxes. Select your state to learn more.',
     site: '@VisitFirstMonday',
     images: ['https://beeexemption.com/og-image.jpg'],
   },
   alternates: {
-    canonical: 'https://texasbeeexemption.com',
+    canonical: 'https://beeexemption.com',
   },
   robots: {
     index: true,
@@ -80,10 +86,6 @@ export const metadata: Metadata = {
       'max-video-preview': -1,
     },
   },
-  other: {
-    'geo.region': 'US-TX',
-    'geo.placename': 'Texas',
-  },
 };
 
 export default function RootLayout({
@@ -95,16 +97,16 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <link rel="canonical" href="https://texasbeeexemption.com" />
+        <link rel="canonical" href="https://beeexemption.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebApplication',
-              name: 'Texas Bee Exemption Calculator',
-              url: 'https://texasbeeexemption.com',
-              description: 'Free calculator to estimate property tax savings from a beekeeping agricultural exemption in Texas. Covers all 254 counties with real appraisal district data.',
+              name: 'Bee Exemption',
+              url: 'https://beeexemption.com',
+              description: 'Resources and calculators to help property owners understand and apply for agricultural exemptions through beekeeping. Reduce your property taxes legally and sustainably.',
               applicationCategory: 'FinanceApplication',
               operatingSystem: 'Any',
               offers: {
@@ -135,34 +137,34 @@ export default function RootLayout({
               mainEntity: [
                 {
                   '@type': 'Question',
-                  name: 'How many acres do I need for a bee ag exemption in Texas?',
+                  name: 'Can beekeeping qualify for agricultural property tax exemptions?',
                   acceptedAnswer: {
                     '@type': 'Answer',
-                    text: 'Most Texas counties require between 5 and 20 acres for a beekeeping agricultural exemption. Some counties accept as few as 5 acres. Requirements vary by county appraisal district.',
+                    text: 'Yes. Many states recognize beekeeping as a qualifying agricultural use for property tax exemptions or reduced agricultural appraisals. Requirements vary by state and county, but beekeeping is widely accepted as legitimate agricultural production.',
                   },
                 },
                 {
                   '@type': 'Question',
-                  name: 'How many beehives do I need for an ag exemption in Texas?',
+                  name: 'How much can I save on property taxes with beekeeping?',
                   acceptedAnswer: {
                     '@type': 'Answer',
-                    text: 'The minimum number of hives depends on your county and acreage. Most counties require 6 hives for the first 5-10 acres, plus 1 additional hive per 2.5-5 additional acres. Our calculator shows the exact requirement for your property.',
+                    text: 'Property tax savings vary significantly by state, county, property value, and acreage. Many landowners save thousands of dollars annually. Agricultural appraisal can reduce taxable land value by 90% or more in states with strong ag exemption programs.',
                   },
                 },
                 {
                   '@type': 'Question',
-                  name: 'How much can I save on Texas property taxes with beekeeping?',
+                  name: 'How many acres do I need for a bee ag exemption?',
                   acceptedAnswer: {
                     '@type': 'Answer',
-                    text: 'The average Texas landowner saves $3,000-$7,000 per year with a beekeeping ag exemption. Savings depend on your property value, acreage, and county tax rate. Agricultural appraisal typically reduces taxable land value by 90-98%.',
+                    text: 'Acreage requirements vary by state and county. Some jurisdictions accept as few as 5 acres for beekeeping, while others may require 10-20 acres. Check your local appraisal district or county assessor for specific requirements.',
                   },
                 },
                 {
                   '@type': 'Question',
-                  name: 'Is beekeeping a legal agricultural exemption in Texas?',
+                  name: 'How many beehives do I need for an ag exemption?',
                   acceptedAnswer: {
                     '@type': 'Answer',
-                    text: 'Yes. Texas Tax Code Chapter 23, Subchapter D explicitly recognizes beekeeping as qualifying agricultural use. The Texas Comptroller has specific guidelines for beekeeping ag valuations.',
+                    text: 'The minimum number of hives depends on your state, county, and property size. Common requirements range from 6-12 hives for smaller properties, with additional hives needed per acre above minimum thresholds. Requirements are set by local appraisal authorities.',
                   },
                 },
                 {
@@ -170,7 +172,7 @@ export default function RootLayout({
                   name: 'How much does it cost to start beekeeping for a tax exemption?',
                   acceptedAnswer: {
                     '@type': 'Answer',
-                    text: 'Startup costs are approximately $197 per hive for equipment and $260 per nuc (bee colony). Annual management costs run about $75 per hive. Most landowners recoup their investment within the first year through tax savings alone, plus earn additional income from honey production.',
+                    text: 'Initial costs include hive equipment (approximately $150-250 per hive) and bee colonies ($150-300 per colony). Annual maintenance costs average $50-100 per hive. Most landowners recoup their investment within 1-2 years through tax savings, plus potential honey income.',
                   },
                 },
               ],
