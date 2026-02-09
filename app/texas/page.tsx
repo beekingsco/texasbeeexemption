@@ -1096,9 +1096,14 @@ export default function Home() {
             <p style={{ fontSize: 17, color: C.gray, lineHeight: 1.6, marginBottom: 32, maxWidth: 420, margin: '0 auto 32px' }}>
               Your <strong style={{ color: C.navy }}>{selectedCounty.name} County Ag Exemption Guide</strong> is ready! We&apos;ll also send a copy to <strong style={{ color: C.navy }}>{lead.email}</strong>.
             </p>
-            <a href={`/guide?county=${encodeURIComponent(selectedCounty.name)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: C.green, color: C.navy, fontWeight: 700, fontSize: 16, padding: '14px 28px', borderRadius: 12, textDecoration: 'none', marginBottom: 32, boxShadow: '0 4px 12px rgba(212,168,67,0.3)' }}>
-              📋 View Your Guide Now
-            </a>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 32 }}>
+              <a href={`/guide?county=${encodeURIComponent(selectedCounty.name)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: C.green, color: C.navy, fontWeight: 700, fontSize: 16, padding: '14px 28px', borderRadius: 12, textDecoration: 'none', boxShadow: '0 4px 12px rgba(212,168,67,0.3)' }}>
+                📋 View Your Guide Now
+              </a>
+              <a href={`/report?county=${encodeURIComponent(selectedCounty.name)}&acres=${acres || parcelData?.legalArea || 10}&propertyValue=${appraisedValue || parcelData?.marketValue || 300000}&taxRate=${selectedCounty.avgTaxRate}&name=${encodeURIComponent((lead.firstName + ' ' + lead.lastName).trim())}&email=${encodeURIComponent(lead.email)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, padding: '14px 28px', borderRadius: 12, textDecoration: 'none', boxShadow: '0 4px 16px rgba(26,58,107,0.3)' }}>
+                📊 Get Your Detailed Report
+              </a>
+            </div>
 
             <div style={{ background: C.white, borderRadius: 20, padding: 32, boxShadow: '0 4px 24px rgba(0,0,0,0.08)', marginBottom: 32, border: '1px solid #D5EAFF' }}>
               <p style={{ fontSize: 14, color: C.gray, fontWeight: 600, marginBottom: 4 }}>Your estimated annual savings</p>

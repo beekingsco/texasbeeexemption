@@ -1,0 +1,962 @@
+[
+  {
+    "name": "Acadia",
+    "region": "Acadiana",
+    "assessor": {
+      "name": "Acadia Parish Assessor",
+      "website": "https://www.acadiaparishassessor.org",
+      "phone": "(337) 788-8841"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.95,
+    "agProductivityValue": 200,
+    "notes": "Crowley area; major rice-producing parish; excellent clover and wildflower forage for bees"
+  },
+  {
+    "name": "Allen",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Allen Parish Assessor",
+      "website": "https://www.allenparishassessor.com",
+      "phone": "(337) 639-4396"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.85,
+    "agProductivityValue": 175,
+    "notes": "Oberlin area; timber and agriculture; good forage from wildflowers and tallow"
+  },
+  {
+    "name": "Ascension",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Ascension Parish Assessor",
+      "website": "https://www.ascensionassessor.com",
+      "phone": "(225) 621-5710"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.10,
+    "agProductivityValue": 250,
+    "notes": "Gonzales area; rapidly growing suburban parish near Baton Rouge; high land values make use value assessment very beneficial"
+  },
+  {
+    "name": "Assumption",
+    "region": "Acadiana",
+    "assessor": {
+      "name": "Assumption Parish Assessor",
+      "website": "https://www.assumptionla.com",
+      "phone": "(985) 369-6386"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.90,
+    "agProductivityValue": 200,
+    "notes": "Napoleonville area; sugar cane country; good nectar from clover and wildflowers"
+  },
+  {
+    "name": "Avoyelles",
+    "region": "Central",
+    "assessor": {
+      "name": "Avoyelles Parish Assessor",
+      "website": "https://www.avoyellesassessor.com",
+      "phone": "(318) 253-9208"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.85,
+    "agProductivityValue": 175,
+    "notes": "Marksville area; agricultural parish in Central Louisiana; diverse farming"
+  },
+  {
+    "name": "Beauregard",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Beauregard Parish Assessor",
+      "website": "https://www.beauregardassessor.org",
+      "phone": "(337) 463-8538"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.80,
+    "agProductivityValue": 150,
+    "notes": "DeRidder area; timber and cattle country; strong wildflower forage"
+  },
+  {
+    "name": "Bienville",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "Bienville Parish Assessor",
+      "website": "https://www.bienvilleparish.org",
+      "phone": "(318) 263-2019"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.75,
+    "agProductivityValue": 150,
+    "notes": "Arcadia area; rural parish with timber and cattle operations"
+  },
+  {
+    "name": "Bossier",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "Bossier Parish Assessor",
+      "website": "https://www.bossierassessor.org",
+      "phone": "(318) 965-2281"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.05,
+    "agProductivityValue": 175,
+    "notes": "Benton area; suburban/urban near Shreveport; Barksdale AFB; higher land values in developed areas"
+  },
+  {
+    "name": "Caddo",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "Caddo Parish Assessor",
+      "website": "https://www.caddoassessor.org",
+      "phone": "(318) 226-6701"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.25,
+    "agProductivityValue": 175,
+    "notes": "Shreveport area; urban parish with significant rural areas; oil and gas activity"
+  },
+  {
+    "name": "Calcasieu",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Calcasieu Parish Assessor",
+      "website": "https://www.calcasieuassessor.org",
+      "phone": "(337) 721-3200"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.10,
+    "agProductivityValue": 200,
+    "notes": "Lake Charles area; petrochemical industry; good suburban ag opportunities"
+  },
+  {
+    "name": "Caldwell",
+    "region": "Central",
+    "assessor": {
+      "name": "Caldwell Parish Assessor",
+      "website": "https://www.caldwellparish.org",
+      "phone": "(318) 649-2681"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.70,
+    "agProductivityValue": 150,
+    "notes": "Columbia area; small rural parish; timber and farming"
+  },
+  {
+    "name": "Cameron",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Cameron Parish Assessor",
+      "website": "https://www.cameronparishassessor.org",
+      "phone": "(337) 775-5416"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 125,
+    "notes": "Cameron area; marsh and coastal parish; one of lowest tax rates in LA; hurricane-prone — hive placement critical"
+  },
+  {
+    "name": "Catahoula",
+    "region": "Central",
+    "assessor": {
+      "name": "Catahoula Parish Assessor",
+      "website": "https://www.catahoulaparish.com",
+      "phone": "(318) 744-5497"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.75,
+    "agProductivityValue": 150,
+    "notes": "Harrisonburg area; rural parish along the Ouachita/Black/Tensas rivers"
+  },
+  {
+    "name": "Claiborne",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "Claiborne Parish Assessor",
+      "website": "https://www.claiborneparish.org",
+      "phone": "(318) 927-2011"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.75,
+    "agProductivityValue": 150,
+    "notes": "Homer area; timber and agriculture; rolling hills of North Louisiana"
+  },
+  {
+    "name": "Concordia",
+    "region": "Central",
+    "assessor": {
+      "name": "Concordia Parish Assessor",
+      "website": "https://www.concordiaparish.org",
+      "phone": "(318) 336-7181"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.80,
+    "agProductivityValue": 175,
+    "notes": "Vidalia area; Mississippi River delta farming; across from Natchez MS"
+  },
+  {
+    "name": "De Soto",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "De Soto Parish Assessor",
+      "website": "https://www.desotoassessor.org",
+      "phone": "(318) 872-0738"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.80,
+    "agProductivityValue": 150,
+    "notes": "Mansfield area; Haynesville Shale gas activity; timber and cattle"
+  },
+  {
+    "name": "East Baton Rouge",
+    "region": "Southeast",
+    "assessor": {
+      "name": "East Baton Rouge Parish Assessor",
+      "website": "https://www.ebrpa.org",
+      "phone": "(225) 389-3920"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.35,
+    "agProductivityValue": 250,
+    "notes": "Baton Rouge / state capital; largest parish by population; high land values but rural areas in north and east portions qualify for ag use"
+  },
+  {
+    "name": "East Carroll",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "East Carroll Parish Assessor",
+      "website": "https://www.eastcarrollparish.org",
+      "phone": "(318) 559-2256"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.70,
+    "agProductivityValue": 175,
+    "notes": "Lake Providence area; Mississippi Delta farming; soybeans and cotton"
+  },
+  {
+    "name": "East Feliciana",
+    "region": "Southeast",
+    "assessor": {
+      "name": "East Feliciana Parish Assessor",
+      "website": "https://www.eastfelicianaparish.org",
+      "phone": "(225) 683-3823"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.80,
+    "agProductivityValue": 175,
+    "notes": "Clinton area; rolling hills; dairy, cattle, and timber; excellent rural beekeeping territory"
+  },
+  {
+    "name": "Evangeline",
+    "region": "Acadiana",
+    "assessor": {
+      "name": "Evangeline Parish Assessor",
+      "website": "https://www.evangelineassessor.com",
+      "phone": "(337) 363-5523"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.80,
+    "agProductivityValue": 175,
+    "notes": "Ville Platte area; Cajun prairie; rice and crawfish farming"
+  },
+  {
+    "name": "Franklin",
+    "region": "Central",
+    "assessor": {
+      "name": "Franklin Parish Assessor",
+      "website": "https://www.franklinparish.org",
+      "phone": "(318) 435-4505"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.75,
+    "agProductivityValue": 175,
+    "notes": "Winnsboro area; northeast Louisiana farming; cotton and soybeans"
+  },
+  {
+    "name": "Grant",
+    "region": "Central",
+    "assessor": {
+      "name": "Grant Parish Assessor",
+      "website": "https://www.grantparish.org",
+      "phone": "(318) 627-3246"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.75,
+    "agProductivityValue": 150,
+    "notes": "Colfax area; Kisatchie National Forest area; timber country"
+  },
+  {
+    "name": "Iberia",
+    "region": "Acadiana",
+    "assessor": {
+      "name": "Iberia Parish Assessor",
+      "website": "https://www.iberiaassessor.org",
+      "phone": "(337) 365-0211"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.95,
+    "agProductivityValue": 200,
+    "notes": "New Iberia area; sugar cane, Tabasco, oil & gas; excellent subtropical forage for bees"
+  },
+  {
+    "name": "Iberville",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Iberville Parish Assessor",
+      "website": "https://www.ibervilleparish.com",
+      "phone": "(225) 687-5190"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.90,
+    "agProductivityValue": 200,
+    "notes": "Plaquemine area; sugar cane and chemical plants; Mississippi River parish"
+  },
+  {
+    "name": "Jackson",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "Jackson Parish Assessor",
+      "website": "https://www.jacksonparishla.org",
+      "phone": "(318) 259-2371"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.80,
+    "agProductivityValue": 150,
+    "notes": "Jonesboro area; timber and agriculture; 5-mill parish tax limit (higher than standard 4)"
+  },
+  {
+    "name": "Jefferson",
+    "region": "Greater New Orleans",
+    "assessor": {
+      "name": "Jefferson Parish Assessor",
+      "website": "https://www.jpassessor.com",
+      "phone": "(504) 736-6230"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.30,
+    "agProductivityValue": 250,
+    "notes": "Metairie/Gretna area; highly urbanized; limited agricultural land but marsh/wetland areas in southern portion may qualify"
+  },
+  {
+    "name": "Jefferson Davis",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Jefferson Davis Parish Assessor",
+      "website": "https://www.jeffdavisassessor.com",
+      "phone": "(337) 824-1773"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.85,
+    "agProductivityValue": 175,
+    "notes": "Jennings area; rice farming capital; excellent agricultural community"
+  },
+  {
+    "name": "La Salle",
+    "region": "Central",
+    "assessor": {
+      "name": "La Salle Parish Assessor",
+      "website": "https://www.lasalleparish.com",
+      "phone": "(318) 992-2155"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.75,
+    "agProductivityValue": 150,
+    "notes": "Jena area; timber and natural gas; rural central Louisiana"
+  },
+  {
+    "name": "Lafayette",
+    "region": "Acadiana",
+    "assessor": {
+      "name": "Lafayette Parish Assessor",
+      "website": "https://www.lafayetteassessor.com",
+      "phone": "(337) 291-7140"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.15,
+    "agProductivityValue": 225,
+    "notes": "Lafayette area; hub of Acadiana; growing metro area but surrounding areas still agricultural"
+  },
+  {
+    "name": "Lafourche",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Lafourche Parish Assessor",
+      "website": "https://www.lafourcheassessor.com",
+      "phone": "(985) 447-2460"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.95,
+    "agProductivityValue": 200,
+    "notes": "Thibodaux area; sugar cane, oil & gas; bayou country — flooding considerations for hive placement"
+  },
+  {
+    "name": "Lincoln",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "Lincoln Parish Assessor",
+      "website": "https://www.lincolnparishassessor.org",
+      "phone": "(318) 251-5130"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.90,
+    "agProductivityValue": 150,
+    "notes": "Ruston area; Louisiana Tech University; timber and farming"
+  },
+  {
+    "name": "Livingston",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Livingston Parish Assessor",
+      "website": "https://www.livingstonassessor.org",
+      "phone": "(225) 686-2036"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 200,
+    "notes": "Livingston area; fast-growing Baton Rouge suburb; ag use value especially beneficial due to rising land prices"
+  },
+  {
+    "name": "Madison",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "Madison Parish Assessor",
+      "website": "https://www.madisonparishla.org",
+      "phone": "(318) 574-3451"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.70,
+    "agProductivityValue": 175,
+    "notes": "Tallulah area; Mississippi Delta farming; soybeans, cotton, rice"
+  },
+  {
+    "name": "Morehouse",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "Morehouse Parish Assessor",
+      "website": "https://www.morehouseparish.org",
+      "phone": "(318) 281-3343"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.80,
+    "agProductivityValue": 175,
+    "notes": "Bastrop area; farming and timber; northeast Louisiana"
+  },
+  {
+    "name": "Natchitoches",
+    "region": "Central",
+    "assessor": {
+      "name": "Natchitoches Parish Assessor",
+      "website": "https://www.natchitochesassessor.com",
+      "phone": "(318) 352-8151"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.80,
+    "agProductivityValue": 150,
+    "notes": "Natchitoches area; historic town; timber, cattle, and poultry"
+  },
+  {
+    "name": "Orleans",
+    "region": "Greater New Orleans",
+    "assessor": {
+      "name": "Orleans Parish Assessor",
+      "website": "https://www.nolaassessor.com",
+      "phone": "(504) 658-1300"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.60,
+    "agProductivityValue": 300,
+    "notes": "New Orleans; highest millage rates in LA; very limited agricultural land; urban beekeeping possible but ag classification unlikely"
+  },
+  {
+    "name": "Ouachita",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "Ouachita Parish Assessor",
+      "website": "https://www.ouachitaassessor.org",
+      "phone": "(318) 327-1340"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.05,
+    "agProductivityValue": 175,
+    "notes": "Monroe area; largest city in northeast Louisiana; university town with surrounding agricultural areas"
+  },
+  {
+    "name": "Plaquemines",
+    "region": "Greater New Orleans",
+    "assessor": {
+      "name": "Plaquemines Parish Assessor",
+      "website": "https://www.plaqueminesassessor.com",
+      "phone": "(504) 934-6640"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.90,
+    "agProductivityValue": 175,
+    "notes": "Belle Chasse area; Mississippi River delta; citrus farming; hurricane-prone but large parish with ag land"
+  },
+  {
+    "name": "Pointe Coupee",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Pointe Coupee Parish Assessor",
+      "website": "https://www.pcparish.org",
+      "phone": "(225) 638-9556"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.80,
+    "agProductivityValue": 175,
+    "notes": "New Roads area; False River; farming and rural character near Baton Rouge"
+  },
+  {
+    "name": "Rapides",
+    "region": "Central",
+    "assessor": {
+      "name": "Rapides Parish Assessor",
+      "website": "https://www.rapidesassessor.com",
+      "phone": "(318) 473-6598"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.95,
+    "agProductivityValue": 175,
+    "notes": "Alexandria/Pineville area; largest parish in Central Louisiana; diverse agriculture including cattle, timber, and row crops"
+  },
+  {
+    "name": "Red River",
+    "region": "Central",
+    "assessor": {
+      "name": "Red River Parish Assessor",
+      "website": "https://www.redriverparish.org",
+      "phone": "(318) 932-5250"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.70,
+    "agProductivityValue": 150,
+    "notes": "Coushatta area; small rural parish; Red River valley farming"
+  },
+  {
+    "name": "Richland",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "Richland Parish Assessor",
+      "website": "https://www.richlandparish.org",
+      "phone": "(318) 728-4441"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.75,
+    "agProductivityValue": 175,
+    "notes": "Rayville area; delta farming; soybeans, cotton, rice, corn"
+  },
+  {
+    "name": "Sabine",
+    "region": "Central",
+    "assessor": {
+      "name": "Sabine Parish Assessor",
+      "website": "https://www.sabineparish.org",
+      "phone": "(318) 256-6174"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.70,
+    "agProductivityValue": 150,
+    "notes": "Many area; Toledo Bend Reservoir; timber country along Texas border"
+  },
+  {
+    "name": "St. Bernard",
+    "region": "Greater New Orleans",
+    "assessor": {
+      "name": "St. Bernard Parish Assessor",
+      "website": "https://www.sbpassessor.com",
+      "phone": "(504) 278-4305"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.10,
+    "agProductivityValue": 200,
+    "notes": "Chalmette area; suburban New Orleans; limited ag land but some marsh areas; heavily impacted by Katrina"
+  },
+  {
+    "name": "St. Charles",
+    "region": "Greater New Orleans",
+    "assessor": {
+      "name": "St. Charles Parish Assessor",
+      "website": "https://www.stcharlesassessor.org",
+      "phone": "(985) 783-6281"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.05,
+    "agProductivityValue": 225,
+    "notes": "Hahnville area; petrochemical corridor; some agricultural land along river and in rural areas"
+  },
+  {
+    "name": "St. Helena",
+    "region": "Southeast",
+    "assessor": {
+      "name": "St. Helena Parish Assessor",
+      "website": "https://www.sthelenaparish.la.gov",
+      "phone": "(225) 222-4440"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.70,
+    "agProductivityValue": 150,
+    "notes": "Greensburg area; one of the most rural parishes in southeast Louisiana; timber and small farms"
+  },
+  {
+    "name": "St. James",
+    "region": "Southeast",
+    "assessor": {
+      "name": "St. James Parish Assessor",
+      "website": "https://www.stjamesassessor.com",
+      "phone": "(225) 562-2260"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.85,
+    "agProductivityValue": 200,
+    "notes": "Convent/Lutcher area; sugar cane parish along the Mississippi River"
+  },
+  {
+    "name": "St. John the Baptist",
+    "region": "Greater New Orleans",
+    "assessor": {
+      "name": "St. John the Baptist Parish Assessor",
+      "website": "https://www.stjohnassessor.org",
+      "phone": "(985) 652-2241"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 200,
+    "notes": "LaPlace/Edgard area; river parish between Baton Rouge and New Orleans; some sugar cane and agricultural areas"
+  },
+  {
+    "name": "St. Landry",
+    "region": "Acadiana",
+    "assessor": {
+      "name": "St. Landry Parish Assessor",
+      "website": "https://www.stlandryassessor.org",
+      "phone": "(337) 942-3168"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.85,
+    "agProductivityValue": 175,
+    "notes": "Opelousas area; largest Acadiana parish by area; strong agricultural tradition; sweet potatoes, soybeans, cattle"
+  },
+  {
+    "name": "St. Martin",
+    "region": "Acadiana",
+    "assessor": {
+      "name": "St. Martin Parish Assessor",
+      "website": "https://www.stmartinassessor.org",
+      "phone": "(337) 332-2190"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.85,
+    "agProductivityValue": 200,
+    "notes": "St. Martinville/Breaux Bridge area; sugar cane and crawfish; unique non-contiguous parish (two parts)"
+  },
+  {
+    "name": "St. Mary",
+    "region": "Acadiana",
+    "assessor": {
+      "name": "St. Mary Parish Assessor",
+      "website": "https://www.stmaryassessor.org",
+      "phone": "(337) 828-4100"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.90,
+    "agProductivityValue": 200,
+    "notes": "Morgan City/Franklin area; sugar cane, oil & gas, seafood; Atchafalaya Basin"
+  },
+  {
+    "name": "St. Tammany",
+    "region": "Greater New Orleans",
+    "assessor": {
+      "name": "St. Tammany Parish Assessor",
+      "website": "https://www.stassessor.org",
+      "phone": "(985) 809-8180"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.15,
+    "agProductivityValue": 225,
+    "notes": "Covington/Mandeville/Slidell area; affluent north shore of Lake Pontchartrain; high land values make ag use value very beneficial"
+  },
+  {
+    "name": "Tangipahoa",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Tangipahoa Parish Assessor",
+      "website": "https://www.tangassessor.org",
+      "phone": "(985) 748-3211"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.95,
+    "agProductivityValue": 200,
+    "notes": "Amite/Hammond area; strawberry capital of Louisiana; strong agricultural heritage; SLU"
+  },
+  {
+    "name": "Tensas",
+    "region": "Central",
+    "assessor": {
+      "name": "Tensas Parish Assessor",
+      "website": "https://www.tensasparish.org",
+      "phone": "(318) 766-3542"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.70,
+    "agProductivityValue": 175,
+    "notes": "St. Joseph area; smallest parish by population; delta farming; very rural"
+  },
+  {
+    "name": "Terrebonne",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Terrebonne Parish Assessor",
+      "website": "https://www.terrebonneassessor.org",
+      "phone": "(985) 868-5650"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 200,
+    "notes": "Houma area; oil & gas, seafood, sugar cane; bayou country with coastal erosion concerns"
+  },
+  {
+    "name": "Union",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "Union Parish Assessor",
+      "website": "https://www.unionparish.org",
+      "phone": "(318) 368-3196"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.75,
+    "agProductivityValue": 150,
+    "notes": "Farmerville area; Lake D'Arbonne; timber and farming"
+  },
+  {
+    "name": "Vermilion",
+    "region": "Acadiana",
+    "assessor": {
+      "name": "Vermilion Parish Assessor",
+      "website": "https://www.vermilionassessor.org",
+      "phone": "(337) 898-4300"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.85,
+    "agProductivityValue": 200,
+    "notes": "Abbeville area; rice, cattle, and crawfish; coastal parish with good agricultural base"
+  },
+  {
+    "name": "Vernon",
+    "region": "Central",
+    "assessor": {
+      "name": "Vernon Parish Assessor",
+      "website": "https://www.vernonparish.org",
+      "phone": "(337) 238-0123"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.75,
+    "agProductivityValue": 150,
+    "notes": "Leesville area; Fort Johnson (formerly Fort Polk); Kisatchie NF; timber country along Texas border"
+  },
+  {
+    "name": "Washington",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Washington Parish Assessor",
+      "website": "https://www.washingtonparish.gov",
+      "phone": "(985) 839-7825"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.80,
+    "agProductivityValue": 150,
+    "notes": "Franklinton/Bogalusa area; timber and dairy farming; Florida Parishes region near Mississippi border"
+  },
+  {
+    "name": "Webster",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "Webster Parish Assessor",
+      "website": "https://www.websterparishassessor.com",
+      "phone": "(318) 371-0302"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.85,
+    "agProductivityValue": 150,
+    "notes": "Minden area; timber, cattle, natural gas; near Shreveport metro"
+  },
+  {
+    "name": "West Baton Rouge",
+    "region": "Southeast",
+    "assessor": {
+      "name": "West Baton Rouge Parish Assessor",
+      "website": "https://www.wbrassessor.org",
+      "phone": "(225) 336-2410"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 225,
+    "notes": "Port Allen area; smallest parish by area; sugar cane; across the river from Baton Rouge"
+  },
+  {
+    "name": "West Carroll",
+    "region": "North Louisiana",
+    "assessor": {
+      "name": "West Carroll Parish Assessor",
+      "website": "https://www.westcarrollparish.org",
+      "phone": "(318) 428-3281"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.70,
+    "agProductivityValue": 175,
+    "notes": "Oak Grove area; delta farming; northeast Louisiana"
+  },
+  {
+    "name": "West Feliciana",
+    "region": "Southeast",
+    "assessor": {
+      "name": "West Feliciana Parish Assessor",
+      "website": "https://www.westfelicianaparish.gov",
+      "phone": "(225) 635-3864"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.80,
+    "agProductivityValue": 175,
+    "notes": "St. Francisville area; historic plantations; rolling hills; cattle and timber; great beekeeping territory"
+  },
+  {
+    "name": "Winn",
+    "region": "Central",
+    "assessor": {
+      "name": "Winn Parish Assessor",
+      "website": "https://www.winnparish.org",
+      "phone": "(318) 628-3121"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.75,
+    "agProductivityValue": 150,
+    "notes": "Winnfield area; birthplace of Huey Long; timber and natural gas"
+  }
+]

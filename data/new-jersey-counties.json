@@ -1,0 +1,317 @@
+[
+  {
+    "name": "Atlantic",
+    "region": "South",
+    "assessor": {
+      "name": "Atlantic County Board of Taxation",
+      "website": "https://www.atlantic-county.org/taxation/",
+      "phone": "(609) 645-5820"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.35,
+    "agProductivityValue": 200,
+    "notes": "Atlantic City area; Pine Barrens blueberry/cranberry forage excellent for bees; municipal assessor administers FA-1"
+  },
+  {
+    "name": "Bergen",
+    "region": "North",
+    "assessor": {
+      "name": "Bergen County Board of Taxation",
+      "website": "https://www.co.bergen.nj.us/board-of-taxation",
+      "phone": "(201) 336-6300"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.55,
+    "agProductivityValue": 250,
+    "notes": "NYC suburbs; extremely high land values make FA savings enormous; limited agricultural land available; very few farms remain"
+  },
+  {
+    "name": "Burlington",
+    "region": "South",
+    "assessor": {
+      "name": "Burlington County Board of Taxation",
+      "website": "https://www.co.burlington.nj.us/167/Board-of-Taxation",
+      "phone": "(609) 265-5056"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.28,
+    "agProductivityValue": 220,
+    "notes": "Largest NJ county by area; significant farmland; Pine Barrens and cranberry bogs; strong TDR program; excellent beekeeping territory"
+  },
+  {
+    "name": "Camden",
+    "region": "South",
+    "assessor": {
+      "name": "Camden County Board of Taxation",
+      "website": "https://www.camdencounty.com/service/board-of-taxation/",
+      "phone": "(856) 225-5238"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.95,
+    "agProductivityValue": 230,
+    "notes": "Urban/suburban; high tax rates; limited farmland but some remaining in eastern townships; Philadelphia suburbs"
+  },
+  {
+    "name": "Cape May",
+    "region": "South",
+    "assessor": {
+      "name": "Cape May County Board of Taxation",
+      "website": "https://www.capemaycountynj.gov/220/Board-of-Taxation",
+      "phone": "(609) 465-1060"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.35,
+    "agProductivityValue": 180,
+    "notes": "Shore/resort area; lowest tax rates in NJ; some agricultural land in northern portions; coastal wildflower forage"
+  },
+  {
+    "name": "Cumberland",
+    "region": "South",
+    "assessor": {
+      "name": "Cumberland County Board of Taxation",
+      "website": "https://www.cumberlandcountynj.gov/content/155/Board-of-Taxation",
+      "phone": "(856) 453-4877"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.65,
+    "agProductivityValue": 200,
+    "notes": "Agricultural heartland of South Jersey; Bridgeton area; significant farmland; truck farming; diverse bee forage"
+  },
+  {
+    "name": "Essex",
+    "region": "North",
+    "assessor": {
+      "name": "Essex County Board of Taxation",
+      "website": "https://essexcountynj.org/board-of-taxation/",
+      "phone": "(973) 621-4486"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.75,
+    "agProductivityValue": 250,
+    "notes": "Newark; most urbanized county; very limited farmland; extremely high values where available; some urban agriculture"
+  },
+  {
+    "name": "Gloucester",
+    "region": "South",
+    "assessor": {
+      "name": "Gloucester County Board of Taxation",
+      "website": "https://www.gloucestercountynj.gov/325/Board-of-Taxation",
+      "phone": "(856) 853-3358"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.60,
+    "agProductivityValue": 230,
+    "notes": "South Jersey suburbs; mix of suburban development and remaining farmland; tomato, pepper, corn farming"
+  },
+  {
+    "name": "Hudson",
+    "region": "North",
+    "assessor": {
+      "name": "Hudson County Board of Taxation",
+      "website": "https://www.hudsoncountynj.org/boards-commissions/board-of-taxation",
+      "phone": "(201) 395-6260"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 250,
+    "notes": "Jersey City; most densely populated county in US; virtually no farmland; rooftop beekeeping may not qualify for FA"
+  },
+  {
+    "name": "Hunterdon",
+    "region": "Central",
+    "assessor": {
+      "name": "Hunterdon County Board of Taxation",
+      "website": "https://www.co.hunterdon.nj.us/taxboard.htm",
+      "phone": "(908) 788-1183"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 230,
+    "notes": "Horse country; rolling farmland; many preserved farms; excellent bee forage from hay, clover, wildflowers; very bee-friendly"
+  },
+  {
+    "name": "Mercer",
+    "region": "Central",
+    "assessor": {
+      "name": "Mercer County Board of Taxation",
+      "website": "https://www.mercercounty.org/departments/board-of-taxation",
+      "phone": "(609) 989-6486"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.30,
+    "agProductivityValue": 230,
+    "notes": "Trenton/Princeton; mix of urban, suburban, and rural; some significant farmland in eastern and southern portions"
+  },
+  {
+    "name": "Middlesex",
+    "region": "Central",
+    "assessor": {
+      "name": "Middlesex County Board of Taxation",
+      "website": "https://www.middlesexcountynj.gov/government/departments/department-of-finance/board-of-taxation",
+      "phone": "(732) 745-3350"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.45,
+    "agProductivityValue": 250,
+    "notes": "Central corridor; New Brunswick/Edison; some farmland in Cranbury, Monroe townships; high development pressure"
+  },
+  {
+    "name": "Monmouth",
+    "region": "Central",
+    "assessor": {
+      "name": "Monmouth County Board of Taxation",
+      "website": "https://www.co.monmouth.nj.us/page.aspx?Id=2508",
+      "phone": "(732) 431-7404"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 240,
+    "notes": "Shore county; horse farms in western portion; Colts Neck, Upper Freehold agricultural areas; diverse bee forage"
+  },
+  {
+    "name": "Morris",
+    "region": "North",
+    "assessor": {
+      "name": "Morris County Board of Taxation",
+      "website": "https://morriscountynj.gov/departments/board-of-taxation/",
+      "phone": "(973) 285-6710"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.13,
+    "agProductivityValue": 240,
+    "notes": "Wealthy suburban; some remaining farmland in western portions; Chester, Mendham horse country; high property values"
+  },
+  {
+    "name": "Ocean",
+    "region": "Central",
+    "assessor": {
+      "name": "Ocean County Board of Taxation",
+      "website": "https://www.co.ocean.nj.us/page/taxboard-t-2",
+      "phone": "(732) 929-2008"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 200,
+    "notes": "Pine Barrens/Shore; cranberry bogs provide excellent bee forage; blueberry, mixed forest; growing retirement community"
+  },
+  {
+    "name": "Passaic",
+    "region": "North",
+    "assessor": {
+      "name": "Passaic County Board of Taxation",
+      "website": "https://www.passaiccountynj.org/government/departments/board_of_taxation.php",
+      "phone": "(973) 225-3535"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.95,
+    "agProductivityValue": 240,
+    "notes": "Paterson area; highest tax rates in NJ; very limited farmland; some in West Milford; enormous potential savings if land qualifies"
+  },
+  {
+    "name": "Salem",
+    "region": "South",
+    "assessor": {
+      "name": "Salem County Board of Taxation",
+      "website": "https://www.salemcountynj.gov/departments/board-of-taxation",
+      "phone": "(856) 935-7510"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.60,
+    "agProductivityValue": 200,
+    "notes": "Most rural NJ county; major agricultural area; asparagus, peaches, grain; Delaware River frontage; excellent farmland"
+  },
+  {
+    "name": "Somerset",
+    "region": "Central",
+    "assessor": {
+      "name": "Somerset County Board of Taxation",
+      "website": "https://www.co.somerset.nj.us/government/county-departments/a-l/board-of-taxation",
+      "phone": "(908) 231-7000"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.10,
+    "agProductivityValue": 240,
+    "notes": "Suburban/horse country; significant preserved farmland; rolling hills excellent for beekeeping; pharmaceutical corridor"
+  },
+  {
+    "name": "Sussex",
+    "region": "North",
+    "assessor": {
+      "name": "Sussex County Board of Taxation",
+      "website": "https://www.sussex.nj.us/cn/webpage/8079",
+      "phone": "(973) 579-0950"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.40,
+    "agProductivityValue": 210,
+    "notes": "Northwest NJ; rural/agricultural; dairy farms, hay, corn; Skylands region; diverse wildflower and clover bee forage"
+  },
+  {
+    "name": "Union",
+    "region": "Central",
+    "assessor": {
+      "name": "Union County Board of Taxation",
+      "website": "https://www.ucnj.org/board-of-taxation",
+      "phone": "(908) 527-4100"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.70,
+    "agProductivityValue": 250,
+    "notes": "Urban/suburban; Elizabeth/Plainfield; virtually no farmland remaining; high development; very limited FA applicability"
+  },
+  {
+    "name": "Warren",
+    "region": "North",
+    "assessor": {
+      "name": "Warren County Board of Taxation",
+      "website": "https://www.co.warren.nj.us/Taxboard/",
+      "phone": "(908) 475-6214"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 2.30,
+    "agProductivityValue": 220,
+    "notes": "Northwest NJ; significant agricultural land; dairy, grain, hay; Delaware River valley; excellent bee forage diversity"
+  }
+]

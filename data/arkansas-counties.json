@@ -1,0 +1,1127 @@
+[
+  {
+    "name": "Arkansas",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Arkansas County Assessor",
+      "website": "https://www.arcounty.org",
+      "phone": "(870) 659-2098"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.62,
+    "agProductivityValue": 250,
+    "notes": "DeWitt/Stuttgart area; rice and soybean capital; two county seats; excellent delta farming"
+  },
+  {
+    "name": "Ashley",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Ashley County Assessor",
+      "website": "https://www.ashleycounty.org",
+      "phone": "(870) 853-2030"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.60,
+    "agProductivityValue": 225,
+    "notes": "Hamburg/Crossett area; timber and farming; SE Arkansas"
+  },
+  {
+    "name": "Baxter",
+    "region": "Northwest",
+    "assessor": {
+      "name": "Baxter County Assessor",
+      "website": "https://www.baxtercounty.org",
+      "phone": "(870) 425-3475"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 150,
+    "notes": "Mountain Home area; Ozark mountains; tourism and retirement community; good wildflower forage"
+  },
+  {
+    "name": "Benton",
+    "region": "Northwest",
+    "assessor": {
+      "name": "Benton County Assessor",
+      "website": "https://www.bentoncountyar.gov",
+      "phone": "(479) 271-1037"
+    },
+    "minAcres": 10,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.75,
+    "agProductivityValue": 175,
+    "notes": "Bentonville/Rogers area; Walmart HQ; fastest growing county in AR; high land values make ag use value very beneficial"
+  },
+  {
+    "name": "Boone",
+    "region": "Northwest",
+    "assessor": {
+      "name": "Boone County Assessor",
+      "website": "https://www.boonecountyar.com",
+      "phone": "(870) 741-5530"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.52,
+    "agProductivityValue": 150,
+    "notes": "Harrison area; Ozark mountains; dairy, cattle, and poultry"
+  },
+  {
+    "name": "Bradley",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Bradley County Assessor",
+      "website": "https://www.bradleycountyar.com",
+      "phone": "(870) 226-2323"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 200,
+    "notes": "Warren area; timber country; pink tomato capital of the world"
+  },
+  {
+    "name": "Calhoun",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Calhoun County Assessor",
+      "website": "https://www.calhouncountyar.org",
+      "phone": "(870) 798-2517"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.50,
+    "agProductivityValue": 175,
+    "notes": "Hampton area; smallest population county in AR; timber and farming"
+  },
+  {
+    "name": "Carroll",
+    "region": "Northwest",
+    "assessor": {
+      "name": "Carroll County Assessor",
+      "website": "https://www.carrollcountyar.gov",
+      "phone": "(870) 423-2022"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 150,
+    "notes": "Berryville/Eureka Springs area; two county seats; tourism and farming in the Ozarks"
+  },
+  {
+    "name": "Chicot",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Chicot County Assessor",
+      "website": "https://www.chicotcounty.org",
+      "phone": "(870) 265-8020"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.60,
+    "agProductivityValue": 250,
+    "notes": "Lake Village area; southernmost county in AR; rich delta farmland; two county seats"
+  },
+  {
+    "name": "Clark",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Clark County Assessor",
+      "website": "https://www.clarkcountyar.com",
+      "phone": "(870) 246-4431"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 175,
+    "notes": "Arkadelphia area; Ouachita Baptist University; timber, cattle, poultry"
+  },
+  {
+    "name": "Clay",
+    "region": "Northeast",
+    "assessor": {
+      "name": "Clay County Assessor",
+      "website": "https://www.claycountyar.com",
+      "phone": "(870) 598-2813"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 225,
+    "notes": "Piggott/Corning area; two county seats; NE Arkansas delta farming; rice and soybeans"
+  },
+  {
+    "name": "Cleburne",
+    "region": "Central",
+    "assessor": {
+      "name": "Cleburne County Assessor",
+      "website": "https://www.cleburnecounty.org",
+      "phone": "(501) 362-4623"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 150,
+    "notes": "Heber Springs area; Greers Ferry Lake; tourism and retirement community"
+  },
+  {
+    "name": "Cleveland",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Cleveland County Assessor",
+      "website": "https://www.clevelandcountyar.com",
+      "phone": "(870) 325-6521"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.50,
+    "agProductivityValue": 175,
+    "notes": "Rison area; timber and farming; small rural county"
+  },
+  {
+    "name": "Columbia",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Columbia County Assessor",
+      "website": "https://www.columbiacountyar.org",
+      "phone": "(870) 234-1040"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 200,
+    "notes": "Magnolia area; Southern Arkansas University; oil and timber"
+  },
+  {
+    "name": "Conway",
+    "region": "Central",
+    "assessor": {
+      "name": "Conway County Assessor",
+      "website": "https://www.conwaycountyar.org",
+      "phone": "(501) 354-9610"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 175,
+    "notes": "Morrilton area; Arkansas River valley; poultry and cattle"
+  },
+  {
+    "name": "Craighead",
+    "region": "Northeast",
+    "assessor": {
+      "name": "Craighead County Assessor",
+      "website": "https://www.craigheadcounty.org",
+      "phone": "(870) 933-4530"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.70,
+    "agProductivityValue": 225,
+    "notes": "Jonesboro area; largest city in NE Arkansas; ASU; two county seats; rice and soybeans in rural areas"
+  },
+  {
+    "name": "Crawford",
+    "region": "River Valley",
+    "assessor": {
+      "name": "Crawford County Assessor",
+      "website": "https://www.crawfordcountyar.com",
+      "phone": "(479) 474-1312"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.60,
+    "agProductivityValue": 175,
+    "notes": "Van Buren area; near Fort Smith; poultry and cattle"
+  },
+  {
+    "name": "Crittenden",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Crittenden County Assessor",
+      "website": "https://www.crittendencountyar.com",
+      "phone": "(870) 739-4434"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.65,
+    "agProductivityValue": 250,
+    "notes": "West Memphis/Marion area; across from Memphis TN; rich delta farmland"
+  },
+  {
+    "name": "Cross",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Cross County Assessor",
+      "website": "https://www.crosscountyar.org",
+      "phone": "(870) 238-5735"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.58,
+    "agProductivityValue": 225,
+    "notes": "Wynne area; two county seats; delta farming; rice and soybeans"
+  },
+  {
+    "name": "Dallas",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Dallas County Assessor",
+      "website": "https://www.dallascountyar.com",
+      "phone": "(870) 352-5369"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.50,
+    "agProductivityValue": 175,
+    "notes": "Fordyce area; timber country; small rural county"
+  },
+  {
+    "name": "Desha",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Desha County Assessor",
+      "website": "https://www.deshacountyar.org",
+      "phone": "(870) 877-2425"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.58,
+    "agProductivityValue": 250,
+    "notes": "Arkansas City/McGehee area; two county seats; delta farming along Mississippi and Arkansas rivers"
+  },
+  {
+    "name": "Drew",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Drew County Assessor",
+      "website": "https://www.drewcountyar.org",
+      "phone": "(870) 460-6220"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 200,
+    "notes": "Monticello area; University of AR at Monticello; timber and farming"
+  },
+  {
+    "name": "Faulkner",
+    "region": "Central",
+    "assessor": {
+      "name": "Faulkner County Assessor",
+      "website": "https://www.faulknercounty.org",
+      "phone": "(501) 450-4910"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.65,
+    "agProductivityValue": 175,
+    "notes": "Conway area; University of Central Arkansas; growing suburb of Little Rock"
+  },
+  {
+    "name": "Franklin",
+    "region": "River Valley",
+    "assessor": {
+      "name": "Franklin County Assessor",
+      "website": "https://www.franklincountyar.com",
+      "phone": "(479) 667-3607"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.50,
+    "agProductivityValue": 150,
+    "notes": "Ozark/Charleston area; two county seats; Ozark National Forest; poultry and cattle"
+  },
+  {
+    "name": "Fulton",
+    "region": "Northwest",
+    "assessor": {
+      "name": "Fulton County Assessor",
+      "website": "https://www.fultoncountyar.org",
+      "phone": "(870) 895-3310"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.48,
+    "agProductivityValue": 150,
+    "notes": "Salem area; Ozark foothills near Missouri border; cattle and dairy"
+  },
+  {
+    "name": "Garland",
+    "region": "Central",
+    "assessor": {
+      "name": "Garland County Assessor",
+      "website": "https://www.garlandcounty.org",
+      "phone": "(501) 622-3610"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.65,
+    "agProductivityValue": 150,
+    "notes": "Hot Springs area; tourism destination; Ouachita Mountains; growing retirement community"
+  },
+  {
+    "name": "Grant",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Grant County Assessor",
+      "website": "https://www.grantcountyar.com",
+      "phone": "(870) 942-2631"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.52,
+    "agProductivityValue": 175,
+    "notes": "Sheridan area; timber and poultry; between Little Rock and Pine Bluff"
+  },
+  {
+    "name": "Greene",
+    "region": "Northeast",
+    "assessor": {
+      "name": "Greene County Assessor",
+      "website": "https://www.greenecountyar.gov",
+      "phone": "(870) 239-6311"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.58,
+    "agProductivityValue": 225,
+    "notes": "Paragould area; NE Arkansas; rice, soybeans, and cotton"
+  },
+  {
+    "name": "Hempstead",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Hempstead County Assessor",
+      "website": "https://www.hempsteadcountyar.com",
+      "phone": "(870) 777-6154"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 200,
+    "notes": "Hope area; birthplace of Bill Clinton; watermelon festival; diverse agriculture"
+  },
+  {
+    "name": "Hot Spring",
+    "region": "Central",
+    "assessor": {
+      "name": "Hot Spring County Assessor",
+      "website": "https://www.hotspringcountyar.gov",
+      "phone": "(501) 332-2261"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 175,
+    "notes": "Malvern area; brick capital of the world; poultry and cattle"
+  },
+  {
+    "name": "Howard",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Howard County Assessor",
+      "website": "https://www.howardcountyar.com",
+      "phone": "(870) 845-7508"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.52,
+    "agProductivityValue": 175,
+    "notes": "Nashville area; Crater of Diamonds nearby; poultry, cattle, timber"
+  },
+  {
+    "name": "Independence",
+    "region": "Northeast",
+    "assessor": {
+      "name": "Independence County Assessor",
+      "website": "https://www.independencecounty.ar.gov",
+      "phone": "(870) 793-8838"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 175,
+    "notes": "Batesville area; White River area; Lyon College; cattle and poultry"
+  },
+  {
+    "name": "Izard",
+    "region": "Northeast",
+    "assessor": {
+      "name": "Izard County Assessor",
+      "website": "https://www.izardcountyar.org",
+      "phone": "(870) 368-4316"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.48,
+    "agProductivityValue": 150,
+    "notes": "Melbourne area; Ozark foothills; cattle, hay, and timber"
+  },
+  {
+    "name": "Jackson",
+    "region": "Northeast",
+    "assessor": {
+      "name": "Jackson County Assessor",
+      "website": "https://www.jacksoncountyar.org",
+      "phone": "(870) 523-7420"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 225,
+    "notes": "Newport area; White River; rice and soybean farming"
+  },
+  {
+    "name": "Jefferson",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Jefferson County Assessor",
+      "website": "https://www.jeffersoncountyar.gov",
+      "phone": "(870) 541-5321"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.68,
+    "agProductivityValue": 225,
+    "notes": "Pine Bluff area; University of AR at Pine Bluff; rice, soybeans, cotton"
+  },
+  {
+    "name": "Johnson",
+    "region": "Central",
+    "assessor": {
+      "name": "Johnson County Assessor",
+      "website": "https://www.johnsoncountyar.com",
+      "phone": "(479) 754-2977"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.52,
+    "agProductivityValue": 150,
+    "notes": "Clarksville area; Arkansas River valley; poultry and cattle"
+  },
+  {
+    "name": "Lafayette",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Lafayette County Assessor",
+      "website": "https://www.lafayettecountyar.com",
+      "phone": "(870) 921-4623"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.50,
+    "agProductivityValue": 200,
+    "notes": "Lewisville area; smallest county by area in AR; farming and timber"
+  },
+  {
+    "name": "Lawrence",
+    "region": "Northeast",
+    "assessor": {
+      "name": "Lawrence County Assessor",
+      "website": "https://www.lawrencecountyar.com",
+      "phone": "(870) 886-1115"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.52,
+    "agProductivityValue": 200,
+    "notes": "Walnut Ridge area; two county seats; rice, soybeans, and cattle"
+  },
+  {
+    "name": "Lee",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Lee County Assessor",
+      "website": "https://www.leecountyar.org",
+      "phone": "(870) 295-7715"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.58,
+    "agProductivityValue": 250,
+    "notes": "Marianna area; delta farming; rice, soybeans, cotton"
+  },
+  {
+    "name": "Lincoln",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Lincoln County Assessor",
+      "website": "https://www.lincolncountyar.com",
+      "phone": "(870) 628-4241"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.52,
+    "agProductivityValue": 200,
+    "notes": "Star City area; farming and timber; SE Arkansas"
+  },
+  {
+    "name": "Little River",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Little River County Assessor",
+      "website": "https://www.littlerivercountyar.com",
+      "phone": "(870) 898-7210"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.52,
+    "agProductivityValue": 200,
+    "notes": "Ashdown area; Millwood Lake; close to Texarkana; timber and farming"
+  },
+  {
+    "name": "Logan",
+    "region": "River Valley",
+    "assessor": {
+      "name": "Logan County Assessor",
+      "website": "https://www.logancountyar.com",
+      "phone": "(479) 963-2816"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.50,
+    "agProductivityValue": 150,
+    "notes": "Paris/Booneville area; two county seats; Magazine Mountain; poultry and cattle"
+  },
+  {
+    "name": "Lonoke",
+    "region": "Central",
+    "assessor": {
+      "name": "Lonoke County Assessor",
+      "website": "https://www.lonokecounty.org",
+      "phone": "(501) 676-2431"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.60,
+    "agProductivityValue": 225,
+    "notes": "Lonoke area; near Little Rock; major rice and soybean production; growing suburban area"
+  },
+  {
+    "name": "Madison",
+    "region": "Northwest",
+    "assessor": {
+      "name": "Madison County Assessor",
+      "website": "https://www.madisoncountyar.com",
+      "phone": "(479) 738-6721"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.48,
+    "agProductivityValue": 150,
+    "notes": "Huntsville area; Ozark county; cattle, hay, and some poultry; good wildflower and clover forage"
+  },
+  {
+    "name": "Marion",
+    "region": "Northwest",
+    "assessor": {
+      "name": "Marion County Assessor",
+      "website": "https://www.marioncountyar.com",
+      "phone": "(870) 449-6231"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.50,
+    "agProductivityValue": 150,
+    "notes": "Yellville area; Bull Shoals Lake; Ozark mountains; tourism, cattle, hay"
+  },
+  {
+    "name": "Miller",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Miller County Assessor",
+      "website": "https://www.millercountyar.com",
+      "phone": "(870) 774-1501"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.60,
+    "agProductivityValue": 200,
+    "notes": "Texarkana area; on Texas border; timber, farming; easy access from Canton TX"
+  },
+  {
+    "name": "Mississippi",
+    "region": "Northeast",
+    "assessor": {
+      "name": "Mississippi County Assessor",
+      "website": "https://www.mississippicountyar.org",
+      "phone": "(870) 762-2411"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.62,
+    "agProductivityValue": 250,
+    "notes": "Blytheville/Osceola area; two county seats; major delta farming; rice, soybeans, cotton"
+  },
+  {
+    "name": "Monroe",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Monroe County Assessor",
+      "website": "https://www.monroecountyar.org",
+      "phone": "(870) 747-3632"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 225,
+    "notes": "Clarendon area; delta farming; rice and soybeans"
+  },
+  {
+    "name": "Montgomery",
+    "region": "River Valley",
+    "assessor": {
+      "name": "Montgomery County Assessor",
+      "website": "https://www.montgomerycountyar.com",
+      "phone": "(870) 867-3114"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.48,
+    "agProductivityValue": 150,
+    "notes": "Mount Ida area; Ouachita Mountains; timber, quartz mining, cattle"
+  },
+  {
+    "name": "Nevada",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Nevada County Assessor",
+      "website": "https://www.nevadacountyar.com",
+      "phone": "(870) 887-2710"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.50,
+    "agProductivityValue": 175,
+    "notes": "Prescott area; timber and farming; small rural county"
+  },
+  {
+    "name": "Newton",
+    "region": "Northwest",
+    "assessor": {
+      "name": "Newton County Assessor",
+      "website": "https://www.newtoncountyar.gov",
+      "phone": "(870) 446-5125"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.45,
+    "agProductivityValue": 125,
+    "notes": "Jasper area; most rugged Ozark county; Buffalo National River; cattle and hay; excellent wildflower forage"
+  },
+  {
+    "name": "Ouachita",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Ouachita County Assessor",
+      "website": "https://www.ouachitacountyar.org",
+      "phone": "(870) 837-2230"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 200,
+    "notes": "Camden area; timber, oil, and farming; Ouachita River"
+  },
+  {
+    "name": "Perry",
+    "region": "Central",
+    "assessor": {
+      "name": "Perry County Assessor",
+      "website": "https://www.perrycountyar.org",
+      "phone": "(501) 889-5146"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.48,
+    "agProductivityValue": 150,
+    "notes": "Perryville area; Lake Winona; small rural county near Little Rock"
+  },
+  {
+    "name": "Phillips",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Phillips County Assessor",
+      "website": "https://www.phillipscountyar.org",
+      "phone": "(870) 338-5505"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.60,
+    "agProductivityValue": 250,
+    "notes": "Helena-West Helena area; Mississippi River; major delta farming"
+  },
+  {
+    "name": "Pike",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Pike County Assessor",
+      "website": "https://www.pikecountyar.com",
+      "phone": "(870) 285-2231"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.48,
+    "agProductivityValue": 150,
+    "notes": "Murfreesboro area; Crater of Diamonds State Park; timber and farming"
+  },
+  {
+    "name": "Poinsett",
+    "region": "Northeast",
+    "assessor": {
+      "name": "Poinsett County Assessor",
+      "website": "https://www.poinsettcountyar.org",
+      "phone": "(870) 578-4420"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.58,
+    "agProductivityValue": 225,
+    "notes": "Harrisburg area; NE Arkansas delta; rice and soybean farming"
+  },
+  {
+    "name": "Polk",
+    "region": "River Valley",
+    "assessor": {
+      "name": "Polk County Assessor",
+      "website": "https://www.polkcountyar.com",
+      "phone": "(479) 394-8100"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.50,
+    "agProductivityValue": 150,
+    "notes": "Mena area; Ouachita Mountains; Rich Mountain; timber, cattle, poultry"
+  },
+  {
+    "name": "Pope",
+    "region": "Central",
+    "assessor": {
+      "name": "Pope County Assessor",
+      "website": "https://www.popecountyar.gov",
+      "phone": "(479) 968-6164"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.58,
+    "agProductivityValue": 175,
+    "notes": "Russellville area; Arkansas Tech University; nuclear power plant; Arkansas River valley"
+  },
+  {
+    "name": "Prairie",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Prairie County Assessor",
+      "website": "https://www.prairiecountyar.org",
+      "phone": "(870) 256-3741"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 225,
+    "notes": "Des Arc/DeValls Bluff area; two county seats; rice and soybean farming in Grand Prairie"
+  },
+  {
+    "name": "Pulaski",
+    "region": "Central",
+    "assessor": {
+      "name": "Pulaski County Assessor",
+      "website": "https://www.pulaskicountyassessor.net",
+      "phone": "(501) 340-6170"
+    },
+    "minAcres": 10,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.82,
+    "agProductivityValue": 200,
+    "notes": "Little Rock area; state capital; largest county by population; high land values in metro — ag use value very beneficial in rural portions"
+  },
+  {
+    "name": "Randolph",
+    "region": "Northeast",
+    "assessor": {
+      "name": "Randolph County Assessor",
+      "website": "https://www.randolphcountyar.org",
+      "phone": "(870) 892-5264"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.52,
+    "agProductivityValue": 200,
+    "notes": "Pocahontas area; Current River; farming and timber"
+  },
+  {
+    "name": "Saline",
+    "region": "Central",
+    "assessor": {
+      "name": "Saline County Assessor",
+      "website": "https://www.salinecounty.org",
+      "phone": "(501) 303-5625"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.68,
+    "agProductivityValue": 175,
+    "notes": "Benton/Bryant area; fast-growing Little Rock suburb; ag use value beneficial due to rising land prices"
+  },
+  {
+    "name": "Scott",
+    "region": "River Valley",
+    "assessor": {
+      "name": "Scott County Assessor",
+      "website": "https://www.scottcountyar.com",
+      "phone": "(479) 637-2155"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.48,
+    "agProductivityValue": 150,
+    "notes": "Waldron area; two county seats; Ouachita/Ozark overlap; poultry, cattle, timber"
+  },
+  {
+    "name": "Searcy",
+    "region": "Northwest",
+    "assessor": {
+      "name": "Searcy County Assessor",
+      "website": "https://www.searcycountyar.com",
+      "phone": "(870) 448-3807"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.45,
+    "agProductivityValue": 125,
+    "notes": "Marshall area; Ozark mountains; very rural; cattle, hay, timber; excellent wildflower forage"
+  },
+  {
+    "name": "Sebastian",
+    "region": "River Valley",
+    "assessor": {
+      "name": "Sebastian County Assessor",
+      "website": "https://www.sebastiancountyar.gov",
+      "phone": "(479) 782-5065"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.68,
+    "agProductivityValue": 175,
+    "notes": "Fort Smith area; second largest city in AR; two county seats (Greenwood); poultry in rural areas"
+  },
+  {
+    "name": "Sevier",
+    "region": "Southwest",
+    "assessor": {
+      "name": "Sevier County Assessor",
+      "website": "https://www.seviercountyar.com",
+      "phone": "(870) 642-2852"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.50,
+    "agProductivityValue": 175,
+    "notes": "De Queen area; poultry and timber; near Oklahoma border"
+  },
+  {
+    "name": "Sharp",
+    "region": "Northeast",
+    "assessor": {
+      "name": "Sharp County Assessor",
+      "website": "https://www.sharpcountyar.org",
+      "phone": "(870) 994-7361"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.48,
+    "agProductivityValue": 150,
+    "notes": "Ash Flat area; two county seats; Ozark foothills; cattle and hay"
+  },
+  {
+    "name": "St. Francis",
+    "region": "Southeast",
+    "assessor": {
+      "name": "St. Francis County Assessor",
+      "website": "https://www.stfranciscountyar.org",
+      "phone": "(870) 261-1725"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.60,
+    "agProductivityValue": 250,
+    "notes": "Forrest City area; delta farming; rice, soybeans, cotton"
+  },
+  {
+    "name": "Stone",
+    "region": "Central",
+    "assessor": {
+      "name": "Stone County Assessor",
+      "website": "https://www.stonecountyar.com",
+      "phone": "(870) 269-3351"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.48,
+    "agProductivityValue": 125,
+    "notes": "Mountain View area; Ozark Folk Center; music and tourism; cattle, hay, small farms"
+  },
+  {
+    "name": "Union",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Union County Assessor",
+      "website": "https://www.unioncountyar.com",
+      "phone": "(870) 864-1920"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.58,
+    "agProductivityValue": 200,
+    "notes": "El Dorado area; largest county by area; oil, timber, farming; Murphy Oil"
+  },
+  {
+    "name": "Van Buren",
+    "region": "Central",
+    "assessor": {
+      "name": "Van Buren County Assessor",
+      "website": "https://www.vanburencountyar.org",
+      "phone": "(501) 745-4140"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.50,
+    "agProductivityValue": 150,
+    "notes": "Clinton area; Greers Ferry Lake area; cattle, hay, timber"
+  },
+  {
+    "name": "Washington",
+    "region": "Northwest",
+    "assessor": {
+      "name": "Washington County Assessor",
+      "website": "https://www.washingtoncountyar.gov",
+      "phone": "(479) 444-1526"
+    },
+    "minAcres": 10,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.72,
+    "agProductivityValue": 175,
+    "notes": "Fayetteville area; University of Arkansas; NW Arkansas metro; high land values — ag use value very beneficial"
+  },
+  {
+    "name": "White",
+    "region": "Central",
+    "assessor": {
+      "name": "White County Assessor",
+      "website": "https://www.whitecountyar.org",
+      "phone": "(501) 279-6204"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.58,
+    "agProductivityValue": 200,
+    "notes": "Searcy area; Harding University; poultry, cattle, row crops"
+  },
+  {
+    "name": "Woodruff",
+    "region": "Southeast",
+    "assessor": {
+      "name": "Woodruff County Assessor",
+      "website": "https://www.woodruffcountyar.org",
+      "phone": "(870) 347-2871"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.55,
+    "agProductivityValue": 225,
+    "notes": "Augusta area; two county seats; delta farming; rice, soybeans"
+  },
+  {
+    "name": "Yell",
+    "region": "River Valley",
+    "assessor": {
+      "name": "Yell County Assessor",
+      "website": "https://www.yellcountyar.org",
+      "phone": "(479) 495-4850"
+    },
+    "minAcres": 5,
+    "minHives": 5,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.50,
+    "agProductivityValue": 150,
+    "notes": "Danville/Dardanelle area; two county seats; Petit Jean Mountain; poultry, cattle, hay"
+  }
+]

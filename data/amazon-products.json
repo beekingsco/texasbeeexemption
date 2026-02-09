@@ -1,0 +1,671 @@
+{
+  "affiliateTag": "BeeKings-20",
+  "lastUpdated": "2025-02-09",
+  "categories": {
+    "hive-kits": {
+      "label": "Complete Hive Kits",
+      "icon": "🏠",
+      "products": [
+        {
+          "name": "Honey Lake 10-Frame Beehive Starter Kit with Smoker & Tools",
+          "asin": "B09P3TCT4T",
+          "price": 119.99,
+          "rating": 4.5,
+          "reviews": 1850,
+          "amazonUrl": "https://www.amazon.com/dp/B09P3TCT4T?tag=BeeKings-20",
+          "image": "Complete 10-frame Langstroth hive kit with beeswax-coated deep box, frames, smoker, and veil hat",
+          "description": "Beeswax-coated assembled deep hive box with 10 frames, bee smoker, hive tool, and protective veil hat. Great budget starter kit.",
+          "recommended": false,
+          "tier": "essential",
+          "brand": "Honey Lake",
+          "perHive": true
+        },
+        {
+          "name": "Honey Lake 8-Frame Beehive Starter Kit with Tools",
+          "asin": "B09P3TLRFN",
+          "price": 99.99,
+          "rating": 4.4,
+          "reviews": 1200,
+          "amazonUrl": "https://www.amazon.com/dp/B09P3TLRFN?tag=BeeKings-20",
+          "image": "8-frame beeswax-coated deep hive box with frames, smoker, and veil hat",
+          "description": "Budget-friendly 8-frame starter kit with beeswax-coated deep box, frames, bee smoker, and protective veil. Great for smaller operations.",
+          "recommended": false,
+          "tier": "essential",
+          "brand": "Honey Lake",
+          "perHive": true
+        },
+        {
+          "name": "BeeCastle 10-Frame Complete Beehive Kit (2 Deep + 1 Medium)",
+          "asin": "B0CNFN4MQQ",
+          "price": 189.99,
+          "rating": 4.6,
+          "reviews": 980,
+          "amazonUrl": "https://www.amazon.com/dp/B0CNFN4MQQ?tag=BeeKings-20",
+          "image": "Complete 10-frame Langstroth hive with 2 deep brood boxes, 1 medium honey super, frames, foundation, and all hardware",
+          "description": "Complete 10-frame Langstroth hive: 2 deep brood boxes + 1 medium honey super with wax-coated frames, bottom board, inner cover, telescoping outer cover, and queen excluder.",
+          "recommended": true,
+          "tier": "upgrade",
+          "brand": "BeeCastle",
+          "perHive": true
+        },
+        {
+          "name": "Mann Lake Complete 10-Frame Hive Kit with Frames & Foundation",
+          "asin": "B09GFPQYXB",
+          "price": 259.99,
+          "rating": 4.7,
+          "reviews": 650,
+          "amazonUrl": "https://www.amazon.com/dp/B09GFPQYXB?tag=BeeKings-20",
+          "image": "Premium commercial-grade 10-frame Langstroth hive with beeswax foundation, assembled frames, and premium pine construction",
+          "description": "Premium commercial-grade 10-frame Langstroth hive from Mann Lake. Select pine construction with dovetail joints, beeswax-coated plastic foundation, and assembled frames.",
+          "recommended": false,
+          "tier": "premium",
+          "brand": "Mann Lake",
+          "perHive": true
+        }
+      ]
+    },
+    "hive-bodies": {
+      "label": "Hive Bodies & Boxes",
+      "icon": "📦",
+      "products": [
+        {
+          "name": "BeeCastle 10-Frame Deep Brood Box (Unassembled)",
+          "asin": "B0CRYDNZ2B",
+          "price": 29.99,
+          "rating": 4.4,
+          "reviews": 520,
+          "amazonUrl": "https://www.amazon.com/dp/B0CRYDNZ2B?tag=BeeKings-20",
+          "image": "Unassembled 10-frame deep pine brood box with dovetail joints",
+          "description": "Budget-friendly unassembled deep brood box. Pine construction with dovetail joints. Requires frames sold separately.",
+          "recommended": false,
+          "tier": "essential",
+          "brand": "BeeCastle",
+          "perHive": true
+        },
+        {
+          "name": "BeeCastle 10-Frame Medium Super Box (Wax Coated)",
+          "asin": "B0CRYPFR2Q",
+          "price": 32.99,
+          "rating": 4.5,
+          "reviews": 380,
+          "amazonUrl": "https://www.amazon.com/dp/B0CRYPFR2Q?tag=BeeKings-20",
+          "image": "Beeswax-coated 10-frame medium honey super box",
+          "description": "Beeswax-coated medium super for honey production. 10-frame capacity, pre-coated for longer life.",
+          "recommended": true,
+          "tier": "upgrade",
+          "brand": "BeeCastle",
+          "perHive": true
+        },
+        {
+          "name": "Mann Lake 10-Frame Deep Hive Body (Assembled)",
+          "asin": "B09GFPZ5RM",
+          "price": 44.99,
+          "rating": 4.7,
+          "reviews": 290,
+          "amazonUrl": "https://www.amazon.com/dp/B09GFPZ5RM?tag=BeeKings-20",
+          "image": "Premium assembled 10-frame deep brood box from Mann Lake with commercial-grade pine",
+          "description": "Premium assembled deep brood box from Mann Lake. Commercial-grade select pine, finger-joint construction. Ready to use.",
+          "recommended": false,
+          "tier": "premium",
+          "brand": "Mann Lake",
+          "perHive": true
+        }
+      ]
+    },
+    "frames-foundation": {
+      "label": "Frames & Foundation",
+      "icon": "🖼️",
+      "products": [
+        {
+          "name": "BeeCastle 10-Pack Deep Frames with Beeswax Foundation",
+          "asin": "B0CRYP8QKR",
+          "price": 34.99,
+          "rating": 4.5,
+          "reviews": 720,
+          "amazonUrl": "https://www.amazon.com/dp/B0CRYP8QKR?tag=BeeKings-20",
+          "image": "Pack of 10 deep Langstroth frames with pre-installed beeswax-coated foundation",
+          "description": "10-pack of deep Langstroth frames with beeswax-coated plastic foundation already installed. Ready to drop into your hive body.",
+          "recommended": true,
+          "tier": "essential",
+          "brand": "BeeCastle",
+          "perHive": false,
+          "qtyPer": 2
+        },
+        {
+          "name": "BeeCastle 10-Pack Medium Frames with Beeswax Foundation",
+          "asin": "B0CRYPHR6W",
+          "price": 29.99,
+          "rating": 4.5,
+          "reviews": 580,
+          "amazonUrl": "https://www.amazon.com/dp/B0CRYPHR6W?tag=BeeKings-20",
+          "image": "Pack of 10 medium Langstroth frames with beeswax-coated foundation",
+          "description": "10-pack of medium frames with beeswax-coated plastic foundation. Perfect for honey supers.",
+          "recommended": true,
+          "tier": "essential",
+          "brand": "BeeCastle",
+          "perHive": false,
+          "qtyPer": 1
+        },
+        {
+          "name": "Mann Lake 10-Pack Deep Frames with Rite-Cell Foundation",
+          "asin": "B09GFQB2V7",
+          "price": 49.99,
+          "rating": 4.8,
+          "reviews": 340,
+          "amazonUrl": "https://www.amazon.com/dp/B09GFQB2V7?tag=BeeKings-20",
+          "image": "Premium 10-pack deep frames with Mann Lake Rite-Cell beeswax foundation",
+          "description": "Premium deep frames with Mann Lake's proprietary Rite-Cell beeswax-coated foundation. Excellent bee acceptance rate.",
+          "recommended": false,
+          "tier": "premium",
+          "brand": "Mann Lake",
+          "perHive": false,
+          "qtyPer": 2
+        }
+      ]
+    },
+    "protective-gear": {
+      "label": "Protective Gear",
+      "icon": "🦺",
+      "products": [
+        {
+          "name": "Humble Bee 410 Polycotton Beekeeping Suit with Round Veil",
+          "asin": "B00P5AZYEM",
+          "price": 69.99,
+          "rating": 4.5,
+          "reviews": 3200,
+          "amazonUrl": "https://www.amazon.com/dp/B00P5AZYEM?tag=BeeKings-20",
+          "image": "White polycotton full beekeeping suit with round veil, elastic cuffs, and heavy-duty zippers",
+          "description": "Classic polycotton beekeeping suit. Heavy-duty metal zippers, elastic wrist & ankle cuffs, round veil with excellent visibility. Includes carry bag.",
+          "recommended": true,
+          "tier": "essential",
+          "brand": "Humble Bee",
+          "perHive": false,
+          "qtyFixed": 1
+        },
+        {
+          "name": "Humble Bee 430 Ventilated Beekeeping Suit with Round Veil",
+          "asin": "B017BMKNN8",
+          "price": 109.99,
+          "rating": 4.6,
+          "reviews": 1800,
+          "amazonUrl": "https://www.amazon.com/dp/B017BMKNN8?tag=BeeKings-20",
+          "image": "Three-layer ventilated mesh beekeeping suit with round veil for hot climate beekeeping",
+          "description": "Three-layer ventilated mesh suit perfect for Texas heat. Keeps you cool while providing excellent sting protection. Round veil for great visibility.",
+          "recommended": false,
+          "tier": "upgrade",
+          "brand": "Humble Bee",
+          "perHive": false,
+          "qtyFixed": 1
+        },
+        {
+          "name": "Humble Bee 420 Ultravent Beekeeping Suit with Round Veil",
+          "asin": "B017BMJAFK",
+          "price": 149.99,
+          "rating": 4.6,
+          "reviews": 1400,
+          "amazonUrl": "https://www.amazon.com/dp/B017BMJAFK?tag=BeeKings-20",
+          "image": "Premium ultravent three-layer beekeeping suit with fencing veil and maximum ventilation",
+          "description": "Premium Ultravent suit with maximum airflow for hot climates. Three-layer mesh construction with brass zippers and reinforced stitching.",
+          "recommended": false,
+          "tier": "premium",
+          "brand": "Humble Bee",
+          "perHive": false,
+          "qtyFixed": 1
+        },
+        {
+          "name": "Foxhound Bee Co. Goatskin Beekeeping Gloves",
+          "asin": "B07Q37KGRP",
+          "price": 19.99,
+          "rating": 4.5,
+          "reviews": 2100,
+          "amazonUrl": "https://www.amazon.com/dp/B07Q37KGRP?tag=BeeKings-20",
+          "image": "Premium goatskin leather beekeeping gloves with ventilated long sleeves",
+          "description": "Premium goatskin leather gloves with long canvas sleeves and elastic cuffs. Soft, durable, and sting-resistant.",
+          "recommended": true,
+          "tier": "essential",
+          "brand": "Foxhound Bee Co.",
+          "perHive": false,
+          "qtyFixed": 1
+        }
+      ]
+    },
+    "smokers": {
+      "label": "Smokers",
+      "icon": "💨",
+      "products": [
+        {
+          "name": "Honey Lake Stainless Steel Bee Smoker (4×7 inch)",
+          "asin": "B0CPZ7WV9T",
+          "price": 19.99,
+          "rating": 4.4,
+          "reviews": 950,
+          "amazonUrl": "https://www.amazon.com/dp/B0CPZ7WV9T?tag=BeeKings-20",
+          "image": "Stainless steel bee smoker with heat shield and leather bellows",
+          "description": "Stainless steel smoker with heat shield guard and leather bellows. 4×7 inch barrel, perfect for hobby beekeepers.",
+          "recommended": true,
+          "tier": "essential",
+          "brand": "Honey Lake",
+          "perHive": false,
+          "qtyFixed": 1
+        },
+        {
+          "name": "Mann Lake HD540 Large Smoker with Guard",
+          "asin": "B003CTIWVM",
+          "price": 42.99,
+          "rating": 4.7,
+          "reviews": 1650,
+          "amazonUrl": "https://www.amazon.com/dp/B003CTIWVM?tag=BeeKings-20",
+          "image": "Large stainless steel bee smoker with heat guard and heavy-duty leather bellows from Mann Lake",
+          "description": "Heavy-duty large smoker from Mann Lake. Stainless steel construction, oversized barrel stays lit longer, with heat guard and premium leather bellows.",
+          "recommended": false,
+          "tier": "upgrade",
+          "brand": "Mann Lake",
+          "perHive": false,
+          "qtyFixed": 1
+        }
+      ]
+    },
+    "hive-tools": {
+      "label": "Hive Tools",
+      "icon": "🔧",
+      "products": [
+        {
+          "name": "KINGLAKE 10\" J-Hook Hive Tool (Stainless Steel)",
+          "asin": "B07WR8ZYXG",
+          "price": 9.99,
+          "rating": 4.6,
+          "reviews": 2800,
+          "amazonUrl": "https://www.amazon.com/dp/B07WR8ZYXG?tag=BeeKings-20",
+          "image": "Stainless steel J-hook hive tool for prying frames and scraping",
+          "description": "Stainless steel J-hook hive tool. Essential for prying frames, scraping propolis, and lifting boxes. The #1 beekeeper's tool.",
+          "recommended": true,
+          "tier": "essential",
+          "brand": "KINGLAKE",
+          "perHive": false,
+          "qtyFixed": 1
+        },
+        {
+          "name": "KINGLAKE Stainless Steel Frame Grip",
+          "asin": "B07WR7Z3RN",
+          "price": 12.99,
+          "rating": 4.5,
+          "reviews": 1200,
+          "amazonUrl": "https://www.amazon.com/dp/B07WR7Z3RN?tag=BeeKings-20",
+          "image": "Spring-loaded stainless steel frame grip for safe frame handling",
+          "description": "Spring-loaded frame grip for safely lifting and inspecting frames. Stainless steel construction, comfortable grip.",
+          "recommended": true,
+          "tier": "essential",
+          "brand": "KINGLAKE",
+          "perHive": false,
+          "qtyFixed": 1
+        },
+        {
+          "name": "Honey Lake Beekeeping Tool Kit (16 Pieces)",
+          "asin": "B08ZY4YFFW",
+          "price": 36.99,
+          "rating": 4.5,
+          "reviews": 1100,
+          "amazonUrl": "https://www.amazon.com/dp/B08ZY4YFFW?tag=BeeKings-20",
+          "image": "Complete 16-piece beekeeping tool kit with smoker, hive tool, brush, frame grip, and accessories",
+          "description": "Complete 16-piece beekeeping tool kit. Includes smoker, J-hook hive tool, bee brush, frame grip, uncapping fork, queen catcher, and more.",
+          "recommended": false,
+          "tier": "upgrade",
+          "brand": "Honey Lake",
+          "perHive": false,
+          "qtyFixed": 1
+        }
+      ]
+    },
+    "feeders": {
+      "label": "Feeders",
+      "icon": "🍯",
+      "products": [
+        {
+          "name": "Little Giant Entrance Feeder for Beehives",
+          "asin": "B000HHO1RW",
+          "price": 7.99,
+          "rating": 4.4,
+          "reviews": 3500,
+          "amazonUrl": "https://www.amazon.com/dp/B000HHO1RW?tag=BeeKings-20",
+          "image": "Boardman-style entrance feeder with mason jar for sugar syrup feeding",
+          "description": "Classic Boardman entrance feeder. Easy to monitor and refill without opening the hive. Uses a standard mason jar (not included).",
+          "recommended": true,
+          "tier": "essential",
+          "brand": "Little Giant",
+          "perHive": true
+        },
+        {
+          "name": "Mann Lake Pro Feeder (In-Hive Top Feeder)",
+          "asin": "B003CLKTCE",
+          "price": 24.99,
+          "rating": 4.5,
+          "reviews": 1200,
+          "amazonUrl": "https://www.amazon.com/dp/B003CLKTCE?tag=BeeKings-20",
+          "image": "In-hive top feeder that sits on top of the brood box with anti-drowning features",
+          "description": "In-hive top feeder with anti-drowning ladders. Holds over 1 gallon of syrup. No robbing risk since it's inside the hive.",
+          "recommended": false,
+          "tier": "upgrade",
+          "brand": "Mann Lake",
+          "perHive": true
+        },
+        {
+          "name": "Apiray 10-Frame Hive Top Feeder (4 Gallon)",
+          "asin": "B0BPFD8PWJ",
+          "price": 32.99,
+          "rating": 4.6,
+          "reviews": 450,
+          "amazonUrl": "https://www.amazon.com/dp/B0BPFD8PWJ?tag=BeeKings-20",
+          "image": "Large 4-gallon in-hive top feeder for rapid feeding",
+          "description": "Large 4-gallon capacity top feeder for rapid feeding during buildup or dearth. Anti-drowning features, easy refill without disturbing bees.",
+          "recommended": false,
+          "tier": "premium",
+          "brand": "Apiray",
+          "perHive": true
+        }
+      ]
+    },
+    "bee-brushes": {
+      "label": "Bee Brushes",
+      "icon": "🖌️",
+      "products": [
+        {
+          "name": "KINGLAKE Soft Bristle Bee Brush (14 inch)",
+          "asin": "B07WR8GQKP",
+          "price": 7.99,
+          "rating": 4.5,
+          "reviews": 1800,
+          "amazonUrl": "https://www.amazon.com/dp/B07WR8GQKP?tag=BeeKings-20",
+          "image": "14-inch soft bristle bee brush for gentle bee removal from frames",
+          "description": "Soft natural bristle bee brush for gently sweeping bees off frames during inspections and harvesting. 14-inch handle.",
+          "recommended": true,
+          "tier": "essential",
+          "brand": "KINGLAKE",
+          "perHive": false,
+          "qtyFixed": 1
+        },
+        {
+          "name": "Mann Lake Double Row Bee Brush",
+          "asin": "B003CL9ERM",
+          "price": 11.99,
+          "rating": 4.6,
+          "reviews": 850,
+          "amazonUrl": "https://www.amazon.com/dp/B003CL9ERM?tag=BeeKings-20",
+          "image": "Professional double-row soft bristle bee brush from Mann Lake",
+          "description": "Professional double-row bee brush from Mann Lake. Extra-soft bristles for gentle handling. Preferred by commercial beekeepers.",
+          "recommended": false,
+          "tier": "upgrade",
+          "brand": "Mann Lake",
+          "perHive": false,
+          "qtyFixed": 1
+        }
+      ]
+    },
+    "books": {
+      "label": "Beekeeping Books",
+      "icon": "📚",
+      "products": [
+        {
+          "name": "Beekeeping for Dummies (4th Edition)",
+          "asin": "1119702607",
+          "price": 19.99,
+          "rating": 4.7,
+          "reviews": 4200,
+          "amazonUrl": "https://www.amazon.com/dp/1119702607?tag=BeeKings-20",
+          "image": "Beekeeping for Dummies book cover - comprehensive beginner's guide",
+          "description": "The most popular beekeeping book for beginners. Covers everything from setting up your first hive to harvesting honey. Updated 4th edition.",
+          "recommended": true,
+          "tier": "essential",
+          "brand": "Wiley",
+          "perHive": false,
+          "qtyFixed": 1
+        },
+        {
+          "name": "The Beekeeper's Handbook (5th Edition)",
+          "asin": "1501711393",
+          "price": 24.99,
+          "rating": 4.7,
+          "reviews": 2800,
+          "amazonUrl": "https://www.amazon.com/dp/1501711393?tag=BeeKings-20",
+          "image": "The Beekeeper's Handbook book cover - comprehensive reference guide",
+          "description": "The definitive reference handbook for beekeepers. More detailed and technical than Beekeeping for Dummies. Great as a reference book to keep near your hives.",
+          "recommended": false,
+          "tier": "upgrade",
+          "brand": "Cornell University Press",
+          "perHive": false,
+          "qtyFixed": 1
+        },
+        {
+          "name": "The Backyard Beekeeper (5th Edition) by Kim Flottum",
+          "asin": "0760385386",
+          "price": 22.49,
+          "rating": 4.7,
+          "reviews": 1500,
+          "amazonUrl": "https://www.amazon.com/dp/0760385386?tag=BeeKings-20",
+          "image": "The Backyard Beekeeper book with color photos and modern beekeeping techniques",
+          "description": "Beautiful full-color guide with step-by-step photos. Excellent for visual learners. Covers modern sustainable beekeeping practices.",
+          "recommended": false,
+          "tier": "upgrade",
+          "brand": "Quarry Books",
+          "perHive": false,
+          "qtyFixed": 1
+        }
+      ]
+    },
+    "medications-treatments": {
+      "label": "Medications & Treatments",
+      "icon": "💊",
+      "products": [
+        {
+          "name": "Apivar Varroa Mite Treatment Strips (10-pack)",
+          "asin": "B07C5TGKRH",
+          "price": 39.99,
+          "rating": 4.6,
+          "reviews": 1200,
+          "amazonUrl": "https://www.amazon.com/dp/B07C5TGKRH?tag=BeeKings-20",
+          "image": "Apivar amitraz strips for varroa mite treatment in beehives - pack of 10",
+          "description": "Apivar amitraz strips — the most effective varroa mite treatment. Place 2 strips per brood box for 6-8 weeks. 10 strips treats 5 hives.",
+          "recommended": true,
+          "tier": "essential",
+          "brand": "Véto-pharma",
+          "perHive": false,
+          "qtyPer": 1
+        },
+        {
+          "name": "Oxalic Acid Vaporizer (12V) for Varroa Treatment",
+          "asin": "B0BN7N8N89",
+          "price": 32.99,
+          "rating": 4.4,
+          "reviews": 680,
+          "amazonUrl": "https://www.amazon.com/dp/B0BN7N8N89?tag=BeeKings-20",
+          "image": "12V oxalic acid vaporizer wand for varroa mite treatment in beehives",
+          "description": "12V oxalic acid vaporizer for effective varroa treatment. Chemical-free approach using organic acid. Connects to car battery.",
+          "recommended": false,
+          "tier": "upgrade",
+          "brand": "Varomor",
+          "perHive": false,
+          "qtyFixed": 1
+        },
+        {
+          "name": "Mann Lake DC-799 Small Hive Beetle Trap (Pack of 6)",
+          "asin": "B003CJXXQW",
+          "price": 16.99,
+          "rating": 4.3,
+          "reviews": 920,
+          "amazonUrl": "https://www.amazon.com/dp/B003CJXXQW?tag=BeeKings-20",
+          "image": "Small hive beetle trap that fits between frames - pack of 6",
+          "description": "Between-frame beetle trap from Mann Lake. Fill with vegetable oil to trap small hive beetles. Essential in warm climates like Texas.",
+          "recommended": true,
+          "tier": "essential",
+          "brand": "Mann Lake",
+          "perHive": false,
+          "qtyPer": 1
+        }
+      ]
+    },
+    "extraction-equipment": {
+      "label": "Extraction Equipment",
+      "icon": "🍯",
+      "products": [
+        {
+          "name": "VIVO 2-Frame Manual Honey Extractor (Stainless Steel)",
+          "asin": "B01D1BGYZY",
+          "price": 134.99,
+          "rating": 4.4,
+          "reviews": 2400,
+          "amazonUrl": "https://www.amazon.com/dp/B01D1BGYZY?tag=BeeKings-20",
+          "image": "Stainless steel 2-frame manual honey extractor with hand crank",
+          "description": "Stainless steel 2-frame tangential honey extractor. Hand crank operation, honey gate valve, clear lid. Perfect for hobby beekeepers.",
+          "recommended": true,
+          "tier": "upgrade",
+          "brand": "VIVO",
+          "perHive": false,
+          "qtyFixed": 1
+        },
+        {
+          "name": "VIVO 4-Frame Manual Honey Extractor (Stainless Steel)",
+          "asin": "B07DJ3S3MH",
+          "price": 209.99,
+          "rating": 4.5,
+          "reviews": 1100,
+          "amazonUrl": "https://www.amazon.com/dp/B07DJ3S3MH?tag=BeeKings-20",
+          "image": "Large stainless steel 4-frame manual honey extractor",
+          "description": "Large 4-frame stainless steel extractor for serious hobbyists. Hand crank with geared mechanism, honey gate, and transparent lid.",
+          "recommended": false,
+          "tier": "premium",
+          "brand": "VIVO",
+          "perHive": false,
+          "qtyFixed": 1
+        },
+        {
+          "name": "CGOLDENWALL Electric Uncapping Knife (Heated)",
+          "asin": "B07KX6XVNJ",
+          "price": 29.99,
+          "rating": 4.4,
+          "reviews": 850,
+          "amazonUrl": "https://www.amazon.com/dp/B07KX6XVNJ?tag=BeeKings-20",
+          "image": "Electric heated honey uncapping knife for removing wax cappings",
+          "description": "Electric heated uncapping knife for slicing wax cappings off honeycomb frames before extraction. Temperature adjustable.",
+          "recommended": false,
+          "tier": "upgrade",
+          "brand": "CGOLDENWALL",
+          "perHive": false,
+          "qtyFixed": 1
+        }
+      ]
+    },
+    "starter-bundles": {
+      "label": "All-in-One Starter Bundles",
+      "icon": "🎁",
+      "products": [
+        {
+          "name": "Honey Lake Complete Beekeeping Starter Bundle (Hive + Suit + Tools)",
+          "asin": "B0CMQVD4MQ",
+          "price": 199.99,
+          "rating": 4.5,
+          "reviews": 780,
+          "amazonUrl": "https://www.amazon.com/dp/B0CMQVD4MQ?tag=BeeKings-20",
+          "image": "Complete beekeeping starter bundle with 10-frame hive, full bee suit, smoker, and all tools",
+          "description": "All-in-one starter bundle: 10-frame beeswax-coated hive with frames, full bee suit with veil, smoker, hive tool, bee brush, and gloves. Everything to start beekeeping.",
+          "recommended": true,
+          "tier": "essential",
+          "brand": "Honey Lake",
+          "perHive": false,
+          "qtyFixed": 1,
+          "includesHive": true
+        },
+        {
+          "name": "BeeCastle Premium Starter Bundle (2 Deep + Super + Suit + Tools)",
+          "asin": "B0CNFQLVRT",
+          "price": 319.99,
+          "rating": 4.6,
+          "reviews": 420,
+          "amazonUrl": "https://www.amazon.com/dp/B0CNFQLVRT?tag=BeeKings-20",
+          "image": "Premium beekeeping starter bundle with 2 deep boxes, honey super, full suit, and complete tool kit",
+          "description": "Premium complete bundle: 2 deep brood boxes + 1 medium honey super with all frames & foundation, full ventilated suit, premium smoker, complete tool kit, and gloves.",
+          "recommended": false,
+          "tier": "upgrade",
+          "brand": "BeeCastle",
+          "perHive": false,
+          "qtyFixed": 1,
+          "includesHive": true
+        },
+        {
+          "name": "Mann Lake Complete Beginner Kit with Hive & Equipment",
+          "asin": "B09GFPRTYV",
+          "price": 449.99,
+          "rating": 4.7,
+          "reviews": 280,
+          "amazonUrl": "https://www.amazon.com/dp/B09GFPRTYV?tag=BeeKings-20",
+          "image": "Premium Mann Lake complete beginner kit with commercial-grade hive, suit, and professional tools",
+          "description": "The ultimate beginner kit from Mann Lake. Commercial-grade 10-frame hive, premium ventilated suit, professional smoker, all tools, and educational guide.",
+          "recommended": false,
+          "tier": "premium",
+          "brand": "Mann Lake",
+          "perHive": false,
+          "qtyFixed": 1,
+          "includesHive": true
+        }
+      ]
+    }
+  },
+  "shoppingListTiers": {
+    "budget": {
+      "label": "Budget Starter",
+      "emoji": "🟢",
+      "description": "Cheapest options to meet minimum requirements",
+      "color": "#16a34a",
+      "items": [
+        { "category": "hive-kits", "productIndex": 0, "perHive": true },
+        { "category": "protective-gear", "productIndex": 0, "qty": 1 },
+        { "category": "protective-gear", "productIndex": 3, "qty": 1 },
+        { "category": "hive-tools", "productIndex": 0, "qty": 1 },
+        { "category": "bee-brushes", "productIndex": 0, "qty": 1 },
+        { "category": "feeders", "productIndex": 0, "perHive": true },
+        { "category": "medications-treatments", "productIndex": 0, "qty": 1 },
+        { "category": "medications-treatments", "productIndex": 2, "qty": 1 },
+        { "category": "books", "productIndex": 0, "qty": 1 }
+      ]
+    },
+    "recommended": {
+      "label": "Recommended",
+      "emoji": "🟡",
+      "description": "Best value — quality gear that lasts",
+      "color": "#d97706",
+      "items": [
+        { "category": "hive-kits", "productIndex": 2, "perHive": true },
+        { "category": "protective-gear", "productIndex": 1, "qty": 1 },
+        { "category": "protective-gear", "productIndex": 3, "qty": 1 },
+        { "category": "smokers", "productIndex": 1, "qty": 1 },
+        { "category": "hive-tools", "productIndex": 2, "qty": 1 },
+        { "category": "bee-brushes", "productIndex": 1, "qty": 1 },
+        { "category": "feeders", "productIndex": 1, "perHive": true },
+        { "category": "medications-treatments", "productIndex": 0, "qty": 1 },
+        { "category": "medications-treatments", "productIndex": 2, "qty": 1 },
+        { "category": "books", "productIndex": 0, "qty": 1 },
+        { "category": "books", "productIndex": 1, "qty": 1 }
+      ]
+    },
+    "premium": {
+      "label": "Premium",
+      "emoji": "🔵",
+      "description": "Top-of-the-line gear for serious beekeepers",
+      "color": "#2563eb",
+      "items": [
+        { "category": "hive-kits", "productIndex": 3, "perHive": true },
+        { "category": "protective-gear", "productIndex": 2, "qty": 1 },
+        { "category": "protective-gear", "productIndex": 3, "qty": 1 },
+        { "category": "smokers", "productIndex": 1, "qty": 1 },
+        { "category": "hive-tools", "productIndex": 2, "qty": 1 },
+        { "category": "bee-brushes", "productIndex": 1, "qty": 1 },
+        { "category": "feeders", "productIndex": 2, "perHive": true },
+        { "category": "medications-treatments", "productIndex": 0, "qty": 1 },
+        { "category": "medications-treatments", "productIndex": 1, "qty": 1 },
+        { "category": "medications-treatments", "productIndex": 2, "qty": 1 },
+        { "category": "books", "productIndex": 0, "qty": 1 },
+        { "category": "books", "productIndex": 1, "qty": 1 },
+        { "category": "extraction-equipment", "productIndex": 0, "qty": 1 },
+        { "category": "extraction-equipment", "productIndex": 2, "qty": 1 }
+      ]
+    }
+  }
+}

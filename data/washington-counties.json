@@ -1,0 +1,587 @@
+[
+  {
+    "name": "Adams",
+    "region": "Eastern",
+    "assessor": {
+      "name": "Adams County Assessor",
+      "website": "https://www.co.adams.wa.us/departments/assessor/",
+      "phone": "(509) 659-3249"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.10,
+    "agProductivityValue": 200,
+    "notes": "Agricultural county; dryland wheat, irrigated crops; good alfalfa/clover forage for bees"
+  },
+  {
+    "name": "Asotin",
+    "region": "Eastern",
+    "assessor": {
+      "name": "Asotin County Assessor",
+      "website": "https://www.co.asotin.wa.us/assessor",
+      "phone": "(509) 243-2084"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.05,
+    "agProductivityValue": 150,
+    "notes": "Clarkston area; Snake River valley; small agricultural county; wheat, barley"
+  },
+  {
+    "name": "Benton",
+    "region": "Eastern",
+    "assessor": {
+      "name": "Benton County Assessor",
+      "website": "https://www.co.benton.wa.us/pview.aspx?id=1268",
+      "phone": "(509) 735-8428"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 350,
+    "notes": "Tri-Cities; wine grapes, orchards, irrigated agriculture; excellent bee forage"
+  },
+  {
+    "name": "Chelan",
+    "region": "Central",
+    "assessor": {
+      "name": "Chelan County Assessor",
+      "website": "https://www.co.chelan.wa.us/assessor",
+      "phone": "(509) 667-6365"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.95,
+    "agProductivityValue": 400,
+    "notes": "Wenatchee; apple capital of WA; orchards provide excellent pollination income potential"
+  },
+  {
+    "name": "Clallam",
+    "region": "Western",
+    "assessor": {
+      "name": "Clallam County Assessor",
+      "website": "https://www.clallam.net/assessor/",
+      "phone": "(360) 417-2232"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.95,
+    "agProductivityValue": 200,
+    "notes": "Olympic Peninsula; Port Angeles; maritime climate; lavender farms; limited but diverse bee forage"
+  },
+  {
+    "name": "Clark",
+    "region": "Western",
+    "assessor": {
+      "name": "Clark County Assessor",
+      "website": "https://www.clark.wa.gov/assessor",
+      "phone": "(564) 397-2391"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.05,
+    "agProductivityValue": 300,
+    "notes": "Vancouver/Portland metro area; high land values; significant tax savings potential; diverse agriculture"
+  },
+  {
+    "name": "Columbia",
+    "region": "Eastern",
+    "assessor": {
+      "name": "Columbia County Assessor",
+      "website": "https://www.columbiaco.com/149/Assessor",
+      "phone": "(509) 382-4541"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.10,
+    "agProductivityValue": 150,
+    "notes": "Dayton; smallest county population; wheat, barley; rural agricultural"
+  },
+  {
+    "name": "Cowlitz",
+    "region": "Western",
+    "assessor": {
+      "name": "Cowlitz County Assessor",
+      "website": "https://www.co.cowlitz.wa.us/assessor/",
+      "phone": "(360) 577-3010"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.10,
+    "agProductivityValue": 250,
+    "notes": "Longview/Kelso; timber country; some agricultural land along Columbia River"
+  },
+  {
+    "name": "Douglas",
+    "region": "Central",
+    "assessor": {
+      "name": "Douglas County Assessor",
+      "website": "https://www.douglascountywa.net/departments/assessor",
+      "phone": "(509) 884-7108"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.90,
+    "agProductivityValue": 300,
+    "notes": "East Wenatchee; orchards, wheat; excellent pollination opportunities"
+  },
+  {
+    "name": "Ferry",
+    "region": "Eastern",
+    "assessor": {
+      "name": "Ferry County Assessor",
+      "website": "https://www.co.ferry.wa.us/assessor",
+      "phone": "(509) 775-5200"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.05,
+    "agProductivityValue": 100,
+    "notes": "Republic; remote, forested; limited agriculture; timber primary industry"
+  },
+  {
+    "name": "Franklin",
+    "region": "Eastern",
+    "assessor": {
+      "name": "Franklin County Assessor",
+      "website": "https://www.co.franklin.wa.us/assessor/",
+      "phone": "(509) 545-3506"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 400,
+    "notes": "Pasco/Tri-Cities; highly irrigated; vineyards, asparagus, potatoes; excellent bee forage"
+  },
+  {
+    "name": "Garfield",
+    "region": "Eastern",
+    "assessor": {
+      "name": "Garfield County Assessor",
+      "website": "https://www.co.garfield.wa.us/assessor",
+      "phone": "(509) 843-1411"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.15,
+    "agProductivityValue": 120,
+    "notes": "Pomeroy; smallest population county; dryland wheat; very rural"
+  },
+  {
+    "name": "Grant",
+    "region": "Central",
+    "assessor": {
+      "name": "Grant County Assessor",
+      "website": "https://www.grantcountywa.gov/363/Assessor",
+      "phone": "(509) 754-2011"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 400,
+    "notes": "Moses Lake; major irrigated agriculture; potatoes, corn, alfalfa; Columbia Basin; excellent bee territory"
+  },
+  {
+    "name": "Grays Harbor",
+    "region": "Western",
+    "assessor": {
+      "name": "Grays Harbor County Assessor",
+      "website": "https://www.graysharbor.us/departments/assessor/",
+      "phone": "(360) 249-3731"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.10,
+    "agProductivityValue": 200,
+    "notes": "Aberdeen; coastal; timber and fishing primary; some dairy; maritime climate limits honey production"
+  },
+  {
+    "name": "Island",
+    "region": "Puget Sound",
+    "assessor": {
+      "name": "Island County Assessor",
+      "website": "https://www.islandcountywa.gov/Assessor/",
+      "phone": "(360) 679-7303"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.85,
+    "agProductivityValue": 250,
+    "notes": "Whidbey Island; small farms, artisanal agriculture; microclimate allows good beekeeping; lower tax rates"
+  },
+  {
+    "name": "Jefferson",
+    "region": "Western",
+    "assessor": {
+      "name": "Jefferson County Assessor",
+      "website": "https://www.co.jefferson.wa.us/assessor/",
+      "phone": "(360) 385-9105"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.90,
+    "agProductivityValue": 200,
+    "notes": "Port Townsend; Olympic Peninsula; small-scale farming; lavender, berries"
+  },
+  {
+    "name": "King",
+    "region": "Puget Sound",
+    "assessor": {
+      "name": "King County Assessor",
+      "website": "https://kingcounty.gov/en/dept/assessor",
+      "phone": "(206) 296-7300"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.94,
+    "agProductivityValue": 400,
+    "notes": "Seattle; highest land values in WA; enormous tax savings potential; farmland in Snoqualmie Valley, Enumclaw area"
+  },
+  {
+    "name": "Kitsap",
+    "region": "Puget Sound",
+    "assessor": {
+      "name": "Kitsap County Assessor",
+      "website": "https://www.kitsapgov.com/as/",
+      "phone": "(360) 337-7160"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 250,
+    "notes": "Bremerton; Puget Sound islands and peninsula; some small farms; naval base area"
+  },
+  {
+    "name": "Kittitas",
+    "region": "Central",
+    "assessor": {
+      "name": "Kittitas County Assessor",
+      "website": "https://www.co.kittitas.wa.us/assessor/",
+      "phone": "(509) 962-7503"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 250,
+    "notes": "Ellensburg; hay, cattle, some orchards; university town; good bee forage in valleys"
+  },
+  {
+    "name": "Klickitat",
+    "region": "Central",
+    "assessor": {
+      "name": "Klickitat County Assessor",
+      "website": "https://www.klickitatcounty.org/173/Assessor",
+      "phone": "(509) 773-4012"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 200,
+    "notes": "Goldendale; Columbia Gorge; orchards, vineyards, ranching; dry climate, good honey production potential"
+  },
+  {
+    "name": "Lewis",
+    "region": "Western",
+    "assessor": {
+      "name": "Lewis County Assessor",
+      "website": "https://lewiscountywa.gov/offices/assessor/",
+      "phone": "(360) 740-1392"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.05,
+    "agProductivityValue": 250,
+    "notes": "Chehalis/Centralia; mix of timber and agriculture; dairy, hay; I-5 corridor"
+  },
+  {
+    "name": "Lincoln",
+    "region": "Eastern",
+    "assessor": {
+      "name": "Lincoln County Assessor",
+      "website": "https://www.co.lincoln.wa.us/assessor/",
+      "phone": "(509) 725-4971"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.10,
+    "agProductivityValue": 150,
+    "notes": "Davenport; dryland wheat primary crop; Channeled Scablands; limited bee forage variety"
+  },
+  {
+    "name": "Mason",
+    "region": "Western",
+    "assessor": {
+      "name": "Mason County Assessor",
+      "website": "https://masoncountywa.gov/assessor/",
+      "phone": "(360) 427-9670"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 200,
+    "notes": "Shelton; Hood Canal; timber, shellfish; some small farms; Olympic foothills"
+  },
+  {
+    "name": "Okanogan",
+    "region": "Central",
+    "assessor": {
+      "name": "Okanogan County Assessor",
+      "website": "https://www.okanogancounty.org/departments/assessor",
+      "phone": "(509) 422-7190"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 200,
+    "notes": "Largest WA county by area; orchards, cattle ranching; Okanogan Valley; good bee habitat"
+  },
+  {
+    "name": "Pacific",
+    "region": "Western",
+    "assessor": {
+      "name": "Pacific County Assessor",
+      "website": "https://www.co.pacific.wa.us/assessor/",
+      "phone": "(360) 875-9320"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.05,
+    "agProductivityValue": 150,
+    "notes": "Long Beach Peninsula; coastal; cranberry bogs, oysters; maritime climate; limited bee season"
+  },
+  {
+    "name": "Pend Oreille",
+    "region": "Eastern",
+    "assessor": {
+      "name": "Pend Oreille County Assessor",
+      "website": "https://www.pendoreille.org/departments/assessor/",
+      "phone": "(509) 447-4119"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 120,
+    "notes": "Newport; NE corner of WA; timber, some cattle; remote; limited agriculture"
+  },
+  {
+    "name": "Pierce",
+    "region": "Puget Sound",
+    "assessor": {
+      "name": "Pierce County Assessor-Treasurer",
+      "website": "https://www.piercecountywa.gov/148/Assessor-Treasurer",
+      "phone": "(253) 798-6111"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.10,
+    "agProductivityValue": 350,
+    "notes": "Tacoma; large county; significant farmland in Puyallup Valley, Orting area; berries, vegetables, nurseries"
+  },
+  {
+    "name": "San Juan",
+    "region": "Puget Sound",
+    "assessor": {
+      "name": "San Juan County Assessor",
+      "website": "https://www.sanjuanco.com/158/Assessor",
+      "phone": "(360) 378-2172"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.60,
+    "agProductivityValue": 200,
+    "notes": "San Juan Islands; lowest tax rate in WA; small-scale artisanal farming; unique island microclimate"
+  },
+  {
+    "name": "Skagit",
+    "region": "Western",
+    "assessor": {
+      "name": "Skagit County Assessor",
+      "website": "https://www.skagitcounty.net/Departments/Assessor/",
+      "phone": "(360) 416-1780"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.95,
+    "agProductivityValue": 400,
+    "notes": "Mt. Vernon; major agricultural county; tulips, berries, dairy, potatoes; excellent bee forage; Skagit Valley"
+  },
+  {
+    "name": "Skamania",
+    "region": "Central",
+    "assessor": {
+      "name": "Skamania County Assessor",
+      "website": "https://www.skamaniacounty.org/assessor",
+      "phone": "(509) 427-3720"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 0.95,
+    "agProductivityValue": 150,
+    "notes": "Stevenson; Columbia Gorge; mostly National Forest; limited agriculture; scenic"
+  },
+  {
+    "name": "Snohomish",
+    "region": "Puget Sound",
+    "assessor": {
+      "name": "Snohomish County Assessor",
+      "website": "https://snohomishcountywa.gov/180/Assessor",
+      "phone": "(425) 388-3433"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 350,
+    "notes": "Everett; significant farmland in Snohomish, Arlington areas; berries, dairy, nurseries; Seattle exurbs"
+  },
+  {
+    "name": "Spokane",
+    "region": "Eastern",
+    "assessor": {
+      "name": "Spokane County Assessor",
+      "website": "https://www.spokanecounty.org/171/Assessor",
+      "phone": "(509) 477-3698"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.10,
+    "agProductivityValue": 250,
+    "notes": "Spokane; largest eastern WA city; wheat, hay in rural areas; urban fringe savings potential"
+  },
+  {
+    "name": "Stevens",
+    "region": "Eastern",
+    "assessor": {
+      "name": "Stevens County Assessor",
+      "website": "https://www.prior.stevenscountywa.gov/assessor/",
+      "phone": "(509) 684-7566"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 150,
+    "notes": "Colville; NE Washington; timber, cattle, hay; rural; moderate bee forage"
+  },
+  {
+    "name": "Thurston",
+    "region": "Puget Sound",
+    "assessor": {
+      "name": "Thurston County Assessor",
+      "website": "https://www.thurstoncountywa.gov/departments/assessors-office",
+      "phone": "(360) 786-5410"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.10,
+    "agProductivityValue": 300,
+    "notes": "Olympia/state capital; mix of urban and rural; South Sound; good agricultural land in Yelm, Rochester areas"
+  },
+  {
+    "name": "Wahkiakum",
+    "region": "Western",
+    "assessor": {
+      "name": "Wahkiakum County Assessor",
+      "website": "https://www.co.wahkiakum.wa.us/departments/assessor/",
+      "phone": "(360) 795-3292"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 150,
+    "notes": "Cathlamet; smallest county; Columbia River; timber, some dairy; very rural"
+  },
+  {
+    "name": "Walla Walla",
+    "region": "Eastern",
+    "assessor": {
+      "name": "Walla Walla County Assessor",
+      "website": "https://www.co.walla-walla.wa.us/departments/assessor/",
+      "phone": "(509) 524-2600"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.05,
+    "agProductivityValue": 300,
+    "notes": "Wine country; wheat, onions, asparagus; vineyards provide some bee forage; growing wine tourism"
+  },
+  {
+    "name": "Whatcom",
+    "region": "Western",
+    "assessor": {
+      "name": "Whatcom County Assessor",
+      "website": "https://www.whatcomcounty.us/305/Assessor",
+      "phone": "(360) 778-5050"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.00,
+    "agProductivityValue": 350,
+    "notes": "Bellingham; dairy, berries, potatoes; excellent agricultural county; Canadian border; good bee forage"
+  },
+  {
+    "name": "Whitman",
+    "region": "Eastern",
+    "assessor": {
+      "name": "Whitman County Assessor",
+      "website": "https://www.whitmancounty.org/275/Assessor",
+      "phone": "(509) 397-5240"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.10,
+    "agProductivityValue": 200,
+    "notes": "Colfax/Pullman; Palouse wheat country; WSU; dryland farming; rolling hills; limited bee forage variety"
+  },
+  {
+    "name": "Yakima",
+    "region": "Central",
+    "assessor": {
+      "name": "Yakima County Assessor",
+      "website": "https://www.yakimacounty.us/150/Assessor",
+      "phone": "(509) 574-1100"
+    },
+    "minAcres": 5,
+    "minHives": 0,
+    "additionalHivesPer": 0,
+    "avgTaxRate": 1.20,
+    "agProductivityValue": 500,
+    "notes": "Top agricultural county in WA; hops, apples, cherries, wine grapes; excellent pollination income potential; major beekeeping area"
+  }
+]
