@@ -414,14 +414,7 @@ export default function FloridaCalculator() {
               <a href="https://beekings.com" style={{ fontSize: 14, fontWeight: 600, color: C.navy, textDecoration: 'none' }}>BeeKings.com</a>
               <a href="mailto:info@beekings.com" style={{ background: C.blue, color: C.white, fontSize: 14, fontWeight: 700, padding: '10px 20px', borderRadius: 8, textDecoration: 'none' }}>Contact Us</a>
             </nav>
-            {/* Florida Bees Badge — flag + text, matching Texas style */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: C.white, border: '1px solid #e2e8f0', borderRadius: 8, padding: '4px 10px' }}>
-              <img src="/florida-bees-badge.jpg" alt="Florida Bees Save You Money" style={{ height: 48, borderRadius: 8 }} />
-              <div style={{ lineHeight: 1.15 }}>
-                <p style={{ fontSize: 10, fontWeight: 900, color: C.navy, letterSpacing: '0.04em', textTransform: 'uppercase' }}>Florida Bees</p>
-                <p style={{ fontSize: 9, fontWeight: 700, color: C.green }}>Save You Money</p>
-              </div>
-            </div>
+            <img src="/florida-bees-badge.jpg" alt="Florida Bees Save You Money" style={{ height: 48, borderRadius: 8 }} />
           </div>
         </div>
       </header>
