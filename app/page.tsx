@@ -368,6 +368,19 @@ export default function Home() {
         source: 'calculator',
       };
       await fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      // Send guide email
+      fetch('/api/send-guide', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: lead.email,
+          firstName: lead.firstName,
+          county: selectedCounty?.name,
+          estimatedSavings: results?.annualSavings,
+          acres: acres ? parseFloat(acres) : parcelData?.legalArea,
+          requiredHives: results?.requiredHives,
+        }),
+      }).catch(() => {});
       track('lead_captured', { county: selectedCounty?.name, savings: results?.annualSavings });
       trackContact('identify', { firstName: lead.firstName, lastName: lead.lastName, email: lead.email, phone: lead.phone });
       trackContact('engage', { event: 'completed_signup' });
