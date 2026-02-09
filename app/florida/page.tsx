@@ -189,6 +189,14 @@ export default function FloridaCalculator() {
       setGeocodedAddress(geo);
       setSelectedCountyName(matchedCounty.name);
       setSearchInput(geo.address.replace(/, USA$/, ''));
+
+      // Auto-fill with reasonable defaults for the county
+      if (!acres) setAcres('10');
+      if (!appraisedValue) setAppraisedValue('300000');
+
+      // Auto-advance to results — same flow as Texas
+      setStep('results');
+
       track('address_searched', { county: matchedCounty.name, address: geo.address, state: 'FL' });
       trackContact('search', { address: geo.address, county: countyClean, lat: geo.lat, lng: geo.lng, referrer: document.referrer });
     } catch {
