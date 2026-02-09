@@ -369,10 +369,13 @@ export default function FloridaCalculator() {
         .r-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
         .r-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .r-nav { display: flex; align-items: center; gap: 32px; }
-        .r-hero-h1 { font-size: 52px; }
+        .r-hero-h1 { font-size: 60px; }
         .r-result-num { font-size: 72px; }
+        .r-pill { flex-direction: row; border-radius: 100px; padding: 6px 6px 6px 20px; }
+        .r-pill-btn { white-space: nowrap; border-radius: 100px; padding: 14px 28px; font-size: 16px; }
         .r-footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
         .r-section { padding: 80px 24px; }
+        .r-vprops { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
         .r-signup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -382,10 +385,13 @@ export default function FloridaCalculator() {
           .r-grid3 { grid-template-columns: 1fr; gap: 24px; }
           .r-grid2 { grid-template-columns: 1fr; }
           .r-nav { display: none; }
-          .r-hero-h1 { font-size: 34px; }
+          .r-hero-h1 { font-size: 40px; }
           .r-result-num { font-size: 48px; }
+          .r-pill { flex-direction: column; border-radius: 16px; padding: 16px; }
+          .r-pill-btn { border-radius: 12px; padding: 16px; font-size: 16px; width: 100%; }
           .r-footer-grid { grid-template-columns: 1fr; gap: 32px; }
           .r-section { padding: 48px 16px; }
+          .r-vprops { flex-direction: column; align-items: center; gap: 12px; }
           .r-signup-grid { grid-template-columns: 1fr; }
         }
       `}</style>
@@ -423,7 +429,7 @@ export default function FloridaCalculator() {
       {/* ===== STEP 1: SEARCH ===== */}
       {step === 'search' && (
         <>
-          {/* Hero */}
+          {/* Hero — matches Texas layout */}
           <section style={{ background: C.sky, position: 'relative', overflow: 'hidden' }}>
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 180, background: C.green }} />
             <svg style={{ position: 'absolute', bottom: 172, left: 0, right: 0, width: '100%' }} height="40" viewBox="0 0 1200 40" preserveAspectRatio="none">
@@ -432,208 +438,139 @@ export default function FloridaCalculator() {
             <div style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 5, width: '100%', maxWidth: 600, pointerEvents: 'none' }}>
               <img src="/hero-beekeeper.png" alt="Beekeeper illustration" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
             </div>
-            <div style={{ position: 'relative', zIndex: 10, maxWidth: 800, margin: '0 auto', padding: '32px 24px 300px', textAlign: 'center' }}>
-              <h1 className="r-hero-h1" style={{ fontWeight: 900, color: C.navy, lineHeight: 1.1, marginBottom: 16, letterSpacing: '-0.03em' }}>
-                Florida Property Tax<br />Savings <span style={{ color: C.blue }}>with Bees</span> 🐝
+            <div style={{ position: 'relative', zIndex: 10, maxWidth: 800, margin: '0 auto', padding: '24px 24px 280px', textAlign: 'center' }}>
+              <h1 className="r-hero-h1" style={{ fontWeight: 900, color: C.navy, lineHeight: 1.05, marginBottom: 16, letterSpacing: '-0.03em', maxWidth: '100%' }}>
+                Save Money on<br />Property Taxes<br /><span style={{ color: C.blue }}>with Bees</span> 🐝
               </h1>
-              <p style={{ fontSize: 17, color: '#5A7A8A', marginBottom: 12, fontWeight: 500, maxWidth: 560, margin: '0 auto 12px' }}>
-                Florida has no minimum acreage for agricultural classification. That means even smaller properties can qualify — and the savings can be substantial.
+              <p style={{ fontSize: 16, color: '#5A7A8A', marginBottom: 32, fontWeight: 500 }}>
+                See how much you could save with a Florida bee exemption
               </p>
-              <p style={{ fontSize: 14, color: '#8DA4B5', fontWeight: 500, marginBottom: 0 }}>
-                Use this free calculator to estimate your savings.
-              </p>
-            </div>
-          </section>
 
-          {/* Calculator Form */}
-          <section className="r-section" style={{ background: C.white }}>
-            <div style={{ maxWidth: 560, margin: '0 auto' }}>
-              <div style={{ background: C.white, borderRadius: 20, boxShadow: '0 8px 40px rgba(0,0,0,0.1)', padding: 32, border: '1px solid #e2e8f0' }}>
-                <h2 style={{ fontSize: 22, fontWeight: 800, color: C.navy, marginBottom: 4, textAlign: 'center' }}>
-                  Estimate Your Savings
-                </h2>
-                <p style={{ fontSize: 14, color: C.gray, marginBottom: 28, textAlign: 'center' }}>
-                  Enter your property details below — takes about 30 seconds.
-                </p>
-
-                {/* Toggle: Address search vs Manual county */}
-                <div style={{ display: 'flex', gap: 0, marginBottom: 20, background: C.lightGray, borderRadius: 10, padding: 3 }}>
-                  <button
-                    onClick={() => setAddressMode(true)}
-                    style={{
-                      flex: 1, padding: '10px 16px', borderRadius: 8, border: 'none', fontSize: 14, fontWeight: 700,
-                      background: addressMode ? C.white : 'transparent', color: addressMode ? C.navy : C.gray,
-                      cursor: 'pointer', fontFamily: 'inherit', boxShadow: addressMode ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
-                    }}
-                  >
-                    🔍 Search by Address
-                  </button>
-                  <button
-                    onClick={() => setAddressMode(false)}
-                    style={{
-                      flex: 1, padding: '10px 16px', borderRadius: 8, border: 'none', fontSize: 14, fontWeight: 700,
-                      background: !addressMode ? C.white : 'transparent', color: !addressMode ? C.navy : C.gray,
-                      cursor: 'pointer', fontFamily: 'inherit', boxShadow: !addressMode ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
-                    }}
-                  >
-                    📋 Select County
-                  </button>
-                </div>
-
-                {/* Address Search */}
-                {addressMode && (
-                  <div style={{ marginBottom: 20, position: 'relative' }} ref={searchRef}>
-                    <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 8 }}>
-                      Property Address
-                    </label>
-                    <div style={{ display: 'flex', gap: 8 }}>
-                      <div style={{ flex: 1, position: 'relative' }}>
-                        <input
-                          type="text" value={searchInput}
-                          onChange={(e) => handleAddressInput(e.target.value)}
-                          onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
-                          onKeyDown={(e) => { if (e.key === 'Enter' && searchInput.trim()) handleAddressSearch(); }}
-                          placeholder="Enter your Florida address..."
-                          style={{
-                            width: '100%', padding: '14px 16px', border: '2px solid #e2e8f0', borderRadius: 10,
-                            fontSize: 16, fontWeight: 500, color: C.navy, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
-                          }}
-                        />
-                        {/* Suggestions dropdown */}
-                        {showSuggestions && suggestions.length > 0 && (
-                          <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, marginTop: 4, background: C.white, border: '1px solid #e2e8f0', borderRadius: 12, boxShadow: '0 8px 24px rgba(0,0,0,0.12)', maxHeight: 280, overflowY: 'auto', zIndex: 50 }}>
-                            {suggestions.map((s, i) => {
-                              const parts = s.text.split(',').map(p => p.trim());
-                              const street = parts[0] || '';
-                              const rest = parts.slice(1).join(', ');
-                              return (
-                                <button key={i} onClick={() => handleSuggestionSelect(s)}
-                                  style={{ width: '100%', padding: '12px 16px', textAlign: 'left', background: 'transparent', border: 'none', borderBottom: '1px solid #f1f5f9', cursor: 'pointer', fontFamily: 'inherit' }}
-                                  onMouseEnter={(e) => (e.currentTarget.style.background = C.sky)}
-                                  onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
-                                  <div style={{ fontWeight: 700, color: C.navy, fontSize: 15 }}>{street}</div>
-                                  <div style={{ fontSize: 12, color: '#6B7280', marginTop: 2 }}>{rest}</div>
-                                </button>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </div>
-                      <button onClick={handleAddressSearch} disabled={!searchInput.trim() || isSearching}
-                        style={{
-                          padding: '14px 20px', borderRadius: 10, border: 'none', fontWeight: 700, fontSize: 14,
-                          background: searchInput.trim() && !isSearching ? C.blue : '#93C5FD', color: C.white,
-                          cursor: searchInput.trim() && !isSearching ? 'pointer' : 'not-allowed', fontFamily: 'inherit',
-                          whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 6,
-                        }}>
-                        {isSearching ? <span className="spinner" /> : 'Find'}
-                      </button>
-                    </div>
-
-                    {/* Show matched county after address search */}
-                    {geocodedAddress && selectedCountyName && (
-                      <div style={{ marginTop: 12, padding: '10px 14px', background: '#F0FDF4', borderRadius: 10, border: '1px solid #BBF7D0', display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
-                          <circle cx="12" cy="12" r="12" fill={C.green} />
-                          <path d="M7 12l3 3 7-7" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        <p style={{ fontSize: 14, fontWeight: 600, color: C.navy }}>{selectedCountyName} County, Florida</p>
-                      </div>
-                    )}
+              {/* Search pill — same as Texas */}
+              <div style={{ maxWidth: 640, margin: '0 auto', position: 'relative' }} ref={searchRef}>
+                <div className="r-pill" style={{
+                  background: C.white, boxShadow: '0 4px 24px rgba(0,0,0,0.12)',
+                  display: 'flex', alignItems: 'center',
+                  border: searchError ? '2px solid #EF4444' : '2px solid #e2e8f0',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: 0 }}>
+                    <svg width="20" height="20" viewBox="0 0 33 33" fill={C.blue} style={{ flexShrink: 0, marginRight: 8 }}>
+                      <path d="M16.5 32.168a7.028 7.028 0 0 1-5.748-2.933c-5.081-7.01-7.659-12.278-7.659-15.662A13.405 13.405 0 0 1 25.98 4.094a13.405 13.405 0 0 1 3.927 9.48c0 3.383-2.578 8.652-7.66 15.66a7.028 7.028 0 0 1-5.747 2.934Zm0-29.09A10.511 10.511 0 0 0 6 13.576c0 2.68 2.524 7.635 7.106 13.953a4.194 4.194 0 0 0 6.786 0C24.475 21.211 27 16.256 27 13.576a10.51 10.51 0 0 0-10.5-10.498Z" />
+                      <path d="M16.5 8.17a5.333 5.333 0 1 0 0 10.667 5.333 5.333 0 0 0 0-10.667Zm0 7.999a2.667 2.667 0 1 1 0-5.333 2.667 2.667 0 0 1 0 5.333Z" />
+                    </svg>
+                    <input
+                      type="text" value={searchInput}
+                      onChange={(e) => handleAddressInput(e.target.value)}
+                      onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
+                      onKeyDown={(e) => { if (e.key === 'Enter' && searchInput.trim()) handleAddressSearch(); }}
+                      placeholder="Enter your address"
+                      style={{ flex: 1, fontSize: 16, fontWeight: 500, color: C.navy, border: 'none', outline: 'none', background: 'transparent', padding: '14px 0', fontFamily: 'inherit', minWidth: 0 }}
+                    />
                   </div>
-                )}
-
-                {/* County selector (manual mode or fallback) */}
-                {!addressMode && (
-                  <div style={{ marginBottom: 20 }}>
-                    <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 8 }}>
-                      County
-                    </label>
-                    <select
-                      value={selectedCountyName}
-                      onChange={(e) => { setSelectedCountyName(e.target.value); setSearchError(''); }}
-                      style={{
-                        width: '100%', padding: '14px 16px', border: '2px solid #e2e8f0', borderRadius: 10,
-                        fontSize: 16, fontWeight: 500, color: selectedCountyName ? C.navy : C.gray,
-                        fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
-                        background: C.white, cursor: 'pointer', appearance: 'none' as const,
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
-                        backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center',
-                      }}
-                    >
-                      <option value="">Select your Florida county…</option>
-                      {regionGroups.map(group => (
-                        <optgroup key={group.region} label={group.region}>
-                          {group.counties.map(c => (
-                            <option key={c.name} value={c.name}>{c.name} County</option>
-                          ))}
-                        </optgroup>
-                      ))}
-                    </select>
-                  </div>
-                )}
-
-                {/* Acreage */}
-                <div style={{ marginBottom: 20 }}>
-                  <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 8 }}>
-                    Property Size (acres)
-                  </label>
-                  <input
-                    type="number" value={acres}
-                    onChange={(e) => { setAcres(e.target.value); setSearchError(''); }}
-                    placeholder="e.g. 10"
-                    style={{
-                      width: '100%', padding: '14px 16px', border: '2px solid #e2e8f0', borderRadius: 10,
-                      fontSize: 16, fontWeight: 500, color: C.navy, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
-                    }}
-                  />
-                  <p style={{ fontSize: 12, color: C.gray, marginTop: 4 }}>
-                    Florida has no minimum acreage requirement at the state level
-                  </p>
-                </div>
-
-                {/* Assessed value */}
-                <div style={{ marginBottom: 24 }}>
-                  <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 8 }}>
-                    Current Assessed Value ($)
-                  </label>
-                  <input
-                    type="number" value={appraisedValue}
-                    onChange={(e) => { setAppraisedValue(e.target.value); setSearchError(''); }}
-                    placeholder="e.g. 250000"
-                    style={{
-                      width: '100%', padding: '14px 16px', border: '2px solid #e2e8f0', borderRadius: 10,
-                      fontSize: 16, fontWeight: 500, color: C.navy, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
-                    }}
-                  />
-                  <p style={{ fontSize: 12, color: C.gray, marginTop: 4 }}>
-                    Find this on your TRIM notice or your county Property Appraiser&apos;s website
-                  </p>
+                  <button onClick={handleAddressSearch} disabled={!searchInput.trim() || isSearching} className="r-pill-btn" style={{
+                    background: searchInput.trim() && !isSearching ? C.blue : '#93C5FD', color: C.white, fontWeight: 700, border: 'none',
+                    cursor: searchInput.trim() && !isSearching ? 'pointer' : 'not-allowed', fontFamily: 'inherit',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  }}>
+                    {isSearching ? <><span className="spinner" /> Verifying...</> : 'Get My Savings'}
+                  </button>
                 </div>
 
                 {searchError && (
-                  <div style={{ marginBottom: 20, padding: '12px 16px', background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 12 }}>
+                  <div style={{ marginTop: 12, padding: '12px 16px', background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 12, textAlign: 'left' }}>
                     <p style={{ fontSize: 14, color: '#991B1B', fontWeight: 500 }}>{searchError}</p>
                   </div>
                 )}
 
-                <button
-                  onClick={handleCalculate}
-                  style={{
-                    width: '100%', padding: '16px 32px', borderRadius: 12,
-                    background: C.blue, color: C.white, fontWeight: 700, fontSize: 17,
-                    border: 'none', cursor: 'pointer', fontFamily: 'inherit',
-                    boxShadow: '0 4px 16px rgba(28,124,229,0.3)',
-                  }}
-                >
-                  Calculate My Savings →
-                </button>
-                <p style={{ textAlign: 'center', fontSize: 13, color: '#8DA4B5', marginTop: 12, fontWeight: 500 }}>
-                  Free estimate — no phone calls, no spam
-                </p>
+                {showSuggestions && suggestions.length > 0 && (
+                  <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, marginTop: 8, background: C.white, border: '1px solid #e2e8f0', borderRadius: 16, boxShadow: '0 12px 40px rgba(0,0,0,0.12)', maxHeight: 360, overflowY: 'auto', zIndex: 50 }}>
+                    {suggestions.map((s, i) => {
+                      const parts = s.text.split(',').map(p => p.trim());
+                      const street = parts[0] || '';
+                      const rest = parts.slice(1).join(', ');
+                      return (
+                        <button key={i} onClick={() => handleSuggestionSelect(s)}
+                          style={{ width: '100%', padding: '14px 20px', textAlign: 'left', background: 'transparent', border: 'none', borderBottom: '1px solid #f1f5f9', cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 12 }}
+                          onMouseEnter={(e) => (e.currentTarget.style.background = C.sky)}
+                          onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
+                          <svg width="18" height="18" viewBox="0 0 33 33" fill={C.blue} style={{ flexShrink: 0 }}>
+                            <path d="M16.5 32.168a7.028 7.028 0 0 1-5.748-2.933c-5.081-7.01-7.659-12.278-7.659-15.662A13.405 13.405 0 0 1 25.98 4.094a13.405 13.405 0 0 1 3.927 9.48c0 3.383-2.578 8.652-7.66 15.66a7.028 7.028 0 0 1-5.747 2.934Z" />
+                          </svg>
+                          <div>
+                            <div style={{ fontWeight: 700, color: C.navy, fontSize: 16 }}>{street}</div>
+                            <div style={{ fontSize: 13, color: '#6B7280', marginTop: 2 }}>{rest}</div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              <p style={{ fontSize: 13, color: '#8DA4B5', marginTop: 12, fontWeight: 500 }}>
+                Instant estimate — no phone calls, no spam
+              </p>
+
+              <div className="r-vprops" style={{ marginTop: 16 }}>
+                {['No minimum acreage', 'Free instant estimate', 'All 67 FL counties'].map(text => (
+                  <span key={text} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 600, color: C.navy }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
+                      <circle cx="12" cy="12" r="12" fill={C.blue} opacity={0.15} />
+                      <path d="M7 12l3 3 7-7" stroke={C.blue} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    {text}
+                  </span>
+                ))}
               </div>
             </div>
           </section>
+
+          {/* Property details form — shows after address is found */}
+          {geocodedAddress && selectedCountyName && (
+            <section style={{ background: C.white, padding: '40px 24px' }}>
+              <div style={{ maxWidth: 480, margin: '0 auto' }}>
+                <div style={{ background: C.white, borderRadius: 16, boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: 28, border: '1px solid #e2e8f0' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 20 }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
+                      <circle cx="12" cy="12" r="12" fill={C.green} />
+                      <path d="M7 12l3 3 7-7" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <p style={{ fontSize: 15, fontWeight: 700, color: C.navy }}>{selectedCountyName} County, Florida</p>
+                  </div>
+                  <p style={{ fontSize: 14, color: C.gray, marginBottom: 20 }}>
+                    We found your county. Enter your property details to calculate savings:
+                  </p>
+                  <div className="r-grid2" style={{ marginBottom: 20 }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: C.navy, marginBottom: 6 }}>Acres</label>
+                      <input type="number" value={acres} onChange={(e) => { setAcres(e.target.value); setSearchError(''); }} placeholder="e.g. 10"
+                        style={{ width: '100%', padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 16, fontWeight: 600, color: C.navy, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }} />
+                      <p style={{ fontSize: 11, color: C.gray, marginTop: 3 }}>No minimum in FL</p>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: C.navy, marginBottom: 6 }}>Assessed Value ($)</label>
+                      <input type="number" value={appraisedValue} onChange={(e) => { setAppraisedValue(e.target.value); setSearchError(''); }} placeholder="e.g. 250000"
+                        style={{ width: '100%', padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 16, fontWeight: 600, color: C.navy, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }} />
+                      <p style={{ fontSize: 11, color: C.gray, marginTop: 3 }}>From TRIM notice</p>
+                    </div>
+                  </div>
+                  {searchError && (
+                    <div style={{ marginBottom: 16, padding: '10px 14px', background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 10 }}>
+                      <p style={{ fontSize: 13, color: '#991B1B', fontWeight: 500 }}>{searchError}</p>
+                    </div>
+                  )}
+                  <button onClick={handleCalculate} style={{
+                    width: '100%', padding: '14px 24px', borderRadius: 12,
+                    background: C.blue, color: C.white, fontWeight: 700, fontSize: 16,
+                    border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                    boxShadow: '0 4px 16px rgba(28,124,229,0.3)',
+                  }}>
+                    Calculate My Savings →
+                  </button>
+                </div>
+              </div>
+            </section>
+          )}
 
           {/* How It Works */}
           <section id="how-it-works" className="r-section" style={{ background: C.sky, textAlign: 'center' }}>
