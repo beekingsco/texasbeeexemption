@@ -114,7 +114,7 @@ export default function NationalLanding() {
           .hero-text { align-items: center !important; padding-bottom: 20px !important; }
           .hero-text h1 { font-size: 26px !important; margin-bottom: 8px !important; }
           .hero-text p { font-size: 14px !important; margin-bottom: 14px !important; display: none !important; }
-          .hero-img { max-width: 160px !important; margin-bottom: -8px !important; }
+          .hero-img { max-width: 160px !important; margin-bottom: -8px !important; align-self: center !important; }
           .counter-bar { padding: 8px 16px !important; }
           .counter-bar p { font-size: 13px !important; }
           .header-bar { height: 50px !important; }
