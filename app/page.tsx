@@ -253,8 +253,10 @@ export default function Home() {
 
   const calculateResults = () => {
     if (!selectedCounty) return null;
-    const totalAcres = acres ? parseFloat(acres) : (parcelData?.legalArea || 10);
-    const totalValue = appraisedValue ? parseFloat(appraisedValue) : (parcelData?.marketValue || getDefaultPropertyValue(selectedCounty));
+    const hasParcelAcres = !!(parcelData?.found && parcelData?.legalArea && parcelData.legalArea > 0);
+    const hasParcelValue = !!(parcelData?.found && parcelData?.marketValue && parcelData.marketValue > 0);
+    const totalAcres = acres ? parseFloat(acres) : (hasParcelAcres ? parcelData!.legalArea! : 0);
+    const totalValue = appraisedValue ? parseFloat(appraisedValue) : (hasParcelValue ? parcelData!.marketValue! : getDefaultPropertyValue(selectedCounty));
     if (isNaN(totalAcres) || isNaN(totalValue) || totalValue <= 0) return null;
 
     const taxRate = selectedCounty.avgTaxRate / 100;
@@ -724,22 +726,39 @@ export default function Home() {
               <button onClick={startOver} style={{ fontSize: 13, fontWeight: 600, color: C.blue, background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>Change</button>
             </div>
 
-            {/* Savings Summary or Not Qualified Message */}
+            {/* Not Qualified or Missing Data Message */}
             {results && !results.qualifies && (
               <div style={{ background: C.white, borderRadius: '0 0 16px 16px', padding: '32px 24px', textAlign: 'center', marginBottom: 24, border: '1px solid #D5EAFF', borderTop: '1px solid #e2e8f0' }}>
                 <div style={{ fontSize: 48, marginBottom: 16 }}>🐝</div>
-                <h2 style={{ fontSize: 22, fontWeight: 800, color: C.navy, marginBottom: 12 }}>Not Enough Land to Qualify</h2>
-                <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.6, marginBottom: 16, maxWidth: 400, margin: '0 auto 20px' }}>
-                  Your property has <strong style={{ color: C.navy }}>{results.agEligibleAcres.toFixed(1)} ag-eligible acres</strong>, but 
-                  {selectedCounty?.name} County requires at least <strong style={{ color: C.navy }}>{selectedCounty?.minAcres} acres</strong> beyond 
-                  your 1-acre homestead to qualify for a beekeeping ag exemption.
-                </p>
-                <p style={{ fontSize: 14, color: C.gray, marginBottom: 24 }}>
-                  Do you have another property you&apos;d like to check?
-                </p>
-                <button onClick={startOver} style={{ background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, padding: '14px 32px', borderRadius: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
-                  Search Another Property →
-                </button>
+                {results.totalAcres === 0 ? (
+                  <>
+                    <h2 style={{ fontSize: 22, fontWeight: 800, color: C.navy, marginBottom: 12 }}>We Couldn&apos;t Find Your Property Size</h2>
+                    <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.6, maxWidth: 400, margin: '0 auto 20px' }}>
+                      We verified your address but couldn&apos;t pull acreage data from county records. 
+                      Enter your property size below to see your savings estimate.
+                    </p>
+                    <div style={{ maxWidth: 300, margin: '0 auto 20px' }}>
+                      <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 6, textAlign: 'left' }}>How many acres is your property?</label>
+                      <input type="number" value={acres} onChange={(e) => setAcres(e.target.value)} placeholder={`Min. ${selectedCounty?.minAcres} acres needed`}
+                        style={{ width: '100%', padding: '14px 16px', border: '2px solid #D5EAFF', borderRadius: 10, fontSize: 18, fontWeight: 600, color: C.navy, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box', textAlign: 'center' }} />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <h2 style={{ fontSize: 22, fontWeight: 800, color: C.navy, marginBottom: 12 }}>Not Enough Land to Qualify</h2>
+                    <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.6, maxWidth: 400, margin: '0 auto 20px' }}>
+                      Your property has <strong style={{ color: C.navy }}>{results.agEligibleAcres.toFixed(1)} ag-eligible acres</strong>, but 
+                      {' '}{selectedCounty?.name} County requires at least <strong style={{ color: C.navy }}>{selectedCounty?.minAcres} acres</strong> beyond 
+                      your 1-acre homestead to qualify for a beekeeping ag exemption.
+                    </p>
+                    <p style={{ fontSize: 14, color: C.gray, marginBottom: 24 }}>
+                      Do you have another property you&apos;d like to check?
+                    </p>
+                    <button onClick={startOver} style={{ background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, padding: '14px 32px', borderRadius: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                      Search Another Property →
+                    </button>
+                  </>
+                )}
               </div>
             )}
             {results && results.qualifies && (
