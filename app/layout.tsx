@@ -47,15 +47,24 @@ export const metadata: Metadata = {
     title: 'Texas Bee Exemption — Free Property Tax Savings Calculator',
     description: 'Discover how much you could save on Texas property taxes with a beekeeping agricultural exemption. Free instant estimate using real county appraisal data for all 254 Texas counties.',
     type: 'website',
-    siteName: 'Texas Bee Exemption',
-    url: 'https://texasbeeexemption.com',
+    siteName: 'Bee Exemption',
+    url: 'https://beeexemption.com',
     locale: 'en_US',
+    images: [
+      {
+        url: 'https://beeexemption.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Texas Bees Save You Money — Free Bee Exemption Calculator',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Save Thousands on Texas Property Taxes with Bees 🐝',
     description: 'Free calculator shows your exact ag exemption savings. Real property data from all 254 Texas counties. Enter your address — instant results.',
     site: '@VisitFirstMonday',
+    images: ['https://beeexemption.com/og-image.jpg'],
   },
   alternates: {
     canonical: 'https://texasbeeexemption.com',
