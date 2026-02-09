@@ -1,0 +1,1007 @@
+[
+  {
+    "name": "Alachua",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Ayesha Solomon",
+      "website": "https://www.acpafl.org",
+      "phone": "(352) 374-5230"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 18.2,
+    "agProductivityValue": 650,
+    "notes": "Gainesville area; active agricultural community near UF"
+  },
+  {
+    "name": "Baker",
+    "region": "Northeast",
+    "propertyAppraiser": {
+      "name": "Tim Sweat",
+      "website": "https://www.bakerpa.com",
+      "phone": "(904) 259-3191"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.5,
+    "agProductivityValue": 550,
+    "notes": "Rural county west of Jacksonville"
+  },
+  {
+    "name": "Bay",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Dan Sowell",
+      "website": "https://www.baypa.net",
+      "phone": "(850) 248-8401"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.8,
+    "agProductivityValue": 600,
+    "notes": "Panama City area; coastal county with inland agricultural land"
+  },
+  {
+    "name": "Bradford",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Bradford County PA",
+      "website": "https://www.bradfordappraiser.com",
+      "phone": "(904) 966-6216"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.0,
+    "agProductivityValue": 550,
+    "notes": "Small rural county; strong agricultural tradition"
+  },
+  {
+    "name": "Brevard",
+    "region": "Central East",
+    "propertyAppraiser": {
+      "name": "Dana Blickley",
+      "website": "https://www.bcpao.us",
+      "phone": "(321) 264-6700"
+    },
+    "minAcres": 0,
+    "minHives": 5,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 17.5,
+    "agProductivityValue": 650,
+    "notes": "Space Coast area; mix of urban and rural land"
+  },
+  {
+    "name": "Broward",
+    "region": "Southeast",
+    "propertyAppraiser": {
+      "name": "Marty Kiar",
+      "website": "https://www.bcpa.net",
+      "phone": "(954) 357-6830"
+    },
+    "minAcres": 0,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 19.2,
+    "agProductivityValue": 800,
+    "notes": "Fort Lauderdale area; limited agricultural land but high tax rates mean big savings"
+  },
+  {
+    "name": "Calhoun",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Calhoun County PA",
+      "website": "https://www.calhouncountypa.com",
+      "phone": "(850) 674-4505"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.5,
+    "agProductivityValue": 500,
+    "notes": "Rural Panhandle county; timber and farming"
+  },
+  {
+    "name": "Charlotte",
+    "region": "Southwest",
+    "propertyAppraiser": {
+      "name": "Charlotte County PA",
+      "website": "https://www.ccappraiser.com",
+      "phone": "(941) 743-1498"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 17.0,
+    "agProductivityValue": 600,
+    "notes": "Port Charlotte area; growing community with rural acreage"
+  },
+  {
+    "name": "Citrus",
+    "region": "Central West",
+    "propertyAppraiser": {
+      "name": "Cregg Dalton",
+      "website": "https://www.citruspa.org",
+      "phone": "(352) 341-6600"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 18.0,
+    "agProductivityValue": 600,
+    "notes": "Nature Coast area; rural with retiree population"
+  },
+  {
+    "name": "Clay",
+    "region": "Northeast",
+    "propertyAppraiser": {
+      "name": "Tracy Scott Drake",
+      "website": "https://www.ccpao.com",
+      "phone": "(904) 284-6305"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 17.2,
+    "agProductivityValue": 600,
+    "notes": "Jacksonville suburbs; rural southern portion ideal for bees"
+  },
+  {
+    "name": "Collier",
+    "region": "Southwest",
+    "propertyAppraiser": {
+      "name": "Abe Skinner",
+      "website": "https://www.collierappraiser.com",
+      "phone": "(239) 252-8141"
+    },
+    "minAcres": 0,
+    "minHives": 5,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 17.8,
+    "agProductivityValue": 700,
+    "notes": "Naples area; large county with significant rural and agricultural land"
+  },
+  {
+    "name": "Columbia",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Columbia County PA",
+      "website": "https://www.columbiacountypa.com",
+      "phone": "(386) 758-1083"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.5,
+    "agProductivityValue": 550,
+    "notes": "Lake City area; rural with affordable land"
+  },
+  {
+    "name": "DeSoto",
+    "region": "Southwest",
+    "propertyAppraiser": {
+      "name": "DeSoto County PA",
+      "website": "https://www.desotobocc.com",
+      "phone": "(863) 993-4870"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.0,
+    "agProductivityValue": 550,
+    "notes": "Arcadia area; strong citrus and cattle heritage"
+  },
+  {
+    "name": "Dixie",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Dixie County PA",
+      "website": "https://www.dixiecounty.us",
+      "phone": "(352) 498-1213"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.5,
+    "agProductivityValue": 500,
+    "notes": "Rural Gulf Coast county; timber and farming"
+  },
+  {
+    "name": "Duval",
+    "region": "Northeast",
+    "propertyAppraiser": {
+      "name": "Jerry Holland",
+      "website": "https://www.coj.net/departments/property-appraiser",
+      "phone": "(904) 630-2010"
+    },
+    "minAcres": 0,
+    "minHives": 5,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 18.5,
+    "agProductivityValue": 700,
+    "notes": "Jacksonville area; large county with significant rural land in western portion"
+  },
+  {
+    "name": "Escambia",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Chris Jones",
+      "website": "https://www.escpa.org",
+      "phone": "(850) 434-2735"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 17.0,
+    "agProductivityValue": 600,
+    "notes": "Pensacola area; northern rural portions well-suited for agriculture"
+  },
+  {
+    "name": "Flagler",
+    "region": "Northeast",
+    "propertyAppraiser": {
+      "name": "Jay Gardner",
+      "website": "https://www.flaglerpa.com",
+      "phone": "(386) 313-4150"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.5,
+    "agProductivityValue": 600,
+    "notes": "Palm Coast area; growing county with available rural acreage"
+  },
+  {
+    "name": "Franklin",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Rhonda Skipper",
+      "website": "https://www.franklincountypa.com",
+      "phone": "(850) 653-9236"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.0,
+    "agProductivityValue": 500,
+    "notes": "Apalachicola area; small coastal county"
+  },
+  {
+    "name": "Gadsden",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Gadsden County PA",
+      "website": "https://www.gadsdenpa.com",
+      "phone": "(850) 627-7025"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.5,
+    "agProductivityValue": 550,
+    "notes": "Near Tallahassee; agricultural county with shade tobacco history"
+  },
+  {
+    "name": "Gilchrist",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Gilchrist County PA",
+      "website": "https://www.gilchristcountypa.com",
+      "phone": "(352) 463-3196"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.5,
+    "agProductivityValue": 500,
+    "notes": "Small rural county near Gainesville; affordable agricultural land"
+  },
+  {
+    "name": "Glades",
+    "region": "South Central",
+    "propertyAppraiser": {
+      "name": "Glades County PA",
+      "website": "https://www.gladescountypa.com",
+      "phone": "(863) 946-6025"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.0,
+    "agProductivityValue": 500,
+    "notes": "Lake Okeechobee area; cattle and farming county"
+  },
+  {
+    "name": "Gulf",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Gulf County PA",
+      "website": "https://www.gulfcountypa.com",
+      "phone": "(850) 229-6114"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.5,
+    "agProductivityValue": 500,
+    "notes": "Port St. Joe area; small coastal county"
+  },
+  {
+    "name": "Hamilton",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Hamilton County PA",
+      "website": "https://www.hamiltonpa.com",
+      "phone": "(386) 792-1232"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.5,
+    "agProductivityValue": 500,
+    "notes": "Rural county along Georgia border; timber and farming"
+  },
+  {
+    "name": "Hardee",
+    "region": "South Central",
+    "propertyAppraiser": {
+      "name": "Hardee County PA",
+      "website": "https://www.hardeecounty.net",
+      "phone": "(863) 773-6145"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.5,
+    "agProductivityValue": 500,
+    "notes": "Wauchula area; heavy agricultural county — citrus and cattle"
+  },
+  {
+    "name": "Hendry",
+    "region": "Southwest",
+    "propertyAppraiser": {
+      "name": "Hendry County PA",
+      "website": "https://www.hendrypa.org",
+      "phone": "(863) 675-5270"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.0,
+    "agProductivityValue": 550,
+    "notes": "LaBelle/Clewiston area; sugar cane and citrus region"
+  },
+  {
+    "name": "Hernando",
+    "region": "Central West",
+    "propertyAppraiser": {
+      "name": "Hernando County PA",
+      "website": "https://www.hernandopa.org",
+      "phone": "(352) 754-4190"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 18.0,
+    "agProductivityValue": 650,
+    "notes": "Brooksville area; growing Tampa commuter county with rural land available"
+  },
+  {
+    "name": "Highlands",
+    "region": "South Central",
+    "propertyAppraiser": {
+      "name": "Raymond McIntyre",
+      "website": "https://www.hcpao.org",
+      "phone": "(863) 402-6659"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 17.0,
+    "agProductivityValue": 550,
+    "notes": "Sebring area; rural agricultural county with affordable land"
+  },
+  {
+    "name": "Hillsborough",
+    "region": "Central West",
+    "propertyAppraiser": {
+      "name": "Bob Henriquez",
+      "website": "https://www.hcpafl.org",
+      "phone": "(813) 272-6100"
+    },
+    "minAcres": 0,
+    "minHives": 5,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 18.8,
+    "agProductivityValue": 700,
+    "notes": "Tampa area; eastern portions have agricultural land with high tax savings potential"
+  },
+  {
+    "name": "Holmes",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Holmes County PA",
+      "website": "https://www.holmescountypa.com",
+      "phone": "(850) 547-1100"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.0,
+    "agProductivityValue": 500,
+    "notes": "Rural Panhandle county; farming and timber"
+  },
+  {
+    "name": "Indian River",
+    "region": "Central East",
+    "propertyAppraiser": {
+      "name": "Wesley Davis",
+      "website": "https://www.ircpa.org",
+      "phone": "(772) 226-1469"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 17.5,
+    "agProductivityValue": 650,
+    "notes": "Vero Beach area; strong citrus tradition with agricultural land"
+  },
+  {
+    "name": "Jackson",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Jackson County PA",
+      "website": "https://www.jacksoncountypa.com",
+      "phone": "(850) 482-9646"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.5,
+    "agProductivityValue": 500,
+    "notes": "Marianna area; agricultural county with peanuts and cotton"
+  },
+  {
+    "name": "Jefferson",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Angela Gray",
+      "website": "https://www.jeffersonpa.net",
+      "phone": "(850) 997-3356"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.0,
+    "agProductivityValue": 550,
+    "notes": "Monticello area; rural county east of Tallahassee"
+  },
+  {
+    "name": "Lafayette",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Lafayette County PA",
+      "website": "https://www.lafayettecountypa.com",
+      "phone": "(386) 294-1020"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.0,
+    "agProductivityValue": 500,
+    "notes": "Florida's least-populated county; very rural and agricultural"
+  },
+  {
+    "name": "Lake",
+    "region": "Central",
+    "propertyAppraiser": {
+      "name": "Carey Baker",
+      "website": "https://www.lakecopropappr.com",
+      "phone": "(352) 253-2150"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 18.0,
+    "agProductivityValue": 650,
+    "notes": "Orlando commuter county; growing with available rural land"
+  },
+  {
+    "name": "Lee",
+    "region": "Southwest",
+    "propertyAppraiser": {
+      "name": "Matt Caldwell",
+      "website": "https://www.leepa.org",
+      "phone": "(239) 533-6100"
+    },
+    "minAcres": 0,
+    "minHives": 5,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 18.0,
+    "agProductivityValue": 700,
+    "notes": "Fort Myers/Cape Coral area; eastern portions have agricultural land"
+  },
+  {
+    "name": "Leon",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Akin Akinyemi",
+      "website": "https://www.leonpa.org",
+      "phone": "(850) 606-6200"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 17.5,
+    "agProductivityValue": 600,
+    "notes": "Tallahassee area; state capital with surrounding rural land"
+  },
+  {
+    "name": "Levy",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Levy County PA",
+      "website": "https://www.levypa.com",
+      "phone": "(352) 486-5228"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.5,
+    "agProductivityValue": 500,
+    "notes": "Rural Gulf Coast county; affordable agricultural land"
+  },
+  {
+    "name": "Liberty",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Liberty County PA",
+      "website": "https://www.libertycountypa.com",
+      "phone": "(850) 643-2279"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 14.5,
+    "agProductivityValue": 500,
+    "notes": "One of Florida's most rural counties; timber country"
+  },
+  {
+    "name": "Madison",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Madison County PA",
+      "website": "https://www.madisoncountypa.com",
+      "phone": "(850) 973-6569"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.0,
+    "agProductivityValue": 500,
+    "notes": "Rural county between Tallahassee and Jacksonville"
+  },
+  {
+    "name": "Manatee",
+    "region": "Central West",
+    "propertyAppraiser": {
+      "name": "Charles Hackney",
+      "website": "https://www.manateepao.com",
+      "phone": "(941) 748-8208"
+    },
+    "minAcres": 0,
+    "minHives": 5,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 18.5,
+    "agProductivityValue": 700,
+    "notes": "Bradenton area; eastern portions have significant agricultural land"
+  },
+  {
+    "name": "Marion",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "George Albright",
+      "website": "https://www.pa.marion.fl.us",
+      "phone": "(352) 368-8200"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 17.5,
+    "agProductivityValue": 650,
+    "notes": "Ocala area; horse country with strong agricultural community"
+  },
+  {
+    "name": "Martin",
+    "region": "Southeast",
+    "propertyAppraiser": {
+      "name": "Jenny Fields",
+      "website": "https://www.pa.martin.fl.us",
+      "phone": "(772) 288-5608"
+    },
+    "minAcres": 0,
+    "minHives": 5,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 18.0,
+    "agProductivityValue": 700,
+    "notes": "Stuart area; Treasure Coast with western rural areas"
+  },
+  {
+    "name": "Miami-Dade",
+    "region": "Southeast",
+    "propertyAppraiser": {
+      "name": "Pedro Garcia",
+      "website": "https://www.miamidadepa.gov",
+      "phone": "(305) 375-4712"
+    },
+    "minAcres": 0,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 19.5,
+    "agProductivityValue": 800,
+    "notes": "Highest tax rates in Florida; southern agricultural areas (Homestead, Redland)"
+  },
+  {
+    "name": "Monroe",
+    "region": "Southeast",
+    "propertyAppraiser": {
+      "name": "Scott Russell",
+      "website": "https://www.mcpa.co.monroe.fl.us",
+      "phone": "(305) 292-3420"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.0,
+    "agProductivityValue": 600,
+    "notes": "Florida Keys; very limited agricultural land"
+  },
+  {
+    "name": "Nassau",
+    "region": "Northeast",
+    "propertyAppraiser": {
+      "name": "A. Michael Hickox",
+      "website": "https://www.nassauflpa.com",
+      "phone": "(904) 491-7300"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.5,
+    "agProductivityValue": 600,
+    "notes": "Fernandina Beach area; Amelia Island and rural mainland"
+  },
+  {
+    "name": "Okaloosa",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Mack Busbee",
+      "website": "https://www.okaloosapropertya.com",
+      "phone": "(850) 651-7240"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.0,
+    "agProductivityValue": 550,
+    "notes": "Fort Walton Beach/Destin area; northern inland portions have rural land"
+  },
+  {
+    "name": "Okeechobee",
+    "region": "South Central",
+    "propertyAppraiser": {
+      "name": "Okeechobee County PA",
+      "website": "https://www.okeechobeepa.com",
+      "phone": "(863) 763-4422"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.0,
+    "agProductivityValue": 500,
+    "notes": "Lake Okeechobee area; ranch and farming country"
+  },
+  {
+    "name": "Orange",
+    "region": "Central",
+    "propertyAppraiser": {
+      "name": "Amy Mercado",
+      "website": "https://www.ocpafl.org",
+      "phone": "(407) 836-5044"
+    },
+    "minAcres": 0,
+    "minHives": 5,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 18.5,
+    "agProductivityValue": 750,
+    "notes": "Orlando area; high growth with remaining rural pockets"
+  },
+  {
+    "name": "Osceola",
+    "region": "Central",
+    "propertyAppraiser": {
+      "name": "Katrina Scarborough",
+      "website": "https://www.property-appraiser.org",
+      "phone": "(407) 742-5000"
+    },
+    "minAcres": 0,
+    "minHives": 5,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 18.0,
+    "agProductivityValue": 650,
+    "notes": "Kissimmee area; eastern and southern portions have significant ranch land"
+  },
+  {
+    "name": "Palm Beach",
+    "region": "Southeast",
+    "propertyAppraiser": {
+      "name": "Dorothy Jacks",
+      "website": "https://www.pbcgov.org/papa",
+      "phone": "(561) 355-2866"
+    },
+    "minAcres": 0,
+    "minHives": 5,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 19.0,
+    "agProductivityValue": 750,
+    "notes": "West Palm Beach area; western agricultural region (Glades area) with high tax savings"
+  },
+  {
+    "name": "Pasco",
+    "region": "Central West",
+    "propertyAppraiser": {
+      "name": "Mike Fasano",
+      "website": "https://www.pascopa.com",
+      "phone": "(352) 521-4433"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 17.5,
+    "agProductivityValue": 650,
+    "notes": "Tampa metro area; eastern rural portion well-suited for beekeeping"
+  },
+  {
+    "name": "Pinellas",
+    "region": "Central West",
+    "propertyAppraiser": {
+      "name": "Mike Twitty",
+      "website": "https://www.pcpao.org",
+      "phone": "(727) 464-3207"
+    },
+    "minAcres": 0,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 19.0,
+    "agProductivityValue": 800,
+    "notes": "St. Petersburg/Clearwater area; most densely populated FL county — limited ag land"
+  },
+  {
+    "name": "Polk",
+    "region": "Central",
+    "propertyAppraiser": {
+      "name": "Marsha Faux",
+      "website": "https://www.polkpa.org",
+      "phone": "(863) 534-4777"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 17.5,
+    "agProductivityValue": 600,
+    "notes": "Lakeland area; significant agricultural county with citrus heritage"
+  },
+  {
+    "name": "Putnam",
+    "region": "Northeast",
+    "propertyAppraiser": {
+      "name": "Putnam County PA",
+      "website": "https://www.putnam-fl.com/property-appraiser",
+      "phone": "(386) 329-0286"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.5,
+    "agProductivityValue": 550,
+    "notes": "Palatka area; affordable rural land in North Florida"
+  },
+  {
+    "name": "Santa Rosa",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Greg Brown",
+      "website": "https://www.srcpa.org",
+      "phone": "(850) 983-1880"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.0,
+    "agProductivityValue": 550,
+    "notes": "Milton/Navarre area; growing with available agricultural land"
+  },
+  {
+    "name": "Sarasota",
+    "region": "Southwest",
+    "propertyAppraiser": {
+      "name": "Bill Furst",
+      "website": "https://www.sc-pa.com",
+      "phone": "(941) 861-8200"
+    },
+    "minAcres": 0,
+    "minHives": 5,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 18.5,
+    "agProductivityValue": 700,
+    "notes": "Sarasota area; eastern portions have agricultural potential"
+  },
+  {
+    "name": "Seminole",
+    "region": "Central",
+    "propertyAppraiser": {
+      "name": "David Johnson",
+      "website": "https://www.scpafl.org",
+      "phone": "(407) 665-7506"
+    },
+    "minAcres": 0,
+    "minHives": 5,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 18.5,
+    "agProductivityValue": 700,
+    "notes": "Orlando metro area; limited agricultural land but high tax rates"
+  },
+  {
+    "name": "St. Johns",
+    "region": "Northeast",
+    "propertyAppraiser": {
+      "name": "Eddie Creamer",
+      "website": "https://www.sjcpa.us",
+      "phone": "(904) 827-5500"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.5,
+    "agProductivityValue": 600,
+    "notes": "St. Augustine area; western and southern portions have rural acreage"
+  },
+  {
+    "name": "St. Lucie",
+    "region": "Central East",
+    "propertyAppraiser": {
+      "name": "Michelle Franklin",
+      "website": "https://www.paslc.org",
+      "phone": "(772) 462-1000"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 17.5,
+    "agProductivityValue": 650,
+    "notes": "Port St. Lucie area; growing Treasure Coast with western agricultural areas"
+  },
+  {
+    "name": "Sumter",
+    "region": "Central",
+    "propertyAppraiser": {
+      "name": "Sumter County PA",
+      "website": "https://www.sumterpa.com",
+      "phone": "(352) 569-6800"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.5,
+    "agProductivityValue": 600,
+    "notes": "The Villages area; surrounding rural land offers ag classification opportunities"
+  },
+  {
+    "name": "Suwannee",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Lamar Jenkins",
+      "website": "https://www.suwanneepa.com",
+      "phone": "(386) 362-1385"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.0,
+    "agProductivityValue": 500,
+    "notes": "Live Oak area; rural North Florida with affordable farmland"
+  },
+  {
+    "name": "Taylor",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Taylor County PA",
+      "website": "https://www.taylorcountypa.com",
+      "phone": "(850) 838-3515"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.0,
+    "agProductivityValue": 500,
+    "notes": "Perry area; timber and rural agriculture"
+  },
+  {
+    "name": "Union",
+    "region": "North Central",
+    "propertyAppraiser": {
+      "name": "Union County PA",
+      "website": "https://www.unioncountypa.com",
+      "phone": "(386) 496-3331"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.5,
+    "agProductivityValue": 500,
+    "notes": "Small rural county between Gainesville and Jacksonville"
+  },
+  {
+    "name": "Volusia",
+    "region": "Central East",
+    "propertyAppraiser": {
+      "name": "Larry Bartlett",
+      "website": "https://www.vcpa.org",
+      "phone": "(386) 736-5901"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 17.5,
+    "agProductivityValue": 650,
+    "notes": "Daytona Beach area; western rural portions well-suited for agriculture"
+  },
+  {
+    "name": "Wakulla",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Wakulla County PA",
+      "website": "https://www.wakullapa.com",
+      "phone": "(850) 926-0500"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 16.0,
+    "agProductivityValue": 550,
+    "notes": "South of Tallahassee; coastal county with rural interior"
+  },
+  {
+    "name": "Walton",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Walton County PA",
+      "website": "https://www.waltonpa.com",
+      "phone": "(850) 892-8123"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.5,
+    "agProductivityValue": 550,
+    "notes": "Destin/30A area; northern inland portions have affordable rural land"
+  },
+  {
+    "name": "Washington",
+    "region": "Panhandle",
+    "propertyAppraiser": {
+      "name": "Washington County PA",
+      "website": "https://www.washingtoncountypa.com",
+      "phone": "(850) 638-6205"
+    },
+    "minAcres": 0,
+    "minHives": 4,
+    "additionalHivesPer": 5,
+    "avgMillageRate": 15.5,
+    "agProductivityValue": 500,
+    "notes": "Chipley area; rural agricultural county in the Panhandle"
+  }
+]
