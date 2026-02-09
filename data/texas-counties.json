@@ -1,0 +1,3926 @@
+[
+  {
+    "name": "Anderson",
+    "region": "East TX",
+    "cad": {
+      "name": "Anderson County Appraisal District",
+      "website": "https://www.andersoncad.org",
+      "phone": "(903) 729-7969"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Andrews",
+    "region": "West TX",
+    "cad": {
+      "name": "Andrews County Appraisal District",
+      "website": "https://www.andrewscad.org",
+      "phone": "(432) 523-3939"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 120,
+    "notes": "Arid climate - verify water source for bees"
+  },
+  {
+    "name": "Angelina",
+    "region": "East TX",
+    "cad": {
+      "name": "Angelina County Appraisal District",
+      "website": "https://www.angelinacad.org",
+      "phone": "(936) 634-8477"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Aransas",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Aransas County Appraisal District",
+      "website": "https://www.aransascad.org",
+      "phone": "(361) 790-0830"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 140,
+    "notes": "Coastal location - hurricane preparedness needed"
+  },
+  {
+    "name": "Archer",
+    "region": "North TX",
+    "cad": {
+      "name": "Archer County Appraisal District",
+      "website": "https://www.archercad.org",
+      "phone": "(940) 574-4801"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 130,
+    "notes": ""
+  },
+  {
+    "name": "Armstrong",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Armstrong County Appraisal District",
+      "website": "https://www.armstrongcad.org",
+      "phone": "(806) 226-3331"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.55,
+    "agProductivityValue": 110,
+    "notes": "Harsh winters - winterization essential"
+  },
+  {
+    "name": "Atascosa",
+    "region": "South TX",
+    "cad": {
+      "name": "Atascosa County Appraisal District",
+      "website": "https://www.atascosacad.org",
+      "phone": "(830) 769-3144"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 135,
+    "notes": ""
+  },
+  {
+    "name": "Austin",
+    "region": "Central TX",
+    "cad": {
+      "name": "Austin County Appraisal District",
+      "website": "https://www.austincad.com",
+      "phone": "(979) 865-5893"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.25,
+    "agProductivityValue": 175,
+    "notes": ""
+  },
+  {
+    "name": "Bailey",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Bailey County Appraisal District",
+      "website": "https://www.baileycad.org",
+      "phone": "(806) 272-5501"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Bandera",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Bandera County Appraisal District",
+      "website": "https://www.banderacad.org",
+      "phone": "(830) 796-3754"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 145,
+    "notes": "Hill Country terrain - good forage"
+  },
+  {
+    "name": "Bastrop",
+    "region": "Central TX",
+    "cad": {
+      "name": "Bastrop County Appraisal District",
+      "website": "https://www.bastropcad.org",
+      "phone": "(512) 303-1930"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.35,
+    "agProductivityValue": 180,
+    "notes": "Growing area near Austin"
+  },
+  {
+    "name": "Baylor",
+    "region": "North TX",
+    "cad": {
+      "name": "Baylor County Appraisal District",
+      "website": "https://www.baylorcad.org",
+      "phone": "(940) 889-3393"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 125,
+    "notes": ""
+  },
+  {
+    "name": "Bee",
+    "region": "South TX",
+    "cad": {
+      "name": "Bee County Appraisal District",
+      "website": "https://www.beecad.org",
+      "phone": "(361) 358-3852"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 140,
+    "notes": "Aptly named for beekeeping!"
+  },
+  {
+    "name": "Bell",
+    "region": "Central TX",
+    "cad": {
+      "name": "Bell County Appraisal District",
+      "website": "https://www.bellcad.org",
+      "phone": "(254) 933-5390",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=6",
+      "cadClientId": "6",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.3,
+    "agProductivityValue": 165,
+    "notes": ""
+  },
+  {
+    "name": "Bexar",
+    "region": "South TX",
+    "cad": {
+      "name": "Bexar Appraisal District",
+      "website": "https://www.bcad.org",
+      "phone": "(210) 242-2432",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=110",
+      "cadClientId": "110",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.45,
+    "agProductivityValue": 155,
+    "notes": "San Antonio metro - highest savings potential"
+  },
+  {
+    "name": "Blanco",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Blanco County Appraisal District",
+      "website": "https://www.blancocad.org",
+      "phone": "(830) 868-7125"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 150,
+    "notes": "Hill Country - excellent for beekeeping"
+  },
+  {
+    "name": "Borden",
+    "region": "West TX",
+    "cad": {
+      "name": "Borden County Appraisal District",
+      "website": "https://www.bordencad.org",
+      "phone": "(806) 756-4336"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.5,
+    "agProductivityValue": 100,
+    "notes": ""
+  },
+  {
+    "name": "Bosque",
+    "region": "Central TX",
+    "cad": {
+      "name": "Bosque County Appraisal District",
+      "website": "https://www.bosquecad.org",
+      "phone": "(254) 675-3371"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Bowie",
+    "region": "East TX",
+    "cad": {
+      "name": "Bowie County Appraisal District",
+      "website": "https://www.bowiecad.org",
+      "phone": "(903) 793-8936"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Brazoria",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Brazoria County Appraisal District",
+      "website": "https://www.brazoriacad.org",
+      "phone": "(979) 849-7774",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=11",
+      "cadClientId": "11",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.4,
+    "agProductivityValue": 170,
+    "notes": "Houston metro area - high property values"
+  },
+  {
+    "name": "Brazos",
+    "region": "Central TX",
+    "cad": {
+      "name": "Brazos County Appraisal District",
+      "website": "https://www.brazoscad.org",
+      "phone": "(979) 822-6971"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.35,
+    "agProductivityValue": 165,
+    "notes": "College Station area"
+  },
+  {
+    "name": "Brewster",
+    "region": "West TX",
+    "cad": {
+      "name": "Brewster County Appraisal District",
+      "website": "https://www.brewstercad.org",
+      "phone": "(432) 837-5831"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 90,
+    "notes": "Desert climate - water critical"
+  },
+  {
+    "name": "Briscoe",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Briscoe County Appraisal District",
+      "website": "https://www.briscoecad.org",
+      "phone": "(806) 823-2134"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.55,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Brooks",
+    "region": "South TX",
+    "cad": {
+      "name": "Brooks County Appraisal District",
+      "website": "https://www.brookscad.org",
+      "phone": "(361) 325-5604"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.85,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Brown",
+    "region": "Central TX",
+    "cad": {
+      "name": "Brown County Appraisal District",
+      "website": "https://www.browncad.org",
+      "phone": "(325) 646-0554"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.9,
+    "agProductivityValue": 145,
+    "notes": ""
+  },
+  {
+    "name": "Burleson",
+    "region": "Central TX",
+    "cad": {
+      "name": "Burleson County Appraisal District",
+      "website": "https://www.burlesoncad.org",
+      "phone": "(979) 567-2326"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Burnet",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Burnet County Appraisal District",
+      "website": "https://www.burnetcad.org",
+      "phone": "(512) 756-5384"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.25,
+    "agProductivityValue": 165,
+    "notes": "Highland Lakes area - popular for retirement"
+  },
+  {
+    "name": "Caldwell",
+    "region": "Central TX",
+    "cad": {
+      "name": "Caldwell County Appraisal District",
+      "website": "https://www.caldwellcad.org",
+      "phone": "(512) 398-1830"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.3,
+    "agProductivityValue": 170,
+    "notes": ""
+  },
+  {
+    "name": "Calhoun",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Calhoun County Appraisal District",
+      "website": "https://www.calhouncad.org",
+      "phone": "(361) 553-4300"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.2,
+    "agProductivityValue": 145,
+    "notes": "Coastal - hurricane considerations"
+  },
+  {
+    "name": "Callahan",
+    "region": "Central TX",
+    "cad": {
+      "name": "Callahan County Appraisal District",
+      "website": "https://www.callahancad.org",
+      "phone": "(325) 854-5817"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.85,
+    "agProductivityValue": 140,
+    "notes": ""
+  },
+  {
+    "name": "Cameron",
+    "region": "South TX",
+    "cad": {
+      "name": "Cameron County Appraisal District",
+      "website": "https://www.cameroncad.org",
+      "phone": "(956) 546-7502",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=15",
+      "cadClientId": "15",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.35,
+    "agProductivityValue": 150,
+    "notes": "Rio Grande Valley - year-round beekeeping"
+  },
+  {
+    "name": "Camp",
+    "region": "East TX",
+    "cad": {
+      "name": "Camp County Appraisal District",
+      "website": "https://www.campcad.org",
+      "phone": "(903) 856-5101"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Carson",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Carson County Appraisal District",
+      "website": "https://www.carsoncad.org",
+      "phone": "(806) 537-3581"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Cass",
+    "region": "East TX",
+    "cad": {
+      "name": "Cass County Appraisal District",
+      "website": "https://www.casscad.org",
+      "phone": "(903) 756-7435"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.9,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Castro",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Castro County Appraisal District",
+      "website": "https://www.castrocad.org",
+      "phone": "(806) 647-5425"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Chambers",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Chambers County Appraisal District",
+      "website": "https://www.chamberscad.org",
+      "phone": "(409) 267-2441"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.3,
+    "agProductivityValue": 165,
+    "notes": "Houston metro area"
+  },
+  {
+    "name": "Cherokee",
+    "region": "East TX",
+    "cad": {
+      "name": "Cherokee County Appraisal District",
+      "website": "https://www.cherokeecad.org",
+      "phone": "(903) 683-2296"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Childress",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Childress County Appraisal District",
+      "website": "https://www.childresscad.org",
+      "phone": "(940) 937-6143"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Clay",
+    "region": "North TX",
+    "cad": {
+      "name": "Clay County Appraisal District",
+      "website": "https://www.claycad.org",
+      "phone": "(940) 538-4342"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.85,
+    "agProductivityValue": 135,
+    "notes": ""
+  },
+  {
+    "name": "Cochran",
+    "region": "West TX",
+    "cad": {
+      "name": "Cochran County Appraisal District",
+      "website": "https://www.cochrancad.org",
+      "phone": "(806) 266-5215"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 100,
+    "notes": ""
+  },
+  {
+    "name": "Coke",
+    "region": "West TX",
+    "cad": {
+      "name": "Coke County Appraisal District",
+      "website": "https://www.cokecad.org",
+      "phone": "(325) 453-2542"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 120,
+    "notes": ""
+  },
+  {
+    "name": "Coleman",
+    "region": "Central TX",
+    "cad": {
+      "name": "Coleman County Appraisal District",
+      "website": "https://www.colemancad.org",
+      "phone": "(325) 625-2674"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.8,
+    "agProductivityValue": 135,
+    "notes": ""
+  },
+  {
+    "name": "Collin",
+    "region": "North TX",
+    "cad": {
+      "name": "Collin County Appraisal District",
+      "website": "https://www.collincad.org",
+      "phone": "(469) 742-9200",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=24",
+      "cadClientId": "24",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.5,
+    "agProductivityValue": 185,
+    "notes": "Dallas metro - huge savings potential"
+  },
+  {
+    "name": "Collingsworth",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Collingsworth County Appraisal District",
+      "website": "https://www.collingsworthcad.org",
+      "phone": "(806) 447-2574"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Colorado",
+    "region": "Central TX",
+    "cad": {
+      "name": "Colorado County Appraisal District",
+      "website": "https://www.coloradocad.org",
+      "phone": "(979) 732-2341"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Comal",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Comal County Appraisal District",
+      "website": "https://www.comalad.org",
+      "phone": "(830) 625-3507",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=23",
+      "cadClientId": "23",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.4,
+    "agProductivityValue": 175,
+    "notes": "New Braunfels area - very high property values"
+  },
+  {
+    "name": "Comanche",
+    "region": "Central TX",
+    "cad": {
+      "name": "Comanche County Appraisal District",
+      "website": "https://www.comanchecad.org",
+      "phone": "(325) 356-2382"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.9,
+    "agProductivityValue": 145,
+    "notes": ""
+  },
+  {
+    "name": "Concho",
+    "region": "West TX",
+    "cad": {
+      "name": "Concho County Appraisal District",
+      "website": "https://www.conchocad.org",
+      "phone": "(325) 732-4324"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 125,
+    "notes": ""
+  },
+  {
+    "name": "Cooke",
+    "region": "North TX",
+    "cad": {
+      "name": "Cooke County Appraisal District",
+      "website": "https://www.cookecad.org",
+      "phone": "(940) 668-8746"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Coryell",
+    "region": "Central TX",
+    "cad": {
+      "name": "Coryell County Appraisal District",
+      "website": "https://www.coryellcad.org",
+      "phone": "(254) 865-6593"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.2,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Cottle",
+    "region": "North TX",
+    "cad": {
+      "name": "Cottle County Appraisal District",
+      "website": "https://www.cottlecad.org",
+      "phone": "(806) 492-3563"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Crane",
+    "region": "West TX",
+    "cad": {
+      "name": "Crane County Appraisal District",
+      "website": "https://www.cranecad.org",
+      "phone": "(432) 558-3523"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.55,
+    "agProductivityValue": 95,
+    "notes": ""
+  },
+  {
+    "name": "Crockett",
+    "region": "West TX",
+    "cad": {
+      "name": "Crockett County Appraisal District",
+      "website": "https://www.crockettcad.org",
+      "phone": "(325) 392-3540"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 100,
+    "notes": ""
+  },
+  {
+    "name": "Crosby",
+    "region": "West TX",
+    "cad": {
+      "name": "Crosby County Appraisal District",
+      "website": "https://www.crosbycad.org",
+      "phone": "(806) 675-2355"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Culberson",
+    "region": "West TX",
+    "cad": {
+      "name": "Culberson County Appraisal District",
+      "website": "https://www.culbersoncad.org",
+      "phone": "(432) 283-2060"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 85,
+    "notes": "Mountain/desert terrain"
+  },
+  {
+    "name": "Dallam",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Dallam County Appraisal District",
+      "website": "https://www.dallamcad.org",
+      "phone": "(806) 244-2944"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Dallas",
+    "region": "North TX",
+    "cad": {
+      "name": "Dallas County Appraisal District",
+      "website": "https://www.dallascad.org",
+      "phone": "(214) 631-0910",
+      "cadPlatform": "custom",
+      "cadSearchUrl": "https://www.dallascad.org/SearchAddr.aspx",
+      "lookupSupported": false
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.55,
+    "agProductivityValue": 190,
+    "notes": "Dallas metro - maximum savings potential"
+  },
+  {
+    "name": "Dawson",
+    "region": "West TX",
+    "cad": {
+      "name": "Dawson County Appraisal District",
+      "website": "https://www.dawsoncad.org",
+      "phone": "(806) 872-3340"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Deaf Smith",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Deaf Smith County Appraisal District",
+      "website": "https://www.deafsmithcad.org",
+      "phone": "(806) 363-7325"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Delta",
+    "region": "East TX",
+    "cad": {
+      "name": "Delta County Appraisal District",
+      "website": "https://www.deltacad.org",
+      "phone": "(903) 395-4255"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Denton",
+    "region": "North TX",
+    "cad": {
+      "name": "Denton County Appraisal District",
+      "website": "https://www.dentoncad.com",
+      "phone": "(940) 349-3800",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=27",
+      "cadClientId": "27",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.45,
+    "agProductivityValue": 180,
+    "notes": "DFW metro - excellent opportunity"
+  },
+  {
+    "name": "DeWitt",
+    "region": "South TX",
+    "cad": {
+      "name": "DeWitt County Appraisal District",
+      "website": "https://www.dewittcad.org",
+      "phone": "(361) 275-3894"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Dickens",
+    "region": "West TX",
+    "cad": {
+      "name": "Dickens County Appraisal District",
+      "website": "https://www.dickenscad.org",
+      "phone": "(806) 623-5595"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Dimmit",
+    "region": "South TX",
+    "cad": {
+      "name": "Dimmit County Appraisal District",
+      "website": "https://www.dimmitcad.org",
+      "phone": "(830) 876-4253"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.9,
+    "agProductivityValue": 120,
+    "notes": ""
+  },
+  {
+    "name": "Donley",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Donley County Appraisal District",
+      "website": "https://www.donleycad.org",
+      "phone": "(806) 874-2744"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Duval",
+    "region": "South TX",
+    "cad": {
+      "name": "Duval County Appraisal District",
+      "website": "https://www.duvalcad.org",
+      "phone": "(361) 279-6272"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.85,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Eastland",
+    "region": "Central TX",
+    "cad": {
+      "name": "Eastland County Appraisal District",
+      "website": "https://www.eastlandcad.org",
+      "phone": "(254) 629-8597"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.85,
+    "agProductivityValue": 140,
+    "notes": ""
+  },
+  {
+    "name": "Ector",
+    "region": "West TX",
+    "cad": {
+      "name": "Ector County Appraisal District",
+      "website": "https://www.ectorcad.org",
+      "phone": "(432) 332-6834"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.8,
+    "agProductivityValue": 115,
+    "notes": "Odessa area - oil country"
+  },
+  {
+    "name": "Edwards",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Edwards County Appraisal District",
+      "website": "https://www.edwardscad.org",
+      "phone": "(830) 683-4141"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.85,
+    "agProductivityValue": 130,
+    "notes": ""
+  },
+  {
+    "name": "Ellis",
+    "region": "North TX",
+    "cad": {
+      "name": "Ellis County Appraisal District",
+      "website": "https://www.elliscad.com",
+      "phone": "(972) 825-5151",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=31",
+      "cadClientId": "31",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.35,
+    "agProductivityValue": 175,
+    "notes": "DFW metro - great opportunity"
+  },
+  {
+    "name": "El Paso",
+    "region": "West TX",
+    "cad": {
+      "name": "El Paso County Appraisal District",
+      "website": "https://www.epcad.org",
+      "phone": "(915) 780-2034",
+      "cadPlatform": "custom",
+      "cadSearchUrl": "https://www.epcad.org/propertysearch",
+      "lookupSupported": false
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.4,
+    "agProductivityValue": 125,
+    "notes": "Desert climate - water essential"
+  },
+  {
+    "name": "Erath",
+    "region": "Central TX",
+    "cad": {
+      "name": "Erath County Appraisal District",
+      "website": "https://www.erathcad.org",
+      "phone": "(254) 965-5703"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Falls",
+    "region": "Central TX",
+    "cad": {
+      "name": "Falls County Appraisal District",
+      "website": "https://www.fallscad.org",
+      "phone": "(254) 883-1463"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Fannin",
+    "region": "East TX",
+    "cad": {
+      "name": "Fannin County Appraisal District",
+      "website": "https://www.fannincad.org",
+      "phone": "(903) 583-7431"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Fayette",
+    "region": "Central TX",
+    "cad": {
+      "name": "Fayette County Appraisal District",
+      "website": "https://www.fayettecad.org",
+      "phone": "(979) 968-8545"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Fisher",
+    "region": "West TX",
+    "cad": {
+      "name": "Fisher County Appraisal District",
+      "website": "https://www.fishercad.org",
+      "phone": "(325) 776-2453"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Floyd",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Floyd County Appraisal District",
+      "website": "https://www.floydcad.org",
+      "phone": "(806) 983-5256"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Foard",
+    "region": "North TX",
+    "cad": {
+      "name": "Foard County Appraisal District",
+      "website": "https://www.foardcad.org",
+      "phone": "(940) 684-1365"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Fort Bend",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Fort Bend County Appraisal District",
+      "website": "https://www.fbcad.org",
+      "phone": "(281) 344-8623",
+      "cadPlatform": "custom",
+      "cadSearchUrl": "https://esearch.fbcad.org/Property",
+      "lookupSupported": false
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.5,
+    "agProductivityValue": 185,
+    "notes": "Houston metro - highest savings potential"
+  },
+  {
+    "name": "Franklin",
+    "region": "East TX",
+    "cad": {
+      "name": "Franklin County Appraisal District",
+      "website": "https://www.franklincad.org",
+      "phone": "(903) 537-4335"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Freestone",
+    "region": "East TX",
+    "cad": {
+      "name": "Freestone County Appraisal District",
+      "website": "https://www.freestonecad.org",
+      "phone": "(903) 389-2228"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Frio",
+    "region": "South TX",
+    "cad": {
+      "name": "Frio County Appraisal District",
+      "website": "https://www.friocad.org",
+      "phone": "(830) 334-8073"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 130,
+    "notes": ""
+  },
+  {
+    "name": "Gaines",
+    "region": "West TX",
+    "cad": {
+      "name": "Gaines County Appraisal District",
+      "website": "https://www.gainescad.org",
+      "phone": "(432) 758-3626"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Galveston",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Galveston County Appraisal District",
+      "website": "https://www.galvestoncad.org",
+      "phone": "(409) 935-1980",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=42",
+      "cadClientId": "42",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.45,
+    "agProductivityValue": 175,
+    "notes": "Coastal - hurricane considerations"
+  },
+  {
+    "name": "Garza",
+    "region": "West TX",
+    "cad": {
+      "name": "Garza County Appraisal District",
+      "website": "https://www.garzacad.org",
+      "phone": "(806) 495-3518"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Gillespie",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Gillespie County Appraisal District",
+      "website": "https://www.gillespiecad.org",
+      "phone": "(830) 997-9807"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 165,
+    "notes": "Fredericksburg area - wine country, great for bees"
+  },
+  {
+    "name": "Glasscock",
+    "region": "West TX",
+    "cad": {
+      "name": "Glasscock County Appraisal District",
+      "website": "https://www.glasscoc kcad.org",
+      "phone": "(432) 354-2371"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 95,
+    "notes": ""
+  },
+  {
+    "name": "Goliad",
+    "region": "South TX",
+    "cad": {
+      "name": "Goliad County Appraisal District",
+      "website": "https://www.goliadcad.org",
+      "phone": "(361) 645-3337"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 145,
+    "notes": ""
+  },
+  {
+    "name": "Gonzales",
+    "region": "South TX",
+    "cad": {
+      "name": "Gonzales County Appraisal District",
+      "website": "https://www.gonzalescad.org",
+      "phone": "(830) 672-2881"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Gray",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Gray County Appraisal District",
+      "website": "https://www.graycad.org",
+      "phone": "(806) 669-8035"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 115,
+    "notes": "Pampa area"
+  },
+  {
+    "name": "Grayson",
+    "region": "North TX",
+    "cad": {
+      "name": "Grayson County Appraisal District",
+      "website": "https://www.graysonappraisal.org",
+      "phone": "(903) 892-8301"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.25,
+    "agProductivityValue": 170,
+    "notes": "Sherman area"
+  },
+  {
+    "name": "Gregg",
+    "region": "East TX",
+    "cad": {
+      "name": "Gregg County Appraisal District",
+      "website": "https://www.greggcad.org",
+      "phone": "(903) 236-8430",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=43",
+      "cadClientId": "43",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.2,
+    "agProductivityValue": 165,
+    "notes": "Longview area"
+  },
+  {
+    "name": "Grimes",
+    "region": "Central TX",
+    "cad": {
+      "name": "Grimes County Appraisal District",
+      "website": "https://www.grimescad.org",
+      "phone": "(936) 873-2131"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Guadalupe",
+    "region": "South TX",
+    "cad": {
+      "name": "Guadalupe County Appraisal District",
+      "website": "https://www.guadalupecad.org",
+      "phone": "(830) 372-0840",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=44",
+      "cadClientId": "44",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.35,
+    "agProductivityValue": 170,
+    "notes": "Seguin area - growing fast"
+  },
+  {
+    "name": "Hale",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Hale County Appraisal District",
+      "website": "https://www.halecad.org",
+      "phone": "(806) 293-5537"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.8,
+    "agProductivityValue": 120,
+    "notes": "Plainview area"
+  },
+  {
+    "name": "Hall",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Hall County Appraisal District",
+      "website": "https://www.hallcad.org",
+      "phone": "(806) 259-2627"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Hamilton",
+    "region": "Central TX",
+    "cad": {
+      "name": "Hamilton County Appraisal District",
+      "website": "https://www.hamiltoncad.org",
+      "phone": "(254) 386-3757"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Hansford",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Hansford County Appraisal District",
+      "website": "https://www.hansfordcad.org",
+      "phone": "(806) 659-2828"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Hardeman",
+    "region": "North TX",
+    "cad": {
+      "name": "Hardeman County Appraisal District",
+      "website": "https://www.hardemancad.org",
+      "phone": "(940) 663-2745"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Hardin",
+    "region": "East TX",
+    "cad": {
+      "name": "Hardin County Appraisal District",
+      "website": "https://www.hardincad.org",
+      "phone": "(409) 246-5151"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Harris",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Harris County Appraisal District",
+      "website": "https://www.hcad.org",
+      "phone": "(713) 957-7800",
+      "cadPlatform": "custom",
+      "cadSearchUrl": "https://public.hcad.org/records/quicksearch.asp",
+      "lookupSupported": false
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.6,
+    "agProductivityValue": 195,
+    "notes": "Houston - massive savings potential"
+  },
+  {
+    "name": "Harrison",
+    "region": "East TX",
+    "cad": {
+      "name": "Harrison County Appraisal District",
+      "website": "https://www.harrisoncad.org",
+      "phone": "(903) 935-8426"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Hartley",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Hartley County Appraisal District",
+      "website": "https://www.hartleycad.org",
+      "phone": "(806) 365-4326"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.55,
+    "agProductivityValue": 100,
+    "notes": ""
+  },
+  {
+    "name": "Haskell",
+    "region": "West TX",
+    "cad": {
+      "name": "Haskell County Appraisal District",
+      "website": "https://www.haskellcad.org",
+      "phone": "(940) 864-3805"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 120,
+    "notes": ""
+  },
+  {
+    "name": "Hays",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Hays County Appraisal District",
+      "website": "https://www.hayscad.com",
+      "phone": "(512) 268-2522",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=48",
+      "cadClientId": "48",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.5,
+    "agProductivityValue": 185,
+    "notes": "San Marcos/Austin area - huge growth"
+  },
+  {
+    "name": "Hemphill",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Hemphill County Appraisal District",
+      "website": "https://www.hemphillcad.org",
+      "phone": "(806) 323-6451"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Henderson",
+    "region": "East TX",
+    "cad": {
+      "name": "Henderson County Appraisal District",
+      "website": "https://www.hendersoncad.org",
+      "phone": "(903) 675-5675",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=49",
+      "cadClientId": "49",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 160,
+    "notes": "Athens area - near BeeKings home base"
+  },
+  {
+    "name": "Hidalgo",
+    "region": "South TX",
+    "cad": {
+      "name": "Hidalgo County Appraisal District",
+      "website": "https://www.hidalgoad.org",
+      "phone": "(956) 381-5041",
+      "cadPlatform": "custom",
+      "cadSearchUrl": "https://www.hidalgoad.org/search",
+      "lookupSupported": false
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.4,
+    "agProductivityValue": 155,
+    "notes": "Rio Grande Valley - year-round beekeeping"
+  },
+  {
+    "name": "Hill",
+    "region": "Central TX",
+    "cad": {
+      "name": "Hill County Appraisal District",
+      "website": "https://www.hillcad.org",
+      "phone": "(254) 582-4040"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Hockley",
+    "region": "West TX",
+    "cad": {
+      "name": "Hockley County Appraisal District",
+      "website": "https://www.hockleycad.org",
+      "phone": "(806) 894-3682"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Hood",
+    "region": "North TX",
+    "cad": {
+      "name": "Hood County Appraisal District",
+      "website": "https://www.hoodcad.org",
+      "phone": "(817) 579-2256"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.3,
+    "agProductivityValue": 175,
+    "notes": "Granbury area - DFW metro"
+  },
+  {
+    "name": "Hopkins",
+    "region": "East TX",
+    "cad": {
+      "name": "Hopkins County Appraisal District",
+      "website": "https://www.hopkinscad.org",
+      "phone": "(903) 885-8702"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Houston",
+    "region": "East TX",
+    "cad": {
+      "name": "Houston County Appraisal District",
+      "website": "https://www.houstoncad.org",
+      "phone": "(936) 544-3255"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Howard",
+    "region": "West TX",
+    "cad": {
+      "name": "Howard County Appraisal District",
+      "website": "https://www.howardcad.org",
+      "phone": "(432) 263-8301"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 115,
+    "notes": "Big Spring area"
+  },
+  {
+    "name": "Hudspeth",
+    "region": "West TX",
+    "cad": {
+      "name": "Hudspeth County Appraisal District",
+      "website": "https://www.hudspethcad.org",
+      "phone": "(915) 369-2301"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.55,
+    "agProductivityValue": 80,
+    "notes": "Desert terrain"
+  },
+  {
+    "name": "Hunt",
+    "region": "East TX",
+    "cad": {
+      "name": "Hunt County Appraisal District",
+      "website": "https://www.huntcad.org",
+      "phone": "(903) 454-3510"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.2,
+    "agProductivityValue": 165,
+    "notes": "Greenville area"
+  },
+  {
+    "name": "Hutchinson",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Hutchinson County Appraisal District",
+      "website": "https://www.hutchinsoncad.org",
+      "phone": "(806) 878-4041"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Irion",
+    "region": "West TX",
+    "cad": {
+      "name": "Irion County Appraisal District",
+      "website": "https://www.irioncad.org",
+      "phone": "(325) 835-2421"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Jack",
+    "region": "North TX",
+    "cad": {
+      "name": "Jack County Appraisal District",
+      "website": "https://www.jackcad.org",
+      "phone": "(940) 567-6251"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.9,
+    "agProductivityValue": 145,
+    "notes": ""
+  },
+  {
+    "name": "Jackson",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Jackson County Appraisal District",
+      "website": "https://www.jacksoncad.org",
+      "phone": "(361) 782-3139"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Jasper",
+    "region": "East TX",
+    "cad": {
+      "name": "Jasper County Appraisal District",
+      "website": "https://www.jaspercad.org",
+      "phone": "(409) 384-5816"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 145,
+    "notes": ""
+  },
+  {
+    "name": "Jeff Davis",
+    "region": "West TX",
+    "cad": {
+      "name": "Jeff Davis County Appraisal District",
+      "website": "https://www.jeffdaviscad.org",
+      "phone": "(432) 426-3251"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 90,
+    "notes": "Mountain terrain"
+  },
+  {
+    "name": "Jefferson",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Jefferson County Appraisal District",
+      "website": "https://www.jcad.org",
+      "phone": "(409) 727-3500"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.35,
+    "agProductivityValue": 165,
+    "notes": "Beaumont area"
+  },
+  {
+    "name": "Jim Hogg",
+    "region": "South TX",
+    "cad": {
+      "name": "Jim Hogg County Appraisal District",
+      "website": "https://www.jimhoggcad.org",
+      "phone": "(361) 527-4500"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.8,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Jim Wells",
+    "region": "South TX",
+    "cad": {
+      "name": "Jim Wells County Appraisal District",
+      "website": "https://www.jimwellscad.org",
+      "phone": "(361) 668-5431"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 140,
+    "notes": ""
+  },
+  {
+    "name": "Johnson",
+    "region": "North TX",
+    "cad": {
+      "name": "Johnson County Appraisal District",
+      "website": "https://www.johnsoncad.com",
+      "phone": "(817) 556-6236",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=59",
+      "cadClientId": "59",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.35,
+    "agProductivityValue": 175,
+    "notes": "Cleburne area - DFW metro"
+  },
+  {
+    "name": "Jones",
+    "region": "West TX",
+    "cad": {
+      "name": "Jones County Appraisal District",
+      "website": "https://www.jonescad.org",
+      "phone": "(325) 823-2516"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 120,
+    "notes": ""
+  },
+  {
+    "name": "Karnes",
+    "region": "South TX",
+    "cad": {
+      "name": "Karnes County Appraisal District",
+      "website": "https://www.karnescad.org",
+      "phone": "(830) 780-3574"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 140,
+    "notes": ""
+  },
+  {
+    "name": "Kaufman",
+    "region": "North TX",
+    "cad": {
+      "name": "Kaufman County Appraisal District",
+      "website": "https://www.kaufmancad.org",
+      "phone": "(972) 932-6501",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=61",
+      "cadClientId": "61",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.2,
+    "agProductivityValue": 170,
+    "notes": "DFW metro - excellent opportunity per research"
+  },
+  {
+    "name": "Kendall",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Kendall County Appraisal District",
+      "website": "https://www.kendallad.org",
+      "phone": "(830) 249-9343"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.25,
+    "agProductivityValue": 170,
+    "notes": "Boerne area - Hill Country"
+  },
+  {
+    "name": "Kenedy",
+    "region": "South TX",
+    "cad": {
+      "name": "Kenedy County Appraisal District",
+      "website": "https://www.kenedycad.org",
+      "phone": "(361) 294-5255"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Kent",
+    "region": "West TX",
+    "cad": {
+      "name": "Kent County Appraisal District",
+      "website": "https://www.kentcad.org",
+      "phone": "(806) 237-3373"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 100,
+    "notes": ""
+  },
+  {
+    "name": "Kerr",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Kerr County Appraisal District",
+      "website": "https://www.kerrcad.org",
+      "phone": "(830) 895-5222"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 165,
+    "notes": "Kerrville area - Hill Country"
+  },
+  {
+    "name": "Kimble",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Kimble County Appraisal District",
+      "website": "https://www.kimblecad.org",
+      "phone": "(325) 446-3357"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.85,
+    "agProductivityValue": 135,
+    "notes": ""
+  },
+  {
+    "name": "King",
+    "region": "North TX",
+    "cad": {
+      "name": "King County Appraisal District",
+      "website": "https://www.kingcad.org",
+      "phone": "(806) 596-4412"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.55,
+    "agProductivityValue": 100,
+    "notes": ""
+  },
+  {
+    "name": "Kinney",
+    "region": "South TX",
+    "cad": {
+      "name": "Kinney County Appraisal District",
+      "website": "https://www.kinneycad.org",
+      "phone": "(830) 563-2322"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.8,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Kleberg",
+    "region": "South TX",
+    "cad": {
+      "name": "Kleberg County Appraisal District",
+      "website": "https://www.klebergcad.org",
+      "phone": "(361) 595-8313"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 145,
+    "notes": "Kingsville area"
+  },
+  {
+    "name": "Knox",
+    "region": "North TX",
+    "cad": {
+      "name": "Knox County Appraisal District",
+      "website": "https://www.knoxcad.org",
+      "phone": "(940) 459-2245"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Lamar",
+    "region": "East TX",
+    "cad": {
+      "name": "Lamar County Appraisal District",
+      "website": "https://www.lamarcad.org",
+      "phone": "(903) 737-2470"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 165,
+    "notes": "Paris area"
+  },
+  {
+    "name": "Lamb",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Lamb County Appraisal District",
+      "website": "https://www.lambcad.org",
+      "phone": "(806) 385-4979"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Lampasas",
+    "region": "Central TX",
+    "cad": {
+      "name": "Lampasas County Appraisal District",
+      "website": "https://www.lampasascad.org",
+      "phone": "(512) 556-6491"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "La Salle",
+    "region": "South TX",
+    "cad": {
+      "name": "La Salle County Appraisal District",
+      "website": "https://www.lasallecad.org",
+      "phone": "(361) 879-2323"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.85,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Lavaca",
+    "region": "South TX",
+    "cad": {
+      "name": "Lavaca County Appraisal District",
+      "website": "https://www.lavacacad.org",
+      "phone": "(361) 798-3347"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Lee",
+    "region": "Central TX",
+    "cad": {
+      "name": "Lee County Appraisal District",
+      "website": "https://www.leecad.org",
+      "phone": "(979) 542-3726"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 165,
+    "notes": ""
+  },
+  {
+    "name": "Leon",
+    "region": "East TX",
+    "cad": {
+      "name": "Leon County Appraisal District",
+      "website": "https://www.leoncad.org",
+      "phone": "(903) 536-7211"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Liberty",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Liberty County Appraisal District",
+      "website": "https://www.libertycad.com",
+      "phone": "(936) 336-5722"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.25,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Limestone",
+    "region": "Central TX",
+    "cad": {
+      "name": "Limestone County Appraisal District",
+      "website": "https://www.limestonecad.org",
+      "phone": "(254) 729-3003"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Lipscomb",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Lipscomb County Appraisal District",
+      "website": "https://www.lipscombcad.org",
+      "phone": "(806) 862-3206"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Live Oak",
+    "region": "South TX",
+    "cad": {
+      "name": "Live Oak County Appraisal District",
+      "website": "https://www.liveoakcad.org",
+      "phone": "(361) 449-2607"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 135,
+    "notes": ""
+  },
+  {
+    "name": "Llano",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Llano County Appraisal District",
+      "website": "https://www.llanocad.org",
+      "phone": "(325) 247-4405"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 160,
+    "notes": "Hill Country - good for bees"
+  },
+  {
+    "name": "Loving",
+    "region": "West TX",
+    "cad": {
+      "name": "Loving County Appraisal District",
+      "website": "https://www.lovingcad.org",
+      "phone": "(432) 377-2441"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.45,
+    "agProductivityValue": 75,
+    "notes": "Smallest population county in Texas"
+  },
+  {
+    "name": "Lubbock",
+    "region": "West TX",
+    "cad": {
+      "name": "Lubbock County Appraisal District",
+      "website": "https://www.lubbockcad.org",
+      "phone": "(806) 762-4935",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=124",
+      "cadClientId": "124",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 135,
+    "notes": "Lubbock metro"
+  },
+  {
+    "name": "Lynn",
+    "region": "West TX",
+    "cad": {
+      "name": "Lynn County Appraisal District",
+      "website": "https://www.lynncad.org",
+      "phone": "(806) 561-5477"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "McCulloch",
+    "region": "Central TX",
+    "cad": {
+      "name": "McCulloch County Appraisal District",
+      "website": "https://www.mccullochcad.org",
+      "phone": "(325) 597-2609"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.85,
+    "agProductivityValue": 135,
+    "notes": ""
+  },
+  {
+    "name": "McLennan",
+    "region": "Central TX",
+    "cad": {
+      "name": "McLennan County Appraisal District",
+      "website": "https://www.mclennancad.org",
+      "phone": "(254) 752-9431"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.35,
+    "agProductivityValue": 170,
+    "notes": "Waco area"
+  },
+  {
+    "name": "McMullen",
+    "region": "South TX",
+    "cad": {
+      "name": "McMullen County Appraisal District",
+      "website": "https://www.mcmullencad.org",
+      "phone": "(361) 274-3812"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Madison",
+    "region": "Central TX",
+    "cad": {
+      "name": "Madison County Appraisal District",
+      "website": "https://www.madisoncad.org",
+      "phone": "(936) 348-2631"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Marion",
+    "region": "East TX",
+    "cad": {
+      "name": "Marion County Appraisal District",
+      "website": "https://www.marioncad.org",
+      "phone": "(903) 665-2272"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 145,
+    "notes": ""
+  },
+  {
+    "name": "Martin",
+    "region": "West TX",
+    "cad": {
+      "name": "Martin County Appraisal District",
+      "website": "https://www.martincad.org",
+      "phone": "(432) 756-3351"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Mason",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Mason County Appraisal District",
+      "website": "https://www.masoncad.org",
+      "phone": "(325) 347-5353"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 145,
+    "notes": "Hill Country"
+  },
+  {
+    "name": "Matagorda",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Matagorda County Appraisal District",
+      "website": "https://www.matagordacad.org",
+      "phone": "(979) 244-7610"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 155,
+    "notes": "Coastal area"
+  },
+  {
+    "name": "Maverick",
+    "region": "South TX",
+    "cad": {
+      "name": "Maverick County Appraisal District",
+      "website": "https://www.maverickcad.org",
+      "phone": "(830) 773-4658"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 120,
+    "notes": "Eagle Pass area"
+  },
+  {
+    "name": "Medina",
+    "region": "South TX",
+    "cad": {
+      "name": "Medina County Appraisal District",
+      "website": "https://www.medinacad.org",
+      "phone": "(830) 741-3035"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.2,
+    "agProductivityValue": 160,
+    "notes": "San Antonio metro"
+  },
+  {
+    "name": "Menard",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Menard County Appraisal District",
+      "website": "https://www.menardcad.org",
+      "phone": "(325) 396-2885"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.85,
+    "agProductivityValue": 130,
+    "notes": ""
+  },
+  {
+    "name": "Midland",
+    "region": "West TX",
+    "cad": {
+      "name": "Midland County Appraisal District",
+      "website": "https://www.midlandcad.org",
+      "phone": "(432) 685-2490"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.85,
+    "agProductivityValue": 120,
+    "notes": "Midland metro - oil country"
+  },
+  {
+    "name": "Milam",
+    "region": "Central TX",
+    "cad": {
+      "name": "Milam County Appraisal District",
+      "website": "https://www.milamcad.org",
+      "phone": "(512) 697-6971"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Mills",
+    "region": "Central TX",
+    "cad": {
+      "name": "Mills County Appraisal District",
+      "website": "https://www.millscad.org",
+      "phone": "(325) 648-3341"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.9,
+    "agProductivityValue": 140,
+    "notes": ""
+  },
+  {
+    "name": "Mitchell",
+    "region": "West TX",
+    "cad": {
+      "name": "Mitchell County Appraisal District",
+      "website": "https://www.mitchellcad.org",
+      "phone": "(325) 728-8411"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Montague",
+    "region": "North TX",
+    "cad": {
+      "name": "Montague County Appraisal District",
+      "website": "https://www.montaguecad.org",
+      "phone": "(940) 894-2238"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Montgomery",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Montgomery County Appraisal District",
+      "website": "https://www.mcad-tx.org",
+      "phone": "(936) 756-3371",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=135",
+      "cadClientId": "135",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.45,
+    "agProductivityValue": 180,
+    "notes": "Houston metro - huge savings potential"
+  },
+  {
+    "name": "Moore",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Moore County Appraisal District",
+      "website": "https://www.moorecad.org",
+      "phone": "(806) 935-6164"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Morris",
+    "region": "East TX",
+    "cad": {
+      "name": "Morris County Appraisal District",
+      "website": "https://www.morriscad.org",
+      "phone": "(903) 645-2971"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 145,
+    "notes": ""
+  },
+  {
+    "name": "Motley",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Motley County Appraisal District",
+      "website": "https://www.motleycad.org",
+      "phone": "(806) 347-2273"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 100,
+    "notes": ""
+  },
+  {
+    "name": "Nacogdoches",
+    "region": "East TX",
+    "cad": {
+      "name": "Nacogdoches County Appraisal District",
+      "website": "https://www.nacogdochescad.com",
+      "phone": "(936) 560-4280"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Navarro",
+    "region": "Central TX",
+    "cad": {
+      "name": "Navarro County Appraisal District",
+      "website": "https://www.navarrocad.org",
+      "phone": "(903) 654-3510"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 165,
+    "notes": "Corsicana area"
+  },
+  {
+    "name": "Newton",
+    "region": "East TX",
+    "cad": {
+      "name": "Newton County Appraisal District",
+      "website": "https://www.newtoncad.org",
+      "phone": "(409) 379-8228"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.9,
+    "agProductivityValue": 140,
+    "notes": ""
+  },
+  {
+    "name": "Nolan",
+    "region": "West TX",
+    "cad": {
+      "name": "Nolan County Appraisal District",
+      "website": "https://www.nolancad.org",
+      "phone": "(325) 235-5549"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.8,
+    "agProductivityValue": 125,
+    "notes": "Sweetwater area"
+  },
+  {
+    "name": "Nueces",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Nueces County Appraisal District",
+      "website": "https://www.nuecescad.com",
+      "phone": "(361) 888-0444",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=143",
+      "cadClientId": "143",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.4,
+    "agProductivityValue": 165,
+    "notes": "Corpus Christi metro"
+  },
+  {
+    "name": "Ochiltree",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Ochiltree County Appraisal District",
+      "website": "https://www.ochiltreecad.org",
+      "phone": "(806) 435-3577"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Oldham",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Oldham County Appraisal District",
+      "website": "https://www.oldhamcad.org",
+      "phone": "(806) 267-2667"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.55,
+    "agProductivityValue": 100,
+    "notes": ""
+  },
+  {
+    "name": "Orange",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Orange County Appraisal District",
+      "website": "https://www.orangecad.net",
+      "phone": "(409) 882-7191"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.25,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Palo Pinto",
+    "region": "North TX",
+    "cad": {
+      "name": "Palo Pinto County Appraisal District",
+      "website": "https://www.palopintocad.org",
+      "phone": "(940) 659-1244"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Panola",
+    "region": "East TX",
+    "cad": {
+      "name": "Panola County Appraisal District",
+      "website": "https://www.panolacad.org",
+      "phone": "(903) 693-0200"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Parker",
+    "region": "North TX",
+    "cad": {
+      "name": "Parker County Appraisal District",
+      "website": "https://www.parkercad.org",
+      "phone": "(817) 596-0077",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=148",
+      "cadClientId": "148",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.35,
+    "agProductivityValue": 175,
+    "notes": "Weatherford area - DFW metro"
+  },
+  {
+    "name": "Parmer",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Parmer County Appraisal District",
+      "website": "https://www.parmercad.org",
+      "phone": "(806) 250-3646"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Pecos",
+    "region": "West TX",
+    "cad": {
+      "name": "Pecos County Appraisal District",
+      "website": "https://www.pecoscad.org",
+      "phone": "(432) 336-3306"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 100,
+    "notes": "Desert climate"
+  },
+  {
+    "name": "Polk",
+    "region": "East TX",
+    "cad": {
+      "name": "Polk County Appraisal District",
+      "website": "https://www.polkcad.org",
+      "phone": "(936) 327-6821"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Potter",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Potter County Appraisal District",
+      "website": "https://www.pottercad.org",
+      "phone": "(806) 379-2411"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 130,
+    "notes": "Amarillo area"
+  },
+  {
+    "name": "Presidio",
+    "region": "West TX",
+    "cad": {
+      "name": "Presidio County Appraisal District",
+      "website": "https://www.presidiocad.org",
+      "phone": "(432) 729-4812"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 85,
+    "notes": "Desert/mountain terrain"
+  },
+  {
+    "name": "Rains",
+    "region": "East TX",
+    "cad": {
+      "name": "Rains County Appraisal District",
+      "website": "https://www.rainscad.org",
+      "phone": "(903) 473-4535"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 160,
+    "notes": "Near BeeKings area"
+  },
+  {
+    "name": "Randall",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Randall County Appraisal District",
+      "website": "https://www.randallcad.org",
+      "phone": "(806) 356-6426"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 130,
+    "notes": "Canyon/Amarillo area"
+  },
+  {
+    "name": "Reagan",
+    "region": "West TX",
+    "cad": {
+      "name": "Reagan County Appraisal District",
+      "website": "https://www.reagancad.org",
+      "phone": "(325) 884-2728"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 95,
+    "notes": ""
+  },
+  {
+    "name": "Real",
+    "region": "Hill Country",
+    "cad": {
+      "name": "Real County Appraisal District",
+      "website": "https://www.realcad.org",
+      "phone": "(830) 232-5576"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.9,
+    "agProductivityValue": 135,
+    "notes": ""
+  },
+  {
+    "name": "Red River",
+    "region": "East TX",
+    "cad": {
+      "name": "Red River County Appraisal District",
+      "website": "https://www.redrivercad.org",
+      "phone": "(903) 427-3834"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Reeves",
+    "region": "West TX",
+    "cad": {
+      "name": "Reeves County Appraisal District",
+      "website": "https://www.reevescad.org",
+      "phone": "(432) 445-5476"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 90,
+    "notes": "Desert climate"
+  },
+  {
+    "name": "Refugio",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Refugio County Appraisal District",
+      "website": "https://www.refugiocad.org",
+      "phone": "(361) 526-2315"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 145,
+    "notes": "Coastal area"
+  },
+  {
+    "name": "Roberts",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Roberts County Appraisal District",
+      "website": "https://www.robertscad.org",
+      "phone": "(806) 868-3341"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.55,
+    "agProductivityValue": 100,
+    "notes": ""
+  },
+  {
+    "name": "Robertson",
+    "region": "Central TX",
+    "cad": {
+      "name": "Robertson County Appraisal District",
+      "website": "https://www.robertsoncad.org",
+      "phone": "(979) 828-4630"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Rockwall",
+    "region": "North TX",
+    "cad": {
+      "name": "Rockwall County Appraisal District",
+      "website": "https://www.rockwallcad.com",
+      "phone": "(972) 771-2034",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=172",
+      "cadClientId": "172",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.45,
+    "agProductivityValue": 180,
+    "notes": "DFW metro - excellent savings"
+  },
+  {
+    "name": "Runnels",
+    "region": "West TX",
+    "cad": {
+      "name": "Runnels County Appraisal District",
+      "website": "https://www.runnelscad.org",
+      "phone": "(325) 365-2553"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.8,
+    "agProductivityValue": 130,
+    "notes": ""
+  },
+  {
+    "name": "Rusk",
+    "region": "East TX",
+    "cad": {
+      "name": "Rusk County Appraisal District",
+      "website": "https://www.ruskcad.org",
+      "phone": "(903) 657-0571"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Sabine",
+    "region": "East TX",
+    "cad": {
+      "name": "Sabine County Appraisal District",
+      "website": "https://www.sabinecad.org",
+      "phone": "(409) 787-2273"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 145,
+    "notes": ""
+  },
+  {
+    "name": "San Augustine",
+    "region": "East TX",
+    "cad": {
+      "name": "San Augustine County Appraisal District",
+      "website": "https://www.sanaugustinecad.org",
+      "phone": "(936) 275-9345"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 145,
+    "notes": ""
+  },
+  {
+    "name": "San Jacinto",
+    "region": "East TX",
+    "cad": {
+      "name": "San Jacinto County Appraisal District",
+      "website": "https://www.sjcad.org",
+      "phone": "(936) 653-2702"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "San Patricio",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "San Patricio County Appraisal District",
+      "website": "https://www.spatco.org",
+      "phone": "(361) 364-9272"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.25,
+    "agProductivityValue": 155,
+    "notes": "Coastal area"
+  },
+  {
+    "name": "San Saba",
+    "region": "Central TX",
+    "cad": {
+      "name": "San Saba County Appraisal District",
+      "website": "https://www.sansabacad.org",
+      "phone": "(325) 372-3560"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.9,
+    "agProductivityValue": 140,
+    "notes": ""
+  },
+  {
+    "name": "Schleicher",
+    "region": "West TX",
+    "cad": {
+      "name": "Schleicher County Appraisal District",
+      "website": "https://www.schleichercad.org",
+      "phone": "(325) 853-2532"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Scurry",
+    "region": "West TX",
+    "cad": {
+      "name": "Scurry County Appraisal District",
+      "website": "https://www.scurrycad.org",
+      "phone": "(325) 573-9186"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.8,
+    "agProductivityValue": 125,
+    "notes": "Snyder area"
+  },
+  {
+    "name": "Shackelford",
+    "region": "Central TX",
+    "cad": {
+      "name": "Shackelford County Appraisal District",
+      "website": "https://www.shackelfordcad.org",
+      "phone": "(325) 762-2221"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 130,
+    "notes": ""
+  },
+  {
+    "name": "Shelby",
+    "region": "East TX",
+    "cad": {
+      "name": "Shelby County Appraisal District",
+      "website": "https://www.shelbycad.org",
+      "phone": "(936) 598-6161"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Sherman",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Sherman County Appraisal District",
+      "website": "https://www.shermancad.org",
+      "phone": "(806) 366-5185"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Smith",
+    "region": "East TX",
+    "cad": {
+      "name": "Smith County Appraisal District",
+      "website": "https://www.smithcad.org",
+      "phone": "(903) 510-8600",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=188",
+      "cadClientId": "188",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.3,
+    "agProductivityValue": 170,
+    "notes": "Tyler metro - great opportunity"
+  },
+  {
+    "name": "Somervell",
+    "region": "Central TX",
+    "cad": {
+      "name": "Somervell County Appraisal District",
+      "website": "https://www.somervellcad.org",
+      "phone": "(254) 897-2656"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 160,
+    "notes": "Glen Rose area"
+  },
+  {
+    "name": "Starr",
+    "region": "South TX",
+    "cad": {
+      "name": "Starr County Appraisal District",
+      "website": "https://www.starrcad.org",
+      "phone": "(956) 487-8941"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 130,
+    "notes": "Rio Grande Valley"
+  },
+  {
+    "name": "Stephens",
+    "region": "Central TX",
+    "cad": {
+      "name": "Stephens County Appraisal District",
+      "website": "https://www.stephenscad.org",
+      "phone": "(254) 559-3276"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.85,
+    "agProductivityValue": 135,
+    "notes": ""
+  },
+  {
+    "name": "Sterling",
+    "region": "West TX",
+    "cad": {
+      "name": "Sterling County Appraisal District",
+      "website": "https://www.sterlingcad.org",
+      "phone": "(325) 378-3181"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Stonewall",
+    "region": "West TX",
+    "cad": {
+      "name": "Stonewall County Appraisal District",
+      "website": "https://www.stonewallcad.org",
+      "phone": "(940) 989-2842"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Sutton",
+    "region": "West TX",
+    "cad": {
+      "name": "Sutton County Appraisal District",
+      "website": "https://www.suttoncad.org",
+      "phone": "(325) 387-5919"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Swisher",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Swisher County Appraisal District",
+      "website": "https://www.swishercad.org",
+      "phone": "(806) 995-3876"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 115,
+    "notes": "Tulia area"
+  },
+  {
+    "name": "Tarrant",
+    "region": "North TX",
+    "cad": {
+      "name": "Tarrant County Appraisal District",
+      "website": "https://www.tad.org",
+      "phone": "(817) 284-0024",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=220",
+      "cadClientId": "220",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.5,
+    "agProductivityValue": 185,
+    "notes": "Fort Worth metro - massive savings potential"
+  },
+  {
+    "name": "Taylor",
+    "region": "Central TX",
+    "cad": {
+      "name": "Taylor County Appraisal District",
+      "website": "https://www.taylorcad.org",
+      "phone": "(325) 672-5861"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 150,
+    "notes": "Abilene area"
+  },
+  {
+    "name": "Terrell",
+    "region": "West TX",
+    "cad": {
+      "name": "Terrell County Appraisal District",
+      "website": "https://www.terrellcad.org",
+      "phone": "(432) 345-2357"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 85,
+    "notes": "Desert terrain"
+  },
+  {
+    "name": "Terry",
+    "region": "West TX",
+    "cad": {
+      "name": "Terry County Appraisal District",
+      "website": "https://www.terrycad.org",
+      "phone": "(806) 637-6684"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.75,
+    "agProductivityValue": 115,
+    "notes": ""
+  },
+  {
+    "name": "Throckmorton",
+    "region": "North TX",
+    "cad": {
+      "name": "Throckmorton County Appraisal District",
+      "website": "https://www.throckmortoncad.org",
+      "phone": "(940) 849-3081"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 120,
+    "notes": ""
+  },
+  {
+    "name": "Titus",
+    "region": "East TX",
+    "cad": {
+      "name": "Titus County Appraisal District",
+      "website": "https://www.tituscad.org",
+      "phone": "(903) 577-6651"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 160,
+    "notes": "Mount Pleasant area"
+  },
+  {
+    "name": "Tom Green",
+    "region": "West TX",
+    "cad": {
+      "name": "Tom Green County Appraisal District",
+      "website": "https://www.tomgreencad.org",
+      "phone": "(325) 653-3543"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 135,
+    "notes": "San Angelo area"
+  },
+  {
+    "name": "Travis",
+    "region": "Central TX",
+    "cad": {
+      "name": "Travis County Appraisal District",
+      "website": "https://www.tcad.org",
+      "phone": "(512) 834-9317",
+      "cadPlatform": "custom",
+      "cadSearchUrl": "https://stage.travis.prodigycad.com/",
+      "lookupSupported": false
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.55,
+    "agProductivityValue": 190,
+    "notes": "Austin metro - maximum savings potential"
+  },
+  {
+    "name": "Trinity",
+    "region": "East TX",
+    "cad": {
+      "name": "Trinity County Appraisal District",
+      "website": "https://www.trinitycad.org",
+      "phone": "(936) 642-1402"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 145,
+    "notes": ""
+  },
+  {
+    "name": "Tyler",
+    "region": "East TX",
+    "cad": {
+      "name": "Tyler County Appraisal District",
+      "website": "https://www.tylercad.org",
+      "phone": "(409) 283-2132"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.05,
+    "agProductivityValue": 150,
+    "notes": ""
+  },
+  {
+    "name": "Upshur",
+    "region": "East TX",
+    "cad": {
+      "name": "Upshur County Appraisal District",
+      "website": "https://www.upsh urcad.org",
+      "phone": "(903) 843-4146"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Upton",
+    "region": "West TX",
+    "cad": {
+      "name": "Upton County Appraisal District",
+      "website": "https://www.uptoncad.org",
+      "phone": "(432) 693-2260"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 95,
+    "notes": ""
+  },
+  {
+    "name": "Uvalde",
+    "region": "South TX",
+    "cad": {
+      "name": "Uvalde County Appraisal District",
+      "website": "https://www.uvaldecad.org",
+      "phone": "(830) 278-6653"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 135,
+    "notes": ""
+  },
+  {
+    "name": "Val Verde",
+    "region": "South TX",
+    "cad": {
+      "name": "Val Verde County Appraisal District",
+      "website": "https://www.valverdecad.org",
+      "phone": "(830) 774-7564"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.9,
+    "agProductivityValue": 120,
+    "notes": "Del Rio area"
+  },
+  {
+    "name": "Van Zandt",
+    "region": "East TX",
+    "cad": {
+      "name": "Van Zandt County Appraisal District",
+      "website": "https://www.vzcad.org",
+      "phone": "(903) 567-6146",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=231",
+      "cadClientId": "231",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 160,
+    "notes": "BeeKings home base - Canton area"
+  },
+  {
+    "name": "Victoria",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Victoria County Appraisal District",
+      "website": "https://www.vctad.org",
+      "phone": "(361) 576-3831"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.2,
+    "agProductivityValue": 155,
+    "notes": ""
+  },
+  {
+    "name": "Walker",
+    "region": "East TX",
+    "cad": {
+      "name": "Walker County Appraisal District",
+      "website": "https://www.walkercad.org",
+      "phone": "(936) 295-2801"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 160,
+    "notes": "Huntsville area"
+  },
+  {
+    "name": "Waller",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Waller County Appraisal District",
+      "website": "https://www.wallercad.org",
+      "phone": "(979) 921-0060"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.3,
+    "agProductivityValue": 170,
+    "notes": "Houston metro growth area"
+  },
+  {
+    "name": "Ward",
+    "region": "West TX",
+    "cad": {
+      "name": "Ward County Appraisal District",
+      "website": "https://www.wardcad.org",
+      "phone": "(432) 943-3294"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 100,
+    "notes": ""
+  },
+  {
+    "name": "Washington",
+    "region": "Central TX",
+    "cad": {
+      "name": "Washington County Appraisal District",
+      "website": "https://www.washingtoncad.org",
+      "phone": "(979) 277-3740"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 165,
+    "notes": "Brenham area"
+  },
+  {
+    "name": "Webb",
+    "region": "South TX",
+    "cad": {
+      "name": "Webb County Appraisal District",
+      "website": "https://www.webbcad.com",
+      "phone": "(956) 723-8341"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.3,
+    "agProductivityValue": 140,
+    "notes": "Laredo area"
+  },
+  {
+    "name": "Wharton",
+    "region": "Gulf Coast",
+    "cad": {
+      "name": "Wharton County Appraisal District",
+      "website": "https://www.whartoncad.org",
+      "phone": "(979) 532-2302"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.2,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Wheeler",
+    "region": "Panhandle",
+    "cad": {
+      "name": "Wheeler County Appraisal District",
+      "website": "https://www.wheelercad.org",
+      "phone": "(806) 826-5931"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.65,
+    "agProductivityValue": 110,
+    "notes": ""
+  },
+  {
+    "name": "Wichita",
+    "region": "North TX",
+    "cad": {
+      "name": "Wichita County Appraisal District",
+      "website": "https://www.wichitacad.org",
+      "phone": "(940) 766-0044"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 155,
+    "notes": "Wichita Falls area"
+  },
+  {
+    "name": "Wilbarger",
+    "region": "North TX",
+    "cad": {
+      "name": "Wilbarger County Appraisal District",
+      "website": "https://www.wilbargercad.org",
+      "phone": "(940) 552-6542"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.85,
+    "agProductivityValue": 135,
+    "notes": "Vernon area"
+  },
+  {
+    "name": "Willacy",
+    "region": "South TX",
+    "cad": {
+      "name": "Willacy County Appraisal District",
+      "website": "https://www.willacycad.org",
+      "phone": "(956) 689-2343"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.1,
+    "agProductivityValue": 135,
+    "notes": "Rio Grande Valley"
+  },
+  {
+    "name": "Williamson",
+    "region": "Central TX",
+    "cad": {
+      "name": "Williamson County Appraisal District",
+      "website": "https://www.wcad.org",
+      "phone": "(512) 930-3787",
+      "cadPlatform": "trueAutomation",
+      "cadSearchUrl": "https://propaccess.trueautomation.com/clientdb/?cid=249",
+      "cadClientId": "249",
+      "lookupSupported": true
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.5,
+    "agProductivityValue": 185,
+    "notes": "Round Rock/Georgetown - Austin metro, huge savings"
+  },
+  {
+    "name": "Wilson",
+    "region": "South TX",
+    "cad": {
+      "name": "Wilson County Appraisal District",
+      "website": "https://www.wilsoncad.org",
+      "phone": "(830) 393-7322"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.2,
+    "agProductivityValue": 160,
+    "notes": ""
+  },
+  {
+    "name": "Winkler",
+    "region": "West TX",
+    "cad": {
+      "name": "Winkler County Appraisal District",
+      "website": "https://www.winklercad.org",
+      "phone": "(432) 586-3573"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.6,
+    "agProductivityValue": 95,
+    "notes": ""
+  },
+  {
+    "name": "Wise",
+    "region": "North TX",
+    "cad": {
+      "name": "Wise County Appraisal District",
+      "website": "https://www.wisecad.com",
+      "phone": "(940) 627-3081"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.25,
+    "agProductivityValue": 170,
+    "notes": "Decatur area - DFW metro"
+  },
+  {
+    "name": "Wood",
+    "region": "East TX",
+    "cad": {
+      "name": "Wood County Appraisal District",
+      "website": "https://www.woodcad.org",
+      "phone": "(903) 763-2282"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2.15,
+    "agProductivityValue": 165,
+    "notes": "Quitman area - near BeeKings"
+  },
+  {
+    "name": "Yoakum",
+    "region": "West TX",
+    "cad": {
+      "name": "Yoakum County Appraisal District",
+      "website": "https://www.yoakumcad.org",
+      "phone": "(806) 592-5562"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.7,
+    "agProductivityValue": 105,
+    "notes": ""
+  },
+  {
+    "name": "Young",
+    "region": "North TX",
+    "cad": {
+      "name": "Young County Appraisal District",
+      "website": "https://www.youngcad.org",
+      "phone": "(940) 549-0600"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.9,
+    "agProductivityValue": 145,
+    "notes": ""
+  },
+  {
+    "name": "Zapata",
+    "region": "South TX",
+    "cad": {
+      "name": "Zapata County Appraisal District",
+      "website": "https://www.zapatacad.org",
+      "phone": "(956) 765-9930"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 2,
+    "agProductivityValue": 125,
+    "notes": ""
+  },
+  {
+    "name": "Zavala",
+    "region": "South TX",
+    "cad": {
+      "name": "Zavala County Appraisal District",
+      "website": "https://www.zavalacad.org",
+      "phone": "(830) 374-2725"
+    },
+    "minAcres": 5,
+    "minHives": 6,
+    "additionalHivesPer": 5,
+    "avgTaxRate": 1.95,
+    "agProductivityValue": 125,
+    "notes": ""
+  }
+]
