@@ -41,15 +41,15 @@ interface LeadData {
 }
 
 const C = {
-  sky: '#EDF6FF',
-  blue: '#1C7CE5',
-  blueDark: '#1A5CA3',
-  navy: '#053249',
-  green: '#57C975',
-  greenDark: '#249241',
+  sky: '#F0F4FA',
+  blue: '#1A3A6B',
+  blueDark: '#122B52',
+  navy: '#0D1B2A',
+  green: '#D4A843',
+  greenDark: '#B8912E',
   white: '#FFFFFF',
-  gray: '#6B7280',
-  lightGray: '#F8FAFC',
+  gray: '#5A6A7A',
+  lightGray: '#F5F7FB',
 };
 
 type Step = 'search' | 'results' | 'signup' | 'thankyou';
@@ -497,7 +497,7 @@ export default function FloridaCalculator() {
                           </svg>
                           <div>
                             <div style={{ fontWeight: 700, color: C.navy, fontSize: 16 }}>{street}</div>
-                            <div style={{ fontSize: 13, color: '#6B7280', marginTop: 2 }}>{rest}</div>
+                            <div style={{ fontSize: 13, color: '#5A6A7A', marginTop: 2 }}>{rest}</div>
                           </div>
                         </button>
                       );
@@ -658,7 +658,7 @@ export default function FloridaCalculator() {
               <p style={{ color: '#8DA4B5', fontSize: 16, marginBottom: 32 }}>
                 Use the calculator above to get a free, instant estimate for your Florida property
               </p>
-              <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ background: C.green, color: C.white, fontWeight: 700, fontSize: 18, padding: '16px 40px', borderRadius: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(87,201,117,0.4)' }}>
+              <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ background: C.green, color: C.navy, fontWeight: 700, fontSize: 18, padding: '16px 40px', borderRadius: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.4)' }}>
                 Calculate My Savings →
               </button>
               <p style={{ color: '#5A7A8A', fontSize: 13, marginTop: 12 }}>Free • Instant • No spam</p>
@@ -781,11 +781,11 @@ export default function FloridaCalculator() {
                       <span style={{ fontSize: 14, fontWeight: 600, color: C.gray }}>With Ag Classification</span>
                       <span style={{ fontSize: 16, fontWeight: 900, color: C.green }}>{fmtMoney(results.totalWithAg)}/yr</span>
                     </div>
-                    <div style={{ height: 28, background: '#DCFCE7', borderRadius: 8, overflow: 'hidden' }}>
+                    <div style={{ height: 28, background: '#FFF0D1', borderRadius: 8, overflow: 'hidden' }}>
                       <div style={{ height: '100%', width: `${Math.max(5, (results.totalWithAg / results.currentTaxes) * 100)}%`, background: C.green, borderRadius: 8 }} />
                     </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px', background: '#F0FDF4', borderRadius: 10, border: '1px solid #BBF7D0' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px', background: '#FFF8EE', borderRadius: 10, border: '1px solid #F0DBA8' }}>
                     <span style={{ fontSize: 20 }}>💰</span>
                     <span style={{ fontSize: 15, fontWeight: 700, color: C.greenDark }}>You save {fmtMoney(results.annualSavings)}/yr ({results.savingsPercent.toFixed(0)}% reduction)</span>
                   </div>
@@ -841,7 +841,7 @@ export default function FloridaCalculator() {
                   </div>
 
                   {results.netAnnualSavings > 0 && (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 16px', background: '#F0FDF4', borderRadius: 10, border: '1px solid #BBF7D0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 16px', background: '#FFF8EE', borderRadius: 10, border: '1px solid #F0DBA8' }}>
                       <span style={{ fontSize: 20 }}>📈</span>
                       <div>
                         <p style={{ fontSize: 15, fontWeight: 700, color: C.greenDark }}>
@@ -926,7 +926,7 @@ export default function FloridaCalculator() {
                     }
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  style={{ width: '100%', background: C.green, color: C.white, fontWeight: 700, fontSize: 18, padding: '18px 32px', borderRadius: 16, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(87,201,117,0.4)' }}
+                  style={{ width: '100%', background: C.green, color: C.navy, fontWeight: 700, fontSize: 18, padding: '18px 32px', borderRadius: 16, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.4)' }}
                 >
                   Get Your Free {selectedCounty.name} County Guide →
                 </button>
@@ -1063,7 +1063,7 @@ export default function FloridaCalculator() {
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <div className="r-footer-grid" style={{ marginBottom: 40 }}>
             <div>
-              <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 36, marginBottom: 12, filter: 'brightness(0) invert(1)' }} />
+              <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 36, marginBottom: 12 }} />
               <p style={{ color: '#8DA4B5', fontSize: 14 }}>Canton, Texas</p>
               <p style={{ marginTop: 8 }}><a href="mailto:info@beekings.com" style={{ color: '#8DA4B5', fontSize: 14, textDecoration: 'none' }}>info@beekings.com</a></p>
             </div>
