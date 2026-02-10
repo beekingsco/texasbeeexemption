@@ -635,7 +635,7 @@ function ReportContent() {
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
         <SectionHeader emoji="📋" title="HOW TO GET YOUR EXEMPTION" subtitle="Step-by-step instructions for applying to your county appraisal district." />
       </div>
-      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)} isDemo={isDemo}>
       <section id="section-2" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
 
         {/* Where to Apply — gold border card */}
@@ -740,7 +740,7 @@ function ReportContent() {
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
         <SectionHeader emoji="🛒" title="WHAT TO BUY" subtitle="Everything you need to get started — hives, equipment, bees, and protective gear." />
       </div>
-      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)} isDemo={isDemo}>
       <section id="section-3" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
 
         {/* ═══ VERIFIED PRODUCTS SHOPPING LIST ═══ */}
@@ -888,7 +888,7 @@ function ReportContent() {
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
         <SectionHeader emoji="🐝" title="WHAT YOU NEED TO KNOW" subtitle="Beekeeping basics, seasonal care, and what your county requires." />
       </div>
-      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)} isDemo={isDemo}>
       <section id="section-4" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
 
         {/* Two side-by-side cards: Queen & Workers */}
@@ -1005,7 +1005,7 @@ function ReportContent() {
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
         <SectionHeader emoji="🏪" title="LOCAL RESOURCES &amp; SUPPLIERS" subtitle="Nearby bee suppliers, associations, and mentors in your area." />
       </div>
-      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)} isDemo={isDemo}>
       <section id="section-6" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
 
         {/* Nuc Suppliers */}
@@ -1145,7 +1145,7 @@ function ReportContent() {
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
         <SectionHeader emoji="📋" title="KEEPING YOUR RECORDS STRAIGHT" subtitle="What to document and how to stay compliant year after year." />
       </div>
-      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)} isDemo={isDemo}>
       <section id="section-5" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
 
         <div className="pdf-card avoid-break" style={{ padding: 32, marginBottom: 28 }}>
