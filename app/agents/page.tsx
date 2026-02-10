@@ -49,6 +49,32 @@ function FadeSection({ children, style }: { children: React.ReactNode; style?: R
 export default function AgentLandingPage() {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [showPromo, setShowPromo] = useState(false);
+  const [promoCode, setPromoCode] = useState('');
+  const [promoStatus, setPromoStatus] = useState<{ valid?: boolean; message?: string; trialDays?: number } | null>(null);
+  const [promoChecking, setPromoChecking] = useState(false);
+
+  const validatePromo = async () => {
+    if (!promoCode.trim()) return;
+    setPromoChecking(true);
+    setPromoStatus(null);
+    try {
+      const res = await fetch('/api/coupon/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: promoCode.trim() }),
+      });
+      const data = await res.json();
+      if (data.valid) {
+        setPromoStatus({ valid: true, message: data.description || 'Code applied!', trialDays: data.trialDays });
+      } else {
+        setPromoStatus({ valid: false, message: data.error || 'Invalid code' });
+      }
+    } catch {
+      setPromoStatus({ valid: false, message: 'Error validating code' });
+    }
+    setPromoChecking(false);
+  };
 
   const handleCheckout = async () => {
     setCheckoutLoading(true);
@@ -56,7 +82,7 @@ export default function AgentLandingPage() {
       const res = await fetch('/api/stripe/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier: 'agent', propertyData: {} }),
+        body: JSON.stringify({ tier: 'agent', propertyData: {}, couponCode: promoStatus?.valid ? promoCode.trim() : undefined }),
       });
       const data = await res.json();
       if (data.url) window.location.href = data.url;
@@ -465,13 +491,41 @@ export default function AgentLandingPage() {
                   </div>
                 </div>
 
+                {/* Promo code */}
+                <div style={{ marginBottom: 16 }}>
+                  {!showPromo ? (
+                    <button onClick={() => setShowPromo(true)} style={{ background: 'none', border: 'none', color: C.blue, fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'underline' }}>
+                      Have a promo code?
+                    </button>
+                  ) : (
+                    <div>
+                      <div style={{ display: 'flex', gap: 8 }}>
+                        <input
+                          type="text" value={promoCode} onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                          onKeyDown={(e) => { if (e.key === 'Enter') validatePromo(); }}
+                          placeholder="Enter code"
+                          style={{ flex: 1, padding: '10px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 14, fontFamily: 'inherit', outline: 'none', fontWeight: 600, letterSpacing: '0.05em' }}
+                        />
+                        <button onClick={validatePromo} disabled={promoChecking || !promoCode.trim()} style={{ padding: '10px 18px', borderRadius: 10, background: C.navy, color: C.white, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'inherit', opacity: promoChecking || !promoCode.trim() ? 0.5 : 1 }}>
+                          {promoChecking ? '...' : 'Apply'}
+                        </button>
+                      </div>
+                      {promoStatus && (
+                        <p style={{ fontSize: 13, fontWeight: 600, marginTop: 8, color: promoStatus.valid ? '#16A34A' : '#DC2626' }}>
+                          {promoStatus.valid ? '✓ ' : '✗ '}{promoStatus.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+
                 <button
                   onClick={handleCheckout}
                   disabled={checkoutLoading}
                   className="cta-btn"
                   style={{ width: '100%', padding: '18px 24px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)', marginBottom: 12 }}
                 >
-                  {checkoutLoading ? 'Loading...' : 'Start Your Free 7-Day Trial →'}
+                  {checkoutLoading ? 'Loading...' : promoStatus?.valid && promoStatus.trialDays ? `Start Free ${promoStatus.trialDays}-Day Trial →` : 'Start Your Free 7-Day Trial →'}
                 </button>
                 <p style={{ textAlign: 'center', fontSize: 13, color: C.gray }}>
                   Cancel anytime • One commission pays for 10+ years
