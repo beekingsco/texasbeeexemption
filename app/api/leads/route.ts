@@ -154,7 +154,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, id: lead.id });
   } catch (error) {
     console.error('Lead capture error:', error);
-    return NextResponse.json({ error: 'Failed to save lead' }, { status: 500 });
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json({ error: 'Failed to save lead', detail: msg }, { status: 500 });
   }
 }
 
