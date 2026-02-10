@@ -254,7 +254,7 @@ export default function ArkansasCalculator() {
 
     // Hive requirements
     let requiredHives = selectedCounty.minHives;
-    if (agEligibleAcres > selectedCounty.minAcres) {
+    if (agEligibleAcres > selectedCounty.minAcres && selectedCounty.additionalHivesPer > 0) {
       requiredHives += Math.ceil((agEligibleAcres - selectedCounty.minAcres) / selectedCounty.additionalHivesPer);
     }
 
