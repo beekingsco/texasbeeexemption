@@ -145,11 +145,18 @@ export default function AdminPage() {
   };
 
   useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    if (hash) {
-      setKey(hash);
-      fetchLeads(hash);
-    } else {
+    try {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        setKey(hash);
+        // Clear hash from URL for security
+        window.history.replaceState(null, '', window.location.pathname);
+        fetchLeads(hash);
+      } else {
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error('Admin init error:', err);
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -186,6 +193,14 @@ export default function AdminPage() {
       setMagicError('Network error. Please try again.');
     }
   };
+
+  if (loading && !authed) {
+    return (
+      <div style={{ minHeight: '100vh', background: C.sky, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'system-ui' }}>
+        <p style={{ color: C.gray, fontSize: 16 }}>Loading dashboard...</p>
+      </div>
+    );
+  }
 
   if (!authed) {
     const errorParam = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('error') : null;
