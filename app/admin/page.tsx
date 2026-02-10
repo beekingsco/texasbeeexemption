@@ -167,7 +167,7 @@ export default function AdminPage() {
   if (!authed) {
     return (
       <div style={{ minHeight: '100vh', background: C.sky, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'system-ui' }}>
-        <form onSubmit={handleAuth} style={{ background: C.white, padding: 40, borderRadius: 20, boxShadow: '0 8px 32px rgba(0,0,0,0.1)', maxWidth: 400, width: '100%' }}>
+        <form onSubmit={handleAuth} style={{ background: C.white, padding: 40, borderRadius: 20, boxShadow: '0 8px 32px rgba(0,0,0,0.1)', maxWidth: 400, width: '100%', margin: '0 16px', boxSizing: 'border-box' }}>
           <h1 style={{ fontSize: 24, fontWeight: 800, color: C.navy, marginBottom: 8 }}>🔐 Admin Dashboard</h1>
           <p style={{ color: C.gray, fontSize: 14, marginBottom: 24 }}>Enter the admin key to view the dashboard.</p>
           <input
@@ -185,20 +185,135 @@ export default function AdminPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: C.sky, fontFamily: 'system-ui' }}>
+      <style>{`
+        .admin-stats {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 16px;
+          margin-bottom: 24px;
+        }
+        .admin-tabs {
+          display: flex;
+          gap: 4px;
+          margin-bottom: 24px;
+          background: ${C.white};
+          border-radius: 12px;
+          padding: 4px;
+          border: 1px solid #e2e8f0;
+        }
+        .admin-tab-label-full { display: inline; }
+        .admin-tab-label-short { display: none; }
+        .admin-funnel {
+          display: flex;
+          gap: 4px;
+          align-items: flex-end;
+          height: 120px;
+        }
+        .admin-funnel-label { font-size: 10px; }
+        .admin-funnel-value { font-size: 18px; }
+        .admin-revenue-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+          margin-bottom: 24px;
+        }
+        .admin-summary-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+        }
+        .admin-agent-row {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+        .admin-agent-meta {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+        .admin-header-stats { display: inline; }
+        .admin-lead-table { display: block; }
+        .admin-lead-cards { display: none; }
+        .admin-agent-leads-wrap { overflow-x: auto; }
+
+        @media (max-width: 768px) {
+          .admin-stats {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .admin-tabs {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+          }
+          .admin-tab-label-full { display: none; }
+          .admin-tab-label-short { display: inline; }
+          .admin-funnel {
+            flex-direction: column;
+            align-items: stretch;
+            height: auto;
+            gap: 8px;
+          }
+          .admin-funnel-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
+          .admin-funnel-bar-h {
+            display: none;
+          }
+          .admin-funnel-bar-v {
+            display: block !important;
+            border-radius: 4px;
+            min-width: 8px;
+            height: 24px;
+            transition: width 0.3s;
+          }
+          .admin-revenue-grid {
+            grid-template-columns: 1fr;
+          }
+          .admin-summary-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .admin-agent-row {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          .admin-agent-meta {
+            flex-wrap: wrap;
+          }
+          .admin-header-stats { display: none; }
+          .admin-lead-table { display: none; }
+          .admin-lead-cards { display: block; }
+        }
+        @media (min-width: 769px) {
+          .admin-funnel-bar-v {
+            display: none !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .admin-stats {
+            grid-template-columns: 1fr 1fr;
+          }
+          .admin-summary-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
+
       <header style={{ background: C.navy, padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <span style={{ fontSize: 24 }}>🐝</span>
           <h1 style={{ fontSize: 18, fontWeight: 700, color: C.white }}>BeeExemption Admin</h1>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <span style={{ color: '#8DA4B5', fontSize: 14, fontWeight: 600 }}>{total} leads · {agents.length} agents</span>
+          <span className="admin-header-stats" style={{ color: '#8DA4B5', fontSize: 14, fontWeight: 600 }}>{total} leads · {agents.length} agents</span>
           <a href="/" style={{ color: C.blue, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>← Calculator</a>
         </div>
       </header>
 
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '32px 24px' }}>
         {/* Stats row */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16, marginBottom: 24 }}>
+        <div className="admin-stats">
           {[
             { label: 'Total Leads', value: total.toString(), color: C.blue },
             { label: 'Today', value: leads.filter(l => new Date(l.createdAt).toDateString() === new Date().toDateString()).length.toString(), color: C.green },
@@ -214,12 +329,12 @@ export default function AdminPage() {
         </div>
 
         {/* Tab Navigation */}
-        <div style={{ display: 'flex', gap: 4, marginBottom: 24, background: C.white, borderRadius: 12, padding: 4, border: '1px solid #e2e8f0' }}>
+        <div className="admin-tabs">
           {[
-            { key: 'leads' as const, label: '📋 Leads', count: total },
-            { key: 'agents' as const, label: '🐝 Agents', count: agents.length },
-            { key: 'revenue' as const, label: '💰 Revenue' },
-            { key: 'activity' as const, label: '📊 Activity' },
+            { key: 'leads' as const, label: '📋 Leads', short: '📋', count: total },
+            { key: 'agents' as const, label: '🐝 Agents', short: '🐝', count: agents.length },
+            { key: 'revenue' as const, label: '💰 Revenue', short: '💰' },
+            { key: 'activity' as const, label: '📊 Activity', short: '📊' },
           ].map(tab => (
             <button
               key={tab.key}
@@ -229,9 +344,11 @@ export default function AdminPage() {
                 background: activeTab === tab.key ? C.navy : 'transparent',
                 color: activeTab === tab.key ? C.white : C.gray,
                 fontWeight: 700, fontSize: 13, cursor: 'pointer', fontFamily: 'inherit',
+                whiteSpace: 'nowrap',
               }}
             >
-              {tab.label} {tab.count !== undefined ? `(${tab.count})` : ''}
+              <span className="admin-tab-label-full">{tab.label}{tab.count !== undefined ? ` (${tab.count})` : ''}</span>
+              <span className="admin-tab-label-short">{tab.short}{tab.count !== undefined ? ` ${tab.count}` : ''}</span>
             </button>
           ))}
         </div>
@@ -240,7 +357,7 @@ export default function AdminPage() {
         {funnel && (
           <div style={{ background: C.white, borderRadius: 16, padding: 24, marginBottom: 24, border: '1px solid #e2e8f0' }}>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: C.navy, marginBottom: 16 }}>📊 Conversion Funnel</h2>
-            <div style={{ display: 'flex', gap: 4, alignItems: 'flex-end', height: 120 }}>
+            <div className="admin-funnel">
               {[
                 { label: 'Page Views', value: funnel.pageViews, color: '#93C5FD' },
                 { label: 'Searched', value: funnel.addressSearched, color: '#60A5FA' },
@@ -252,10 +369,13 @@ export default function AdminPage() {
                 const max = Math.max(funnel.pageViews, 1);
                 const pct = Math.max(8, (f.value / max) * 100);
                 return (
-                  <div key={f.label} style={{ flex: 1, textAlign: 'center' }}>
-                    <p style={{ fontSize: 18, fontWeight: 900, color: C.navy, marginBottom: 4 }}>{f.value}</p>
-                    <div style={{ height: `${pct}%`, background: f.color, borderRadius: '6px 6px 0 0', minHeight: 8, transition: 'height 0.3s' }} />
-                    <p style={{ fontSize: 10, fontWeight: 600, color: C.gray, marginTop: 6 }}>{f.label}</p>
+                  <div key={f.label} className="admin-funnel-item" style={{ flex: 1, textAlign: 'center' }}>
+                    <p className="admin-funnel-value" style={{ fontWeight: 900, color: C.navy, marginBottom: 4 }}>{f.value}</p>
+                    {/* Vertical bar for desktop */}
+                    <div className="admin-funnel-bar-h" style={{ height: `${pct}%`, background: f.color, borderRadius: '6px 6px 0 0', minHeight: 8, transition: 'height 0.3s' }} />
+                    {/* Horizontal bar for mobile */}
+                    <div className="admin-funnel-bar-v" style={{ display: 'none', width: `${pct}%`, background: f.color }} />
+                    <p className="admin-funnel-label" style={{ fontWeight: 600, color: C.gray, marginTop: 6, flex: 'none', minWidth: 80 }}>{f.label}</p>
                   </div>
                 );
               })}
@@ -280,33 +400,61 @@ export default function AdminPage() {
                 <p style={{ color: C.gray, fontSize: 14 }}>Leads will appear here as visitors use the calculator.</p>
               </div>
             ) : (
-              <div style={{ background: C.white, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-                <div style={{ overflowX: 'auto' }}>
-                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
-                    <thead>
-                      <tr style={{ background: '#F8FAFC', borderBottom: '2px solid #e2e8f0' }}>
-                        {['Name', 'Email', 'Phone', 'Address', 'County', 'Acres', 'Savings', 'Date'].map(h => (
-                          <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 700, color: C.navy, fontSize: 12, textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {leads.map(lead => (
-                        <tr key={lead.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                          <td style={{ padding: '12px 16px', fontWeight: 600, color: C.navy, whiteSpace: 'nowrap' }}>{lead.firstName} {lead.lastName}</td>
-                          <td style={{ padding: '12px 16px', color: C.blue }}><a href={`mailto:${lead.email}`} style={{ color: C.blue, textDecoration: 'none' }}>{lead.email}</a></td>
-                          <td style={{ padding: '12px 16px', color: C.gray }}>{lead.phone || '—'}</td>
-                          <td style={{ padding: '12px 16px', color: C.gray, maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{lead.address || '—'}</td>
-                          <td style={{ padding: '12px 16px', color: C.navy, fontWeight: 600 }}>{lead.county || '—'}</td>
-                          <td style={{ padding: '12px 16px', color: C.navy }}>{lead.acres ? lead.acres.toFixed(1) : '—'}</td>
-                          <td style={{ padding: '12px 16px', fontWeight: 700, color: C.green }}>{lead.estimatedSavings ? fmtMoney(lead.estimatedSavings) : '—'}</td>
-                          <td style={{ padding: '12px 16px', color: C.gray, whiteSpace: 'nowrap' }}>{fmtDate(lead.createdAt)}</td>
+              <>
+                {/* Desktop table */}
+                <div className="admin-lead-table" style={{ background: C.white, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
+                      <thead>
+                        <tr style={{ background: '#F8FAFC', borderBottom: '2px solid #e2e8f0' }}>
+                          {['Name', 'Email', 'Phone', 'Address', 'County', 'Acres', 'Savings', 'Date'].map(h => (
+                            <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 700, color: C.navy, fontSize: 12, textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</th>
+                          ))}
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {leads.map(lead => (
+                          <tr key={lead.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                            <td style={{ padding: '12px 16px', fontWeight: 600, color: C.navy, whiteSpace: 'nowrap' }}>{lead.firstName} {lead.lastName}</td>
+                            <td style={{ padding: '12px 16px', color: C.blue }}><a href={`mailto:${lead.email}`} style={{ color: C.blue, textDecoration: 'none' }}>{lead.email}</a></td>
+                            <td style={{ padding: '12px 16px', color: C.gray }}>{lead.phone || '—'}</td>
+                            <td style={{ padding: '12px 16px', color: C.gray, maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{lead.address || '—'}</td>
+                            <td style={{ padding: '12px 16px', color: C.navy, fontWeight: 600 }}>{lead.county || '—'}</td>
+                            <td style={{ padding: '12px 16px', color: C.navy }}>{lead.acres ? lead.acres.toFixed(1) : '—'}</td>
+                            <td style={{ padding: '12px 16px', fontWeight: 700, color: C.green }}>{lead.estimatedSavings ? fmtMoney(lead.estimatedSavings) : '—'}</td>
+                            <td style={{ padding: '12px 16px', color: C.gray, whiteSpace: 'nowrap' }}>{fmtDate(lead.createdAt)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
+
+                {/* Mobile cards */}
+                <div className="admin-lead-cards">
+                  {leads.map(lead => (
+                    <div key={lead.id} style={{ background: C.white, borderRadius: 12, padding: 16, marginBottom: 12, border: '1px solid #e2e8f0' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
+                        <p style={{ fontSize: 15, fontWeight: 700, color: C.navy }}>{lead.firstName} {lead.lastName}</p>
+                        {lead.estimatedSavings ? (
+                          <span style={{ padding: '3px 10px', borderRadius: 20, fontSize: 12, fontWeight: 700, background: '#ECFDF5', color: C.green }}>
+                            {fmtMoney(lead.estimatedSavings)}
+                          </span>
+                        ) : null}
+                      </div>
+                      <p style={{ fontSize: 13, color: C.blue, marginBottom: 4 }}>
+                        <a href={`mailto:${lead.email}`} style={{ color: C.blue, textDecoration: 'none' }}>{lead.email}</a>
+                      </p>
+                      <p style={{ fontSize: 13, color: C.gray, marginBottom: 4 }}>
+                        {lead.address || lead.county || '—'}
+                        {lead.county && lead.address ? `, ${lead.county}` : ''}
+                        {lead.acres ? ` · ${lead.acres.toFixed(1)} ac` : ''}
+                      </p>
+                      <p style={{ fontSize: 12, color: '#9CA3AF' }}>{fmtDate(lead.createdAt)}</p>
+                    </div>
+                  ))}
+                </div>
+              </>
             )}
           </>
         )}
@@ -336,8 +484,9 @@ export default function AdminPage() {
                           setExpandedAgent(isExpanded ? null : agent.id);
                           if (!isExpanded) fetchAgentLeads(agent.id);
                         }}
+                        className="admin-agent-row"
                         style={{
-                          padding: '16px 24px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 16,
+                          padding: '16px 24px', cursor: 'pointer',
                           background: isExpanded ? '#FAFBFC' : 'transparent',
                           transition: 'background 0.1s',
                         }}
@@ -356,7 +505,7 @@ export default function AdminPage() {
                           <p style={{ fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 2 }}>{agent.name}</p>
                           <p style={{ fontSize: 12, color: C.gray }}>{agent.email} · {agent.brokerage}</p>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                        <div className="admin-agent-meta">
                           <span style={{ fontSize: 12, color: C.gray }}>{agent.licensedCounties?.map(c => c.replace('TX-', '')).join(', ') || 'No counties'}</span>
                           <span style={{
                             padding: '4px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700,
@@ -375,31 +524,33 @@ export default function AdminPage() {
                           ) : agentLeads[agent.id].length === 0 ? (
                             <p style={{ color: C.gray, fontSize: 13, padding: '12px 0' }}>No leads yet for this agent.</p>
                           ) : (
-                            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                              <thead>
-                                <tr>
-                                  {['Date', 'Address', 'County', 'Owner', 'Savings', 'Status'].map(h => (
-                                    <th key={h} style={{ padding: '8px 12px', textAlign: 'left', fontWeight: 700, color: C.navy, fontSize: 11, textTransform: 'uppercase' }}>{h}</th>
-                                  ))}
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {agentLeads[agent.id].slice(0, 10).map(lead => (
-                                  <tr key={lead.id} style={{ borderBottom: '1px solid #e2e8f0' }}>
-                                    <td style={{ padding: '8px 12px', color: C.gray, whiteSpace: 'nowrap' }}>{fmtDate(lead.createdAt)}</td>
-                                    <td style={{ padding: '8px 12px', color: C.navy, maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{lead.propertyAddress}</td>
-                                    <td style={{ padding: '8px 12px', color: C.navy }}>{lead.county}</td>
-                                    <td style={{ padding: '8px 12px', color: C.gray }}>{lead.ownerName || '—'}</td>
-                                    <td style={{ padding: '8px 12px', color: C.green, fontWeight: 700 }}>{fmtMoney(lead.estimatedSavings)}</td>
-                                    <td style={{ padding: '8px 12px' }}>
-                                      <span style={{ padding: '2px 8px', borderRadius: 12, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', background: '#F1F5F9', color: C.gray }}>
-                                        {lead.status}
-                                      </span>
-                                    </td>
+                            <div className="admin-agent-leads-wrap">
+                              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                                <thead>
+                                  <tr>
+                                    {['Date', 'Address', 'County', 'Owner', 'Savings', 'Status'].map(h => (
+                                      <th key={h} style={{ padding: '8px 12px', textAlign: 'left', fontWeight: 700, color: C.navy, fontSize: 11, textTransform: 'uppercase' }}>{h}</th>
+                                    ))}
                                   </tr>
-                                ))}
-                              </tbody>
-                            </table>
+                                </thead>
+                                <tbody>
+                                  {agentLeads[agent.id].slice(0, 10).map(lead => (
+                                    <tr key={lead.id} style={{ borderBottom: '1px solid #e2e8f0' }}>
+                                      <td style={{ padding: '8px 12px', color: C.gray, whiteSpace: 'nowrap' }}>{fmtDate(lead.createdAt)}</td>
+                                      <td style={{ padding: '8px 12px', color: C.navy, maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{lead.propertyAddress}</td>
+                                      <td style={{ padding: '8px 12px', color: C.navy }}>{lead.county}</td>
+                                      <td style={{ padding: '8px 12px', color: C.gray }}>{lead.ownerName || '—'}</td>
+                                      <td style={{ padding: '8px 12px', color: C.green, fontWeight: 700 }}>{fmtMoney(lead.estimatedSavings)}</td>
+                                      <td style={{ padding: '8px 12px' }}>
+                                        <span style={{ padding: '2px 8px', borderRadius: 12, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', background: '#F1F5F9', color: C.gray }}>
+                                          {lead.status}
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
                           )}
                         </div>
                       )}
@@ -414,7 +565,7 @@ export default function AdminPage() {
         {/* REVENUE TAB */}
         {activeTab === 'revenue' && (
           <div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 24 }}>
+            <div className="admin-revenue-grid">
               <div style={{ background: C.white, borderRadius: 16, padding: 24, border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: 14, fontWeight: 700, color: C.gray, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 16 }}>📄 Single Reports</h3>
                 <p style={{ fontSize: 36, fontWeight: 900, color: C.blue, marginBottom: 4 }}>{reportSales}</p>
@@ -455,7 +606,7 @@ export default function AdminPage() {
             {/* Revenue Summary */}
             <div style={{ background: `linear-gradient(135deg, ${C.navy}, #0a2540)`, borderRadius: 16, padding: 32, color: C.white }}>
               <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 20 }}>💰 Revenue Summary</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 16 }}>
+              <div className="admin-summary-grid">
                 {[
                   { label: 'Report Sales', value: fmtMoney(singleRevenue / 100) },
                   { label: 'Unlimited MRR', value: fmtMoney(unlimitedMRR / 100) },
@@ -500,11 +651,11 @@ export default function AdminPage() {
                       display: 'flex', alignItems: 'center', gap: 12,
                     }}>
                       <span style={{ fontSize: 18 }}>{emojiMap[ev.event] || '📣'}</span>
-                      <div style={{ flex: 1 }}>
+                      <div style={{ flex: 1, minWidth: 0 }}>
                         <p style={{ fontSize: 13, fontWeight: 600, color: C.navy, marginBottom: 2 }}>
                           {ev.event.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
                         </p>
-                        <p style={{ fontSize: 12, color: C.gray }}>
+                        <p style={{ fontSize: 12, color: C.gray, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                           {ev.county ? `${ev.county} County` : ''}{ev.address ? ` · ${ev.address}` : ''}
                         </p>
                       </div>
