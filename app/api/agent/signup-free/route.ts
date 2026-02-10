@@ -47,11 +47,10 @@ export async function POST(req: NextRequest) {
     await createAgent(agent);
     await redeemCoupon(couponCode, agent.id);
 
-    notifyAdmin('agent_free_signup', {
+    notifyAdmin('agent_trial_started', {
       agentName: agent.name,
       agentEmail: agent.email,
-      couponCode,
-      plan: plan || 'agent',
+      tier: 'agent_free',
     });
 
     return NextResponse.json({ ok: true, agentId: agent.id });
