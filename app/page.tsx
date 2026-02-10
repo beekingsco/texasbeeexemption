@@ -18,7 +18,7 @@ const C = {
   amber: '#D4A843',
 };
 
-const AVAILABLE_STATES = ['TX', 'FL'];
+const AVAILABLE_STATES = ['TX', 'FL', 'AR'];
 
 const BEEKEEPER_BASE = 153132;
 
@@ -129,6 +129,8 @@ export default function NationalLanding() {
       router.push('/texas');
     } else if (stateCode === 'FL') {
       router.push('/florida');
+    } else if (stateCode === 'AR') {
+      router.push('/arkansas');
     } else {
       router.push(`/state/${stateCode.toLowerCase()}`);
     }
