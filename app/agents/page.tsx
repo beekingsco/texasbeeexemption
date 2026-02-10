@@ -96,7 +96,7 @@ export default function AgentLandingPage() {
           .hero-flex > div:first-child { align-items: center !important; }
           .pricing-flex { flex-direction: column !important; }
           .agent-hero-bg { background-position: 65% center !important; }
-          .agent-hero-section { padding-top: 80px !important; padding-bottom: 60px !important; min-height: 400px !important; }
+          .agent-hero-section { padding-top: 80px !important; padding-bottom: 48px !important; min-height: 280px !important; }
         }
       `}</style>
 
@@ -121,22 +121,27 @@ export default function AgentLandingPage() {
         </div>
       </header>
 
-      {/* ===================== HERO ===================== */}
-      <section className="agent-hero-section" style={{ padding: '200px 24px 80px', position: 'relative', overflow: 'hidden', minHeight: 520, width: '100%' }}>
-        {/* Full background photo */}
+      {/* ===================== HERO TOP — Background Image ===================== */}
+      <section className="agent-hero-section" style={{ padding: '120px 24px 60px', position: 'relative', overflow: 'hidden', minHeight: 380, width: '100%' }}>
         <div className="agent-hero-bg" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/agent-landowner.jpg)', backgroundSize: 'cover', backgroundPosition: 'center 25%', width: '100%', height: '100%' }} />
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(135deg, rgba(13,27,42,0.6) 0%, rgba(26,58,91,0.5) 50%, rgba(13,27,42,0.45) 100%)' }} />
-        
-        <div className="hero-animate hero-flex" style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 48, position: 'relative', zIndex: 1 }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(135deg, rgba(13,27,42,0.55) 0%, rgba(26,58,91,0.4) 50%, rgba(13,27,42,0.35) 100%)' }} />
+
+        <div className="hero-animate" style={{ maxWidth: 1000, margin: '0 auto', position: 'relative', zIndex: 1, textAlign: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(212,168,67,0.15)', borderRadius: 20, padding: '6px 16px', marginBottom: 20 }}>
+            <span style={{ fontSize: 14 }}>🏠</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: C.green, letterSpacing: '0.05em' }}>FOR REAL ESTATE AGENTS</span>
+          </div>
+          <h1 style={{ fontSize: 'clamp(32px, 5vw, 52px)', fontWeight: 900, color: C.white, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: 20, maxWidth: 700, margin: '0 auto 20px' }}>
+            Turn Every Land Listing Into a Tax-Saving Opportunity
+          </h1>
+        </div>
+      </section>
+
+      {/* ===================== HERO BOTTOM — No Background Image ===================== */}
+      <section style={{ padding: '48px 24px 64px', background: C.sky }}>
+        <div className="hero-animate hero-flex" style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 48 }}>
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(212,168,67,0.15)', borderRadius: 20, padding: '6px 16px', marginBottom: 20 }}>
-              <span style={{ fontSize: 14 }}>🏠</span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: C.green, letterSpacing: '0.05em' }}>FOR REAL ESTATE AGENTS</span>
-            </div>
-            <h1 style={{ fontSize: 'clamp(32px, 5vw, 52px)', fontWeight: 900, color: C.white, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: 20 }}>
-              Turn Every Land Listing Into a Tax-Saving Opportunity
-            </h1>
-            <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.7)', lineHeight: 1.7, marginBottom: 36, maxWidth: 520 }}>
+            <p style={{ fontSize: 18, color: C.gray, lineHeight: 1.7, marginBottom: 36, maxWidth: 520 }}>
               Give your clients something no other agent offers — a personalized property tax savings report. 
               Generate qualified leads, close more deals, and become the go-to agent for rural land.
             </p>
@@ -151,17 +156,17 @@ export default function AgentLandingPage() {
               </button>
               <a
                 href="#how-it-works"
-                style={{ padding: '16px 28px', borderRadius: 12, background: 'transparent', color: C.white, fontWeight: 700, fontSize: 16, border: '2px solid rgba(255,255,255,0.25)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}
+                style={{ padding: '16px 28px', borderRadius: 12, background: 'transparent', color: C.navy, fontWeight: 700, fontSize: 16, border: `2px solid ${C.blue}22`, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}
               >
                 See How It Works
               </a>
             </div>
-            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 14 }}>
+            <p style={{ fontSize: 13, color: C.gray, marginTop: 14 }}>
               No credit card required • Cancel anytime
             </p>
           </div>
           <div style={{ flex: '0 0 auto', maxWidth: 320 }}>
-            <div style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 24, padding: 28, backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <div style={{ background: C.navy, borderRadius: 24, padding: 28, border: '1px solid rgba(255,255,255,0.1)' }}>
               <div style={{ textAlign: 'center', marginBottom: 20 }}>
                 <span style={{ fontSize: 48 }}>📊</span>
               </div>
