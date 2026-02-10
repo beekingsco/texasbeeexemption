@@ -1,4 +1,4 @@
-import { put, list } from '@vercel/blob';
+import { blobPut, blobRead } from './blob-helpers';
 import { Coupon } from './types/coupon';
 
 const COUPONS_BLOB_PATH = 'coupons/coupons.json';
@@ -56,14 +56,12 @@ const DEFAULT_COUPONS: Coupon[] = [
 
 export async function getCoupons(): Promise<Coupon[]> {
   try {
-    const blobs = await list({ prefix: 'coupons/coupons' });
-    if (blobs.blobs.length === 0) {
+    const data = await blobRead<{ coupons: Coupon[] }>('coupons/coupons');
+    if (!data) {
       // Seed defaults
       await saveCoupons(DEFAULT_COUPONS);
       return DEFAULT_COUPONS;
     }
-    const response = await fetch(blobs.blobs[0].url);
-    const data = await response.json();
     return data.coupons || [];
   } catch (error) {
     console.error('Error fetching coupons:', error);
@@ -72,11 +70,7 @@ export async function getCoupons(): Promise<Coupon[]> {
 }
 
 export async function saveCoupons(coupons: Coupon[]): Promise<void> {
-  await put(COUPONS_BLOB_PATH, JSON.stringify({ coupons }, null, 2), {
-    access: 'public',
-    contentType: 'application/json',
-      allowOverwrite: true,
-  });
+  await blobPut(COUPONS_BLOB_PATH, JSON.stringify({ coupons }, null, 2));
 }
 
 export async function getCouponByCode(code: string): Promise<Coupon | null> {

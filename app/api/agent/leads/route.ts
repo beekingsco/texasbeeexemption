@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ leads: leads.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) });
   } catch (error) {
     console.error('Error fetching leads:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch leads', detail: String(error) }, { status: 500 });
   }
 }
 
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ lead }, { status: 201 });
   } catch (error) {
     console.error('Error creating lead:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to create lead', detail: String(error) }, { status: 500 });
   }
 }
 
@@ -91,7 +91,7 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ lead: updatedLead });
   } catch (error) {
     console.error('Error updating lead:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to update lead', detail: String(error) }, { status: 500 });
   }
 }
 
@@ -117,6 +117,6 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error deleting lead:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to delete lead', detail: String(error) }, { status: 500 });
   }
 }

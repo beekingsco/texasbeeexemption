@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error('Error fetching agent profile:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Failed to fetch agent profile', detail: String(error) },
       { status: 500 }
     );
   }
@@ -72,7 +72,7 @@ export async function PUT(req: NextRequest) {
   } catch (error) {
     console.error('Error updating agent profile:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Failed to update agent profile', detail: String(error) },
       { status: 500 }
     );
   }

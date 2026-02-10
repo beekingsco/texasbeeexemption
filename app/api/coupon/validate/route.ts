@@ -22,6 +22,6 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error('Coupon validation error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to validate coupon', detail: String(error) }, { status: 500 });
   }
 }
