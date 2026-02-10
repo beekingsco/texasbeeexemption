@@ -80,7 +80,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [key, setKey] = useState('');
   const [authed, setAuthed] = useState(false);
-  const [activeTab, setActiveTab] = useState<'leads' | 'agents' | 'revenue' | 'activity'>('leads');
+  const [activeTab, setActiveTab] = useState<'leads' | 'agents' | 'revenue' | 'activity' | 'coupons'>('leads');
   const [loginEmail, setLoginEmail] = useState('');
   const [loginSent, setLoginSent] = useState(false);
   const [loginError, setLoginError] = useState('');
@@ -89,6 +89,8 @@ export default function AdminPage() {
   const [agentLeads, setAgentLeads] = useState<Record<string, AgentLead[]>>({});
   const [expandedAgent, setExpandedAgent] = useState<string | null>(null);
   const [recentEvents, setRecentEvents] = useState<AnalyticsEvent[]>([]);
+  const [coupons, setCoupons] = useState<Array<{ code: string; type: string; value: number; maxRedemptions: number | null; currentRedemptions: number; expiresAt: string | null; campaign: string; active: boolean; createdAt: string }>>([]);
+  const [newCoupon, setNewCoupon] = useState({ code: '', type: 'trial', value: 30, campaign: '', maxRedemptions: '' });
 
   const fetchLeads = async (apiKey: string) => {
     setLoading(true);
@@ -122,6 +124,15 @@ export default function AdminPage() {
         if (agentsResp.ok) {
           const agentsData = await agentsResp.json();
           setAgents(agentsData.agents || []);
+        }
+      } catch { /* ignore */ }
+
+      // Fetch coupons
+      try {
+        const couponsResp = await fetch(`/api/admin/coupons${qs}`);
+        if (couponsResp.ok) {
+          const couponsData = await couponsResp.json();
+          setCoupons(couponsData || []);
         }
       } catch { /* ignore */ }
 
@@ -447,6 +458,7 @@ export default function AdminPage() {
             { key: 'agents' as const, label: '🐝 Agents', short: '🐝', count: agents.length },
             { key: 'revenue' as const, label: '💰 Revenue', short: '💰' },
             { key: 'activity' as const, label: '📊 Activity', short: '📊' },
+            { key: 'coupons' as const, label: '🎟️ Coupons', short: '🎟️', count: coupons.length },
           ].map(tab => (
             <button
               key={tab.key}
@@ -779,6 +791,133 @@ export default function AdminPage() {
             )}
           </div>
         )}
+        {/* COUPONS TAB */}
+        {activeTab === 'coupons' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            {/* Create coupon form */}
+            <div style={{ background: C.white, borderRadius: 16, border: '1px solid #e2e8f0', padding: 24 }}>
+              <h2 style={{ fontSize: 16, fontWeight: 700, color: C.navy, marginBottom: 16 }}>🎟️ Create New Coupon</h2>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'flex-end' }}>
+                <div>
+                  <label style={{ fontSize: 12, fontWeight: 600, color: C.gray, display: 'block', marginBottom: 4 }}>Code</label>
+                  <input value={newCoupon.code} onChange={e => setNewCoupon({ ...newCoupon, code: e.target.value.toUpperCase() })} placeholder="PROMO30" style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #ccc', fontSize: 14, width: 140, fontFamily: 'inherit' }} />
+                </div>
+                <div>
+                  <label style={{ fontSize: 12, fontWeight: 600, color: C.gray, display: 'block', marginBottom: 4 }}>Type</label>
+                  <select value={newCoupon.type} onChange={e => setNewCoupon({ ...newCoupon, type: e.target.value })} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #ccc', fontSize: 14, fontFamily: 'inherit' }}>
+                    <option value="trial">Trial (free days)</option>
+                    <option value="discount">Discount (%)</option>
+                  </select>
+                </div>
+                <div>
+                  <label style={{ fontSize: 12, fontWeight: 600, color: C.gray, display: 'block', marginBottom: 4 }}>Value</label>
+                  <input type="number" value={newCoupon.value} onChange={e => setNewCoupon({ ...newCoupon, value: Number(e.target.value) })} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #ccc', fontSize: 14, width: 80, fontFamily: 'inherit' }} />
+                </div>
+                <div>
+                  <label style={{ fontSize: 12, fontWeight: 600, color: C.gray, display: 'block', marginBottom: 4 }}>Campaign</label>
+                  <input value={newCoupon.campaign} onChange={e => setNewCoupon({ ...newCoupon, campaign: e.target.value })} placeholder="apollo" style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #ccc', fontSize: 14, width: 120, fontFamily: 'inherit' }} />
+                </div>
+                <div>
+                  <label style={{ fontSize: 12, fontWeight: 600, color: C.gray, display: 'block', marginBottom: 4 }}>Max Uses</label>
+                  <input type="number" value={newCoupon.maxRedemptions} onChange={e => setNewCoupon({ ...newCoupon, maxRedemptions: e.target.value })} placeholder="∞" style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #ccc', fontSize: 14, width: 80, fontFamily: 'inherit' }} />
+                </div>
+                <button
+                  onClick={async () => {
+                    if (!newCoupon.code || !newCoupon.campaign) return;
+                    try {
+                      const res = await fetch('/api/admin/coupons', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          code: newCoupon.code,
+                          type: newCoupon.type,
+                          value: newCoupon.value,
+                          campaign: newCoupon.campaign,
+                          maxRedemptions: newCoupon.maxRedemptions ? Number(newCoupon.maxRedemptions) : null,
+                        }),
+                      });
+                      if (res.ok) {
+                        const created = await res.json();
+                        setCoupons([...coupons, created]);
+                        setNewCoupon({ code: '', type: 'trial', value: 30, campaign: '', maxRedemptions: '' });
+                      }
+                    } catch { /* ignore */ }
+                  }}
+                  style={{ padding: '8px 20px', borderRadius: 8, background: C.navy, color: C.white, fontSize: 14, fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+                >
+                  Create
+                </button>
+              </div>
+            </div>
+
+            {/* Coupons list */}
+            <div style={{ background: C.white, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+              <div style={{ padding: '16px 24px', borderBottom: '1px solid #e2e8f0' }}>
+                <h2 style={{ fontSize: 16, fontWeight: 700, color: C.navy, margin: 0 }}>All Coupons</h2>
+              </div>
+              {coupons.length === 0 ? (
+                <div style={{ padding: 40, textAlign: 'center' }}>
+                  <p style={{ fontSize: 40, marginBottom: 8 }}>🎟️</p>
+                  <p style={{ color: C.gray, fontSize: 14 }}>No coupons yet. Create one above.</p>
+                </div>
+              ) : (
+                <div style={{ overflowX: 'auto' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
+                    <thead>
+                      <tr style={{ background: '#F8FAFC' }}>
+                        <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 700, color: C.navy }}>Code</th>
+                        <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 700, color: C.navy }}>Type</th>
+                        <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 700, color: C.navy }}>Value</th>
+                        <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 700, color: C.navy }}>Campaign</th>
+                        <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 700, color: C.navy }}>Redemptions</th>
+                        <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 700, color: C.navy }}>Status</th>
+                        <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 700, color: C.navy }}>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {coupons.map(c => (
+                        <tr key={c.code} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                          <td style={{ padding: '12px 16px', fontWeight: 700, fontFamily: 'monospace', color: C.navy }}>{c.code}</td>
+                          <td style={{ padding: '12px 16px', color: C.gray }}>{c.type === 'trial' ? `${c.value}-day trial` : `${c.value}% off`}</td>
+                          <td style={{ padding: '12px 16px', color: C.gray }}>{c.value}</td>
+                          <td style={{ padding: '12px 16px' }}>
+                            <span style={{ background: '#EEF2FF', color: '#4338CA', padding: '2px 10px', borderRadius: 12, fontSize: 12, fontWeight: 600 }}>{c.campaign}</span>
+                          </td>
+                          <td style={{ padding: '12px 16px', color: C.gray }}>{c.currentRedemptions}{c.maxRedemptions ? ` / ${c.maxRedemptions}` : ' / ∞'}</td>
+                          <td style={{ padding: '12px 16px' }}>
+                            <span style={{ background: c.active ? '#DCFCE7' : '#FEE2E2', color: c.active ? '#166534' : '#991B1B', padding: '2px 10px', borderRadius: 12, fontSize: 12, fontWeight: 600 }}>
+                              {c.active ? 'Active' : 'Inactive'}
+                            </span>
+                          </td>
+                          <td style={{ padding: '12px 16px' }}>
+                            <button
+                              onClick={async () => {
+                                try {
+                                  const res = await fetch('/api/admin/coupons', {
+                                    method: 'PATCH',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ code: c.code, active: !c.active }),
+                                  });
+                                  if (res.ok) {
+                                    setCoupons(coupons.map(x => x.code === c.code ? { ...x, active: !x.active } : x));
+                                  }
+                                } catch { /* ignore */ }
+                              }}
+                              style={{ padding: '4px 12px', borderRadius: 6, background: c.active ? '#FEE2E2' : '#DCFCE7', color: c.active ? '#991B1B' : '#166534', fontSize: 12, fontWeight: 600, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+                            >
+                              {c.active ? 'Deactivate' : 'Activate'}
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );

@@ -49,6 +49,27 @@ function FadeSection({ children, style }: { children: React.ReactNode; style?: R
 export default function AgentLandingPage() {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [promoCode, setPromoCode] = useState('');
+  const [promoStatus, setPromoStatus] = useState<null | { valid: boolean; type?: string; value?: number; error?: string }>(null);
+  const [promoChecking, setPromoChecking] = useState(false);
+  const [showPromoInput, setShowPromoInput] = useState(false);
+
+  const checkPromoCode = async (code: string) => {
+    if (!code.trim()) { setPromoStatus(null); return; }
+    setPromoChecking(true);
+    try {
+      const res = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: code.trim() }),
+      });
+      const data = await res.json();
+      setPromoStatus(data);
+    } catch {
+      setPromoStatus({ valid: false, error: 'Error checking code' });
+    }
+    setPromoChecking(false);
+  };
 
   const handleCheckout = async () => {
     setCheckoutLoading(true);
@@ -56,7 +77,11 @@ export default function AgentLandingPage() {
       const res = await fetch('/api/stripe/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier: 'agent', propertyData: {} }),
+        body: JSON.stringify({
+          tier: 'agent',
+          propertyData: {},
+          ...(promoStatus?.valid && promoCode ? { couponCode: promoCode.trim() } : {}),
+        }),
       });
       const data = await res.json();
       if (data.url) window.location.href = data.url;
@@ -65,6 +90,12 @@ export default function AgentLandingPage() {
       setCheckoutLoading(false);
     }
   };
+
+  const hasValidTrial = promoStatus?.valid && promoStatus?.type === 'trial';
+  const hasValidDiscount = promoStatus?.valid && promoStatus?.type === 'discount';
+  const ctaLabel = hasValidTrial
+    ? `Start Free ${promoStatus?.value}-Day Trial →`
+    : checkoutLoading ? 'Loading...' : 'Start Now — $297/year →';
 
   return (
     <div style={{ minHeight: '100vh', background: C.white }}>
@@ -115,7 +146,7 @@ export default function AgentLandingPage() {
               onClick={handleCheckout}
               style={{ padding: '10px 20px', borderRadius: 10, background: C.green, color: C.navy, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
             >
-              Start Free Trial
+              Get Started
             </button>
           </nav>
         </div>
@@ -145,14 +176,14 @@ export default function AgentLandingPage() {
               Give your clients something no other agent offers — a personalized property tax savings report. 
               Generate qualified leads, close more deals, and become the go-to agent for rural land.
             </p>
-            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
               <button
                 onClick={handleCheckout}
                 disabled={checkoutLoading}
                 className="cta-btn"
                 style={{ padding: '16px 32px', borderRadius: 12, background: C.green, color: C.navy, fontWeight: 800, fontSize: 17, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)' }}
               >
-                {checkoutLoading ? 'Loading...' : 'Start Free 30-Day Trial →'}
+                {ctaLabel}
               </button>
               <a
                 href="#how-it-works"
@@ -161,8 +192,45 @@ export default function AgentLandingPage() {
                 See How It Works
               </a>
             </div>
-            <p style={{ fontSize: 13, color: C.gray, marginTop: 14 }}>
-              No credit card required • Cancel anytime
+            {hasValidTrial && (
+              <div style={{ marginTop: 12, background: 'rgba(87,201,117,0.12)', border: '1px solid rgba(87,201,117,0.3)', borderRadius: 10, padding: '10px 16px', display: 'inline-block' }}>
+                <span style={{ fontSize: 15, fontWeight: 700, color: '#1a6b3a' }}>🎉 {promoStatus?.value}-day free trial activated!</span>
+              </div>
+            )}
+            {hasValidDiscount && (
+              <div style={{ marginTop: 12, background: 'rgba(212,168,67,0.12)', border: '1px solid rgba(212,168,67,0.3)', borderRadius: 10, padding: '10px 16px', display: 'inline-block' }}>
+                <span style={{ fontSize: 15, fontWeight: 700, color: C.navy }}>🎉 {promoStatus?.value}% discount applied!</span>
+              </div>
+            )}
+            <div style={{ marginTop: 14 }}>
+              {!showPromoInput ? (
+                <button onClick={() => setShowPromoInput(true)} style={{ background: 'none', border: 'none', color: C.blue, fontSize: 13, cursor: 'pointer', textDecoration: 'underline', fontFamily: 'inherit', padding: 0 }}>
+                  Have a promo code?
+                </button>
+              ) : (
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                  <input
+                    type="text"
+                    placeholder="Enter promo code"
+                    value={promoCode}
+                    onChange={e => { setPromoCode(e.target.value.toUpperCase()); setPromoStatus(null); }}
+                    style={{ padding: '8px 14px', borderRadius: 8, border: '1px solid #ccc', fontSize: 14, fontFamily: 'inherit', width: 180, letterSpacing: '0.05em', fontWeight: 600 }}
+                  />
+                  <button
+                    onClick={() => checkPromoCode(promoCode)}
+                    disabled={promoChecking || !promoCode.trim()}
+                    style={{ padding: '8px 16px', borderRadius: 8, background: C.blue, color: C.white, fontSize: 13, fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: 'inherit', opacity: promoChecking || !promoCode.trim() ? 0.5 : 1 }}
+                  >
+                    {promoChecking ? '...' : 'Apply'}
+                  </button>
+                </div>
+              )}
+              {promoStatus && !promoStatus.valid && (
+                <p style={{ fontSize: 13, color: '#DC2626', marginTop: 6 }}>{promoStatus.error}</p>
+              )}
+            </div>
+            <p style={{ fontSize: 13, color: C.gray, marginTop: 10 }}>
+              Cancel anytime
             </p>
           </div>
           <div style={{ flex: '0 0 auto', maxWidth: 320 }}>
@@ -422,15 +490,19 @@ export default function AgentLandingPage() {
                 One Plan. Everything Included.
               </h2>
               <p style={{ fontSize: 16, color: C.gray, marginTop: 12, maxWidth: 480, margin: '12px auto 0' }}>
-                Start with a free 30-day trial. If it doesn&apos;t pay for itself, cancel anytime.
+                {hasValidTrial
+                  ? `Start with a free ${promoStatus?.value}-day trial. If it doesn't pay for itself, cancel anytime.`
+                  : 'Everything you need to generate leads and close more rural land deals.'}
               </p>
             </div>
 
             <div style={{ maxWidth: 520, margin: '0 auto' }}>
               <div style={{ background: C.white, borderRadius: 24, padding: '40px 36px', border: `2px solid ${C.green}`, boxShadow: '0 8px 40px rgba(0,0,0,0.08)', position: 'relative' }}>
-                <div style={{ position: 'absolute', top: -16, left: '50%', transform: 'translateX(-50%)', background: C.green, color: C.navy, fontSize: 12, fontWeight: 800, padding: '6px 20px', borderRadius: 20, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-                  30 Days Free
-                </div>
+                {hasValidTrial && (
+                  <div style={{ position: 'absolute', top: -16, left: '50%', transform: 'translateX(-50%)', background: C.green, color: C.navy, fontSize: 12, fontWeight: 800, padding: '6px 20px', borderRadius: 20, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                    {promoStatus?.value} Days Free
+                  </div>
+                )}
 
                 <div style={{ textAlign: 'center', marginBottom: 28 }}>
                   <span style={{ fontSize: 40 }}>🏠</span>
@@ -472,7 +544,7 @@ export default function AgentLandingPage() {
                   className="cta-btn"
                   style={{ width: '100%', padding: '18px 24px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)', marginBottom: 12 }}
                 >
-                  {checkoutLoading ? 'Loading...' : 'Start Your Free 30-Day Trial →'}
+                  {ctaLabel}
                 </button>
                 <p style={{ textAlign: 'center', fontSize: 13, color: C.gray }}>
                   Cancel anytime • One commission pays for 10+ years
@@ -516,8 +588,8 @@ export default function AgentLandingPage() {
                   a: 'BeeExemption provides personalized, data-driven reports with exact savings calculations based on real property data. It\'s not a generic pitch — it\'s a professional document with your branding that shows a specific dollar amount for a specific property. That\'s what gets clients to act.',
                 },
                 {
-                  q: 'What does the 30-day trial include?',
-                  a: 'Everything. Full access to your branded link, unlimited reports, lead notifications, and your client dashboard. If BeeExemption doesn\'t deliver value in 30 days, just cancel. No questions asked, no charges.',
+                  q: 'Do you offer free trials?',
+                  a: 'Yes! If you have a promo code, enter it on this page to unlock a free trial. Trial codes are available through our partner campaigns and events. During the trial, you get full access to everything — branded link, unlimited reports, lead notifications, and your client dashboard.',
                 },
                 {
                   q: 'Can I share leads with my team or brokerage?',
@@ -577,10 +649,10 @@ export default function AgentLandingPage() {
             className="cta-btn"
             style={{ padding: '18px 40px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 6px 24px rgba(212,168,67,0.35)', marginBottom: 12 }}
           >
-            {checkoutLoading ? 'Loading...' : 'Start Your Free 30-Day Trial →'}
+            {ctaLabel}
           </button>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)', marginTop: 12 }}>
-            No credit card required • Cancel anytime • Full access for 30 days
+            Cancel anytime • Full access
           </p>
         </div>
       </section>

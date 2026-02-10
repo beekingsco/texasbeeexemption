@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { stripe, getOrCreatePrice, TierKey, TIERS } from '@/lib/stripe';
+import { validateCoupon, redeemCoupon } from '@/lib/coupons';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { tier, propertyData, county } = body as {
+    const { tier, propertyData, county, couponCode } = body as {
       tier: TierKey;
       propertyData?: Record<string, string>;
       county?: string;
+      couponCode?: string;
     };
 
     if (!tier || !TIERS[tier]) {
@@ -44,6 +46,35 @@ export async function POST(req: NextRequest) {
     const successUrl = `${origin}/report/success?session_id={CHECKOUT_SESSION_ID}&${reportParams.toString()}`;
     const cancelUrl = `${origin}/report?${reportParams.toString()}`;
 
+    // Handle coupon logic for agent tier
+    let trialDays: number | undefined;
+    let stripeCouponId: string | undefined;
+
+    if (tier === 'agent' && couponCode) {
+      const couponResult = validateCoupon(couponCode);
+      if (couponResult.valid && couponResult.coupon) {
+        const c = couponResult.coupon;
+        metadata.coupon_code = c.code;
+        metadata.coupon_campaign = c.campaign;
+
+        if (c.type === 'trial') {
+          trialDays = c.value;
+        } else if (c.type === 'discount') {
+          // Create a one-time Stripe coupon for the discount
+          const sc = await stripe.coupons.create({
+            percent_off: c.value,
+            duration: 'once',
+            name: `Promo ${c.code}`,
+          });
+          stripeCouponId = sc.id;
+        }
+        redeemCoupon(couponCode);
+      }
+    }
+
+    // For agent tier without coupon, no trial (trial is coupon-based now)
+    const subscriptionTrialDays: number | undefined = tier === 'agent' ? trialDays : ('trialDays' in tierConfig ? (tierConfig as { trialDays?: number }).trialDays : undefined);
+
     // Create checkout session params
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
       mode: tierConfig.mode,
@@ -51,12 +82,11 @@ export async function POST(req: NextRequest) {
       success_url: successUrl,
       cancel_url: cancelUrl,
       metadata,
+      ...(stripeCouponId ? { discounts: [{ coupon: stripeCouponId }] } : {}),
       payment_intent_data: tierConfig.mode === 'payment' ? { metadata } : undefined,
       subscription_data: tierConfig.mode === 'subscription' ? {
         metadata,
-        ...('trialDays' in tierConfig && tierConfig.trialDays
-          ? { trial_period_days: tierConfig.trialDays }
-          : {}),
+        ...(subscriptionTrialDays ? { trial_period_days: subscriptionTrialDays } : {}),
       } : undefined,
     };
 

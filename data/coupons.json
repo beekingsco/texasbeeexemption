@@ -1,0 +1,24 @@
+[
+  {
+    "code": "APOLLO30",
+    "type": "trial",
+    "value": 30,
+    "maxRedemptions": null,
+    "currentRedemptions": 0,
+    "expiresAt": null,
+    "campaign": "apollo",
+    "active": true,
+    "createdAt": "2026-02-10T00:00:00.000Z"
+  },
+  {
+    "code": "PARTNER30",
+    "type": "trial",
+    "value": 30,
+    "maxRedemptions": null,
+    "currentRedemptions": 0,
+    "expiresAt": null,
+    "campaign": "partner",
+    "active": true,
+    "createdAt": "2026-02-10T00:00:00.000Z"
+  }
+]
