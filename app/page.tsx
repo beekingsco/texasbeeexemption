@@ -131,6 +131,7 @@ export default function NationalLanding() {
           <nav className="r-nav">
             <a href="#how-it-works" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>How It Works</a>
             <a href="#about" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>About</a>
+            <a href="/agents" style={{ fontSize: 14, fontWeight: 600, color: C.green, textDecoration: 'none' }}>For Agents</a>
             <a href="https://beekings.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>BeeKings</a>
           </nav>
         </div>
@@ -351,6 +352,30 @@ export default function NationalLanding() {
               county&apos;s appraisal district.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* AGENT CTA BANNER */}
+      <section style={{ padding: '48px 24px', background: `linear-gradient(135deg, ${C.green} 0%, ${C.greenDark} 100%)`, position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.06, backgroundImage: 'radial-gradient(circle, #0D1B2A 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+        <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+          <h2 style={{ fontSize: 'clamp(22px, 4vw, 30px)', fontWeight: 900, color: C.navy, marginBottom: 10, lineHeight: 1.2 }}>
+            🏠 Real Estate Agents Love Us
+          </h2>
+          <p style={{ fontSize: 16, color: C.navy, opacity: 0.8, lineHeight: 1.6, marginBottom: 24, maxWidth: 560, margin: '0 auto 24px' }}>
+            Generate qualified leads, close more deals, and help your clients save thousands on property taxes — all with your brand front and center.
+          </p>
+          <a
+            href="/agents"
+            style={{
+              display: 'inline-block', padding: '14px 28px', borderRadius: 12,
+              background: C.navy, color: C.white, fontWeight: 700, fontSize: 16,
+              textDecoration: 'none', fontFamily: 'inherit',
+              boxShadow: '0 4px 16px rgba(13,27,42,0.3)',
+            }}
+          >
+            See Why Agents Partner With Us →
+          </a>
         </div>
       </section>
 
