@@ -826,7 +826,7 @@ export default function Home() {
                       We verified your address but couldn&apos;t pull acreage data from county records. This can happen with rural properties or if the data source was temporarily unavailable.
                     </p>
                     <button
-                      onClick={() => { setResults(null); setTimeout(() => handleSearch(), 100); }}
+                      onClick={() => handleSearch()}
                       style={{ background: C.blue, color: C.white, fontWeight: 700, fontSize: 14, padding: '10px 24px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'inherit', marginBottom: 20 }}
                     >
                       🔄 Try Again
