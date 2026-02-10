@@ -53,9 +53,8 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const key = searchParams.get('key');
-
-  if (key !== 'beekings2026') {
+  const { checkAdminAuth } = await import('@/lib/admin-auth');
+  if (!checkAdminAuth(req).authorized) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

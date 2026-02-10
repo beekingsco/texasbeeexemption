@@ -161,12 +161,11 @@ export async function POST(req: NextRequest) {
 
 /* ─── GET — retrieve leads (admin) ─── */
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const apiKey = searchParams.get('key');
-
-  if (apiKey !== 'beekings2026') {
+  const { checkAdminAuth } = await import('@/lib/admin-auth');
+  if (!checkAdminAuth(req).authorized) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  const { searchParams } = new URL(req.url);
 
   const leads = await readAllLeads();
 

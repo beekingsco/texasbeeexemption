@@ -56,7 +56,8 @@ function buildDigestEmail(agentName: string, stats: { newLeads: number; totalLea
 // GET — trigger weekly digest for all agents (requires admin key)
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  if (searchParams.get('key') !== 'beekings2026') {
+  const { checkAdminAuth } = await import('@/lib/admin-auth');
+  if (!checkAdminAuth(req).authorized) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

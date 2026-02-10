@@ -44,12 +44,13 @@ interface AgentLead {
 }
 
 const C = {
-  sky: '#EDF6FF',
-  blue: '#1C7CE5',
-  navy: '#053249',
+  sky: '#F0F4FA',
+  blue: '#1A3A6B',
+  navy: '#0D1B2A',
   green: '#57C975',
+  gold: '#D4A843',
   white: '#FFFFFF',
-  gray: '#6B7280',
+  gray: '#5A6A7A',
   amber: '#F59E0B',
   red: '#DC2626',
 };
@@ -80,6 +81,10 @@ export default function AdminPage() {
   const [key, setKey] = useState('');
   const [authed, setAuthed] = useState(false);
   const [activeTab, setActiveTab] = useState<'leads' | 'agents' | 'revenue' | 'activity'>('leads');
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginSent, setLoginSent] = useState(false);
+  const [loginError, setLoginError] = useState('');
+  const [loginLoading, setLoginLoading] = useState(false);
   const [agents, setAgents] = useState<AgentInfo[]>([]);
   const [agentLeads, setAgentLeads] = useState<Record<string, AgentLead[]>>({});
   const [expandedAgent, setExpandedAgent] = useState<string | null>(null);
@@ -87,10 +92,12 @@ export default function AdminPage() {
 
   const fetchLeads = async (apiKey: string) => {
     setLoading(true);
+    const keyParam = apiKey === '__cookie__' ? '' : `key=${encodeURIComponent(apiKey)}`;
+    const qs = keyParam ? `?${keyParam}` : '';
     try {
       const [leadsResp, analyticsResp] = await Promise.all([
-        fetch(`/api/leads?key=${encodeURIComponent(apiKey)}`),
-        fetch(`/api/analytics?key=${encodeURIComponent(apiKey)}`),
+        fetch(`/api/leads${qs}`),
+        fetch(`/api/analytics${qs}`),
       ]);
       if (leadsResp.status === 401) {
         setAuthed(false);
@@ -111,7 +118,7 @@ export default function AdminPage() {
 
       // Fetch agents
       try {
-        const agentsResp = await fetch(`/api/admin/agents?key=${encodeURIComponent(apiKey)}`);
+        const agentsResp = await fetch(`/api/admin/agents${qs}`);
         if (agentsResp.ok) {
           const agentsData = await agentsResp.json();
           setAgents(agentsData.agents || []);
@@ -128,7 +135,8 @@ export default function AdminPage() {
   const fetchAgentLeads = async (agentId: string) => {
     if (agentLeads[agentId]) return; // already loaded
     try {
-      const resp = await fetch(`/api/admin/agents?key=${encodeURIComponent(key)}&agentId=${agentId}`);
+      const agentKeyParam = key && key !== '__cookie__' ? `key=${encodeURIComponent(key)}&` : '';
+      const resp = await fetch(`/api/admin/agents?${agentKeyParam}agentId=${agentId}`);
       if (resp.ok) {
         const data = await resp.json();
         setAgentLeads(prev => ({ ...prev, [agentId]: data.leads || [] }));
@@ -141,14 +149,56 @@ export default function AdminPage() {
     fetchLeads(key);
   };
 
-  useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    if (hash) {
-      setKey(hash);
-      fetchLeads(hash);
-    } else {
-      setLoading(false);
+  const handleMagicLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginLoading(true);
+    setLoginError('');
+    try {
+      const resp = await fetch('/api/auth/admin-magic-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: loginEmail }),
+      });
+      if (resp.ok) {
+        setLoginSent(true);
+      } else {
+        setLoginError('Failed to send login link. Please try again.');
+      }
+    } catch {
+      setLoginError('Network error. Please try again.');
     }
+    setLoginLoading(false);
+  };
+
+  useEffect(() => {
+    // Check for error params
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get('error');
+    if (error) {
+      const msgs: Record<string, string> = {
+        missing_token: 'Invalid login link.',
+        invalid_token: 'Login link is invalid or already used.',
+        expired: 'Login link has expired. Please request a new one.',
+        unauthorized: 'This email is not authorized for admin access.',
+        verification_failed: 'Verification failed. Please try again.',
+      };
+      setLoginError(msgs[error] || 'Login failed.');
+      window.history.replaceState({}, '', '/admin');
+    }
+
+    // Check if already authenticated via cookie
+    fetch('/api/auth/admin-session')
+      .then(r => { if (r.ok) { setAuthed(true); fetchLeads('__cookie__'); } else { setLoading(false); } })
+      .catch(() => {
+        // Fall back to hash-based auth
+        const hash = window.location.hash.replace('#', '');
+        if (hash) {
+          setKey(hash);
+          fetchLeads(hash);
+        } else {
+          setLoading(false);
+        }
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -167,18 +217,80 @@ export default function AdminPage() {
   if (!authed) {
     return (
       <div style={{ minHeight: '100vh', background: C.sky, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'system-ui' }}>
-        <form onSubmit={handleAuth} style={{ background: C.white, padding: 40, borderRadius: 20, boxShadow: '0 8px 32px rgba(0,0,0,0.1)', maxWidth: 400, width: '100%', margin: '0 16px', boxSizing: 'border-box' }}>
-          <h1 style={{ fontSize: 24, fontWeight: 800, color: C.navy, marginBottom: 8 }}>🔐 Admin Dashboard</h1>
-          <p style={{ color: C.gray, fontSize: 14, marginBottom: 24 }}>Enter the admin key to view the dashboard.</p>
-          <input
-            type="password" value={key} onChange={(e) => setKey(e.target.value)}
-            placeholder="Admin key"
-            style={{ width: '100%', padding: '12px 16px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 16, marginBottom: 16, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
-          />
-          <button type="submit" style={{ width: '100%', padding: '14px', background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
-            View Dashboard
-          </button>
-        </form>
+        <div style={{ background: C.white, padding: 40, borderRadius: 20, boxShadow: '0 8px 32px rgba(0,0,0,0.08)', maxWidth: 420, width: '100%', margin: '0 16px', boxSizing: 'border-box' }}>
+          <div style={{ textAlign: 'center', marginBottom: 28 }}>
+            <span style={{ fontSize: 40 }}>🐝</span>
+            <h1 style={{ fontSize: 24, fontWeight: 800, color: C.navy, marginBottom: 4, marginTop: 8 }}>Admin Dashboard</h1>
+            <p style={{ color: C.gray, fontSize: 14 }}>Sign in to manage BeeExemption</p>
+          </div>
+
+          {loginError && (
+            <div style={{ background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 10, padding: '10px 14px', marginBottom: 16 }}>
+              <p style={{ color: C.red, fontSize: 13, fontWeight: 600 }}>{loginError}</p>
+            </div>
+          )}
+
+          {loginSent ? (
+            <div style={{ textAlign: 'center', padding: '16px 0' }}>
+              <span style={{ fontSize: 48 }}>📬</span>
+              <h2 style={{ fontSize: 18, fontWeight: 700, color: C.navy, marginTop: 12, marginBottom: 8 }}>Check your email</h2>
+              <p style={{ color: C.gray, fontSize: 14, lineHeight: 1.6 }}>
+                We sent a sign-in link to <strong style={{ color: C.navy }}>{loginEmail}</strong>. Click the link in your email to access the dashboard.
+              </p>
+              <button
+                onClick={() => { setLoginSent(false); setLoginEmail(''); }}
+                style={{ marginTop: 20, padding: '10px 24px', background: 'transparent', color: C.blue, fontWeight: 600, fontSize: 14, borderRadius: 8, border: `1px solid ${C.blue}`, cursor: 'pointer', fontFamily: 'inherit' }}
+              >
+                Use a different email
+              </button>
+            </div>
+          ) : (
+            <>
+              {/* Magic Link Login */}
+              <form onSubmit={handleMagicLink}>
+                <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: C.navy, marginBottom: 6 }}>Email address</label>
+                <input
+                  type="email"
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  required
+                  style={{ width: '100%', padding: '12px 16px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 16, marginBottom: 16, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s' }}
+                  onFocus={(e) => e.currentTarget.style.borderColor = C.gold}
+                  onBlur={(e) => e.currentTarget.style.borderColor = '#e2e8f0'}
+                />
+                <button
+                  type="submit"
+                  disabled={loginLoading}
+                  style={{ width: '100%', padding: '14px', background: C.gold, color: C.navy, fontWeight: 700, fontSize: 16, borderRadius: 10, border: 'none', cursor: loginLoading ? 'wait' : 'pointer', fontFamily: 'inherit', opacity: loginLoading ? 0.7 : 1, transition: 'opacity 0.2s' }}
+                >
+                  {loginLoading ? 'Sending...' : 'Send Magic Link ✨'}
+                </button>
+              </form>
+
+              {/* Divider */}
+              <div style={{ display: 'flex', alignItems: 'center', margin: '24px 0', gap: 12 }}>
+                <div style={{ flex: 1, height: 1, background: '#e2e8f0' }} />
+                <span style={{ fontSize: 12, color: C.gray, fontWeight: 600 }}>OR</span>
+                <div style={{ flex: 1, height: 1, background: '#e2e8f0' }} />
+              </div>
+
+              {/* Legacy Key Login */}
+              <form onSubmit={handleAuth}>
+                <input
+                  type="password"
+                  value={key}
+                  onChange={(e) => setKey(e.target.value)}
+                  placeholder="Admin key"
+                  style={{ width: '100%', padding: '12px 16px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 16, marginBottom: 12, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                />
+                <button type="submit" style={{ width: '100%', padding: '12px', background: C.navy, color: C.white, fontWeight: 600, fontSize: 14, borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                  Sign in with key
+                </button>
+              </form>
+            </>
+          )}
+        </div>
       </div>
     );
   }
