@@ -22,19 +22,20 @@ export const TIERS = {
     interval: 'month' as const,
   },
   agent: {
-    name: 'BeeExemption — Agent Partner Annual',
+    name: 'BeeExemption — Agent Partner (1 County)',
     description: 'Annual agent license — one county, white-label reports',
     price: 29700,
     mode: 'subscription' as const,
     interval: 'year' as const,
     trialDays: 7,
   },
-  county_addon: {
-    name: 'BeeExemption — Additional County (Agent Add-on)',
-    description: 'Additional county for Agent Partner plan',
-    price: 9700,
+  agent_state: {
+    name: 'BeeExemption — Agent Partner (Entire State)',
+    description: 'Annual agent license — statewide access, white-label reports',
+    price: 49700,
     mode: 'subscription' as const,
     interval: 'year' as const,
+    trialDays: 7,
   },
 } as const;
 

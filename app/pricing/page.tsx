@@ -153,10 +153,10 @@ export default function PricingPage() {
 
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 4 }}>
             <span style={{ fontSize: 48, fontWeight: 900, color: C.navy }}>$297</span>
-            <span style={{ fontSize: 16, fontWeight: 600, color: C.gray }}>/year per county</span>
+            <span style={{ fontSize: 16, fontWeight: 600, color: C.gray }}>/year for 1 county</span>
           </div>
-          <p style={{ fontSize: 14, color: C.gray, marginBottom: 8 }}>+ $97/year for each additional county</p>
-          <p style={{ fontSize: 13, color: C.green, fontWeight: 700, marginBottom: 24 }}>🎁 First 30 days free — try it risk-free</p>
+          <p style={{ fontSize: 14, color: C.blue, fontWeight: 600, marginBottom: 8 }}>or $497/year for the entire state</p>
+          <p style={{ fontSize: 13, color: C.green, fontWeight: 700, marginBottom: 24 }}>🎁 7-day free trial — try it risk-free</p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12, marginBottom: 28 }}>
             {[
@@ -210,10 +210,10 @@ export default function PricingPage() {
             className="cta-wiggle"
             style={{ width: '100%', background: C.green, color: C.navy, fontWeight: 700, fontSize: 16, padding: '16px 24px', borderRadius: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 12px rgba(212,168,67,0.3)' }}
           >
-            Start Your Free 30-Day Trial →
+            Start Your Free 7-Day Trial →
           </button>
           <p style={{ textAlign: 'center', fontSize: 12, color: C.gray, marginTop: 10 }}>
-            No charge for 30 days • Cancel anytime • One commission pays for 10 years
+            No charge for 7 days • Cancel anytime • One commission pays for 10 years
           </p>
         </div>
 
@@ -226,7 +226,7 @@ export default function PricingPage() {
               { q: 'What\'s included in the enhanced report?', a: 'A personalized property analysis with exact savings calculations, step-by-step application instructions for your county, a shopping list with direct Amazon links, local bee supplier directory, hive placement guide, and record keeping templates.' },
               { q: 'Why would a real estate agent use this?', a: 'It\'s a powerful lead magnet. Share your branded link, get notified when potential clients research properties, and show them exactly how much they\'ll save. It helps you close deals by quantifying a benefit most buyers don\'t know about.' },
               { q: 'Do agents get access to client information?', a: 'Yes — every person who uses your branded link becomes a shared lead. You get their name, email, and property details. They\'re your client — we just help with the bee side.' },
-              { q: 'What does "$97 per additional county" mean?', a: 'Your base $297/year covers one county. If you work across multiple counties, add more at $97/year each. Each county gets its own data and your branded reports work for any address in your covered counties.' },
+              { q: 'Can I cover more than one county?', a: 'Yes! Choose the Entire State plan at $497/year and you get access to all 254 Texas counties. Or start with a single county at $297/year and upgrade anytime.' },
             ].map((faq) => (
               <div key={faq.q} style={{ background: C.white, borderRadius: 12, padding: '16px 20px', border: '1px solid #e2e8f0' }}>
                 <p style={{ fontWeight: 700, color: C.navy, fontSize: 14, marginBottom: 6 }}>{faq.q}</p>

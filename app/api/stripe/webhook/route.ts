@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
             amount: session.amount_total || 2999,
             tier: 'unlimited',
           });
-        } else if (tier === 'agent') {
+        } else if (tier === 'agent' || tier === 'agent_state') {
           // Agent subscription — create or update agent record
           const agentEmail = session.metadata?.agent_email || customerEmail;
           const agentName = session.metadata?.agent_name || customerName || '';
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
                 name: agentName || existingAgent.name,
                 brokerage: agentBrokerage || existingAgent.brokerage,
                 phone: agentPhone || existingAgent.phone,
-                licensedCounties: agentCounties ? agentCounties.split(',').map((c: string) => c.trim()).filter(Boolean) : existingAgent.licensedCounties,
+                licensedCounties: tier === 'agent_state' ? ['ALL'] : agentCounties ? agentCounties.split(',').map((c: string) => c.trim()).filter(Boolean) : existingAgent.licensedCounties,
                 subscription: {
                   ...existingAgent.subscription,
                   status: 'trial',
@@ -102,9 +102,11 @@ export async function POST(req: NextRequest) {
               const randomPassword = randomUUID();
               const passwordHash = await bcrypt.hash(randomPassword, 10);
 
-              const counties = agentCounties
-                ? agentCounties.split(',').map((c: string) => c.trim()).filter(Boolean)
-                : [];
+              const counties = tier === 'agent_state'
+                ? ['ALL']
+                : agentCounties
+                  ? agentCounties.split(',').map((c: string) => c.trim()).filter(Boolean)
+                  : [];
 
               const newAgent: Agent = {
                 id: randomUUID(),
@@ -154,7 +156,7 @@ export async function POST(req: NextRequest) {
         const tier = subscription.metadata?.tier;
 
         // Check if agent trial converted to active
-        if (tier === 'agent' && subscription.status === 'active') {
+        if ((tier === 'agent' || tier === 'agent_state') && subscription.status === 'active') {
           // Find agent by looking up Stripe customer email
           const customerId = typeof subscription.customer === 'string'
             ? subscription.customer
@@ -198,7 +200,7 @@ export async function POST(req: NextRequest) {
         });
 
         // Update agent status if agent subscription
-        if (subscription.metadata?.tier === 'agent') {
+        if (subscription.metadata?.tier === 'agent' || subscription.metadata?.tier === 'agent_state') {
           const customerId = typeof subscription.customer === 'string'
             ? subscription.customer
             : subscription.customer?.id || '';

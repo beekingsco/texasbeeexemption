@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
     }
     if (county) reportParams.set('county', county);
     
-    const isAgent = tier === 'agent' || tier === 'county_addon';
+    const isAgent = tier === 'agent' || tier === 'agent_state';
     const successUrl = isAgent 
       ? `${origin}/agent/login?welcome=true&session_id={CHECKOUT_SESSION_ID}`
       : `${origin}/report/success?session_id={CHECKOUT_SESSION_ID}&${reportParams.toString()}`;

@@ -46,6 +46,8 @@ function FadeSection({ children, style }: { children: React.ReactNode; style?: R
   );
 }
 
+type PlanType = 'agent' | 'agent_state';
+
 export default function AgentLandingPage() {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -53,13 +55,13 @@ export default function AgentLandingPage() {
   const [promoCode, setPromoCode] = useState('');
   const [promoStatus, setPromoStatus] = useState<{ valid?: boolean; message?: string; trialDays?: number } | null>(null);
   const [promoChecking, setPromoChecking] = useState(false);
-  const [showSignup, setShowSignup] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<PlanType>('agent_state');
   const [formData, setFormData] = useState({ name: '', email: '', brokerage: '', phone: '', counties: '' });
   const [formError, setFormError] = useState('');
   const signupRef = useRef<HTMLDivElement>(null);
 
-  const scrollToSignup = () => {
-    setShowSignup(true);
+  const scrollToSignup = (plan?: PlanType) => {
+    if (plan) setSelectedPlan(plan);
     setTimeout(() => signupRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
   };
 
@@ -86,8 +88,11 @@ export default function AgentLandingPage() {
   };
 
   const handleCheckout = async () => {
-    // Validate form
-    if (!formData.name.trim() || !formData.email.trim() || !formData.brokerage.trim() || !formData.phone.trim() || !formData.counties.trim()) {
+    const requiredFields = selectedPlan === 'agent'
+      ? formData.name.trim() && formData.email.trim() && formData.brokerage.trim() && formData.phone.trim() && formData.counties.trim()
+      : formData.name.trim() && formData.email.trim() && formData.brokerage.trim() && formData.phone.trim();
+
+    if (!requiredFields) {
       setFormError('Please fill out all fields.');
       scrollToSignup();
       return;
@@ -104,12 +109,12 @@ export default function AgentLandingPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          tier: 'agent',
+          tier: selectedPlan,
           agentName: formData.name.trim(),
           agentEmail: formData.email.trim(),
           agentBrokerage: formData.brokerage.trim(),
           agentPhone: formData.phone.trim(),
-          agentCounties: formData.counties.trim(),
+          agentCounties: selectedPlan === 'agent_state' ? 'ALL' : formData.counties.trim(),
           couponCode: promoStatus?.valid ? promoCode.trim() : undefined,
         }),
       });
@@ -122,6 +127,17 @@ export default function AgentLandingPage() {
       setCheckoutLoading(false);
     }
   };
+
+  const featureList = [
+    'White-labeled reports with your logo',
+    'Branded shareable link',
+    'Lead notifications (name, email, property)',
+    'Client dashboard',
+    'Unlimited reports',
+    'BeeKings handles bee setup for your clients',
+    'BeeKings Certified Partner badge',
+    'Priority support',
+  ];
 
   return (
     <div style={{ minHeight: '100vh', background: C.white }}>
@@ -137,10 +153,13 @@ export default function AgentLandingPage() {
         .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1) !important; }
         .step-card { transition: transform 0.2s ease; }
         .step-card:hover { transform: translateY(-2px); }
+        .pricing-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .pricing-card:hover { transform: translateY(-4px); }
         .r-nav-agents { display: flex; align-items: center; gap: 24px; }
         .r-grid-features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         .r-grid-roi { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         .r-grid-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .r-grid-pricing { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
         @media (max-width: 900px) {
           .r-grid-steps { grid-template-columns: repeat(2, 1fr); }
           .r-grid-roi { grid-template-columns: 1fr; }
@@ -149,6 +168,7 @@ export default function AgentLandingPage() {
           .r-nav-agents { display: none; }
           .r-grid-features { grid-template-columns: 1fr; }
           .r-grid-steps { grid-template-columns: 1fr; }
+          .r-grid-pricing { grid-template-columns: 1fr; }
           .hero-flex { flex-direction: column !important; text-align: center !important; }
           .hero-flex > div:first-child { align-items: center !important; }
           .pricing-flex { flex-direction: column !important; }
@@ -172,7 +192,7 @@ export default function AgentLandingPage() {
             <a href="/pricing" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>Pricing</a>
             <a href="/agent/login" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>Agent Login</a>
             <button
-              onClick={scrollToSignup}
+              onClick={() => scrollToSignup()}
               style={{ padding: '10px 20px', borderRadius: 10, background: C.green, color: C.navy, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
             >
               Start Free Trial
@@ -203,7 +223,7 @@ export default function AgentLandingPage() {
             </p>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
               <button
-                onClick={scrollToSignup}
+                onClick={() => scrollToSignup()}
                 className="cta-btn"
                 style={{ padding: '16px 32px', borderRadius: 12, background: C.green, color: C.navy, fontWeight: 800, fontSize: 17, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)' }}
               >
@@ -350,7 +370,7 @@ export default function AgentLandingPage() {
                   icon: '🏆',
                   stat: '1 Commission',
                   label: 'Pays for 10+ Years',
-                  desc: 'At $297/year, a single rural land commission covers your BeeExemption cost for over a decade. One deal. That\'s it.',
+                  desc: 'Starting at $297/year, a single rural land commission covers your BeeExemption cost for over a decade. One deal. That\'s it.',
                 },
                 {
                   icon: '📉',
@@ -398,7 +418,7 @@ export default function AgentLandingPage() {
                 { icon: '🔗', title: 'Branded Shareable Link', desc: 'A custom URL (beeexemption.com/r/yourname) you can share anywhere — social media, email, listing descriptions.' },
                 { icon: '🔔', title: 'Lead Notifications', desc: 'Instant alerts when someone uses your link. You get their name, email, property address, and estimated savings.' },
                 { icon: '📋', title: 'Client Dashboard', desc: 'View all your leads in one place. Track which properties they searched, their savings estimates, and follow-up status.' },
-                { icon: '♾️', title: 'Unlimited Reports', desc: 'Generate as many branded reports as you want for your covered counties. No per-report fees, ever.' },
+                { icon: '♾️', title: 'Unlimited Reports', desc: 'Generate as many branded reports as you want. No per-report fees, ever.' },
                 { icon: '🐝', title: 'BeeKings Handles Setup', desc: 'When your client is ready for bees, BeeKings provides everything — hives, bees, equipment, and training. You just make the intro.' },
                 { icon: '🏅', title: 'Certified Partner Badge', desc: 'Display the "BeeKings Certified Partner" badge on your site and marketing. It signals expertise and builds trust.' },
                 { icon: '📞', title: 'Priority Support', desc: 'Direct line to our team for questions, custom report requests, and client consultations. We\'re here to help you close.' },
@@ -470,59 +490,178 @@ export default function AgentLandingPage() {
       {/* ===================== PRICING ===================== */}
       <FadeSection>
         <section id="pricing" style={{ padding: '80px 24px', background: C.white }}>
-          <div style={{ maxWidth: 800, margin: '0 auto' }}>
+          <div style={{ maxWidth: 900, margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: 56 }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: C.green, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8 }}>Simple Pricing</p>
               <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: 800, color: C.navy, lineHeight: 1.2 }}>
-                One Plan. Everything Included.
+                Choose Your Coverage
               </h2>
-              <p style={{ fontSize: 16, color: C.gray, marginTop: 12, maxWidth: 480, margin: '12px auto 0' }}>
-                Start with a free 7-day trial. If it doesn&apos;t pay for itself, cancel anytime.
+              <p style={{ fontSize: 16, color: C.gray, marginTop: 12, maxWidth: 520, margin: '12px auto 0' }}>
+                Start with a free 7-day trial on either plan. If it doesn&apos;t pay for itself, cancel anytime.
               </p>
             </div>
 
-            <div style={{ maxWidth: 520, margin: '0 auto' }}>
-              <div style={{ background: C.white, borderRadius: 24, padding: '40px 36px', border: `2px solid ${C.green}`, boxShadow: '0 8px 40px rgba(0,0,0,0.08)', position: 'relative' }}>
-                <div style={{ position: 'absolute', top: -16, left: '50%', transform: 'translateX(-50%)', background: C.green, color: C.navy, fontSize: 12, fontWeight: 800, padding: '6px 20px', borderRadius: 20, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+            <div className="r-grid-pricing" style={{ maxWidth: 760, margin: '0 auto 48px' }}>
+              {/* 1 County Card */}
+              <div
+                className="pricing-card"
+                style={{
+                  background: C.white,
+                  borderRadius: 24,
+                  padding: '36px 28px',
+                  border: selectedPlan === 'agent' ? `2px solid ${C.green}` : '2px solid #e2e8f0',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                  position: 'relative',
+                  cursor: 'pointer',
+                }}
+                onClick={() => setSelectedPlan('agent')}
+              >
+                <div style={{ position: 'absolute', top: -16, left: '50%', transform: 'translateX(-50%)', background: C.navy, color: C.white, fontSize: 11, fontWeight: 800, padding: '5px 16px', borderRadius: 20, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
                   7 Days Free
                 </div>
 
-                <div style={{ textAlign: 'center', marginBottom: 28 }}>
-                  <span style={{ fontSize: 40 }}>🏠</span>
-                  <p style={{ fontSize: 14, fontWeight: 700, color: C.green, textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 8, marginBottom: 4 }}>Agent Partner Plan</p>
+                <div style={{ textAlign: 'center', marginBottom: 20, marginTop: 8 }}>
+                  <span style={{ fontSize: 36 }}>📍</span>
+                  <p style={{ fontSize: 14, fontWeight: 700, color: C.blue, textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 8, marginBottom: 4 }}>1 County</p>
                 </div>
 
                 <div style={{ textAlign: 'center', marginBottom: 8 }}>
-                  <span style={{ fontSize: 56, fontWeight: 900, color: C.navy }}>$297</span>
-                  <span style={{ fontSize: 18, fontWeight: 600, color: C.gray }}>/year</span>
+                  <span style={{ fontSize: 48, fontWeight: 900, color: C.navy }}>$297</span>
+                  <span style={{ fontSize: 16, fontWeight: 600, color: C.gray }}>/year</span>
                 </div>
-                <p style={{ textAlign: 'center', fontSize: 15, color: C.gray, marginBottom: 6 }}>per county</p>
-                <p style={{ textAlign: 'center', fontSize: 14, color: C.blue, fontWeight: 600, marginBottom: 28 }}>
-                  + $97/year for each additional county
+                <p style={{ textAlign: 'center', fontSize: 14, color: C.gray, marginBottom: 24 }}>
+                  Perfect for agents focused on one area
                 </p>
 
-                <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: 24, marginBottom: 28 }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                    {[
-                      'White-labeled reports with your logo',
-                      'Branded shareable link',
-                      'Lead notifications (name, email, property)',
-                      'Client dashboard',
-                      'Unlimited reports for your counties',
-                      'BeeKings handles bee setup for your clients',
-                      'BeeKings Certified Partner badge',
-                      'Priority support',
-                    ].map(item => (
-                      <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                        <span style={{ color: C.green, fontSize: 16, fontWeight: 700, flexShrink: 0 }}>✓</span>
-                        <span style={{ fontSize: 15, color: C.charcoal }}>{item}</span>
+                <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: 20, marginBottom: 20 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    {featureList.map(item => (
+                      <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        <span style={{ color: C.green, fontSize: 14, fontWeight: 700, flexShrink: 0 }}>✓</span>
+                        <span style={{ fontSize: 13, color: C.charcoal }}>{item}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
+                <button
+                  onClick={(e) => { e.stopPropagation(); scrollToSignup('agent'); }}
+                  className="cta-btn-blue"
+                  style={{ width: '100%', padding: '14px 20px', borderRadius: 12, background: C.navy, color: C.white, fontWeight: 700, fontSize: 15, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+                >
+                  Get Started →
+                </button>
+              </div>
+
+              {/* Entire State Card */}
+              <div
+                className="pricing-card"
+                style={{
+                  background: C.white,
+                  borderRadius: 24,
+                  padding: '36px 28px',
+                  border: selectedPlan === 'agent_state' ? `2px solid ${C.green}` : `2px solid ${C.green}55`,
+                  boxShadow: selectedPlan === 'agent_state' ? `0 8px 40px rgba(212,168,67,0.2)` : '0 4px 20px rgba(0,0,0,0.06)',
+                  position: 'relative',
+                  cursor: 'pointer',
+                }}
+                onClick={() => setSelectedPlan('agent_state')}
+              >
+                <div style={{ position: 'absolute', top: -16, left: '50%', transform: 'translateX(-50%)', background: C.green, color: C.navy, fontSize: 11, fontWeight: 800, padding: '5px 16px', borderRadius: 20, letterSpacing: '0.05em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+                  ⭐ Best Value — 7 Days Free
+                </div>
+
+                <div style={{ textAlign: 'center', marginBottom: 20, marginTop: 8 }}>
+                  <span style={{ fontSize: 36 }}>🗺️</span>
+                  <p style={{ fontSize: 14, fontWeight: 700, color: C.green, textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 8, marginBottom: 4 }}>Entire State</p>
+                </div>
+
+                <div style={{ textAlign: 'center', marginBottom: 8 }}>
+                  <span style={{ fontSize: 48, fontWeight: 900, color: C.navy }}>$497</span>
+                  <span style={{ fontSize: 16, fontWeight: 600, color: C.gray }}>/year</span>
+                </div>
+                <p style={{ textAlign: 'center', fontSize: 14, color: C.gray, marginBottom: 24 }}>
+                  Cover every county — no limits
+                </p>
+
+                <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: 20, marginBottom: 20 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    {featureList.map(item => (
+                      <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        <span style={{ color: C.green, fontSize: 14, fontWeight: 700, flexShrink: 0 }}>✓</span>
+                        <span style={{ fontSize: 13, color: C.charcoal }}>{item}</span>
+                      </div>
+                    ))}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <span style={{ color: C.green, fontSize: 14, fontWeight: 700, flexShrink: 0 }}>✓</span>
+                      <span style={{ fontSize: 13, color: C.charcoal, fontWeight: 700 }}>All 254 Texas counties included</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={(e) => { e.stopPropagation(); scrollToSignup('agent_state'); }}
+                  className="cta-btn"
+                  style={{ width: '100%', padding: '14px 20px', borderRadius: 12, background: C.green, color: C.navy, fontWeight: 700, fontSize: 15, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)' }}
+                >
+                  Get Started →
+                </button>
+              </div>
+            </div>
+
+            {/* SIGNUP FORM */}
+            <div ref={signupRef} style={{ maxWidth: 520, margin: '0 auto' }}>
+              <div style={{ background: C.white, borderRadius: 24, padding: '36px 32px', border: '2px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
+                {/* Plan toggle */}
+                <div style={{ display: 'flex', background: C.lightGray, borderRadius: 12, padding: 4, marginBottom: 24 }}>
+                  <button
+                    onClick={() => setSelectedPlan('agent')}
+                    style={{
+                      flex: 1, padding: '10px 16px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                      background: selectedPlan === 'agent' ? C.white : 'transparent',
+                      color: selectedPlan === 'agent' ? C.navy : C.gray,
+                      fontWeight: selectedPlan === 'agent' ? 700 : 500,
+                      fontSize: 14,
+                      boxShadow: selectedPlan === 'agent' ? '0 2px 8px rgba(0,0,0,0.08)' : 'none',
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    1 County — $297/yr
+                  </button>
+                  <button
+                    onClick={() => setSelectedPlan('agent_state')}
+                    style={{
+                      flex: 1, padding: '10px 16px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                      background: selectedPlan === 'agent_state' ? C.white : 'transparent',
+                      color: selectedPlan === 'agent_state' ? C.navy : C.gray,
+                      fontWeight: selectedPlan === 'agent_state' ? 700 : 500,
+                      fontSize: 14,
+                      boxShadow: selectedPlan === 'agent_state' ? '0 2px 8px rgba(0,0,0,0.08)' : 'none',
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    Entire State — $497/yr
+                  </button>
+                </div>
+
+                <p style={{ fontSize: 15, fontWeight: 700, color: C.navy, textAlign: 'center', marginBottom: 16 }}>
+                  {selectedPlan === 'agent' ? '1 County Plan' : 'Entire State Plan'} — Get started below
+                </p>
+
+                {formError && <p style={{ fontSize: 13, color: '#DC2626', fontWeight: 600, textAlign: 'center', marginBottom: 12 }}>{formError}</p>}
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <input type="text" placeholder="Full Name" value={formData.name} onChange={e => setFormData(d => ({ ...d, name: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                  <input type="email" placeholder="Email Address" value={formData.email} onChange={e => setFormData(d => ({ ...d, email: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                  <input type="text" placeholder="Brokerage Name" value={formData.brokerage} onChange={e => setFormData(d => ({ ...d, brokerage: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                  <input type="tel" placeholder="Phone Number" value={formData.phone} onChange={e => setFormData(d => ({ ...d, phone: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                  {selectedPlan === 'agent' && (
+                    <input type="text" placeholder="County (e.g. Van Zandt, Henderson)" value={formData.counties} onChange={e => setFormData(d => ({ ...d, counties: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                  )}
+                </div>
+
                 {/* Promo code */}
-                <div style={{ marginBottom: 16 }}>
+                <div style={{ marginTop: 16, marginBottom: 16 }}>
                   {!showPromo ? (
                     <button onClick={() => setShowPromo(true)} style={{ background: 'none', border: 'none', color: C.blue, fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'underline' }}>
                       Have a promo code?
@@ -549,24 +688,14 @@ export default function AgentLandingPage() {
                   )}
                 </div>
 
-                {/* SIGNUP FORM — always visible */}
-                <div ref={signupRef} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                  <p style={{ fontSize: 15, fontWeight: 700, color: C.navy, textAlign: 'center', marginBottom: 4 }}>Get started — tell us about yourself.</p>
-                  {formError && <p style={{ fontSize: 13, color: '#DC2626', fontWeight: 600, textAlign: 'center' }}>{formError}</p>}
-                  <input type="text" placeholder="Full Name" value={formData.name} onChange={e => setFormData(d => ({ ...d, name: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
-                  <input type="email" placeholder="Email Address" value={formData.email} onChange={e => setFormData(d => ({ ...d, email: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
-                  <input type="text" placeholder="Brokerage Name" value={formData.brokerage} onChange={e => setFormData(d => ({ ...d, brokerage: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
-                  <input type="tel" placeholder="Phone Number" value={formData.phone} onChange={e => setFormData(d => ({ ...d, phone: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
-                  <input type="text" placeholder="County (e.g. Van Zandt, Henderson)" value={formData.counties} onChange={e => setFormData(d => ({ ...d, counties: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
-                  <button
-                    onClick={handleCheckout}
-                    disabled={checkoutLoading}
-                    className="cta-btn"
-                    style={{ width: '100%', padding: '18px 24px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)' }}
-                  >
-                    {checkoutLoading ? 'Loading...' : 'Continue to Checkout →'}
-                  </button>
-                </div>
+                <button
+                  onClick={handleCheckout}
+                  disabled={checkoutLoading}
+                  className="cta-btn"
+                  style={{ width: '100%', padding: '18px 24px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)' }}
+                >
+                  {checkoutLoading ? 'Loading...' : 'Continue to Checkout →'}
+                </button>
                 <p style={{ textAlign: 'center', fontSize: 13, color: C.gray, marginTop: 12 }}>
                   Cancel anytime • One commission pays for 10+ years
                 </p>
@@ -593,8 +722,8 @@ export default function AgentLandingPage() {
                   a: 'When someone uses your branded link to check their property, you\'re automatically notified with their name, email, property address, and estimated savings. They appear in your agent dashboard where you can track and follow up. These are exclusive leads — they came from your link, and they\'re your clients.',
                 },
                 {
-                  q: 'Can I use BeeExemption in multiple counties?',
-                  a: 'Yes! Your first county is included at $297/year. Each additional county is just $97/year. Your branded reports and lead capture work across all your covered counties. Most agents start with their primary county and expand as they see results.',
+                  q: 'What\'s the difference between the 1 County and Entire State plans?',
+                  a: 'The 1 County plan ($297/year) covers a single county — great if you focus on one area. The Entire State plan ($497/year) gives you access to all 254 Texas counties, so your branded reports and lead capture work statewide. If you work across multiple areas, the Entire State plan is the better deal.',
                 },
                 {
                   q: 'What if my client actually wants bees?',
@@ -665,7 +794,7 @@ export default function AgentLandingPage() {
             and give their clients something no one else can.
           </p>
           <button
-            onClick={scrollToSignup}
+            onClick={() => scrollToSignup()}
             className="cta-btn"
             style={{ padding: '18px 40px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 6px 24px rgba(212,168,67,0.35)', marginBottom: 12 }}
           >
