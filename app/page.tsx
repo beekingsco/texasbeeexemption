@@ -282,29 +282,19 @@ export default function NationalLanding() {
 
       {/* QUICK FACTS */}
       <section style={{ padding: '64px 24px', background: C.white }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 48 }} className="hero-layout">
-          {/* Cartoon beekeeper illustration */}
-          <div className="hero-img" style={{ flex: '0 0 auto', maxWidth: 220 }}>
-            <img
-              src="/hero-beekeeper.png"
-              alt="Friendly beekeeper illustration"
-              style={{ width: '100%', display: 'block', objectFit: 'contain' }}
-            />
-          </div>
-          <div style={{ flex: 1 }}>
-            <div className="r-grid3">
-              {[
-                { icon: '🏡', title: 'For Landowners', desc: 'If you own 5+ acres of rural or semi-rural land, you may already qualify for an agricultural property tax exemption through beekeeping.' },
-                { icon: '🐝', title: 'Low Maintenance', desc: 'Honeybees are gentle and largely self-sufficient. Most beekeepers spend just 15-30 minutes per hive per month during active season.' },
-                { icon: '💰', title: 'Real Savings', desc: 'Agricultural appraisal typically reduces taxable land value by 90-98%, saving most qualifying landowners $2,000-$8,000+ per year.' },
-              ].map(item => (
-                <div key={item.title} style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: 40, marginBottom: 16 }}>{item.icon}</div>
-                  <h3 style={{ fontSize: 18, fontWeight: 700, color: C.navy, marginBottom: 8 }}>{item.title}</h3>
-                  <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.7 }}>{item.desc}</p>
-                </div>
-              ))}
-            </div>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+          <div className="r-grid3">
+            {[
+              { icon: '🏡', title: 'For Landowners', desc: 'If you own 5+ acres of rural or semi-rural land, you may already qualify for an agricultural property tax exemption through beekeeping.' },
+              { icon: '🐝', title: 'Low Maintenance', desc: 'Honeybees are gentle and largely self-sufficient. Most beekeepers spend just 15-30 minutes per hive per month during active season.' },
+              { icon: '💰', title: 'Real Savings', desc: 'Agricultural appraisal typically reduces taxable land value by 90-98%, saving most qualifying landowners $2,000-$8,000+ per year.' },
+            ].map(item => (
+              <div key={item.title} style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 40, marginBottom: 16 }}>{item.icon}</div>
+                <h3 style={{ fontSize: 18, fontWeight: 700, color: C.navy, marginBottom: 8 }}>{item.title}</h3>
+                <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.7 }}>{item.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -491,28 +481,37 @@ export default function NationalLanding() {
       </section>
 
       {/* GENTLE CTA */}
-      <section style={{ padding: '64px 24px', background: C.sky, textAlign: 'center' }}>
-        <div style={{ maxWidth: 500, margin: '0 auto' }}>
-          <div style={{ fontSize: 48, marginBottom: 16 }}>🐝</div>
-          <h2 style={{ fontSize: 28, fontWeight: 800, color: C.navy, marginBottom: 12 }}>
-            See what you could save
-          </h2>
-          <p style={{ fontSize: 16, color: C.gray, marginBottom: 32, lineHeight: 1.6 }}>
-            It takes 60 seconds to check your property. No signup required.
-          </p>
-          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button
-              onClick={() => router.push('/texas')}
-              style={{ padding: '14px 28px', borderRadius: 12, background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
-            >
-              Texas Calculator
-            </button>
-            <button
-              onClick={() => router.push('/florida')}
-              style={{ padding: '14px 28px', borderRadius: 12, background: C.white, color: C.navy, fontWeight: 700, fontSize: 16, border: '2px solid #D5EAFF', cursor: 'pointer', fontFamily: 'inherit' }}
-            >
-              Florida Calculator
-            </button>
+      <section style={{ padding: '64px 24px', background: C.sky }}>
+        <div style={{ maxWidth: 800, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 40 }} className="hero-layout">
+          <div style={{ flex: 1, textAlign: 'center' }}>
+            <h2 style={{ fontSize: 28, fontWeight: 800, color: C.navy, marginBottom: 12 }}>
+              See what you could save
+            </h2>
+            <p style={{ fontSize: 16, color: C.gray, marginBottom: 32, lineHeight: 1.6 }}>
+              It takes 60 seconds to check your property. No signup required.
+            </p>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => router.push('/texas')}
+                style={{ padding: '14px 28px', borderRadius: 12, background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+              >
+                Texas Calculator
+              </button>
+              <button
+                onClick={() => router.push('/florida')}
+                style={{ padding: '14px 28px', borderRadius: 12, background: C.white, color: C.navy, fontWeight: 700, fontSize: 16, border: '2px solid #D5EAFF', cursor: 'pointer', fontFamily: 'inherit' }}
+              >
+                Florida Calculator
+              </button>
+            </div>
+          </div>
+          {/* Cartoon beekeeper */}
+          <div className="hero-img" style={{ flex: '0 0 auto', maxWidth: 200 }}>
+            <img
+              src="/hero-beekeeper.png"
+              alt="Friendly beekeeper illustration"
+              style={{ width: '100%', display: 'block', objectFit: 'contain' }}
+            />
           </div>
         </div>
       </section>
