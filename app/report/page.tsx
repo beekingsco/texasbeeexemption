@@ -55,7 +55,7 @@ const today = () => {
 /* ──────────────────── Design tokens ────────────────────── */
 const colors = {
   cream: '#faf9f6',
-  darkGreen: '#1a3a2a',
+  darkGreen: '#2d2d2d',
   gold: '#d4a843',
   goldLight: 'rgba(212, 168, 67, 0.15)',
   white: '#ffffff',
