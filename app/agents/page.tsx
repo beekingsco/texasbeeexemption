@@ -549,35 +549,23 @@ export default function AgentLandingPage() {
                   )}
                 </div>
 
-                {/* SIGNUP FORM */}
-                <div ref={signupRef}>
-                  {!showSignup ? (
-                    <button
-                      onClick={scrollToSignup}
-                      className="cta-btn"
-                      style={{ width: '100%', padding: '18px 24px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)', marginBottom: 12 }}
-                    >
-                      Start Your Free 7-Day Trial →
-                    </button>
-                  ) : (
-                    <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: 20, display: 'flex', flexDirection: 'column', gap: 12 }}>
-                      <p style={{ fontSize: 15, fontWeight: 700, color: C.navy, textAlign: 'center', marginBottom: 4 }}>Almost there! Tell us about yourself.</p>
-                      {formError && <p style={{ fontSize: 13, color: '#DC2626', fontWeight: 600, textAlign: 'center' }}>{formError}</p>}
-                      <input type="text" placeholder="Full Name" value={formData.name} onChange={e => setFormData(d => ({ ...d, name: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
-                      <input type="email" placeholder="Email Address" value={formData.email} onChange={e => setFormData(d => ({ ...d, email: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
-                      <input type="text" placeholder="Brokerage Name" value={formData.brokerage} onChange={e => setFormData(d => ({ ...d, brokerage: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
-                      <input type="tel" placeholder="Phone Number" value={formData.phone} onChange={e => setFormData(d => ({ ...d, phone: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
-                      <input type="text" placeholder="County (e.g. Van Zandt, Henderson)" value={formData.counties} onChange={e => setFormData(d => ({ ...d, counties: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
-                      <button
-                        onClick={handleCheckout}
-                        disabled={checkoutLoading}
-                        className="cta-btn"
-                        style={{ width: '100%', padding: '18px 24px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)' }}
-                      >
-                        {checkoutLoading ? 'Loading...' : 'Continue to Checkout →'}
-                      </button>
-                    </div>
-                  )}
+                {/* SIGNUP FORM — always visible */}
+                <div ref={signupRef} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <p style={{ fontSize: 15, fontWeight: 700, color: C.navy, textAlign: 'center', marginBottom: 4 }}>Get started — tell us about yourself.</p>
+                  {formError && <p style={{ fontSize: 13, color: '#DC2626', fontWeight: 600, textAlign: 'center' }}>{formError}</p>}
+                  <input type="text" placeholder="Full Name" value={formData.name} onChange={e => setFormData(d => ({ ...d, name: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                  <input type="email" placeholder="Email Address" value={formData.email} onChange={e => setFormData(d => ({ ...d, email: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                  <input type="text" placeholder="Brokerage Name" value={formData.brokerage} onChange={e => setFormData(d => ({ ...d, brokerage: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                  <input type="tel" placeholder="Phone Number" value={formData.phone} onChange={e => setFormData(d => ({ ...d, phone: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                  <input type="text" placeholder="County (e.g. Van Zandt, Henderson)" value={formData.counties} onChange={e => setFormData(d => ({ ...d, counties: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                  <button
+                    onClick={handleCheckout}
+                    disabled={checkoutLoading}
+                    className="cta-btn"
+                    style={{ width: '100%', padding: '18px 24px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)' }}
+                  >
+                    {checkoutLoading ? 'Loading...' : 'Continue to Checkout →'}
+                  </button>
                 </div>
                 <p style={{ textAlign: 'center', fontSize: 13, color: C.gray, marginTop: 12 }}>
                   Cancel anytime • One commission pays for 10+ years
