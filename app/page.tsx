@@ -203,9 +203,13 @@ export default function NationalLanding() {
         )}
       </div>
 
-      {/* HERO */}
-      <section className="hero-section" style={{ background: C.sky, padding: '60px 24px 0', overflow: 'hidden' }}>
-        <div className="hero-layout" style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'flex-end', gap: 40 }}>
+      {/* HERO — real photo background */}
+      <section className="hero-section" style={{ position: 'relative', padding: '60px 24px 0', overflow: 'hidden' }}>
+        {/* Background photo */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/beekeeper-frame.jpg)', backgroundSize: 'cover', backgroundPosition: 'center 30%', opacity: 0.15 }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: `linear-gradient(135deg, ${C.sky}ee 0%, ${C.sky}dd 50%, ${C.sky}cc 100%)` }} />
+
+        <div className="hero-layout" style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 40, position: 'relative', zIndex: 1 }}>
           <div className="hero-text fade-in" style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingBottom: 60 }}>
             <h1 style={{ fontSize: 'clamp(28px, 5vw, 52px)', fontWeight: 900, color: C.navy, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: 16 }}>
               Could bees lower<br />your property taxes?
@@ -259,12 +263,12 @@ export default function NationalLanding() {
             </div>
           </div>
 
-          {/* Beekeeper illustration */}
-          <div className="hero-img" style={{ flex: '0 0 auto', maxWidth: 300, alignSelf: 'flex-end' }}>
+          {/* Real photo on right side */}
+          <div className="hero-img" style={{ flex: '0 0 auto', maxWidth: 340, borderRadius: 20, overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.12)' }}>
             <img
-              src="/hero-beekeeper.png"
-              alt="Friendly beekeeper illustration"
-              style={{ width: '100%', display: 'block', objectFit: 'contain' }}
+              src="/beekeepers-inspecting.jpg"
+              alt="Beekeepers inspecting hive"
+              style={{ width: '100%', display: 'block', objectFit: 'cover', height: 360 }}
             />
           </div>
         </div>
@@ -272,19 +276,29 @@ export default function NationalLanding() {
 
       {/* QUICK FACTS */}
       <section style={{ padding: '64px 24px', background: C.white }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <div className="r-grid3">
-            {[
-              { icon: '🏡', title: 'For Landowners', desc: 'If you own 5+ acres of rural or semi-rural land, you may already qualify for an agricultural property tax exemption through beekeeping.' },
-              { icon: '🐝', title: 'Low Maintenance', desc: 'Honeybees are gentle and largely self-sufficient. Most beekeepers spend just 15-30 minutes per hive per month during active season.' },
-              { icon: '💰', title: 'Real Savings', desc: 'Agricultural appraisal typically reduces taxable land value by 90-98%, saving most qualifying landowners $2,000-$8,000+ per year.' },
-            ].map(item => (
-              <div key={item.title} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 40, marginBottom: 16 }}>{item.icon}</div>
-                <h3 style={{ fontSize: 18, fontWeight: 700, color: C.navy, marginBottom: 8 }}>{item.title}</h3>
-                <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.7 }}>{item.desc}</p>
-              </div>
-            ))}
+        <div style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 48 }} className="hero-layout">
+          {/* Cartoon beekeeper illustration */}
+          <div className="hero-img" style={{ flex: '0 0 auto', maxWidth: 220 }}>
+            <img
+              src="/hero-beekeeper.png"
+              alt="Friendly beekeeper illustration"
+              style={{ width: '100%', display: 'block', objectFit: 'contain' }}
+            />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div className="r-grid3">
+              {[
+                { icon: '🏡', title: 'For Landowners', desc: 'If you own 5+ acres of rural or semi-rural land, you may already qualify for an agricultural property tax exemption through beekeeping.' },
+                { icon: '🐝', title: 'Low Maintenance', desc: 'Honeybees are gentle and largely self-sufficient. Most beekeepers spend just 15-30 minutes per hive per month during active season.' },
+                { icon: '💰', title: 'Real Savings', desc: 'Agricultural appraisal typically reduces taxable land value by 90-98%, saving most qualifying landowners $2,000-$8,000+ per year.' },
+              ].map(item => (
+                <div key={item.title} style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: 40, marginBottom: 16 }}>{item.icon}</div>
+                  <h3 style={{ fontSize: 18, fontWeight: 700, color: C.navy, marginBottom: 8 }}>{item.title}</h3>
+                  <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.7 }}>{item.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
