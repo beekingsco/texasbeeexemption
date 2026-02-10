@@ -120,10 +120,10 @@ export default function AgentLandingPage() {
       </header>
 
       {/* ===================== HERO ===================== */}
-      <section style={{ background: `linear-gradient(135deg, ${C.navy} 0%, #1A3A5B 100%)`, padding: '80px 24px 90px', position: 'relative', overflow: 'hidden' }}>
-        {/* Background photo overlay */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/agent-landowner.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.12 }} />
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: `linear-gradient(135deg, ${C.navy}ee 0%, #1A3A5Bdd 100%)` }} />
+      <section style={{ padding: '200px 24px 80px', position: 'relative', overflow: 'hidden', minHeight: 520 }}>
+        {/* Full background photo */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/agent-landowner.jpg)', backgroundSize: 'cover', backgroundPosition: 'center 25%' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(135deg, rgba(13,27,42,0.6) 0%, rgba(26,58,91,0.5) 50%, rgba(13,27,42,0.45) 100%)' }} />
         
         <div className="hero-animate hero-flex" style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 48, position: 'relative', zIndex: 1 }}>
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
