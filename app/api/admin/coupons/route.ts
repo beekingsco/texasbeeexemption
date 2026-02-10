@@ -63,7 +63,7 @@ export async function PATCH(req: NextRequest) {
   if (index === -1) return NextResponse.json({ error: 'Coupon not found' }, { status: 404 });
 
   // Only allow safe updates
-  const allowed = ['description', 'enabled', 'maxRedemptions', 'maxCounties', 'expiresAt'];
+  const allowed = ['description', 'enabled', 'maxRedemptions', 'maxCounties', 'expiresAt', 'redemptions', 'redeemedBy'];
   for (const key of allowed) {
     if (key in updates) (coupons[index] as any)[key] = updates[key];
   }
