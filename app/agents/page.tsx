@@ -53,6 +53,15 @@ export default function AgentLandingPage() {
   const [promoCode, setPromoCode] = useState('');
   const [promoStatus, setPromoStatus] = useState<{ valid?: boolean; message?: string; trialDays?: number } | null>(null);
   const [promoChecking, setPromoChecking] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', brokerage: '', phone: '', counties: '' });
+  const [formError, setFormError] = useState('');
+  const signupRef = useRef<HTMLDivElement>(null);
+
+  const scrollToSignup = () => {
+    setShowSignup(true);
+    setTimeout(() => signupRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+  };
 
   const validatePromo = async () => {
     if (!promoCode.trim()) return;
@@ -77,17 +86,39 @@ export default function AgentLandingPage() {
   };
 
   const handleCheckout = async () => {
+    // Validate form
+    if (!formData.name.trim() || !formData.email.trim() || !formData.brokerage.trim() || !formData.phone.trim() || !formData.counties.trim()) {
+      setFormError('Please fill out all fields.');
+      scrollToSignup();
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setFormError('Please enter a valid email address.');
+      scrollToSignup();
+      return;
+    }
+    setFormError('');
     setCheckoutLoading(true);
     try {
       const res = await fetch('/api/stripe/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier: 'agent', propertyData: {}, couponCode: promoStatus?.valid ? promoCode.trim() : undefined }),
+        body: JSON.stringify({
+          tier: 'agent',
+          agentName: formData.name.trim(),
+          agentEmail: formData.email.trim(),
+          agentBrokerage: formData.brokerage.trim(),
+          agentPhone: formData.phone.trim(),
+          agentCounties: formData.counties.trim(),
+          couponCode: promoStatus?.valid ? promoCode.trim() : undefined,
+        }),
       });
       const data = await res.json();
       if (data.url) window.location.href = data.url;
+      else { setFormError('Something went wrong. Please try again.'); setCheckoutLoading(false); }
     } catch (err) {
       console.error('Checkout error:', err);
+      setFormError('Something went wrong. Please try again.');
       setCheckoutLoading(false);
     }
   };
@@ -141,7 +172,7 @@ export default function AgentLandingPage() {
             <a href="/pricing" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>Pricing</a>
             <a href="/agent/login" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>Agent Login</a>
             <button
-              onClick={handleCheckout}
+              onClick={scrollToSignup}
               style={{ padding: '10px 20px', borderRadius: 10, background: C.green, color: C.navy, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
             >
               Start Free Trial
@@ -172,12 +203,11 @@ export default function AgentLandingPage() {
             </p>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
               <button
-                onClick={handleCheckout}
-                disabled={checkoutLoading}
+                onClick={scrollToSignup}
                 className="cta-btn"
                 style={{ padding: '16px 32px', borderRadius: 12, background: C.green, color: C.navy, fontWeight: 800, fontSize: 17, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)' }}
               >
-                {checkoutLoading ? 'Loading...' : 'Start Free 7-Day Trial →'}
+                Start Free 7-Day Trial →
               </button>
               <a
                 href="#how-it-works"
@@ -519,15 +549,37 @@ export default function AgentLandingPage() {
                   )}
                 </div>
 
-                <button
-                  onClick={handleCheckout}
-                  disabled={checkoutLoading}
-                  className="cta-btn"
-                  style={{ width: '100%', padding: '18px 24px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)', marginBottom: 12 }}
-                >
-                  {checkoutLoading ? 'Loading...' : promoStatus?.valid && promoStatus.trialDays ? `Start Free ${promoStatus.trialDays}-Day Trial →` : 'Start Your Free 7-Day Trial →'}
-                </button>
-                <p style={{ textAlign: 'center', fontSize: 13, color: C.gray }}>
+                {/* SIGNUP FORM */}
+                <div ref={signupRef}>
+                  {!showSignup ? (
+                    <button
+                      onClick={scrollToSignup}
+                      className="cta-btn"
+                      style={{ width: '100%', padding: '18px 24px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)', marginBottom: 12 }}
+                    >
+                      Start Your Free 7-Day Trial →
+                    </button>
+                  ) : (
+                    <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: 20, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                      <p style={{ fontSize: 15, fontWeight: 700, color: C.navy, textAlign: 'center', marginBottom: 4 }}>Almost there! Tell us about yourself.</p>
+                      {formError && <p style={{ fontSize: 13, color: '#DC2626', fontWeight: 600, textAlign: 'center' }}>{formError}</p>}
+                      <input type="text" placeholder="Full Name" value={formData.name} onChange={e => setFormData(d => ({ ...d, name: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                      <input type="email" placeholder="Email Address" value={formData.email} onChange={e => setFormData(d => ({ ...d, email: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                      <input type="text" placeholder="Brokerage Name" value={formData.brokerage} onChange={e => setFormData(d => ({ ...d, brokerage: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                      <input type="tel" placeholder="Phone Number" value={formData.phone} onChange={e => setFormData(d => ({ ...d, phone: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                      <input type="text" placeholder="County (e.g. Van Zandt, Henderson)" value={formData.counties} onChange={e => setFormData(d => ({ ...d, counties: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                      <button
+                        onClick={handleCheckout}
+                        disabled={checkoutLoading}
+                        className="cta-btn"
+                        style={{ width: '100%', padding: '18px 24px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)' }}
+                      >
+                        {checkoutLoading ? 'Loading...' : 'Continue to Checkout →'}
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <p style={{ textAlign: 'center', fontSize: 13, color: C.gray, marginTop: 12 }}>
                   Cancel anytime • One commission pays for 10+ years
                 </p>
               </div>
@@ -625,12 +677,11 @@ export default function AgentLandingPage() {
             and give their clients something no one else can.
           </p>
           <button
-            onClick={handleCheckout}
-            disabled={checkoutLoading}
+            onClick={scrollToSignup}
             className="cta-btn"
             style={{ padding: '18px 40px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 6px 24px rgba(212,168,67,0.35)', marginBottom: 12 }}
           >
-            {checkoutLoading ? 'Loading...' : 'Start Your Free 7-Day Trial →'}
+            Start Your Free 7-Day Trial →
           </button>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)', marginTop: 12 }}>
             No credit card required • Cancel anytime • Full access for 7 days
