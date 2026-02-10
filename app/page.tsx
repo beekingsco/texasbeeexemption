@@ -210,7 +210,7 @@ export default function NationalLanding() {
           >
             <img src="/bee-wink.png" alt="" style={{ width: 28, height: 28, flexShrink: 0 }} />
             <div>
-              <p style={{ fontWeight: 800, color: C.navy, fontSize: 14, margin: 0 }}>${toastData.savings.toLocaleString()} Saved</p>
+              <p style={{ fontWeight: 800, color: C.navy, fontSize: 14, margin: 0 }}>${toastData.savings.toLocaleString()}/yr Saved</p>
               <p style={{ fontWeight: 600, color: C.gray, fontSize: 12, margin: 0 }}>in {toastData.city}, {toastData.state}</p>
             </div>
           </div>
