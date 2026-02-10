@@ -373,16 +373,34 @@ function ReportContent() {
       {/* ════════════════════════════════════════════
           FLOATING PRINT BUTTON
           ════════════════════════════════════════════ */}
-      <div className="no-print fixed top-4 right-4 z-50 flex gap-2">
+      <div className="no-print" style={{ position: 'fixed', top: 16, left: 16, zIndex: 50 }}>
         <button
           onClick={() => window.print()}
-          className="text-white font-bold px-6 py-3 rounded-xl shadow-lg flex items-center gap-2 transition-all hover:brightness-110"
-          style={{ background: colors.darkGreen }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            background: '#C1272D',
+            color: 'white',
+            fontWeight: 800,
+            fontSize: 15,
+            padding: '12px 24px',
+            borderRadius: 10,
+            border: 'none',
+            cursor: 'pointer',
+            boxShadow: '0 4px 16px rgba(193,39,45,0.35)',
+            transition: 'all 0.2s',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
+            letterSpacing: '0.04em',
+          }}
+          onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(193,39,45,0.45)'; }}
+          onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(193,39,45,0.35)'; }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clipRule="evenodd" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/>
+            <path d="M8 12h8v2H8zm0 4h5v2H8z"/>
           </svg>
-          Save as PDF
+          DOWNLOAD PDF
         </button>
       </div>
 
