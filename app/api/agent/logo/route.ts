@@ -3,6 +3,31 @@ import { put } from '@vercel/blob';
 import { verifySessionToken } from '@/lib/auth-tokens';
 import { getAgentById, updateAgent } from '@/lib/agent-storage';
 
+export async function DELETE(req: NextRequest) {
+  try {
+    const sessionCookie = req.cookies.get('bee_session')?.value;
+    if (!sessionCookie) {
+      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+    }
+    const agentId = verifySessionToken(sessionCookie);
+    if (!agentId) {
+      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
+    }
+
+    const agent = await getAgentById(agentId);
+    if (!agent) {
+      return NextResponse.json({ error: 'Agent not found' }, { status: 404 });
+    }
+
+    await updateAgent(agentId, { logoUrl: undefined });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Logo delete error:', error);
+    return NextResponse.json({ error: 'Delete failed' }, { status: 500 });
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     // Authenticate

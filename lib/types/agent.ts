@@ -9,6 +9,7 @@ export interface Agent {
   logoUrl?: string;
   subdomain?: string;
   licensedCounties: string[]; // e.g. ["TX-Van Zandt", "TX-Henderson"]
+  lastCountyChange?: string; // ISO date of last county swap
   createdAt: string;
   subscription?: {
     status: 'trial' | 'active' | 'cancelled';
