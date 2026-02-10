@@ -27,7 +27,7 @@ export const TIERS = {
     price: 29700,
     mode: 'subscription' as const,
     interval: 'year' as const,
-    trialDays: 30,
+    trialDays: 7,
   },
   county_addon: {
     name: 'BeeExemption — Additional County (Agent Add-on)',

@@ -41,8 +41,13 @@ export async function POST(req: NextRequest) {
     }
     if (county) reportParams.set('county', county);
     
-    const successUrl = `${origin}/report/success?session_id={CHECKOUT_SESSION_ID}&${reportParams.toString()}`;
-    const cancelUrl = `${origin}/report?${reportParams.toString()}`;
+    const isAgent = tier === 'agent' || tier === 'county_addon';
+    const successUrl = isAgent 
+      ? `${origin}/agent/login?welcome=true&session_id={CHECKOUT_SESSION_ID}`
+      : `${origin}/report/success?session_id={CHECKOUT_SESSION_ID}&${reportParams.toString()}`;
+    const cancelUrl = isAgent
+      ? `${origin}/agents`
+      : `${origin}/report?${reportParams.toString()}`;
 
     // Create checkout session params
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
