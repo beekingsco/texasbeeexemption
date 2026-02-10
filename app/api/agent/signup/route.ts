@@ -100,10 +100,10 @@ export async function POST(req: NextRequest) {
     // Return agent without password hash
     const { passwordHash: _, ...agentWithoutPassword } = agent;
     return NextResponse.json({ agent: agentWithoutPassword }, { status: 201 });
-  } catch (error) {
-    console.error('Error creating agent:', error);
+  } catch (error: any) {
+    console.error('Error creating agent:', error?.message, error?.stack);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Internal server error', detail: error?.message || 'Unknown error' },
       { status: 500 }
     );
   }
