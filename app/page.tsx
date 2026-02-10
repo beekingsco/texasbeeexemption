@@ -222,7 +222,7 @@ export default function NationalLanding() {
         {/* Full-screen background photo */}
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/beekeeper-frame.jpg)', backgroundSize: 'cover', backgroundPosition: 'center 30%' }} />
         {/* Dark overlay for text readability */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(135deg, rgba(13,27,42,0.82) 0%, rgba(26,58,107,0.72) 50%, rgba(13,27,42,0.65) 100%)' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(135deg, rgba(13,27,42,0.65) 0%, rgba(26,58,107,0.52) 50%, rgba(13,27,42,0.45) 100%)' }} />
 
         <div style={{ maxWidth: 700, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div className="hero-text fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
