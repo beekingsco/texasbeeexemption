@@ -1186,17 +1186,40 @@ export default function Home() {
             <p style={{ fontSize: 17, color: C.gray, lineHeight: 1.6, marginBottom: 32, maxWidth: 420, margin: '0 auto 32px' }}>
               Your <strong style={{ color: C.navy }}>{selectedCounty.name} County Ag Exemption Guide</strong> is ready! We&apos;ll also send a copy to <strong style={{ color: C.navy }}>{lead.email}</strong>.
             </p>
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 16 }}>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 24 }}>
               <a href={`/guide?county=${encodeURIComponent(selectedCounty.name)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: C.green, color: C.navy, fontWeight: 700, fontSize: 16, padding: '14px 28px', borderRadius: 12, textDecoration: 'none', boxShadow: '0 4px 12px rgba(212,168,67,0.3)' }}>
                 📋 View Your Free Guide
               </a>
-              <a href={`/report?county=${encodeURIComponent(selectedCounty.name)}&acres=${acres || parcelData?.legalArea || 10}&propertyValue=${appraisedValue || parcelData?.marketValue || 300000}&taxRate=${selectedCounty.avgTaxRate}&name=${encodeURIComponent((lead.firstName + ' ' + lead.lastName).trim())}&email=${encodeURIComponent(lead.email)}`} target="_blank" rel="noopener noreferrer" className="cta-wiggle" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, padding: '14px 28px', borderRadius: 12, textDecoration: 'none', boxShadow: '0 4px 16px rgba(26,58,107,0.3)' }}>
+            </div>
+
+            {/* Enhanced Report Upsell */}
+            <div style={{ background: C.white, borderRadius: 20, padding: '28px 24px', marginBottom: 32, border: '1px solid #e2e8f0', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
+              <p style={{ fontSize: 13, fontWeight: 700, color: C.gray, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Want even more?</p>
+              <a href={`/report?county=${encodeURIComponent(selectedCounty.name)}&acres=${acres || parcelData?.legalArea || 10}&propertyValue=${appraisedValue || parcelData?.marketValue || 300000}&taxRate=${selectedCounty.avgTaxRate}&name=${encodeURIComponent((lead.firstName + ' ' + lead.lastName).trim())}&email=${encodeURIComponent(lead.email)}`}
+                target="_blank" rel="noopener noreferrer"
+                className="cta-wiggle cta-green"
+                style={{ marginTop: 0, marginBottom: 20 }}>
                 🔓 Upgrade to Enhanced Report — $14.99
               </a>
+              <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {[
+                  'Step-by-step ag exemption application walkthrough',
+                  'Personalized beekeeping shopping list with Amazon links',
+                  'Local bee suppliers & nuc sources near you',
+                  'Seasonal hive management calendar for your region',
+                  'Record-keeping templates for CAD compliance',
+                  'Hive placement guide with property diagram',
+                  'County-specific deadlines & CAD contact info',
+                ].map((item, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="#22883e" style={{ flexShrink: 0, marginTop: 1 }}>
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span style={{ fontSize: 14, color: C.navy, lineHeight: 1.4 }}>{item}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <p style={{ fontSize: 13, color: C.gray, marginBottom: 32, maxWidth: 380, margin: '0 auto 32px' }}>
-              Get step-by-step application instructions, a personalized shopping list, local bee suppliers near you, and more — just $14.99
-            </p>
 
             <div style={{ background: C.white, borderRadius: 20, padding: 32, boxShadow: '0 4px 24px rgba(0,0,0,0.08)', marginBottom: 32, border: '1px solid #D5EAFF' }}>
               <p style={{ fontSize: 14, color: C.gray, fontWeight: 600, marginBottom: 4 }}>Your estimated annual savings</p>
