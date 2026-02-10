@@ -448,20 +448,15 @@ export default function FloridaCalculator() {
       {/* ===== STEP 1: SEARCH ===== */}
       {step === 'search' && (
         <>
-          {/* Hero — matches Texas layout */}
-          <section style={{ background: C.sky, position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 180, background: C.green }} />
-            <svg style={{ position: 'absolute', bottom: 172, left: 0, right: 0, width: '100%' }} height="40" viewBox="0 0 1200 40" preserveAspectRatio="none">
-              <path d="M0,40 C150,5 350,30 500,12 C650,-5 800,25 950,8 C1050,0 1150,18 1200,5 L1200,40 Z" fill={C.green} />
-            </svg>
-            <div style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 5, width: '100%', maxWidth: 600, pointerEvents: 'none' }}>
-              <img src="/hero-beekeeper.png" alt="Beekeeper illustration" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
-            </div>
-            <div style={{ position: 'relative', zIndex: 10, maxWidth: 800, margin: '0 auto', padding: '24px 24px 280px', textAlign: 'center' }}>
-              <h1 className="r-hero-h1" style={{ fontWeight: 900, color: C.navy, lineHeight: 1.05, marginBottom: 16, letterSpacing: '-0.03em', maxWidth: '100%' }}>
-                Save Money on<br />Property Taxes<br /><span style={{ color: C.blue }}>with Bees</span> 🐝
+          {/* Hero with background photo */}
+          <section style={{ position: 'relative', overflow: 'hidden', minHeight: 420 }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/agent-landowner.jpg)', backgroundSize: 'cover', backgroundPosition: 'center 25%' }} />
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(135deg, rgba(13,27,42,0.6) 0%, rgba(26,58,91,0.45) 50%, rgba(13,27,42,0.4) 100%)' }} />
+            <div style={{ position: 'relative', zIndex: 10, maxWidth: 800, margin: '0 auto', padding: '60px 24px 60px', textAlign: 'center' }}>
+              <h1 className="r-hero-h1" style={{ fontWeight: 900, color: '#FFFFFF', lineHeight: 1.05, marginBottom: 16, letterSpacing: '-0.03em', maxWidth: '100%' }}>
+                Save Money on<br />Property Taxes<br /><span style={{ color: C.green }}>with Bees</span>
               </h1>
-              <p style={{ fontSize: 16, color: '#5A7A8A', marginBottom: 32, fontWeight: 500 }}>
+              <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.85)', marginBottom: 32, fontWeight: 500 }}>
                 See how much you could save with a Florida bee exemption
               </p>
 
@@ -526,16 +521,16 @@ export default function FloridaCalculator() {
                 )}
               </div>
 
-              <p style={{ fontSize: 13, color: '#8DA4B5', marginTop: 12, fontWeight: 500 }}>
+              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginTop: 12, fontWeight: 500 }}>
                 Instant estimate — no phone calls, no spam
               </p>
 
               <div className="r-vprops" style={{ marginTop: 16 }}>
                 {['No minimum acreage', 'Free instant estimate', 'All 67 FL counties'].map(text => (
-                  <span key={text} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 600, color: C.navy }}>
+                  <span key={text} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 600, color: '#FFFFFF' }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
-                      <circle cx="12" cy="12" r="12" fill={C.blue} opacity={0.15} />
-                      <path d="M7 12l3 3 7-7" stroke={C.blue} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                      <circle cx="12" cy="12" r="12" fill="#FFFFFF" opacity={0.2} />
+                      <path d="M7 12l3 3 7-7" stroke={C.green} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     {text}
                   </span>
@@ -594,7 +589,10 @@ export default function FloridaCalculator() {
           {/* How It Works */}
           <section id="how-it-works" className="r-section" style={{ background: C.sky, textAlign: 'center' }}>
             <div style={{ maxWidth: 900, margin: '0 auto' }}>
-              <h2 style={{ fontSize: 32, fontWeight: 800, color: C.navy, marginBottom: 8 }}>How Agricultural Classification Works</h2>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 8 }}>
+                <img src="/hero-beekeeper.png" alt="Beekeeper illustration" style={{ width: 220, height: 'auto', marginBottom: 12 }} />
+                <h2 style={{ fontSize: 32, fontWeight: 800, color: C.navy, marginBottom: 8 }}>How Agricultural Classification Works</h2>
+              </div>
               <p style={{ color: C.gray, fontSize: 16, marginBottom: 48, maxWidth: 600, margin: '0 auto 48px' }}>
                 Florida law (Statute 193.461) allows landowners using property for agriculture — including beekeeping — to have it assessed at its agricultural value instead of market value.
               </p>
