@@ -22,18 +22,30 @@ const AVAILABLE_STATES = ['TX', 'FL'];
 
 const BEEKEEPER_BASE = 153132;
 
-const TX_CITIES = [
-  'Athens', 'Canton', 'Tyler', 'Longview', 'Nacogdoches', 'Lufkin', 'Palestine',
-  'Corsicana', 'Waxahachie', 'Terrell', 'Kaufman', 'Mabank', 'Gun Barrel City',
-  'Cedar Creek', 'Kemp', 'Eustace', 'Murchison', 'Wills Point', 'Edgewood',
-  'Grand Saline', 'Lindale', 'Chandler', 'Brownsboro', 'Malakoff', 'Tool',
-  'Ennis', 'Hillsboro', 'Mexia', 'Fairfield', 'Buffalo', 'Crockett',
-  'Jacksonville', 'Rusk', 'Henderson', 'Carthage', 'Marshall', 'Jefferson',
-  'Mineola', 'Quitman', 'Emory', 'Sulphur Springs', 'Greenville', 'Commerce',
-  'Rockwall', 'Forney', 'Royse City', 'Weatherford', 'Granbury', 'Cleburne',
-  'Stephenville', 'Glen Rose', 'Gatesville', 'Lampasas', 'Burnet', 'Marble Falls',
-  'Dripping Springs', 'Wimberley', 'Bastrop', 'Smithville', 'La Grange',
-  'Brenham', 'Navasota', 'Huntsville', 'Conroe', 'Willis', 'Livingston',
+const CITIES = [
+  // Texas
+  { city: 'Athens', state: 'TX' }, { city: 'Canton', state: 'TX' }, { city: 'Tyler', state: 'TX' },
+  { city: 'Longview', state: 'TX' }, { city: 'Nacogdoches', state: 'TX' }, { city: 'Palestine', state: 'TX' },
+  { city: 'Corsicana', state: 'TX' }, { city: 'Waxahachie', state: 'TX' }, { city: 'Terrell', state: 'TX' },
+  { city: 'Kaufman', state: 'TX' }, { city: 'Mabank', state: 'TX' }, { city: 'Wills Point', state: 'TX' },
+  { city: 'Grand Saline', state: 'TX' }, { city: 'Lindale', state: 'TX' }, { city: 'Chandler', state: 'TX' },
+  { city: 'Ennis', state: 'TX' }, { city: 'Hillsboro', state: 'TX' }, { city: 'Fairfield', state: 'TX' },
+  { city: 'Jacksonville', state: 'TX' }, { city: 'Henderson', state: 'TX' }, { city: 'Marshall', state: 'TX' },
+  { city: 'Mineola', state: 'TX' }, { city: 'Sulphur Springs', state: 'TX' }, { city: 'Greenville', state: 'TX' },
+  { city: 'Rockwall', state: 'TX' }, { city: 'Weatherford', state: 'TX' }, { city: 'Granbury', state: 'TX' },
+  { city: 'Cleburne', state: 'TX' }, { city: 'Stephenville', state: 'TX' }, { city: 'Burnet', state: 'TX' },
+  { city: 'Marble Falls', state: 'TX' }, { city: 'Dripping Springs', state: 'TX' }, { city: 'Bastrop', state: 'TX' },
+  { city: 'Brenham', state: 'TX' }, { city: 'Huntsville', state: 'TX' }, { city: 'Conroe', state: 'TX' },
+  { city: 'Livingston', state: 'TX' }, { city: 'Wimberley', state: 'TX' }, { city: 'La Grange', state: 'TX' },
+  // Florida
+  { city: 'Ocala', state: 'FL' }, { city: 'Gainesville', state: 'FL' }, { city: 'Palatka', state: 'FL' },
+  { city: 'Brooksville', state: 'FL' }, { city: 'Deland', state: 'FL' }, { city: 'Clermont', state: 'FL' },
+  { city: 'Eustis', state: 'FL' }, { city: 'Inverness', state: 'FL' }, { city: 'Chiefland', state: 'FL' },
+  { city: 'Live Oak', state: 'FL' }, { city: 'Lake City', state: 'FL' }, { city: 'Perry', state: 'FL' },
+  { city: 'Crestview', state: 'FL' }, { city: 'Defuniak Springs', state: 'FL' }, { city: 'Marianna', state: 'FL' },
+  { city: 'Arcadia', state: 'FL' }, { city: 'Sebring', state: 'FL' }, { city: 'Okeechobee', state: 'FL' },
+  { city: 'Labelle', state: 'FL' }, { city: 'Wauchula', state: 'FL' }, { city: 'Williston', state: 'FL' },
+  { city: 'Newberry', state: 'FL' }, { city: 'Trenton', state: 'FL' }, { city: 'Monticello', state: 'FL' },
 ];
 
 function randomSavings() {
@@ -41,8 +53,9 @@ function randomSavings() {
   return (Math.floor(Math.random() * 64) + 21) * 100;
 }
 
-function randomCity() {
-  return TX_CITIES[Math.floor(Math.random() * TX_CITIES.length)];
+function randomLocation() {
+  const loc = CITIES[Math.floor(Math.random() * CITIES.length)];
+  return { city: loc.city, state: loc.state };
 }
 
 function useBeekeeperActivity() {
@@ -50,7 +63,7 @@ function useBeekeeperActivity() {
   const [toastVisible, setToastVisible] = useState(false);
   const [toastExiting, setToastExiting] = useState(false);
   const [countBump, setCountBump] = useState(false);
-  const [toastData, setToastData] = useState({ savings: 3500, city: 'Athens' });
+  const [toastData, setToastData] = useState({ savings: 3500, city: 'Athens', state: 'TX' });
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
@@ -68,8 +81,9 @@ function useBeekeeperActivity() {
         setCountBump(true);
         setTimeout(() => setCountBump(false), 600);
 
-        // Generate random savings + city
-        setToastData({ savings: randomSavings(), city: randomCity() });
+        // Generate random savings + location
+        const loc = randomLocation();
+        setToastData({ savings: randomSavings(), city: loc.city, state: loc.state });
 
         // Show toast
         setToastExiting(false);
@@ -197,7 +211,7 @@ export default function NationalLanding() {
             <img src="/bee-wink.png" alt="" style={{ width: 28, height: 28, flexShrink: 0 }} />
             <div>
               <p style={{ fontWeight: 800, color: C.navy, fontSize: 14, margin: 0 }}>${toastData.savings.toLocaleString()} Saved</p>
-              <p style={{ fontWeight: 600, color: C.gray, fontSize: 12, margin: 0 }}>in {toastData.city}, TX</p>
+              <p style={{ fontWeight: 600, color: C.gray, fontSize: 12, margin: 0 }}>in {toastData.city}, {toastData.state}</p>
             </div>
           </div>
         )}
