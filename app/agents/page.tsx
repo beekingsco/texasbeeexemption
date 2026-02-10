@@ -106,7 +106,7 @@ export default function AgentLandingPage() {
           <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
             <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 36 }} />
             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
-              <span style={{ fontWeight: 900, fontSize: 20, color: C.navy, letterSpacing: '-0.02em' }}>BEE EXEMPTION</span>
+              <span style={{ fontWeight: 900, fontSize: 20, color: C.navy, letterSpacing: '-0.02em' }}>BEE EXEMPTION REPORTS</span>
               <span style={{ fontSize: 11, fontWeight: 700, color: C.green, letterSpacing: '0.08em', textTransform: 'uppercase' }}>For Real Estate Agents</span>
             </div>
           </a>
