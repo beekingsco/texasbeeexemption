@@ -79,6 +79,9 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [key, setKey] = useState('');
   const [authed, setAuthed] = useState(false);
+  const [magicEmail, setMagicEmail] = useState('');
+  const [magicSent, setMagicSent] = useState(false);
+  const [magicError, setMagicError] = useState('');
   const [activeTab, setActiveTab] = useState<'leads' | 'agents' | 'revenue' | 'activity'>('leads');
   const [agents, setAgents] = useState<AgentInfo[]>([]);
   const [agentLeads, setAgentLeads] = useState<Record<string, AgentLead[]>>({});
@@ -164,21 +167,62 @@ export default function AdminPage() {
   const activeAgents = agents.filter(a => a.subscription?.status === 'active').length;
   const agentRevenue = activeAgents * 29700; // $297/yr per agent
 
+  const handleMagicLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMagicError('');
+    try {
+      const resp = await fetch('/api/auth/admin-magic-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: magicEmail }),
+      });
+      const data = await resp.json();
+      if (resp.ok) {
+        setMagicSent(true);
+      } else {
+        setMagicError(data.error || 'Failed to send login link');
+      }
+    } catch {
+      setMagicError('Network error. Please try again.');
+    }
+  };
+
   if (!authed) {
+    const errorParam = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('error') : null;
     return (
       <div style={{ minHeight: '100vh', background: C.sky, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'system-ui' }}>
-        <form onSubmit={handleAuth} style={{ background: C.white, padding: 40, borderRadius: 20, boxShadow: '0 8px 32px rgba(0,0,0,0.1)', maxWidth: 400, width: '100%', margin: '0 16px', boxSizing: 'border-box' }}>
+        <div style={{ background: C.white, padding: 40, borderRadius: 20, boxShadow: '0 8px 32px rgba(0,0,0,0.1)', maxWidth: 400, width: '100%', margin: '0 16px', boxSizing: 'border-box' }}>
           <h1 style={{ fontSize: 24, fontWeight: 800, color: C.navy, marginBottom: 8 }}>🔐 Admin Dashboard</h1>
-          <p style={{ color: C.gray, fontSize: 14, marginBottom: 24 }}>Enter the admin key to view the dashboard.</p>
-          <input
-            type="password" value={key} onChange={(e) => setKey(e.target.value)}
-            placeholder="Admin key"
-            style={{ width: '100%', padding: '12px 16px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 16, marginBottom: 16, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
-          />
-          <button type="submit" style={{ width: '100%', padding: '14px', background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
-            View Dashboard
-          </button>
-        </form>
+          {errorParam === 'invalid-token' && (
+            <p style={{ color: C.red, fontSize: 14, marginBottom: 16, background: '#FEF2F2', padding: '10px 14px', borderRadius: 8 }}>Login link expired or invalid. Please request a new one.</p>
+          )}
+          {magicSent ? (
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>📧</div>
+              <p style={{ color: C.navy, fontSize: 16, fontWeight: 600, marginBottom: 8 }}>Check your email</p>
+              <p style={{ color: C.gray, fontSize: 14, lineHeight: 1.6 }}>
+                We sent a login link to <strong>{magicEmail}</strong>. Click it to access the dashboard. The link expires in 15 minutes.
+              </p>
+              <button onClick={() => { setMagicSent(false); setMagicEmail(''); }} style={{ marginTop: 20, padding: '10px 20px', background: 'transparent', color: C.blue, fontWeight: 600, fontSize: 14, border: `1px solid ${C.blue}`, borderRadius: 8, cursor: 'pointer', fontFamily: 'inherit' }}>
+                Use a different email
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleMagicLink}>
+              <p style={{ color: C.gray, fontSize: 14, marginBottom: 24 }}>Enter your admin email to receive a login link.</p>
+              {magicError && <p style={{ color: C.red, fontSize: 14, marginBottom: 12 }}>{magicError}</p>}
+              <input
+                type="email" value={magicEmail} onChange={(e) => setMagicEmail(e.target.value)}
+                placeholder="admin@beekings.com"
+                required
+                style={{ width: '100%', padding: '12px 16px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 16, marginBottom: 16, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+              />
+              <button type="submit" style={{ width: '100%', padding: '14px', background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                Send Login Link
+              </button>
+            </form>
+          )}
+        </div>
       </div>
     );
   }
