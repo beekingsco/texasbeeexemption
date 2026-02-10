@@ -218,7 +218,7 @@ export default function NationalLanding() {
       </div>
 
       {/* HERO — full background photo */}
-      <section className="hero-section" style={{ position: 'relative', padding: '80px 24px 80px', overflow: 'hidden', minHeight: 420 }}>
+      <section className="hero-section" style={{ position: 'relative', padding: '140px 24px 80px', overflow: 'hidden', minHeight: 480 }}>
         {/* Full-screen background photo */}
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/beekeeper-frame.jpg)', backgroundSize: 'cover', backgroundPosition: 'center 30%' }} />
         {/* Dark overlay for text readability */}
