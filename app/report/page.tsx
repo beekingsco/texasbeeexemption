@@ -732,11 +732,9 @@ function ReportContent() {
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 text-base font-bold px-8 py-3 rounded-full transition-all hover:brightness-95 active:scale-95"
-                        style={{ background: '#FFD814', color: '#0F1111', border: 'none', boxShadow: '0 2px 5px rgba(0,0,0,.1)' }}
+                        className="inline-block transition-all hover:brightness-95 active:scale-95"
                       >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><text x="4" y="16" fontFamily="Arial,Helvetica,sans-serif" fontWeight="900" fontSize="16" fill="#0F1111">a</text><path d="M5 17.5q4 3 10 0" stroke="#FF9900" strokeWidth="1.8" strokeLinecap="round" fill="none"/><path d="M15.5 16l1.5 2.5" stroke="#FF9900" strokeWidth="1.8" strokeLinecap="round" fill="none"/></svg>
-                        Buy Now
+                        <img src="/amazon-buy-now.jpg" alt="Buy Now on Amazon" style={{ height: 44, borderRadius: 8 }} />
                       </a>
                     </div>
                   </div>
@@ -754,11 +752,10 @@ function ReportContent() {
                     href="https://www.amazon.com/s?k=beekeeping+starter+kit&tag=BeeKings-20"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 px-12 py-4 rounded-full text-lg font-bold transition-all hover:brightness-95 shadow-md"
-                    style={{ background: '#FFD814', color: '#0F1111', border: 'none' }}
+                    className="inline-block transition-all hover:brightness-95 shadow-md"
+                    style={{ borderRadius: 8 }}
                   >
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><text x="4" y="16" fontFamily="Arial,Helvetica,sans-serif" fontWeight="900" fontSize="16" fill="#0F1111">a</text><path d="M5 17.5q4 3 10 0" stroke="#FF9900" strokeWidth="1.8" strokeLinecap="round" fill="none"/><path d="M15.5 16l1.5 2.5" stroke="#FF9900" strokeWidth="1.8" strokeLinecap="round" fill="none"/></svg>
-                    Buy Now on Amazon
+                    <img src="/amazon-buy-now.jpg" alt="Buy Now on Amazon" style={{ height: 52, borderRadius: 8 }} />
                   </a>
                   <p className="text-xs text-gray-400 mt-2">As an Amazon Associate, BeeKings earns from qualifying purchases</p>
                 </div>
