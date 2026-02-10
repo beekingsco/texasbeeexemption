@@ -115,6 +115,7 @@ export default function NationalLanding() {
           .hero-text h1 { font-size: 26px !important; margin-bottom: 8px !important; }
           .hero-text p { font-size: 14px !important; margin-bottom: 14px !important; display: none !important; }
           .hero-img { max-width: 160px !important; margin-bottom: -8px !important; align-self: center !important; }
+          .r-agent-img { display: none !important; }
           .counter-bar { padding: 8px 16px !important; }
           .counter-bar p { font-size: 13px !important; }
           .header-bar { height: 50px !important; }
@@ -356,26 +357,41 @@ export default function NationalLanding() {
       </section>
 
       {/* AGENT CTA BANNER */}
-      <section style={{ padding: '48px 24px', background: `linear-gradient(135deg, ${C.green} 0%, ${C.greenDark} 100%)`, position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.06, backgroundImage: 'radial-gradient(circle, #0D1B2A 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
-        <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
-          <h2 style={{ fontSize: 'clamp(22px, 4vw, 30px)', fontWeight: 900, color: C.navy, marginBottom: 10, lineHeight: 1.2 }}>
-            🏠 Real Estate Agents Love Us
-          </h2>
-          <p style={{ fontSize: 16, color: C.navy, opacity: 0.8, lineHeight: 1.6, marginBottom: 24, maxWidth: 560, margin: '0 auto 24px' }}>
-            Generate qualified leads, close more deals, and help your clients save thousands on property taxes — all with your brand front and center.
-          </p>
-          <a
-            href="/agents"
-            style={{
-              display: 'inline-block', padding: '14px 28px', borderRadius: 12,
-              background: C.navy, color: C.white, fontWeight: 700, fontSize: 16,
-              textDecoration: 'none', fontFamily: 'inherit',
-              boxShadow: '0 4px 16px rgba(13,27,42,0.3)',
-            }}
-          >
-            See Why Agents Partner With Us →
-          </a>
+      <section style={{ padding: 0, background: C.navy, position: 'relative', overflow: 'hidden' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'stretch' }}>
+          {/* Photo side */}
+          <div style={{ flex: '0 0 320px', position: 'relative', overflow: 'hidden' }} className="r-agent-img">
+            <img
+              src="/agent-landowner.jpg"
+              alt="Agent walking property with client"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', minHeight: 240 }}
+            />
+            <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 80, background: `linear-gradient(to right, transparent, ${C.navy})` }} />
+          </div>
+          {/* Text side */}
+          <div style={{ flex: 1, padding: '48px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(212,168,67,0.15)', borderRadius: 16, padding: '5px 14px', marginBottom: 14 }}>
+              <span style={{ fontSize: 14 }}>🏠</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: C.green, letterSpacing: '0.08em' }}>FOR REAL ESTATE AGENTS</span>
+            </div>
+            <h2 style={{ fontSize: 'clamp(22px, 4vw, 30px)', fontWeight: 900, color: C.white, marginBottom: 10, lineHeight: 1.2 }}>
+              Real Estate Agents Love Us
+            </h2>
+            <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.65)', lineHeight: 1.6, marginBottom: 24, maxWidth: 480 }}>
+              Generate qualified leads, close more deals, and help your clients save thousands on property taxes — all with your brand front and center.
+            </p>
+            <a
+              href="/agents"
+              style={{
+                display: 'inline-block', padding: '14px 28px', borderRadius: 12,
+                background: C.green, color: C.navy, fontWeight: 700, fontSize: 16,
+                textDecoration: 'none', fontFamily: 'inherit',
+                boxShadow: '0 4px 16px rgba(212,168,67,0.3)',
+              }}
+            >
+              See Why Agents Partner With Us →
+            </a>
+          </div>
         </div>
       </section>
 

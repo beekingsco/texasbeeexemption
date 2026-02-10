@@ -121,8 +121,9 @@ export default function AgentLandingPage() {
 
       {/* ===================== HERO ===================== */}
       <section style={{ background: `linear-gradient(135deg, ${C.navy} 0%, #1A3A5B 100%)`, padding: '80px 24px 90px', position: 'relative', overflow: 'hidden' }}>
-        {/* Subtle background pattern */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.05, backgroundImage: 'radial-gradient(circle at 20% 50%, #D4A843 1px, transparent 1px), radial-gradient(circle at 80% 30%, #D4A843 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+        {/* Background photo overlay */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/agent-landowner.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.12 }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: `linear-gradient(135deg, ${C.navy}ee 0%, #1A3A5Bdd 100%)` }} />
         
         <div className="hero-animate hero-flex" style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 48, position: 'relative', zIndex: 1 }}>
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -212,13 +213,22 @@ export default function AgentLandingPage() {
 
       {/* Solution bridge */}
       <FadeSection>
-        <section style={{ padding: '48px 24px', background: C.sky }}>
-          <div style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center' }}>
-            <p style={{ fontSize: 18, fontWeight: 700, color: C.blue, lineHeight: 1.7 }}>
-              <span style={{ fontSize: 24, marginRight: 8 }}>💡</span>
-              What if you could show every prospect exactly how much they&apos;d save on taxes — 
-              with <em>your name</em> on the report?
-            </p>
+        <section style={{ padding: '0', background: C.sky, overflow: 'hidden' }}>
+          <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 0 }} className="hero-flex">
+            <div style={{ flex: '0 0 auto', maxWidth: 380, overflow: 'hidden' }}>
+              <img
+                src="/beekeeper-frame.jpg"
+                alt="Beekeeper holding honeycomb frame"
+                style={{ width: '100%', height: 280, objectFit: 'cover', display: 'block' }}
+              />
+            </div>
+            <div style={{ flex: 1, padding: '48px 40px', textAlign: 'center' }}>
+              <p style={{ fontSize: 18, fontWeight: 700, color: C.blue, lineHeight: 1.7 }}>
+                <span style={{ fontSize: 24, marginRight: 8 }}>💡</span>
+                What if you could show every prospect exactly how much they&apos;d save on taxes — 
+                with <em>your name</em> on the report?
+              </p>
+            </div>
           </div>
         </section>
       </FadeSection>
@@ -338,11 +348,20 @@ export default function AgentLandingPage() {
       <FadeSection>
         <section style={{ padding: '80px 24px', background: C.sky }}>
           <div style={{ maxWidth: 900, margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <div style={{ textAlign: 'center', marginBottom: 32 }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: C.green, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8 }}>Real-World Scenarios</p>
               <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: 800, color: C.navy, lineHeight: 1.2 }}>
                 How Agents Are Using BeeExemption
               </h2>
+            </div>
+
+            {/* Photo banner */}
+            <div style={{ borderRadius: 20, overflow: 'hidden', marginBottom: 48 }}>
+              <img
+                src="/beekeepers-inspecting.jpg"
+                alt="Beekeepers inspecting hive frames together"
+                style={{ width: '100%', height: 260, objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }}
+              />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
