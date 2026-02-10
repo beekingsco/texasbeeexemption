@@ -65,13 +65,16 @@ const colors = {
 };
 
 /* ──────────────────── Section Header Component ────────────────────── */
-function SectionHeader({ emoji, title }: { emoji: string; title: string }) {
+function SectionHeader({ emoji, title, subtitle }: { emoji: string; title: string; subtitle?: string }) {
   return (
     <div className="mb-10">
       <h2 style={{ fontSize: 28, fontWeight: 900, color: colors.darkGreen, letterSpacing: '0.03em', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif' }}>
         <span style={{ marginRight: 12 }}>{emoji}</span>
         {title}
       </h2>
+      {subtitle && (
+        <p style={{ fontSize: 15, color: '#666', marginTop: 8, lineHeight: 1.6 }}>{subtitle}</p>
+      )}
       <div style={{ width: 80, height: 4, background: colors.gold, borderRadius: 2, marginTop: 10 }} />
     </div>
   );
@@ -630,7 +633,7 @@ function ReportContent() {
           SECTION 3 — HOW TO GET YOUR EXEMPTION
           ════════════════════════════════════════════════════════════ */}
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
-        <SectionHeader emoji="📋" title="HOW TO GET YOUR EXEMPTION" />
+        <SectionHeader emoji="📋" title="HOW TO GET YOUR EXEMPTION" subtitle="Step-by-step instructions for applying to your county appraisal district." />
       </div>
       <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-2" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
@@ -735,7 +738,7 @@ function ReportContent() {
           SECTION 4 — WHAT TO BUY
           ════════════════════════════════════════════════════════════ */}
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
-        <SectionHeader emoji="🛒" title="WHAT TO BUY" />
+        <SectionHeader emoji="🛒" title="WHAT TO BUY" subtitle="Everything you need to get started — hives, equipment, bees, and protective gear." />
       </div>
       <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-3" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
@@ -883,7 +886,7 @@ function ReportContent() {
           SECTION 5 — WHAT YOU NEED TO KNOW
           ════════════════════════════════════════════════════════════ */}
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
-        <SectionHeader emoji="🐝" title="WHAT YOU NEED TO KNOW" />
+        <SectionHeader emoji="🐝" title="WHAT YOU NEED TO KNOW" subtitle="Beekeeping basics, seasonal care, and what your county requires." />
       </div>
       <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-4" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
@@ -1000,7 +1003,7 @@ function ReportContent() {
           SECTION 6 — LOCAL RESOURCES & SUPPLIERS
           ════════════════════════════════════════════════════════════ */}
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
-        <SectionHeader emoji="🏪" title="LOCAL RESOURCES & SUPPLIERS" />
+        <SectionHeader emoji="🏪" title="LOCAL RESOURCES &amp; SUPPLIERS" subtitle="Nearby bee suppliers, associations, and mentors in your area." />
       </div>
       <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-6" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
@@ -1140,7 +1143,7 @@ function ReportContent() {
           SECTION 5 — RECORD KEEPING & EXPENSES (kept from original)
           ════════════════════════════════════════════════════════════ */}
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
-        <SectionHeader emoji="📋" title="KEEPING YOUR RECORDS STRAIGHT" />
+        <SectionHeader emoji="📋" title="KEEPING YOUR RECORDS STRAIGHT" subtitle="What to document and how to stay compliant year after year." />
       </div>
       <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-5" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
