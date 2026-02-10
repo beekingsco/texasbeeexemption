@@ -555,10 +555,10 @@ export default function Home() {
               <path d="M0,40 C150,5 350,30 500,12 C650,-5 800,25 950,8 C1050,0 1150,18 1200,5 L1200,40 Z" fill={C.green} />
             </svg>
             {/* Hero illustration */}
-            <div style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 5, width: '100%', maxWidth: 600, pointerEvents: 'none' }}>
+            <div style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 2, width: '100%', maxWidth: 400, pointerEvents: 'none', opacity: 0.9 }}>
               <img src="/hero-beekeeper.png" alt="Beekeeper illustration" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
             </div>
-            <div style={{ position: 'relative', zIndex: 10, maxWidth: 800, margin: '0 auto', padding: '24px 24px 280px', textAlign: 'center' }}>
+            <div style={{ position: 'relative', zIndex: 10, maxWidth: 800, margin: '0 auto', padding: '24px 24px 220px', textAlign: 'center' }}>
               <h1 className="r-hero-h1" style={{ fontWeight: 900, color: C.navy, lineHeight: 1.05, marginBottom: 16, letterSpacing: '-0.03em', maxWidth: '100%' }}>
                 Save Money on<br />Property Taxes<br /><span style={{ color: C.blue }}>with Bees</span> 🐝
               </h1>
