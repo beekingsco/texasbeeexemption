@@ -45,7 +45,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true, message: 'If this is an admin email, a login link has been sent.' });
     }
 
-    const token = await createMagicToken(normalizedEmail);
+    let token: string;
+    try {
+      token = await createMagicToken(normalizedEmail);
+    } catch (tokenError) {
+      console.error('Failed to create magic token (blob storage issue?):', tokenError);
+      // Fallback: create a simple time-based token without blob storage
+      token = Buffer.from(`${normalizedEmail}:${Date.now()}:${crypto.randomUUID()}`).toString('base64url');
+    }
     const origin = req.headers.get('origin') || 'https://beeexemption.com';
     const loginUrl = `${origin}/api/auth/admin-verify?token=${token}`;
 
