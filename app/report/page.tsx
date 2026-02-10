@@ -653,6 +653,7 @@ function ReportContent() {
                       <th style={{ textAlign: 'left', padding: '14px 20px', color: 'white', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Item</th>
                       <th style={{ textAlign: 'center', padding: '14px 16px', color: 'white', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', width: 60 }}>Qty</th>
                       <th style={{ textAlign: 'right', padding: '14px 20px', color: 'white', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', width: 100 }}>Est. Cost</th>
+                      <th className="no-print" style={{ textAlign: 'center', padding: '14px 16px', color: 'white', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', width: 110 }}></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -667,6 +668,11 @@ function ReportContent() {
                         </td>
                         <td style={{ textAlign: 'center', padding: '12px 16px', fontWeight: 600, color: '#555', fontSize: 14 }}>{item.qty}</td>
                         <td style={{ textAlign: 'right', padding: '12px 20px', fontWeight: 700, color: '#222', fontSize: 15 }}>${item.total.toFixed(2)}</td>
+                        <td className="no-print" style={{ textAlign: 'center', padding: '12px 12px' }}>
+                          <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-block transition-all hover:brightness-95 active:scale-95">
+                            <img src="/amazon-buy-now.jpg" alt="Buy Now" style={{ height: 32, borderRadius: 5 }} />
+                          </a>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -674,30 +680,11 @@ function ReportContent() {
                     <tr style={{ background: colors.cream, borderTop: `2px solid ${colors.gold}` }}>
                       <td style={{ padding: '16px 20px', fontWeight: 900, color: '#222', fontSize: 16 }} colSpan={2}>TOTAL</td>
                       <td style={{ textAlign: 'right', padding: '16px 20px', fontWeight: 900, color: colors.darkGreen, fontSize: 18 }}>{fmtMoney(Math.round(grandTotal))}</td>
+                      <td className="no-print"></td>
                     </tr>
                   </tfoot>
                 </table>
-              </div>
-
-              {/* Amazon Buy Now buttons for each product */}
-              <div className="no-print" style={{ marginBottom: 32 }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                  {products.map((item, i) => (
-                    <div key={`buy-${item.asin || item.name}-${i}`} className="flex items-center justify-between" style={{ background: 'white', borderRadius: 10, padding: '12px 16px', boxShadow: colors.cardShadow }}>
-                      <span style={{ fontSize: 13, fontWeight: 600, color: '#555', flex: 1, marginRight: 12 }}>{item.name}</span>
-                      <a
-                        href={item.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block transition-all hover:brightness-95 active:scale-95"
-                        style={{ flexShrink: 0 }}
-                      >
-                        <img src="/amazon-buy-now.jpg" alt="Buy Now on Amazon" style={{ height: 38, borderRadius: 6 }} />
-                      </a>
-                    </div>
-                  ))}
-                </div>
-                <p style={{ fontSize: 11, color: '#999', marginTop: 12, textAlign: 'center' }}>As an Amazon Associate, BeeKings earns from qualifying purchases</p>
+                <p className="no-print" style={{ fontSize: 11, color: '#999', marginTop: 12, textAlign: 'center' }}>As an Amazon Associate, BeeKings earns from qualifying purchases</p>
               </div>
             </>
           );
