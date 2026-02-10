@@ -282,6 +282,16 @@ export default function NationalLanding() {
         </div>
       </section>
 
+      {/* BEE PHOTO DIVIDER */}
+      <div style={{ width: '100%', height: 200, overflow: 'hidden', position: 'relative' }}>
+        <img
+          src="/bees-closeup.jpg"
+          alt="Honeybees working on hive frames"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+        />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(to bottom, rgba(240,244,250,0.3) 0%, transparent 30%, transparent 70%, rgba(255,255,255,0.3) 100%)' }} />
+      </div>
+
       {/* AVAILABLE STATES */}
       <section style={{ padding: '64px 24px', background: C.white }}>
         <div style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center' }}>

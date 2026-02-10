@@ -309,6 +309,16 @@ export default function AgentLandingPage() {
         </section>
       </FadeSection>
 
+      {/* BEE PHOTO DIVIDER */}
+      <div style={{ width: '100%', height: 180, overflow: 'hidden', position: 'relative' }}>
+        <img
+          src="/bees-closeup.jpg"
+          alt="Honeybees working on hive frames"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+        />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: `linear-gradient(to bottom, ${C.navy}44 0%, transparent 40%, transparent 60%, ${C.white}44 100%)` }} />
+      </div>
+
       {/* ===================== WHAT YOU GET ===================== */}
       <FadeSection>
         <section style={{ padding: '80px 24px', background: C.white }}>
