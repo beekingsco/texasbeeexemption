@@ -530,7 +530,6 @@ export default function Home() {
               <a href="https://beekings.com" style={{ fontSize: 14, fontWeight: 600, color: C.navy, textDecoration: 'none' }}>BeeKings.com</a>
               <a href="mailto:info@beekings.com" style={{ background: C.blue, color: C.white, fontSize: 14, fontWeight: 700, padding: '10px 20px', borderRadius: 8, textDecoration: 'none' }}>Contact Us</a>
             </nav>
-            <img src="/texas-bees-badge.jpg" alt="Texas Bees Save You Money" style={{ height: 48, borderRadius: 8 }} />
           </div>
         </div>
       </header>
