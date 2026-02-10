@@ -302,6 +302,9 @@ export default function NationalLanding() {
       {/* HOW IT WORKS */}
       <section id="how-it-works" style={{ padding: '64px 24px', background: C.sky }}>
         <div style={{ maxWidth: 700, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: 8 }}>
+            <img src="/hero-beekeeper.png" alt="Friendly beekeeper" style={{ height: 120, display: 'inline-block', objectFit: 'contain' }} />
+          </div>
           <h2 style={{ fontSize: 32, fontWeight: 800, color: C.navy, textAlign: 'center', marginBottom: 12 }}>
             How it works
           </h2>
@@ -481,9 +484,10 @@ export default function NationalLanding() {
       </section>
 
       {/* GENTLE CTA */}
-      <section style={{ padding: '64px 24px', background: C.sky }}>
-        <div style={{ maxWidth: 800, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 40 }} className="hero-layout">
-          <div style={{ flex: 1, textAlign: 'center' }}>
+      <section style={{ padding: '64px 24px', background: C.sky, textAlign: 'center' }}>
+        <div style={{ maxWidth: 500, margin: '0 auto' }}>
+          <div style={{ fontSize: 48, marginBottom: 16 }}>🐝</div>
+          <div>
             <h2 style={{ fontSize: 28, fontWeight: 800, color: C.navy, marginBottom: 12 }}>
               See what you could save
             </h2>
@@ -504,14 +508,6 @@ export default function NationalLanding() {
                 Florida Calculator
               </button>
             </div>
-          </div>
-          {/* Cartoon beekeeper */}
-          <div className="hero-img" style={{ flex: '0 0 auto', maxWidth: 200 }}>
-            <img
-              src="/hero-beekeeper.png"
-              alt="Friendly beekeeper illustration"
-              style={{ width: '100%', display: 'block', objectFit: 'contain' }}
-            />
           </div>
         </div>
       </section>
