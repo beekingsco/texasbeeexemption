@@ -483,6 +483,8 @@ export default function Home() {
         @keyframes wiggle { 0%, 100% { transform: rotate(0deg); } 15% { transform: rotate(-2deg); } 30% { transform: rotate(2deg); } 45% { transform: rotate(-1.5deg); } 60% { transform: rotate(1deg); } 75% { transform: rotate(-0.5deg); } }
         .cta-wiggle { animation: wiggle 2.5s ease-in-out infinite; animation-delay: 3s; }
         .cta-wiggle:hover { animation: none; transform: scale(1.02); transition: transform 0.15s ease; }
+        .cta-green { display: block; width: 100%; text-align: center; margin-top: 20px; background: linear-gradient(135deg, #22883e, #2da44e); color: #fff; font-weight: 700; font-size: 17px; padding: 18px 24px; border-radius: 14px; border: none; cursor: pointer; font-family: inherit; text-decoration: none; box-shadow: 0 4px 16px rgba(34,136,62,0.35); box-sizing: border-box; }
+        .cta-green span { display: block; font-size: 12px; font-weight: 400; opacity: 0.85; margin-top: 4px; }
         .fade-in { animation: fadeIn 0.4s ease-out; }
         .spinner { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; display: inline-block; }
         .skeleton { background: linear-gradient(90deg, #e2e8f0 25%, #edf2f7 50%, #e2e8f0 75%); background-size: 200% 100%; animation: pulse 1.5s ease-in-out infinite; border-radius: 8px; }
@@ -866,6 +868,11 @@ export default function Home() {
                   {fmtMoney(results.annualSavings)}
                 </div>
                 <p style={{ fontSize: 15, color: C.gray, marginTop: 8 }}>per year on property taxes</p>
+                <button onClick={() => { setStep('signup'); track('cta_savings_top', { county: selectedCounty.name, savings: results?.annualSavings }); trackContact('engage', { event: 'started_signup' }); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="cta-wiggle cta-green">
+                  📋 Get Your Free {selectedCounty.name} County Guide
+                  <span>Step-by-step filing instructions, deadlines & requirements</span>
+                </button>
               </div>
             )}
 
@@ -974,13 +981,12 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Enhanced Report CTA */}
-                  <a href={`/report?county=${encodeURIComponent(selectedCounty.name)}&acres=${acres || parcelData?.legalArea || 10}&propertyValue=${appraisedValue || parcelData?.marketValue || 300000}&taxRate=${selectedCounty.avgTaxRate}&name=${encodeURIComponent((lead?.firstName || '') + ' ' + (lead?.lastName || '')).trim()}&email=${encodeURIComponent(lead?.email || '')}`}
-                    className="cta-wiggle"
-                    style={{ display: 'block', textAlign: 'center', marginTop: 20, background: 'linear-gradient(135deg, #1a3a6a, #1e4f8f)', color: C.white, fontWeight: 700, fontSize: 15, padding: '16px 24px', borderRadius: 14, textDecoration: 'none', boxShadow: '0 4px 16px rgba(26,58,107,0.3)' }}>
-                    🔓 Get Your Enhanced Report — $14.99
-                    <span style={{ display: 'block', fontSize: 12, fontWeight: 400, opacity: 0.8, marginTop: 4 }}>Shopping list, local suppliers, step-by-step application guide & more</span>
-                  </a>
+                  {/* Free Guide CTA */}
+                  <button onClick={() => { setStep('signup'); track('cta_tax_comparison', { county: selectedCounty.name, savings: results?.annualSavings }); trackContact('engage', { event: 'started_signup' }); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    className="cta-wiggle cta-green">
+                    📋 See How to Claim Your {fmtMoney(results.annualSavings)}/yr Savings
+                    <span>Free guide with your county&apos;s exact requirements & deadlines</span>
+                  </button>
                 </div>
 
                 {/* Investment & ROI */}
@@ -1029,13 +1035,12 @@ export default function Home() {
                     </div>
                   )}
 
-                  {/* Enhanced Report CTA #2 */}
-                  <a href={`/report?county=${encodeURIComponent(selectedCounty.name)}&acres=${acres || parcelData?.legalArea || 10}&propertyValue=${appraisedValue || parcelData?.marketValue || 300000}&taxRate=${selectedCounty.avgTaxRate}&name=${encodeURIComponent((lead?.firstName || '') + ' ' + (lead?.lastName || '')).trim()}&email=${encodeURIComponent(lead?.email || '')}`}
-                    className="cta-wiggle"
-                    style={{ display: 'block', textAlign: 'center', marginTop: 20, background: 'linear-gradient(135deg, #1a3a6a, #1e4f8f)', color: C.white, fontWeight: 700, fontSize: 15, padding: '16px 24px', borderRadius: 14, textDecoration: 'none', boxShadow: '0 4px 16px rgba(26,58,107,0.3)' }}>
-                    📊 Want the Full Breakdown? Upgrade for $14.99
-                    <span style={{ display: 'block', fontSize: 12, fontWeight: 400, opacity: 0.8, marginTop: 4 }}>Personalized shopping list • Local bee suppliers • Application checklist • Record keeping tools</span>
-                  </a>
+                  {/* Free Guide CTA */}
+                  <button onClick={() => { setStep('signup'); track('cta_investment', { county: selectedCounty.name, savings: results?.annualSavings }); trackContact('engage', { event: 'started_signup' }); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    className="cta-wiggle cta-green">
+                    🐝 Ready to Start Saving? Get Your Free Guide
+                    <span>Everything you need to apply for your ag exemption in {selectedCounty.name} County</span>
+                  </button>
                 </div>
 
                 {/* Map View - moved above address */}
@@ -1088,13 +1093,11 @@ export default function Home() {
                 </div>
 
                 {/* CTA */}
-                <button onClick={() => { setStep('signup'); track('signup_started', { county: selectedCounty.name, savings: results?.annualSavings }); trackContact('engage', { event: 'started_signup' }); if (resultsTimeRef.current) { trackContact('engage', { event: 'time_on_results', timeMs: Date.now() - resultsTimeRef.current }); } window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  style={{ width: '100%', background: C.green, color: C.navy, fontWeight: 700, fontSize: 18, padding: '18px 32px', borderRadius: 16, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.4)' }}>
-                  Get Your Free {selectedCounty.name} County Guide →
+                <button onClick={() => { setStep('signup'); track('cta_bottom', { county: selectedCounty.name, savings: results?.annualSavings }); trackContact('engage', { event: 'started_signup' }); if (resultsTimeRef.current) { trackContact('engage', { event: 'time_on_results', timeMs: Date.now() - resultsTimeRef.current }); } window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="cta-wiggle cta-green" style={{ marginTop: 0 }}>
+                  📋 Get Your Free {selectedCounty.name} County Guide →
+                  <span>Free PDF with step-by-step filing instructions & deadlines</span>
                 </button>
-                <p style={{ textAlign: 'center', fontSize: 13, color: C.gray, marginTop: 12 }}>
-                  Free PDF with step-by-step filing instructions for {selectedCounty.name} County
-                </p>
               </>
             )}
           </div>
