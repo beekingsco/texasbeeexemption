@@ -671,7 +671,10 @@ export default function Home() {
           {/* How It Works */}
           <section id="how-it-works" className="r-section" style={{ background: C.white, textAlign: 'center' }}>
             <div style={{ maxWidth: 900, margin: '0 auto' }}>
-              <h2 style={{ fontSize: 36, fontWeight: 800, color: C.navy, marginBottom: 8 }}>How It Works</h2>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 8 }}>
+                <img src="/hero-beekeeper.png" alt="Beekeeper illustration" style={{ width: 120, height: 'auto', marginBottom: 12 }} />
+                <h2 style={{ fontSize: 36, fontWeight: 800, color: C.navy, marginBottom: 8 }}>How It Works</h2>
+              </div>
               <p style={{ color: C.gray, fontSize: 16, marginBottom: 60 }}>Get your estimate in less than <strong style={{ color: C.navy }}>60 seconds</strong></p>
               <div className="r-grid3" style={{ gap: 48 }}>
                 {[
