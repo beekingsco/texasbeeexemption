@@ -16,7 +16,8 @@ export function getStripe(): Stripe {
 // For backward compat — throws at runtime not import time
 export const stripe = new Proxy({} as Stripe, {
   get(_, prop) {
-    return (getStripe() as Record<string | symbol, unknown>)[prop];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (getStripe() as any)[prop];
   },
 });
 
