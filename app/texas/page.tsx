@@ -90,6 +90,10 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchError, setSearchError] = useState('');
 
+  const [agentRef, setAgentRef] = useState<string | null>(null);
+  const [agentLogo, setAgentLogo] = useState<string | null>(null);
+  const [agentName, setAgentName] = useState<string | null>(null);
+
   const searchRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
   const resultsTimeRef = useRef<number>(0);
@@ -113,9 +117,36 @@ export default function Home() {
     }).catch(() => {});
   }, []);
 
-  // Track page view on mount
+  // Track page view on mount + capture agent ref
   useEffect(() => {
     track('page_view', { referrer: document.referrer });
+
+    // Capture agent referral from URL params
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    const logo = params.get('agentLogo');
+    const name = params.get('agentName');
+
+    if (ref) {
+      sessionStorage.setItem('bee_agent_ref', ref);
+      setAgentRef(ref);
+      if (logo) {
+        sessionStorage.setItem('bee_agent_logo', logo);
+        setAgentLogo(logo);
+      }
+      if (name) {
+        sessionStorage.setItem('bee_agent_name', name);
+        setAgentName(name);
+      }
+    } else {
+      // Check sessionStorage for existing ref
+      const storedRef = sessionStorage.getItem('bee_agent_ref');
+      if (storedRef) setAgentRef(storedRef);
+      const storedLogo = sessionStorage.getItem('bee_agent_logo');
+      if (storedLogo) setAgentLogo(storedLogo);
+      const storedName = sessionStorage.getItem('bee_agent_name');
+      if (storedName) setAgentName(storedName);
+    }
   }, [track]);
 
   useEffect(() => {
@@ -367,8 +398,26 @@ export default function Home() {
           improvementValue: parcelData.improvementValue,
         } : null,
         source: 'calculator',
+        agentRef: agentRef || undefined,
       };
       await fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+
+      // If agent ref, also create a lead for the agent
+      if (agentRef) {
+        fetch('/api/agent/ref-lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            agentId: agentRef,
+            propertyAddress: geocodedAddress?.address || searchInput,
+            county: selectedCounty?.name,
+            ownerName: `${lead.firstName} ${lead.lastName}`.trim(),
+            acres: acres ? parseFloat(acres) : parcelData?.legalArea || 0,
+            appraisedValue: appraisedValue ? parseFloat(appraisedValue) : parcelData?.marketValue || 0,
+            estimatedSavings: results?.annualSavings || 0,
+          }),
+        }).catch(() => {});
+      }
       // Send guide email
       fetch('/api/send-guide', {
         method: 'POST',

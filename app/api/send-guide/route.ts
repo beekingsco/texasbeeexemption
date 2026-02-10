@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { notifyAdmin } from '@/lib/notify';
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM_EMAIL = process.env.FROM_EMAIL || 'hello@beeexemption.com';
@@ -156,6 +157,15 @@ export async function POST(req: NextRequest) {
       console.error('Resend error:', result);
       return NextResponse.json({ error: 'Failed to send email', details: result }, { status: 500 });
     }
+
+    // Notify admin (fire-and-forget)
+    notifyAdmin('guide_downloaded', {
+      name: firstName,
+      email: to,
+      county,
+      estimatedSavings: estimatedSavings || 0,
+      acres: acres || 0,
+    });
 
     return NextResponse.json({ ok: true, id: result.id });
   } catch (error) {

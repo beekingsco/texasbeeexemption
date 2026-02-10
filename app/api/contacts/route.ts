@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import { ensureDB, isPostgresConfigured } from '@/lib/db';
 import { readJSON, writeJSON, forwardToWebhook } from '@/lib/storage';
+import { notifyAdmin } from '@/lib/notify';
 
 interface Contact {
   id: string;
@@ -269,6 +270,15 @@ export async function POST(req: NextRequest) {
       }
 
       await forwardToWebhook('contact_search', contact as unknown as Record<string, unknown>);
+
+      // Fire admin notification (non-blocking)
+      notifyAdmin('address_searched', {
+        address: contact.address,
+        county: contact.county,
+        acres: contact.acres || undefined,
+        estimatedSavings: contact.estimatedSavings || undefined,
+      });
+
       return NextResponse.json({ ok: true, id: contact.id, tier: contact.tier });
     }
 

@@ -110,6 +110,18 @@ export async function GET(req: NextRequest) {
     todayCounts[e.event] = (todayCounts[e.event] || 0) + 1;
   }
 
+  // Recent events for activity feed (last 50)
+  const recentEvents = events
+    .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+    .slice(0, 50)
+    .map(e => ({
+      event: e.event,
+      county: e.county,
+      savings: e.savings,
+      address: e.address,
+      timestamp: e.timestamp,
+    }));
+
   return NextResponse.json({
     total: events.length,
     today: today.length,
@@ -124,5 +136,6 @@ export async function GET(req: NextRequest) {
       leadCaptured: counts['lead_captured'] || 0,
       guideViewed: counts['guide_viewed'] || 0,
     },
+    recentEvents,
   });
 }
