@@ -462,6 +462,7 @@ export default function Home() {
 
   return (
     <div style={{ minHeight: '100vh', background: C.white }}>
+      <StateBadge stateCode="TX" stateName="Texas" />
       <style>{`
         * { box-sizing: border-box; }
         .r-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
