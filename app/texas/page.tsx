@@ -431,6 +431,9 @@ export default function Home() {
         @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes wiggle { 0%, 100% { transform: rotate(0deg); } 15% { transform: rotate(-2deg); } 30% { transform: rotate(2deg); } 45% { transform: rotate(-1.5deg); } 60% { transform: rotate(1deg); } 75% { transform: rotate(-0.5deg); } }
+        .cta-wiggle { animation: wiggle 2.5s ease-in-out infinite; animation-delay: 3s; }
+        .cta-wiggle:hover { animation: none; transform: scale(1.02); transition: transform 0.15s ease; }
         .fade-in { animation: fadeIn 0.4s ease-out; }
         .spinner { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; display: inline-block; }
         .skeleton { background: linear-gradient(90deg, #e2e8f0 25%, #edf2f7 50%, #e2e8f0 75%); background-size: 200% 100%; animation: pulse 1.5s ease-in-out infinite; border-radius: 8px; }
@@ -921,6 +924,14 @@ export default function Home() {
                       <p style={{ fontSize: 28, fontWeight: 900 }}>{fmtMoney(results.annualSavings * 20)}</p>
                     </div>
                   </div>
+
+                  {/* Enhanced Report CTA */}
+                  <a href={`/report?county=${encodeURIComponent(selectedCounty.name)}&acres=${acres || parcelData?.legalArea || 10}&propertyValue=${appraisedValue || parcelData?.marketValue || 300000}&taxRate=${selectedCounty.avgTaxRate}&name=${encodeURIComponent((lead?.firstName || '') + ' ' + (lead?.lastName || '')).trim()}&email=${encodeURIComponent(lead?.email || '')}`}
+                    className="cta-wiggle"
+                    style={{ display: 'block', textAlign: 'center', marginTop: 20, background: 'linear-gradient(135deg, #1a3a6a, #1e4f8f)', color: C.white, fontWeight: 700, fontSize: 15, padding: '16px 24px', borderRadius: 14, textDecoration: 'none', boxShadow: '0 4px 16px rgba(26,58,107,0.3)' }}>
+                    🔓 Get Your Enhanced Report — $14.99
+                    <span style={{ display: 'block', fontSize: 12, fontWeight: 400, opacity: 0.8, marginTop: 4 }}>Shopping list, local suppliers, step-by-step application guide & more</span>
+                  </a>
                 </div>
 
                 {/* Investment & ROI */}
@@ -968,6 +979,14 @@ export default function Home() {
                       </div>
                     </div>
                   )}
+
+                  {/* Enhanced Report CTA #2 */}
+                  <a href={`/report?county=${encodeURIComponent(selectedCounty.name)}&acres=${acres || parcelData?.legalArea || 10}&propertyValue=${appraisedValue || parcelData?.marketValue || 300000}&taxRate=${selectedCounty.avgTaxRate}&name=${encodeURIComponent((lead?.firstName || '') + ' ' + (lead?.lastName || '')).trim()}&email=${encodeURIComponent(lead?.email || '')}`}
+                    className="cta-wiggle"
+                    style={{ display: 'block', textAlign: 'center', marginTop: 20, background: 'linear-gradient(135deg, #1a3a6a, #1e4f8f)', color: C.white, fontWeight: 700, fontSize: 15, padding: '16px 24px', borderRadius: 14, textDecoration: 'none', boxShadow: '0 4px 16px rgba(26,58,107,0.3)' }}>
+                    📊 Want the Full Breakdown? Upgrade for $14.99
+                    <span style={{ display: 'block', fontSize: 12, fontWeight: 400, opacity: 0.8, marginTop: 4 }}>Personalized shopping list • Local bee suppliers • Application checklist • Record keeping tools</span>
+                  </a>
                 </div>
 
                 {/* Map View - moved above address */}
@@ -1119,8 +1138,8 @@ export default function Home() {
               <a href={`/guide?county=${encodeURIComponent(selectedCounty.name)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: C.green, color: C.navy, fontWeight: 700, fontSize: 16, padding: '14px 28px', borderRadius: 12, textDecoration: 'none', boxShadow: '0 4px 12px rgba(212,168,67,0.3)' }}>
                 📋 View Your Free Guide
               </a>
-              <a href={`/report?county=${encodeURIComponent(selectedCounty.name)}&acres=${acres || parcelData?.legalArea || 10}&propertyValue=${appraisedValue || parcelData?.marketValue || 300000}&taxRate=${selectedCounty.avgTaxRate}&name=${encodeURIComponent((lead.firstName + ' ' + lead.lastName).trim())}&email=${encodeURIComponent(lead.email)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, padding: '14px 28px', borderRadius: 12, textDecoration: 'none', boxShadow: '0 4px 16px rgba(26,58,107,0.3)' }}>
-                🔓 Upgrade to Enhanced Report
+              <a href={`/report?county=${encodeURIComponent(selectedCounty.name)}&acres=${acres || parcelData?.legalArea || 10}&propertyValue=${appraisedValue || parcelData?.marketValue || 300000}&taxRate=${selectedCounty.avgTaxRate}&name=${encodeURIComponent((lead.firstName + ' ' + lead.lastName).trim())}&email=${encodeURIComponent(lead.email)}`} target="_blank" rel="noopener noreferrer" className="cta-wiggle" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, padding: '14px 28px', borderRadius: 12, textDecoration: 'none', boxShadow: '0 4px 16px rgba(26,58,107,0.3)' }}>
+                🔓 Upgrade to Enhanced Report — $14.99
               </a>
             </div>
             <p style={{ fontSize: 13, color: C.gray, marginBottom: 32, maxWidth: 380, margin: '0 auto 32px' }}>
