@@ -388,6 +388,17 @@ function ReportContent() {
           ════════════════════════════════════════════════════════════ */}
       <header style={{ background: colors.darkGreen, color: 'white', padding: '64px 24px 72px' }}>
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
+          {/* Logo */}
+          <div className="text-center fade-up" style={{ marginBottom: 32 }}>
+            {isDemo ? (
+              <div style={{ display: 'inline-block', border: '2px dashed rgba(255,255,255,0.3)', borderRadius: 12, padding: '16px 32px' }}>
+                <p style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>[ Your Agency Logo ]</p>
+              </div>
+            ) : (
+              <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 60, margin: '0 auto' }} />
+            )}
+          </div>
+
           {/* Top line: report # and date */}
           <div className="text-center mb-6 fade-up">
             <p style={{ color: colors.gold, fontSize: 13, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' }}>
@@ -437,6 +448,37 @@ function ReportContent() {
           </div>
         </div>
       </header>
+
+      {/* ════════════════════════════════════════════════════════════
+          AGENT INTRO LETTER (Demo only)
+          ════════════════════════════════════════════════════════════ */}
+      {isDemo && (
+        <section style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
+          <div style={{ background: colors.white, borderRadius: 16, padding: '40px 36px', boxShadow: colors.cardShadow, borderLeft: `4px solid ${colors.gold}` }}>
+            <p style={{ fontSize: 15, color: '#555', lineHeight: 1.8, marginBottom: 16 }}>
+              Dear {name},
+            </p>
+            <p style={{ fontSize: 15, color: '#555', lineHeight: 1.8, marginBottom: 16 }}>
+              Thank you for your interest in learning more about property tax savings on your land in <strong>{county.name} County</strong>. I put together this personalized report to show you exactly how much you could save with an agricultural exemption through beekeeping — and how straightforward the process really is.
+            </p>
+            <p style={{ fontSize: 15, color: '#555', lineHeight: 1.8, marginBottom: 16 }}>
+              Based on your <strong>{acres}-acre</strong> property valued at <strong>{fmtMoney(propertyValue)}</strong>, the potential savings are significant. This report covers everything: what you need, what it costs, how to apply, and where to get started locally.
+            </p>
+            <p style={{ fontSize: 15, color: '#555', lineHeight: 1.8, marginBottom: 16 }}>
+              I&apos;m here to help with any questions — whether it&apos;s about the exemption process, finding the right property, or connecting you with local beekeeping resources. Don&apos;t hesitate to reach out.
+            </p>
+            <p style={{ fontSize: 15, color: '#555', lineHeight: 1.8, marginBottom: 4 }}>
+              Looking forward to helping you save,
+            </p>
+            <p style={{ fontSize: 17, fontWeight: 800, color: colors.darkGreen, marginTop: 8 }}>
+              <span style={{ color: 'rgba(0,0,0,0.35)', fontStyle: 'italic', fontWeight: 600 }}>[ Your Name ]</span>
+            </p>
+            <p style={{ fontSize: 13, color: '#999', marginTop: 4 }}>
+              <span style={{ fontStyle: 'italic', color: 'rgba(0,0,0,0.35)' }}>[ Your Agency ]</span> · Powered by BeeExemption
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* ════════════════════════════════════════════════════════════
           SECTION 2 — HOW MUCH YOU'LL SAVE
