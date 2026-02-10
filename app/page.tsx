@@ -273,9 +273,7 @@ export default function NationalLanding() {
                   Go →
                 </button>
               </div>
-              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginTop: 8 }}>
-                More states coming soon
-              </p>
+              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginTop: 8 }}>&nbsp;</p>
             </div>
           </div>
         </div>
