@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { stripe, getOrCreatePrice, TierKey, TIERS } from '@/lib/stripe';
+import { validateCoupon } from '@/lib/coupon-storage';
 
 export async function POST(req: NextRequest) {
   try {
@@ -71,9 +72,16 @@ export async function POST(req: NextRequest) {
       payment_intent_data: tierConfig.mode === 'payment' ? { metadata } : undefined,
       subscription_data: tierConfig.mode === 'subscription' ? {
         metadata,
-        ...('trialDays' in tierConfig && tierConfig.trialDays
-          ? { trial_period_days: tierConfig.trialDays }
-          : {}),
+        trial_period_days: await (async () => {
+          // Check if internal coupon extends trial
+          if (couponCode) {
+            const result = await validateCoupon(couponCode);
+            if (result.valid && result.coupon?.trialDays) {
+              return result.coupon.trialDays;
+            }
+          }
+          return 'trialDays' in tierConfig && tierConfig.trialDays ? tierConfig.trialDays : undefined;
+        })(),
       } : undefined,
     };
 
@@ -84,27 +92,7 @@ export async function POST(req: NextRequest) {
       sessionParams.customer_email = propertyData.email;
     }
 
-    // Apply coupon if provided
-    if (couponCode) {
-      try {
-        // Try as promotion code first
-        const promoCodes = await stripe.promotionCodes.list({ code: couponCode, active: true, limit: 1 });
-        if (promoCodes.data.length > 0) {
-          sessionParams.discounts = [{ promotion_code: promoCodes.data[0].id }];
-        } else {
-          // Try as coupon directly
-          const coupon = await stripe.coupons.retrieve(couponCode);
-          if (coupon && coupon.valid) {
-            sessionParams.discounts = [{ coupon: coupon.id }];
-          }
-        }
-      } catch {
-        // Coupon not found, continue without it
-        console.warn('Coupon not found:', couponCode);
-      }
-      // Remove trial if discounts are applied (Stripe doesn't allow both with some configurations)
-      // Actually keep trial — Stripe allows discounts + trial together
-    }
+    // Internal coupons are handled via extended trial days above — no Stripe discount needed
 
     const session = await stripe.checkout.sessions.create(sessionParams);
 

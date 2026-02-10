@@ -53,7 +53,7 @@ export default function AgentLandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [showPromo, setShowPromo] = useState(false);
   const [promoCode, setPromoCode] = useState('');
-  const [promoStatus, setPromoStatus] = useState<{ valid?: boolean; message?: string; trialDays?: number } | null>(null);
+  const [promoStatus, setPromoStatus] = useState<{ valid?: boolean; message?: string; trialDays?: number; type?: string } | null>(null);
   const [promoChecking, setPromoChecking] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<PlanType>('agent_state');
   const [formData, setFormData] = useState({ name: '', email: '', brokerage: '', phone: '', counties: '' });
@@ -77,7 +77,7 @@ export default function AgentLandingPage() {
       });
       const data = await res.json();
       if (data.valid) {
-        setPromoStatus({ valid: true, message: data.description || 'Code applied!', trialDays: data.trialDays });
+        setPromoStatus({ valid: true, message: data.description || 'Code applied!', trialDays: data.trialDays, type: data.type });
       } else {
         setPromoStatus({ valid: false, message: data.error || 'Invalid code' });
       }
@@ -105,17 +105,45 @@ export default function AgentLandingPage() {
     setFormError('');
     setCheckoutLoading(true);
     try {
+      const agentData = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        brokerage: formData.brokerage.trim(),
+        phone: formData.phone.trim(),
+        counties: selectedPlan === 'agent_state' ? 'ALL' : formData.counties.trim(),
+        couponCode: promoStatus?.valid ? promoCode.trim() : undefined,
+        plan: selectedPlan,
+      };
+
+      // Always-free coupons skip Stripe entirely
+      if (promoStatus?.valid && promoStatus.type === 'always_free') {
+        const res = await fetch('/api/agent/signup-free', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(agentData),
+        });
+        const data = await res.json();
+        if (data.ok) {
+          window.location.href = '/agent/login?welcome=true';
+        } else {
+          setFormError(data.error || 'Something went wrong.');
+          setCheckoutLoading(false);
+        }
+        return;
+      }
+
+      // Normal flow — send to Stripe Checkout
       const res = await fetch('/api/stripe/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           tier: selectedPlan,
-          agentName: formData.name.trim(),
-          agentEmail: formData.email.trim(),
-          agentBrokerage: formData.brokerage.trim(),
-          agentPhone: formData.phone.trim(),
-          agentCounties: selectedPlan === 'agent_state' ? 'ALL' : formData.counties.trim(),
-          couponCode: promoStatus?.valid ? promoCode.trim() : undefined,
+          agentName: agentData.name,
+          agentEmail: agentData.email,
+          agentBrokerage: agentData.brokerage,
+          agentPhone: agentData.phone,
+          agentCounties: agentData.counties,
+          couponCode: agentData.couponCode,
         }),
       });
       const data = await res.json();
