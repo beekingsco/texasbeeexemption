@@ -98,12 +98,7 @@ export async function POST(req: NextRequest) {
             } else {
               // Create new agent account
               // Hash a random UUID as password (agents will use magic link later)
-              let bcrypt;
-              try {
-                bcrypt = await import('bcrypt');
-              } catch {
-                bcrypt = await import('bcryptjs');
-              }
+              const bcrypt = await import('bcryptjs');
               const randomPassword = randomUUID();
               const passwordHash = await bcrypt.hash(randomPassword, 10);
 
