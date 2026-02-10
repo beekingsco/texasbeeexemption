@@ -5,6 +5,10 @@ import { put, list } from '@vercel/blob';
 const TG_BOT_TOKEN = process.env.TG_BOT_TOKEN || '';
 const TG_CHAT_ID = process.env.TG_ALERT_CHAT_ID || '';
 
+// OpenClaw notification (Scout → Chris via Telegram)
+const OPENCLAW_GATEWAY = process.env.OPENCLAW_GATEWAY_URL || '';
+const OPENCLAW_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN || '';
+
 interface Lead {
   id: string;
   firstName: string;
@@ -20,46 +24,86 @@ interface Lead {
   estimatedSavings: number | null;
   parcelData: Record<string, unknown> | null;
   source: string;
+  agentRef?: string;
   createdAt: string;
 }
 
-/* ─── Blob helpers ─── */
-const BLOB_KEY = 'leads/all-leads.json';
+/* ─── Blob helpers (individual files per lead) ─── */
 
-async function readLeadsFromBlob(): Promise<Lead[]> {
-  try {
-    const { blobs } = await list({ prefix: 'leads/' });
-    const match = blobs.find(b => b.pathname === BLOB_KEY);
-    if (!match) return [];
-    const resp = await fetch(match.url);
-    if (!resp.ok) return [];
-    return await resp.json();
-  } catch {
-    return [];
-  }
-}
-
-async function writeLeadsToBlob(leads: Lead[]): Promise<void> {
-  await put(BLOB_KEY, JSON.stringify(leads, null, 2), {
+async function saveLead(lead: Lead): Promise<void> {
+  // Save as individual file — no read-modify-write race condition
+  const key = `leads/${lead.id}.json`;
+  await put(key, JSON.stringify(lead), {
     access: 'public',
     addRandomSuffix: false,
     contentType: 'application/json',
   });
 }
 
+async function readAllLeads(): Promise<Lead[]> {
+  const leads: Lead[] = [];
+  let cursor: string | undefined;
+
+  // Paginate through all lead blobs
+  do {
+    const result = await list({
+      prefix: 'leads/lead_',
+      cursor,
+      limit: 1000,
+    });
+    for (const blob of result.blobs) {
+      try {
+        const resp = await fetch(blob.url);
+        if (resp.ok) {
+          const lead = await resp.json();
+          leads.push(lead);
+        }
+      } catch {
+        // Skip corrupt blobs
+      }
+    }
+    cursor = result.hasMore ? result.cursor : undefined;
+  } while (cursor);
+
+  // Also check legacy all-leads.json
+  try {
+    const { blobs } = await list({ prefix: 'leads/all-leads' });
+    const legacy = blobs.find(b => b.pathname === 'leads/all-leads.json');
+    if (legacy) {
+      const resp = await fetch(legacy.url);
+      if (resp.ok) {
+        const legacyLeads: Lead[] = await resp.json();
+        // Merge legacy leads (avoid duplicates by id)
+        const existingIds = new Set(leads.map(l => l.id));
+        for (const ll of legacyLeads) {
+          if (!existingIds.has(ll.id)) {
+            leads.push(ll);
+          }
+        }
+      }
+    }
+  } catch {
+    // Ignore legacy read errors
+  }
+
+  return leads;
+}
+
 /* ─── Telegram alert ─── */
-async function sendLeadAlert(lead: Lead): Promise<void> {
+async function sendTelegramAlert(lead: Lead): Promise<void> {
   if (!TG_BOT_TOKEN || !TG_CHAT_ID) return;
   try {
-    const savings = lead.estimatedSavings ? `$${lead.estimatedSavings.toLocaleString()}` : 'N/A';
+    const savings = lead.estimatedSavings ? `$${Math.round(lead.estimatedSavings).toLocaleString()}` : 'N/A';
     const text = `🐝 *New Lead!*\n\n` +
       `*${lead.firstName} ${lead.lastName}*\n` +
       `📧 ${lead.email}\n` +
       (lead.phone ? `📱 ${lead.phone}\n` : '') +
-      `📍 ${lead.county || 'Unknown county'}${lead.source ? ` (${lead.source})` : ''}\n` +
+      `📍 ${lead.county || 'Unknown'} County\n` +
+      (lead.address ? `🏠 ${lead.address}\n` : '') +
       (lead.acres ? `🏡 ${lead.acres} acres\n` : '') +
-      (lead.appraisedValue ? `💰 Appraised: $${lead.appraisedValue.toLocaleString()}\n` : '') +
-      `💵 Est. savings: ${savings}\n` +
+      (lead.appraisedValue ? `💰 Appraised: $${Math.round(lead.appraisedValue).toLocaleString()}\n` : '') +
+      `💵 Est. savings: ${savings}/yr\n` +
+      (lead.agentRef ? `🤝 Agent ref: ${lead.agentRef}\n` : '') +
       `\n⏰ ${new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' })}`;
 
     await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
@@ -76,7 +120,7 @@ async function sendLeadAlert(lead: Lead): Promise<void> {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { firstName, lastName, email, phone, address, county, lat, lng, acres, appraisedValue, estimatedSavings, parcelData, source } = body;
+    const { firstName, lastName, email, phone, address, county, lat, lng, acres, appraisedValue, estimatedSavings, parcelData, source, agentRef } = body;
 
     if (!firstName || !lastName || !email) {
       return NextResponse.json({ error: 'First name, last name, and email are required' }, { status: 400 });
@@ -97,16 +141,15 @@ export async function POST(req: NextRequest) {
       estimatedSavings: estimatedSavings || null,
       parcelData: parcelData || null,
       source: source || 'calculator',
+      agentRef: agentRef || undefined,
       createdAt: new Date().toISOString(),
     };
 
-    // Read existing leads, append, write back
-    const leads = await readLeadsFromBlob();
-    leads.push(lead);
-    await writeLeadsToBlob(leads);
+    // Save lead as individual blob (reliable, no race conditions)
+    await saveLead(lead);
 
     // Fire alerts (non-blocking)
-    await sendLeadAlert(lead);
+    sendTelegramAlert(lead).catch(() => {});
 
     return NextResponse.json({ success: true, id: lead.id });
   } catch (error) {
@@ -124,7 +167,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const leads = await readLeadsFromBlob();
+  const leads = await readAllLeads();
 
   const county = searchParams.get('county');
   const filtered = county ? leads.filter(l => l.county.toLowerCase() === county.toLowerCase()) : leads;
