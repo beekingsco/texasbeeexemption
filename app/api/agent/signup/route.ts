@@ -3,11 +3,12 @@ import bcrypt from 'bcryptjs';
 import { createAgent, getAgentByEmail } from '@/lib/agent-storage';
 import { Agent } from '@/lib/types/agent';
 import { put } from '@vercel/blob';
+import { validateCoupon, redeemCoupon } from '@/lib/coupon-storage';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, password, brokerage, phone, licenseNumber, licensedCounties, subdomain, logo } = body;
+    const { name, email, password, brokerage, phone, licenseNumber, licensedCounties, subdomain, logo, couponCode } = body;
 
     // Validate required fields
     if (!name || !email || !password || !brokerage || !phone || !licenseNumber || !licensedCounties) {
@@ -24,6 +25,23 @@ export async function POST(req: NextRequest) {
         { error: 'Agent with this email already exists' },
         { status: 409 }
       );
+    }
+
+    // Validate coupon if provided
+    let appliedCoupon = null;
+    if (couponCode) {
+      const couponResult = await validateCoupon(couponCode);
+      if (!couponResult.valid) {
+        return NextResponse.json({ error: couponResult.error }, { status: 400 });
+      }
+      appliedCoupon = couponResult.coupon!;
+      // Enforce county limit from coupon
+      if (licensedCounties.length > appliedCoupon.maxCounties) {
+        return NextResponse.json(
+          { error: `This coupon is limited to ${appliedCoupon.maxCounties} county${appliedCoupon.maxCounties > 1 ? 'ies' : ''}` },
+          { status: 400 }
+        );
+      }
     }
 
     // Hash password
@@ -61,12 +79,23 @@ export async function POST(req: NextRequest) {
       subdomain,
       licensedCounties,
       createdAt: new Date().toISOString(),
-      subscription: {
-        status: 'trial',
-      },
+      subscription: appliedCoupon?.type === 'always_free'
+        ? { status: 'active' as const }
+        : {
+            status: 'trial' as const,
+            ...(appliedCoupon?.trialDays && {
+              currentPeriodEnd: new Date(Date.now() + appliedCoupon.trialDays * 86400000).toISOString(),
+            }),
+          },
+      couponCode: appliedCoupon?.code,
     };
 
     await createAgent(agent);
+
+    // Redeem coupon after successful creation
+    if (couponCode && appliedCoupon) {
+      await redeemCoupon(couponCode, agent.id);
+    }
 
     // Return agent without password hash
     const { passwordHash: _, ...agentWithoutPassword } = agent;
