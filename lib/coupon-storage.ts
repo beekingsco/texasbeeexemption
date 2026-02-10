@@ -75,6 +75,7 @@ export async function saveCoupons(coupons: Coupon[]): Promise<void> {
   await put(COUPONS_BLOB_PATH, JSON.stringify({ coupons }, null, 2), {
     access: 'public',
     contentType: 'application/json',
+      allowOverwrite: true,
   });
 }
 

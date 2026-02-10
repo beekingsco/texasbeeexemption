@@ -29,6 +29,7 @@ async function writeTokens(tokens: MagicToken[]): Promise<void> {
   await put(TOKENS_BLOB_PATH, JSON.stringify({ tokens: active }, null, 2), {
     access: 'public',
     contentType: 'application/json',
+      allowOverwrite: true,
   });
 }
 

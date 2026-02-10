@@ -58,6 +58,7 @@ export async function POST(req: NextRequest) {
         const blob = await put(`agents/logos/${agentId}.png`, buffer, {
           access: 'public',
           contentType: 'image/png',
+          allowOverwrite: true,
         });
         logoUrl = blob.url;
       } catch (error) {

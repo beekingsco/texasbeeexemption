@@ -25,6 +25,8 @@ export async function saveAgents(agents: Agent[]): Promise<void> {
     const blob = await put(AGENTS_BLOB_PATH, JSON.stringify({ agents }, null, 2), {
       access: 'public',
       contentType: 'application/json',
+      allowOverwrite: true,
+      allowOverwrite: true,
     });
     console.log('Agents saved to blob:', blob.url);
   } catch (error) {
@@ -85,6 +87,7 @@ export async function saveAgentLeads(agentId: string, leads: AgentLead[]): Promi
     const blob = await put(`${LEADS_BLOB_PATH_PREFIX}${agentId}.json`, JSON.stringify({ leads }, null, 2), {
       access: 'public',
       contentType: 'application/json',
+      allowOverwrite: true,
     });
     console.log('Leads saved to blob:', blob.url);
   } catch (error) {
