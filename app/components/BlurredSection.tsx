@@ -81,16 +81,17 @@ export default function BlurredSection({ children, isLocked, onUnlock, savingsAm
             <a
               href="/agents"
               style={{
-                display: 'inline-block',
+                display: 'block',
                 background: '#d4a843',
                 color: '#2d2d2d',
                 fontWeight: 800,
                 fontSize: 16,
-                padding: '14px 32px',
+                padding: '14px 24px',
                 borderRadius: 12,
                 border: 'none',
                 cursor: 'pointer',
                 width: '100%',
+                boxSizing: 'border-box',
                 textAlign: 'center',
                 textDecoration: 'none',
                 transition: 'all 0.2s',
