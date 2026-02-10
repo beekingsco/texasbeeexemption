@@ -273,7 +273,7 @@ export default function NationalLanding() {
                 </button>
               </div>
               <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginTop: 8 }}>
-                <span style={{ color: C.green, fontWeight: 700 }}>✓</span> Texas &amp; Florida calculators live — more states coming soon
+                More states coming soon
               </p>
             </div>
           </div>
