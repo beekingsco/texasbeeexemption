@@ -208,34 +208,36 @@ export default function AdminPage() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleMagicLink}>
-              <p style={{ color: C.gray, fontSize: 14, marginBottom: 24 }}>Enter your admin email to receive a login link.</p>
-              {magicError && <p style={{ color: C.red, fontSize: 14, marginBottom: 12 }}>{magicError}</p>}
-              <input
-                type="email" value={magicEmail} onChange={(e) => setMagicEmail(e.target.value)}
-                placeholder="admin@beekings.com"
-                required
-                style={{ width: '100%', padding: '12px 16px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 16, marginBottom: 16, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
-              />
-              <button type="submit" style={{ width: '100%', padding: '14px', background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
-                Send Login Link
-              </button>
-            </form>
-            <div style={{ borderTop: '1px solid #e2e8f0', marginTop: 24, paddingTop: 20 }}>
-              <form onSubmit={handleAuth}>
-                <p style={{ color: C.gray, fontSize: 13, marginBottom: 12 }}>Or sign in with admin key:</p>
-                <div style={{ display: 'flex', gap: 8 }}>
-                  <input
-                    type="password" value={key} onChange={(e) => setKey(e.target.value)}
-                    placeholder="Admin key"
-                    style={{ flex: 1, padding: '10px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
-                  />
-                  <button type="submit" style={{ padding: '10px 18px', borderRadius: 10, background: C.navy, color: C.white, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
-                    Go
-                  </button>
-                </div>
+            <>
+              <form onSubmit={handleMagicLink}>
+                <p style={{ color: C.gray, fontSize: 14, marginBottom: 24 }}>Enter your admin email to receive a login link.</p>
+                {magicError && <p style={{ color: C.red, fontSize: 14, marginBottom: 12 }}>{magicError}</p>}
+                <input
+                  type="email" value={magicEmail} onChange={(e) => setMagicEmail(e.target.value)}
+                  placeholder="admin@beekings.com"
+                  required
+                  style={{ width: '100%', padding: '12px 16px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 16, marginBottom: 16, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                />
+                <button type="submit" style={{ width: '100%', padding: '14px', background: C.blue, color: C.white, fontWeight: 700, fontSize: 16, borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                  Send Login Link
+                </button>
               </form>
-            </div>
+              <div style={{ borderTop: '1px solid #e2e8f0', marginTop: 24, paddingTop: 20 }}>
+                <form onSubmit={handleAuth}>
+                  <p style={{ color: C.gray, fontSize: 13, marginBottom: 12 }}>Or sign in with admin key:</p>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <input
+                      type="password" value={key} onChange={(e) => setKey(e.target.value)}
+                      placeholder="Admin key"
+                      style={{ flex: 1, padding: '10px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                    />
+                    <button type="submit" style={{ padding: '10px 18px', borderRadius: 10, background: C.navy, color: C.white, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                      Go
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </>
           )}
         </div>
       </div>
