@@ -354,7 +354,7 @@ function ReportContent() {
           {/* Savings callout card */}
           <div className="fade-up fade-up-3" style={{ maxWidth: 560, margin: '0 auto' }}>
             <div style={{
-              background: 'rgba(26, 58, 42, 0.8)',
+              background: 'rgba(45, 45, 45, 0.85)',
               borderLeft: `5px solid ${colors.gold}`,
               borderRadius: '0 16px 16px 0',
               padding: '32px 36px',
