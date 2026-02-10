@@ -156,12 +156,12 @@ export default function NationalLanding() {
           .r-grid2 { grid-template-columns: 1fr; }
           .r-grid3 { grid-template-columns: 1fr; gap: 24px; }
           .r-nav { display: none; }
-          .hero-section { padding-top: 16px !important; padding-bottom: 0 !important; }
-          .hero-layout { flex-direction: column-reverse !important; text-align: center !important; gap: 0 !important; align-items: center !important; }
-          .hero-text { align-items: center !important; padding-bottom: 20px !important; }
+          .hero-section { padding-top: 40px !important; padding-bottom: 40px !important; min-height: 320px !important; }
+          .hero-text { align-items: center !important; text-align: center !important; }
           .hero-text h1 { font-size: 26px !important; margin-bottom: 8px !important; }
-          .hero-text p { font-size: 14px !important; margin-bottom: 14px !important; display: none !important; }
-          .hero-img { max-width: 160px !important; margin-bottom: -8px !important; align-self: center !important; }
+          .hero-text p { font-size: 14px !important; margin-bottom: 14px !important; }
+          .hero-layout { flex-direction: column !important; text-align: center !important; gap: 24px !important; align-items: center !important; }
+          .hero-img { max-width: 160px !important; }
           .r-agent-img { display: none !important; }
           .counter-bar { padding: 8px 16px !important; }
           .counter-bar p { font-size: 13px !important; }
@@ -217,25 +217,26 @@ export default function NationalLanding() {
         )}
       </div>
 
-      {/* HERO — real photo background */}
-      <section className="hero-section" style={{ position: 'relative', padding: '60px 24px 0', overflow: 'hidden' }}>
-        {/* Background photo */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/beekeeper-frame.jpg)', backgroundSize: 'cover', backgroundPosition: 'center 30%', opacity: 0.15 }} />
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: `linear-gradient(135deg, ${C.sky}ee 0%, ${C.sky}dd 50%, ${C.sky}cc 100%)` }} />
+      {/* HERO — full background photo */}
+      <section className="hero-section" style={{ position: 'relative', padding: '80px 24px 80px', overflow: 'hidden', minHeight: 420 }}>
+        {/* Full-screen background photo */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/beekeeper-frame.jpg)', backgroundSize: 'cover', backgroundPosition: 'center 30%' }} />
+        {/* Dark overlay for text readability */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(135deg, rgba(13,27,42,0.82) 0%, rgba(26,58,107,0.72) 50%, rgba(13,27,42,0.65) 100%)' }} />
 
-        <div className="hero-layout" style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 40, position: 'relative', zIndex: 1 }}>
-          <div className="hero-text fade-in" style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingBottom: 60 }}>
-            <h1 style={{ fontSize: 'clamp(28px, 5vw, 52px)', fontWeight: 900, color: C.navy, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: 16 }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          <div className="hero-text fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <h1 style={{ fontSize: 'clamp(28px, 5vw, 52px)', fontWeight: 900, color: C.white, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: 16 }}>
               Could bees lower<br />your property taxes?
             </h1>
-            <p style={{ fontSize: 18, color: '#5A7A8A', lineHeight: 1.6, marginBottom: 32, maxWidth: 480 }}>
+            <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.75)', lineHeight: 1.6, marginBottom: 32, maxWidth: 520 }}>
               In many states, keeping a few beehives on your land qualifies you for an agricultural 
               exemption — reducing your property taxes by thousands of dollars a year.
             </p>
 
             {/* State Selector */}
             <div style={{ width: '100%', maxWidth: 400 }}>
-              <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 8 }}>
+              <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.85)', marginBottom: 8 }}>
                 Select your state to get started
               </label>
               <div style={{ display: 'flex', gap: 12 }}>
@@ -244,12 +245,12 @@ export default function NationalLanding() {
                   onChange={(e) => setSelectedState(e.target.value)}
                   style={{
                     flex: 1, padding: '14px 44px 14px 16px', fontSize: 16, fontWeight: 600,
-                    color: selectedState ? C.navy : C.gray, border: '2px solid #D5EAFF',
+                    color: selectedState ? C.navy : C.gray, border: '2px solid rgba(255,255,255,0.3)',
                     borderRadius: 12, background: C.white, cursor: 'pointer', fontFamily: 'inherit',
                     outline: 'none',
                   }}
-                  onFocus={(e) => e.target.style.borderColor = C.blue}
-                  onBlur={(e) => e.target.style.borderColor = '#D5EAFF'}
+                  onFocus={(e) => e.target.style.borderColor = C.green}
+                  onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.3)'}
                 >
                   <option value="">Choose your state...</option>
                   {US_STATES.map(state => (
@@ -263,7 +264,7 @@ export default function NationalLanding() {
                   disabled={!selectedState}
                   style={{
                     padding: '14px 24px', borderRadius: 12, border: 'none', fontWeight: 700, fontSize: 16,
-                    background: selectedState ? C.blue : '#93C5FD', color: C.white,
+                    background: selectedState ? C.green : 'rgba(212,168,67,0.5)', color: selectedState ? C.navy : C.white,
                     cursor: selectedState ? 'pointer' : 'not-allowed', fontFamily: 'inherit',
                     whiteSpace: 'nowrap',
                   }}
@@ -271,19 +272,10 @@ export default function NationalLanding() {
                   Go →
                 </button>
               </div>
-              <p style={{ fontSize: 13, color: '#8DA4B5', marginTop: 8 }}>
+              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginTop: 8 }}>
                 <span style={{ color: C.green, fontWeight: 700 }}>✓</span> Texas &amp; Florida calculators live — more states coming soon
               </p>
             </div>
-          </div>
-
-          {/* Real photo on right side */}
-          <div className="hero-img" style={{ flex: '0 0 auto', maxWidth: 340, borderRadius: 20, overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.12)' }}>
-            <img
-              src="/beekeepers-inspecting.jpg"
-              alt="Beekeepers inspecting hive"
-              style={{ width: '100%', display: 'block', objectFit: 'cover', height: 360 }}
-            />
           </div>
         </div>
       </section>
