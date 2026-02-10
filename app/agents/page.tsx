@@ -130,10 +130,6 @@ export default function AgentLandingPage() {
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(135deg, rgba(13,27,42,0.55) 0%, rgba(26,58,91,0.4) 50%, rgba(13,27,42,0.35) 100%)' }} />
 
         <div className="hero-animate" style={{ maxWidth: 1000, margin: '0 auto', position: 'relative', zIndex: 1, textAlign: 'center' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(212,168,67,0.15)', borderRadius: 20, padding: '6px 16px', marginBottom: 20 }}>
-            <span style={{ fontSize: 14 }}>🏠</span>
-            <span style={{ fontSize: 13, fontWeight: 700, color: C.green, letterSpacing: '0.05em' }}>FOR REAL ESTATE AGENTS</span>
-          </div>
           <h1 style={{ fontSize: 'clamp(32px, 5vw, 52px)', fontWeight: 900, color: C.white, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: 20, maxWidth: 700, margin: '0 auto 20px' }}>
             Turn Every Land Listing Into a Tax-Saving Opportunity
           </h1>
