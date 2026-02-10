@@ -821,10 +821,16 @@ export default function Home() {
                 {results.totalAcres === 0 ? (
                   <>
                     <h2 style={{ fontSize: 22, fontWeight: 800, color: C.navy, marginBottom: 12 }}>We Couldn&apos;t Find Your Property Size</h2>
-                    <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.6, maxWidth: 400, margin: '0 auto 20px' }}>
-                      We verified your address but couldn&apos;t pull acreage data from county records. 
-                      Enter your property size below to see your savings estimate.
+                    <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.6, maxWidth: 400, margin: '0 auto 16px' }}>
+                      We verified your address but couldn&apos;t pull acreage data from county records. This can happen with rural properties or if the data source was temporarily unavailable.
                     </p>
+                    <button
+                      onClick={() => { setResults(null); setTimeout(() => handleSearch(), 100); }}
+                      style={{ background: C.blue, color: C.white, fontWeight: 700, fontSize: 14, padding: '10px 24px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'inherit', marginBottom: 20 }}
+                    >
+                      🔄 Try Again
+                    </button>
+                    <p style={{ fontSize: 13, color: C.gray, marginBottom: 16 }}>Or enter your property size manually:</p>
                     <div style={{ maxWidth: 300, margin: '0 auto 20px' }}>
                       <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 6, textAlign: 'left' }}>How many acres is your property?</label>
                       <input type="number" value={acres} onChange={(e) => setAcres(e.target.value)} placeholder={`Min. ${selectedCounty?.minAcres} acres needed`}
