@@ -379,24 +379,25 @@ function ReportContent() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 10,
+            gap: 6,
             background: '#C1272D',
             color: 'white',
-            fontWeight: 800,
-            fontSize: 15,
-            padding: '12px 24px',
-            borderRadius: 10,
+            fontWeight: 700,
+            fontSize: 12,
+            padding: '8px 14px',
+            borderRadius: 8,
             border: 'none',
             cursor: 'pointer',
-            boxShadow: '0 4px 16px rgba(193,39,45,0.35)',
+            boxShadow: '0 2px 8px rgba(193,39,45,0.3)',
             transition: 'all 0.2s',
             fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
             letterSpacing: '0.04em',
+            whiteSpace: 'nowrap' as const,
           }}
           onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(193,39,45,0.45)'; }}
           onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(193,39,45,0.35)'; }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/>
             <path d="M8 12h8v2H8zm0 4h5v2H8z"/>
           </svg>
