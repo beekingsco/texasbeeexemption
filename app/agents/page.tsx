@@ -261,7 +261,7 @@ export default function AgentLandingPage() {
                 className="cta-btn"
                 style={{ padding: '16px 32px', borderRadius: 12, background: C.green, color: C.navy, fontWeight: 800, fontSize: 17, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)' }}
               >
-                Start Free 7-Day Trial →
+                Start Free Trial →
               </button>
               <a
                 href="#how-it-works"
@@ -531,7 +531,7 @@ export default function AgentLandingPage() {
                 Choose Your Coverage
               </h2>
               <p style={{ fontSize: 16, color: C.gray, marginTop: 12, maxWidth: 520, margin: '12px auto 0' }}>
-                Start with a free 7-day trial on either plan. If it doesn&apos;t pay for itself, cancel anytime.
+                Start with a free trial on either plan. If it doesn&apos;t pay for itself, cancel anytime.
               </p>
             </div>
 
@@ -794,8 +794,8 @@ export default function AgentLandingPage() {
                   a: 'BeeExemption provides personalized, data-driven reports with exact savings calculations based on real property data. It\'s not a generic pitch — it\'s a professional document with your branding that shows a specific dollar amount for a specific property. That\'s what gets clients to act.',
                 },
                 {
-                  q: 'What does the 7-day trial include?',
-                  a: 'Everything. Full access to your branded link, unlimited reports, lead notifications, and your client dashboard. If BeeExemption doesn\'t deliver value in 7 days, just cancel. No questions asked, no charges.',
+                  q: 'What does the free trial include?',
+                  a: 'Everything. Full access to your branded link, unlimited reports, lead notifications, and your client dashboard. If BeeExemption doesn\'t deliver value, just cancel. No questions asked, no charges.',
                 },
                 {
                   q: 'Can I share leads with my team or brokerage?',
@@ -854,10 +854,10 @@ export default function AgentLandingPage() {
             className="cta-btn"
             style={{ padding: '18px 40px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 6px 24px rgba(212,168,67,0.35)', marginBottom: 12 }}
           >
-            Start Your Free 7-Day Trial →
+            Start Your Free Trial →
           </button>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)', marginTop: 12 }}>
-            No credit card required • Cancel anytime • Full access for 7 days
+            No credit card required • Cancel anytime • Full access
           </p>
         </div>
       </section>
