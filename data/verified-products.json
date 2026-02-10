@@ -1,0 +1,77 @@
+[
+  {
+    "asin": "B0GJYPJ7BC",
+    "url": "https://www.amazon.com/dp/B0GJYPJ7BC?tag=BeeKings-20",
+    "name": "10-Frame Complete Beehive Kit",
+    "price": 169.99,
+    "rating": 4.4,
+    "reviews": 890,
+    "brand": "BeeCastle",
+    "perHive": true
+  },
+  {
+    "asin": "B017BMKNN8",
+    "url": "https://www.amazon.com/dp/B017BMKNN8?tag=BeeKings-20",
+    "name": "Ventilated Beekeeping Suit with Round Veil",
+    "price": 109.99,
+    "rating": 4.6,
+    "reviews": 3200,
+    "brand": "Humble Bee"
+  },
+  {
+    "asin": "B07CBDNTJM",
+    "url": "https://www.amazon.com/dp/B07CBDNTJM?tag=BeeKings-20",
+    "name": "Goatskin Beekeeping Gloves with Long Sleeves",
+    "price": 15.99,
+    "rating": 4.5,
+    "reviews": 2800,
+    "brand": "Forest Beekeeping Supply"
+  },
+  {
+    "asin": "B08ZY4YFFW",
+    "url": "https://www.amazon.com/dp/B08ZY4YFFW?tag=BeeKings-20",
+    "name": "Beekeeping Tool Kit (Smoker, Hive Tool, Brush & More)",
+    "price": 36.99,
+    "rating": 4.4,
+    "reviews": 1650,
+    "brand": "Honey Lake"
+  },
+  {
+    "asin": "B09YPTP8WX",
+    "url": "https://www.amazon.com/dp/B09YPTP8WX?tag=BeeKings-20",
+    "name": "Rapid Round Hive Top Feeder (2-Pack)",
+    "price": 18.99,
+    "rating": 4.4,
+    "reviews": 800,
+    "brand": "Aukbeefun",
+    "perHive": true
+  },
+  {
+    "asin": "B0753HLXLR",
+    "url": "https://www.amazon.com/dp/B0753HLXLR?tag=BeeKings-20",
+    "name": "Beetle Blaster Small Hive Beetle Trap",
+    "price": 14.99,
+    "rating": 4.3,
+    "reviews": 650,
+    "brand": "Beetle Blaster",
+    "perHive": true
+  },
+  {
+    "asin": "0801485037",
+    "url": "https://www.amazon.com/dp/0801485037?tag=BeeKings-20",
+    "name": "The Beekeeper's Handbook (3rd Edition)",
+    "price": 22.95,
+    "rating": 4.7,
+    "reviews": 1100,
+    "brand": "Sammataro & Avitabile"
+  },
+  {
+    "asin": "1612129781",
+    "url": "https://www.amazon.com/dp/1612129781?tag=BeeKings-20",
+    "name": "Storey's Guide to Keeping Honey Bees (2nd Edition)",
+    "price": 16.99,
+    "rating": 4.6,
+    "reviews": 950,
+    "brand": "Storey Publishing"
+  }
+]

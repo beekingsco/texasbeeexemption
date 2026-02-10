@@ -5,6 +5,7 @@ import { Suspense, useMemo } from 'react';
 import countiesData from '@/data/texas-counties.json';
 import suppliersData from '@/data/texas-nuc-suppliers.json';
 import amazonProducts from '@/data/amazon-products.json';
+import verifiedProducts from '@/data/verified-products.json';
 
 /* ─────────────────────────── Types ─────────────────────────── */
 interface County {
@@ -73,7 +74,7 @@ function ReportContent() {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center p-12">
           <div className="text-6xl mb-4">🐝</div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">County Not Found</h1>
+          <h1 className="text-2xl font-black text-gray-900 mb-2">County Not Found</h1>
           <p className="text-gray-500">Please provide a valid Texas county name via <code className="bg-gray-200 px-2 py-1 rounded">?county=Travis</code></p>
         </div>
       </div>
@@ -206,16 +207,32 @@ function ReportContent() {
   return (
     <div className="report-wrapper">
       <style>{`
+        /* ═══ BASE TYPOGRAPHY ═══ */
+        .report-wrapper {
+          font-size: 15px;
+          line-height: 1.7;
+          color: #374151;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        .report-wrapper h1, .report-wrapper h2, .report-wrapper h3, .report-wrapper h4 {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+          font-weight: 900;
+          letter-spacing: -0.02em;
+        }
+
         /* ═══ PRINT STYLES ═══ */
         @media print {
-          @page { margin: 0.5in; size: letter; }
+          @page { margin: 0.6in; size: letter; }
           body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           .no-print { display: none !important; }
           .page-break { page-break-before: always; }
           .avoid-break { page-break-inside: avoid; }
-          .report-wrapper { padding: 0 !important; }
-          .report-section { box-shadow: none !important; border: 1px solid #e5e7eb !important; }
+          .report-wrapper { padding: 0 !important; font-size: 14px; }
+          .report-section { box-shadow: none !important; border: none !important; }
+          .report-card { box-shadow: none !important; }
           a { text-decoration: none !important; }
+          .shopping-item-card { box-shadow: none !important; border: 1px solid #e5e7eb !important; }
         }
 
         /* ═══ ANIMATIONS ═══ */
@@ -230,12 +247,36 @@ function ReportContent() {
 
         /* ═══ HEXAGON PATTERN BG ═══ */
         .hex-bg {
-          background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L52 17.5 L52 42.5 L30 55 L8 42.5 L8 17.5 Z' fill='none' stroke='%23f59e0b' stroke-width='0.3' opacity='0.15'/%3E%3C/svg%3E");
+          background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L52 17.5 L52 42.5 L30 55 L8 42.5 L8 17.5 Z' fill='none' stroke='%23f59e0b' stroke-width='0.3' opacity='0.12'/%3E%3C/svg%3E");
         }
 
         /* ═══ HIVE DIAGRAM ═══ */
         .hive-part { transition: transform 0.2s, box-shadow 0.2s; cursor: default; }
-        .hive-part:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 10; position: relative; }
+        .hive-part:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 10; position: relative; }
+
+        /* ═══ CLEAN TABLE STYLES ═══ */
+        .clean-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        .clean-table th { 
+          text-align: left; padding: 14px 16px; font-weight: 600; font-size: 12px; 
+          text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; 
+          border-bottom: none; background: transparent;
+        }
+        .clean-table td { padding: 14px 16px; border-bottom: none; }
+        .clean-table tbody tr:last-child td { border-bottom: none; }
+        .clean-table tbody tr:nth-child(even) { background: #fafafa; }
+        .clean-table tfoot td { padding: 16px; font-weight: 700; border-top: none; border-bottom: none; }
+
+        /* ═══ EXPENSE TABLE (dotted fill-in rows) ═══ */
+        .expense-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        .expense-table th {
+          text-align: left; padding: 14px 16px; font-weight: 600; font-size: 12px;
+          text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280;
+          border-bottom: none; background: transparent;
+        }
+        .expense-table td { padding: 12px 16px; }
+        .expense-table .example-row td { border-bottom: none; }
+        .expense-table .blank-row td { border-bottom: none; }
+        .expense-table tfoot td { padding: 14px 16px; font-weight: 700; border-top: none; }
       `}</style>
 
       {/* ════════════════════════════════════════════
@@ -256,7 +297,7 @@ function ReportContent() {
       {/* ════════════════════════════════════════════
           COVER / HEADER
           ════════════════════════════════════════════ */}
-      <header className="hex-bg" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%)', color: 'white', padding: '48px 24px 56px' }}>
+      <header className="hex-bg" style={{ background: 'linear-gradient(145deg, #1a2332 0%, #243b53 50%, #1a2332 100%)', color: 'white', padding: '56px 24px 64px' }}>
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
           <div className="flex items-center justify-between mb-8">
             <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 44 }} />
@@ -267,14 +308,14 @@ function ReportContent() {
           </div>
 
           <div className="text-center fade-up">
-            <div className="inline-block px-4 py-1 rounded-full text-xs font-bold tracking-wider uppercase mb-4" style={{ background: 'rgba(245,158,11,0.2)', color: '#fbbf24', border: '1px solid rgba(245,158,11,0.3)' }}>
+            <div className="inline-block px-5 py-1.5 rounded-full text-xs font-semibold tracking-wider mb-5" style={{ background: 'rgba(245,178,51,0.15)', color: '#f5c542', border: '1px solid rgba(245,178,51,0.25)', letterSpacing: '0.1em' }}>
               Personalized Property Report
             </div>
-            <h1 className="text-4xl md:text-5xl font-black mb-3 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4" style={{ lineHeight: 1.15 }}>
               {county.name} County<br />
-              <span style={{ color: '#fbbf24' }}>Tax Savings Report</span>
+              <span style={{ color: '#f5c542' }}>Tax Savings Report</span>
             </h1>
-            <p className="text-lg opacity-80 mb-6">Agricultural Exemption Through Beekeeping</p>
+            <p className="text-lg opacity-75 mb-6" style={{ fontWeight: 400 }}>Agricultural Exemption Through Beekeeping</p>
 
             <div className="inline-block rounded-2xl px-8 py-4 mb-4" style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.12)' }}>
               <p className="text-sm opacity-60 mb-1">Prepared exclusively for</p>
@@ -298,19 +339,19 @@ function ReportContent() {
           TABLE OF CONTENTS
           ════════════════════════════════════════════ */}
       <div className="no-print" style={{ maxWidth: 800, margin: '0 auto', padding: '32px 24px 0' }}>
-        <div className="report-section bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">📑 Table of Contents</h3>
+        <div className="report-section bg-white rounded-2xl p-6">
+          <h3 className="text-sm font-semibold text-gray-400 tracking-wide mb-4">What&apos;s in this report</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {[
-              { n: '1', title: 'Property Tax Savings Analysis', anchor: 'section-1' },
-              { n: '2', title: 'Your County Playbook', anchor: 'section-2' },
-              { n: '3', title: 'Equipment & Shopping List', anchor: 'section-3' },
-              { n: '4', title: 'Beekeeping Basics', anchor: 'section-4' },
-              { n: '5', title: 'Expense Tracking & Record Keeping', anchor: 'section-5' },
-              { n: '6', title: 'Local Bee Resources', anchor: 'section-6' },
+              { n: '1', title: 'How Much You\'ll Save', anchor: 'section-1' },
+              { n: '2', title: 'How to Get Your Exemption', anchor: 'section-2' },
+              { n: '3', title: 'What to Buy', anchor: 'section-3' },
+              { n: '4', title: 'What You Need to Know', anchor: 'section-4' },
+              { n: '5', title: 'Keeping Your Records Straight', anchor: 'section-5' },
+              { n: '6', title: 'People Who Can Help', anchor: 'section-6' },
             ].map(item => (
               <a key={item.n} href={`#${item.anchor}`} className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors group">
-                <span className="w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-sm font-bold shrink-0">{item.n}</span>
+                <span className="text-xl font-black text-amber-500 shrink-0 w-6">{item.n}</span>
                 <span className="text-sm font-semibold text-gray-700 group-hover:text-green-600 transition-colors">{item.title}</span>
               </a>
             ))}
@@ -321,80 +362,79 @@ function ReportContent() {
       {/* ════════════════════════════════════════════
           SECTION 1: TAX SAVINGS ANALYSIS
           ════════════════════════════════════════════ */}
-      <section id="section-1" style={{ maxWidth: 800, margin: '0 auto', padding: '40px 24px' }}>
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center text-xl">💰</div>
+      <section id="section-1" style={{ maxWidth: 800, margin: '0 auto', padding: '48px 24px' }}>
+        <div className="flex items-start gap-5 mb-10">
+          <div className="text-5xl leading-none shrink-0 pt-1">💰</div>
           <div>
-            <h2 className="text-2xl font-black text-gray-900">Your Property Tax Savings Analysis</h2>
-            <p className="text-sm text-gray-500">{county.name} County, Texas • {acres} acres • {fmtMoney(propertyValue)} appraised value</p>
+            <h2 className="text-2xl font-black text-gray-900" style={{ letterSpacing: '-0.01em' }}>How Much You&apos;ll Save</h2>
+            <p className="text-sm text-gray-400 mt-0.5">{county.name} County · {acres} acres · {fmtMoney(propertyValue)} property value</p>
           </div>
         </div>
 
         {/* Key metrics row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-10">
           {[
-            { label: 'Current Taxes', value: fmtMoney(currentTaxes), sub: '/year', color: 'bg-red-50 text-red-700 border-red-100' },
-            { label: 'With Ag Exemption', value: fmtMoney(totalWithAg), sub: '/year', color: 'bg-green-50 text-green-700 border-green-100' },
-            { label: 'Annual Savings', value: fmtMoney(annualSavings), sub: `${savingsPercent.toFixed(0)}% less`, color: 'bg-amber-50 text-amber-700 border-amber-100' },
-            { label: '10-Year Savings', value: fmtMoney(annualSavings * 10), sub: 'cumulative', color: 'bg-blue-50 text-blue-700 border-blue-100' },
+            { label: 'You pay now', value: fmtMoney(currentTaxes), sub: 'per year', bg: '#fef2f2', text: '#b91c1c', border: '#fecaca' },
+            { label: 'With beekeeping', value: fmtMoney(totalWithAg), sub: 'per year', bg: '#f0fdf4', text: '#15803d', border: '#bbf7d0' },
+            { label: 'You save', value: fmtMoney(annualSavings), sub: `${savingsPercent.toFixed(0)}% less`, bg: '#fffbeb', text: '#b45309', border: '#fde68a' },
+            { label: 'Over 10 years', value: fmtMoney(annualSavings * 10), sub: 'total savings', bg: '#eff6ff', text: '#1d4ed8', border: '#bfdbfe' },
           ].map(m => (
-            <div key={m.label} className={`avoid-break rounded-2xl p-4 border ${m.color}`}>
-              <p className="text-xs font-bold uppercase tracking-wider opacity-70 mb-1">{m.label}</p>
-              <p className="text-2xl font-black">{m.value}</p>
-              <p className="text-xs opacity-60">{m.sub}</p>
+            <div key={m.label} className="avoid-break rounded-2xl p-5 text-center" style={{ background: m.bg }}>
+              <p className="text-xs font-semibold tracking-wide mb-2" style={{ color: m.text, opacity: 0.7 }}>{m.label}</p>
+              <p className="text-3xl font-black" style={{ color: m.text }}>{m.value}</p>
+              <p className="text-xs mt-1" style={{ color: m.text, opacity: 0.5 }}>{m.sub}</p>
             </div>
           ))}
         </div>
 
         {/* Visual bar chart */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-6">Tax Comparison — Before vs. After</h3>
+        <div className="report-section avoid-break bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-8">Your Taxes — Before and After</h3>
 
-          <div className="mb-6">
-            <div className="flex justify-between mb-2">
-              <span className="text-sm font-semibold text-gray-600">Without Ag Exemption</span>
-              <span className="text-lg font-black text-red-600">{fmtMoney(currentTaxes)}/yr</span>
+          <div className="mb-8">
+            <div className="flex justify-between mb-3">
+              <span className="text-sm font-medium text-gray-500">What you pay now</span>
+              <span className="text-lg font-bold text-red-600">{fmtMoney(currentTaxes)}/yr</span>
             </div>
-            <div className="h-10 bg-red-100 rounded-xl overflow-hidden">
-              <div className="h-full bg-red-500 rounded-xl bar-grow" style={{ width: '100%' }} />
+            <div className="h-10 rounded-xl overflow-hidden" style={{ background: '#fde8e8' }}>
+              <div className="h-full rounded-xl bar-grow" style={{ width: '100%', background: 'linear-gradient(90deg, #ef4444, #f87171)' }} />
             </div>
           </div>
 
-          <div className="mb-6">
-            <div className="flex justify-between mb-2">
-              <span className="text-sm font-semibold text-gray-600">With Beekeeping Ag Exemption</span>
-              <span className="text-lg font-black text-green-600">{fmtMoney(totalWithAg)}/yr</span>
+          <div className="mb-8">
+            <div className="flex justify-between mb-3">
+              <span className="text-sm font-medium text-gray-500">What you&apos;d pay with beekeeping</span>
+              <span className="text-lg font-bold text-green-600">{fmtMoney(totalWithAg)}/yr</span>
             </div>
-            <div className="h-10 bg-green-100 rounded-xl overflow-hidden">
-              <div className="h-full bg-green-500 rounded-xl bar-grow" style={{ width: `${Math.max(5, (totalWithAg / currentTaxes) * 100)}%` }} />
+            <div className="h-10 rounded-xl overflow-hidden" style={{ background: '#dcfce7' }}>
+              <div className="h-full rounded-xl bar-grow" style={{ width: `${Math.max(5, (totalWithAg / currentTaxes) * 100)}%`, background: 'linear-gradient(90deg, #16a34a, #4ade80)' }} />
             </div>
           </div>
 
-          <div className="flex items-center gap-3 p-4 rounded-xl" style={{ background: '#fef9ee', border: '1px solid #fde68a' }}>
-            <span className="text-2xl">🎉</span>
+          <div className="flex items-start gap-4 p-5 rounded-xl" style={{ background: '#fefcf3' }}>
+            <span className="text-4xl leading-none shrink-0">🎉</span>
             <div>
-              <p className="font-bold text-amber-800">You save {fmtMoney(annualSavings)} per year ({savingsPercent.toFixed(0)}% reduction)</p>
-              <p className="text-sm text-amber-700 opacity-80">That&apos;s {fmtMoney(Math.round(annualSavings / 12))} back in your pocket every month</p>
+              <p className="font-bold text-amber-800 text-lg">You save {fmtMoney(annualSavings)} per year ({savingsPercent.toFixed(0)}% reduction)</p>
+              <p className="text-sm text-amber-700 mt-1" style={{ opacity: 0.7 }}>That&apos;s {fmtMoney(Math.round(annualSavings / 12))} back in your pocket every month</p>
             </div>
           </div>
         </div>
 
         {/* Year-over-year savings projection */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-6">Cumulative Savings Projection</h3>
-          <div className="space-y-3">
+        <div className="report-section avoid-break bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-8">How Your Savings Add Up Over Time</h3>
+          <div className="space-y-4">
             {[1, 2, 3, 5, 10, 15, 20].map(year => {
               const cumSavings = annualSavings * year;
               const maxSavings = annualSavings * 20;
               const pct = maxSavings > 0 ? (cumSavings / maxSavings) * 100 : 0;
               return (
                 <div key={year} className="flex items-center gap-4">
-                  <span className="text-sm font-bold text-gray-500 w-16 text-right">Year {year}</span>
-                  <div className="flex-1 h-8 bg-gray-100 rounded-lg overflow-hidden">
-                    <div className="h-full rounded-lg flex items-center px-3" style={{ width: `${Math.max(8, pct)}%`, background: `linear-gradient(90deg, #16a34a, #22c55e)` }}>
-                      <span className="text-xs font-bold text-white whitespace-nowrap">{fmtMoney(cumSavings)}</span>
-                    </div>
+                  <span className="text-sm font-bold text-gray-400 w-16 text-right">Year {year}</span>
+                  <div className="flex-1 h-7 bg-gray-100 rounded-lg overflow-hidden">
+                    <div className="h-full rounded-lg" style={{ width: `${Math.max(5, pct)}%`, background: `linear-gradient(90deg, #22c55e, #4ade80)` }} />
                   </div>
+                  <span className="text-sm font-bold text-green-700 w-20 text-right">{fmtMoney(cumSavings)}</span>
                 </div>
               );
             })}
@@ -402,84 +442,86 @@ function ReportContent() {
         </div>
 
         {/* ROI calculation */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-6">🐝 Return on Investment</h3>
+        <div className="report-section avoid-break bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-3">Is It Worth It?</h3>
+          <p className="text-sm text-gray-400 mb-8">Here&apos;s the math on what you put in vs. what you get back.</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="rounded-2xl p-5 text-center" style={{ background: 'linear-gradient(135deg, #0f172a, #1e3a5f)', color: 'white' }}>
-              <p className="text-xs font-bold uppercase tracking-wider opacity-60 mb-1">Startup Investment</p>
-              <p className="text-3xl font-black">{fmtMoney(totalUpfront)}</p>
-              <p className="text-xs opacity-50 mt-1">{requiredHives} hives + equipment</p>
+          <div className="grid grid-cols-3 gap-3 md:gap-5 mb-8">
+            <div className="text-center py-4">
+              <p className="text-xs font-semibold text-gray-400 mb-2">Startup cost</p>
+              <p className="text-2xl md:text-3xl font-black text-gray-900">{fmtMoney(totalUpfront)}</p>
+              <p className="text-xs text-gray-400 mt-1">{requiredHives} hives + gear</p>
             </div>
-            <div className="rounded-2xl p-5 text-center" style={{ background: 'linear-gradient(135deg, #14532d, #16a34a)', color: 'white' }}>
-              <p className="text-xs font-bold uppercase tracking-wider opacity-60 mb-1">Net Annual Benefit</p>
-              <p className="text-3xl font-black">{fmtMoney(netAnnualBenefit)}</p>
-              <p className="text-xs opacity-50 mt-1">savings + honey − maintenance</p>
+            <div className="text-center py-4">
+              <p className="text-xs font-semibold text-green-600 mb-2">Annual return</p>
+              <p className="text-2xl md:text-3xl font-black text-green-600">{fmtMoney(netAnnualBenefit)}</p>
+              <p className="text-xs text-gray-400 mt-1">savings + honey − upkeep</p>
             </div>
-            <div className="rounded-2xl p-5 text-center" style={{ background: 'linear-gradient(135deg, #78350f, #d97706)', color: 'white' }}>
-              <p className="text-xs font-bold uppercase tracking-wider opacity-60 mb-1">Payback Period</p>
-              <p className="text-3xl font-black">~{roiMonths} mo</p>
-              <p className="text-xs opacity-50 mt-1">to recoup your investment</p>
+            <div className="text-center py-4">
+              <p className="text-xs font-semibold text-amber-600 mb-2">Pays for itself in</p>
+              <p className="text-2xl md:text-3xl font-black text-amber-600">~{roiMonths} mo</p>
+              <p className="text-xs text-gray-400 mt-1">then it&apos;s pure savings</p>
             </div>
           </div>
 
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between p-3 bg-gray-50 rounded-lg">
-              <span className="text-gray-600">Tax savings</span>
-              <span className="font-bold text-green-700">+{fmtMoney(annualSavings)}/yr</span>
-            </div>
-            <div className="flex justify-between p-3 bg-gray-50 rounded-lg">
-              <span className="text-gray-600">Honey production ({requiredHives * 30} lbs × $20/lb)</span>
-              <span className="font-bold text-amber-700">+{fmtMoney(honeyRevenue)}/yr</span>
-            </div>
-            <div className="flex justify-between p-3 bg-gray-50 rounded-lg">
-              <span className="text-gray-600">Annual maintenance ({requiredHives} hives × $75)</span>
-              <span className="font-bold text-red-600">−{fmtMoney(annualMaintenance)}/yr</span>
-            </div>
-            <div className="flex justify-between p-3 rounded-lg" style={{ background: '#fef9ee', border: '1px solid #fde68a' }}>
-              <span className="font-bold text-gray-900">Net annual benefit</span>
-              <span className="font-black text-green-700">{fmtMoney(netAnnualBenefit)}/yr</span>
+          <div className="space-y-0">
+            {[
+              { label: 'Tax savings', value: `+${fmtMoney(annualSavings)}`, color: '#15803d' },
+              { label: 'Honey you can sell', value: `+${fmtMoney(honeyRevenue)}`, color: '#b45309' },
+              { label: 'Yearly upkeep', value: `−${fmtMoney(annualMaintenance)}`, color: '#dc2626' },
+            ].map((item, i) => (
+              <div key={item.label} className="flex justify-between items-center py-4" style={{ borderBottom: 'none' }}>
+                <span className="text-gray-500">{item.label}</span>
+                <span className="font-semibold" style={{ color: item.color }}>{item.value}/yr</span>
+              </div>
+            ))}
+            <div className="flex justify-between items-center py-5 mt-2" style={{ borderTop: 'none' }}>
+              <span className="font-bold text-gray-800">You come out ahead</span>
+              <span className="font-bold text-green-700 text-lg">{fmtMoney(netAnnualBenefit)}/yr</span>
             </div>
           </div>
         </div>
 
         {/* County-specific details */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">County Tax Details</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="report-section avoid-break bg-white rounded-2xl p-10">
+          <h3 className="text-xl font-black text-gray-800 mb-6">How We Calculated This</h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
             {[
-              { label: 'Avg. Tax Rate', value: `${taxRate.toFixed(2)}%` },
-              { label: 'Ag Productivity Value', value: `${fmtMoney(county.agProductivityValue)}/acre` },
-              { label: 'Homestead (non-ag)', value: `${homesteadAcres} acre` },
-              { label: 'Ag-Eligible Acres', value: `${agEligibleAcres.toFixed(1)} acres` },
-              { label: 'Required Hives', value: `${requiredHives} colonies` },
+              { label: 'Your tax rate', value: `${taxRate.toFixed(2)}%` },
+              { label: 'Farmland value per acre', value: `${fmtMoney(county.agProductivityValue)}` },
+              { label: 'Home site', value: `${homesteadAcres} acre` },
+              { label: 'Farmable land', value: `${agEligibleAcres.toFixed(1)} acres` },
+              { label: 'Hives you need', value: `${requiredHives}` },
               { label: 'Region', value: county.region },
             ].map(d => (
-              <div key={d.label} className="p-4 rounded-xl bg-gray-50">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">{d.label}</p>
-                <p className="text-lg font-black text-gray-900 mt-1">{d.value}</p>
+              <div key={d.label} className="p-5 rounded-xl" style={{ background: '#f9fafb' }}>
+                <p className="text-xs font-medium text-gray-400 tracking-wide">{d.label}</p>
+                <p className="text-xl font-black text-gray-800 mt-2">{d.value}</p>
               </div>
             ))}
           </div>
+          <p className="text-xs text-gray-400 mt-6 leading-relaxed">With an ag exemption, the county taxes your farmable land at the low &ldquo;farmland value&rdquo; instead of full market value. That&apos;s where the savings come from.</p>
         </div>
       </section>
+
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 24px' }}><hr style={{ border: 'none', borderTop: '1px solid #e0e0e0' }} /></div>
 
       {/* ════════════════════════════════════════════
           SECTION 2: COUNTY PLAYBOOK
           ════════════════════════════════════════════ */}
-      <section id="section-2" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '40px 24px' }}>
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center text-xl">📋</div>
+      <section id="section-2" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '48px 24px' }}>
+        <div className="flex items-start gap-5 mb-10">
+          <div className="text-5xl leading-none shrink-0 pt-1">📋</div>
           <div>
-            <h2 className="text-2xl font-black text-gray-900">Your {county.name} County Playbook</h2>
-            <p className="text-sm text-gray-500">Everything you need to file for your ag exemption</p>
+            <h2 className="text-2xl font-black text-gray-900" style={{ letterSpacing: '-0.01em' }}>How to Get Your Exemption</h2>
+            <p className="text-sm text-gray-400 mt-0.5">{county.name} County — step by step</p>
           </div>
         </div>
 
         {/* CAD Info Card */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">Your County Appraisal District</h3>
-          <div className="rounded-xl p-6" style={{ background: 'linear-gradient(135deg, #eff6ff, #f0f9ff)', border: '1px solid #bfdbfe' }}>
+        <div className="report-section avoid-break bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-6">Where to Apply</h3>
+          <div className="rounded-xl p-6" style={{ background: 'linear-gradient(135deg, #eff6ff, #f0f9ff)' }}>
             <p className="text-xl font-bold text-blue-900 mb-3">{county.cad.name}</p>
             <div className="space-y-2">
               <div className="flex items-center gap-3">
@@ -497,66 +539,51 @@ function ReportContent() {
             </div>
           </div>
           {county.notes && (
-            <div className="mt-4 p-4 rounded-xl bg-amber-50 border border-amber-200">
+            <div className="mt-4 p-4 rounded-xl bg-amber-50">
               <p className="text-sm text-amber-800"><strong>📝 County Note:</strong> {county.notes}</p>
             </div>
           )}
         </div>
 
         {/* County requirements */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">{county.name} County Beekeeping Requirements</h3>
-          <div className="overflow-hidden rounded-xl border border-gray-200">
-            <table className="w-full text-sm">
-              <thead>
-                <tr style={{ background: '#0f172a', color: 'white' }}>
-                  <th className="text-left p-4 font-bold">Requirement</th>
-                  <th className="text-left p-4 font-bold">{county.name} County</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ['Minimum Acreage', `${county.minAcres} acres`],
-                  ['Minimum Hives', `${county.minHives} active colonies`],
-                  ['Additional Hives', `1 additional hive per ${county.additionalHivesPer} acres beyond ${county.minAcres}`],
-                  ['Your Property', `${acres} acres → ${requiredHives} hive${requiredHives > 1 ? 's' : ''} required`],
-                  ['Ag History Required', '5 out of 7 preceding tax years'],
-                  ['Tax Rate', `${taxRate.toFixed(2)}%`],
-                  ['Productivity Value', `${fmtMoney(county.agProductivityValue)}/acre (vs. market rate)`],
-                ].map(([label, value], i) => (
-                  <tr key={label} className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                    <td className="p-4 font-semibold text-gray-700">{label}</td>
-                    <td className="p-4 font-bold text-gray-900">{value}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="report-section avoid-break bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-3">What {county.name} County Requires</h3>
+          <p className="text-sm text-gray-400 mb-8">Here&apos;s what the county needs to see for you to qualify.</p>
+          <div className="space-y-5">
+            {[
+              { q: 'How much land do I need?', a: `At least ${county.minAcres} acres.` },
+              { q: 'How many beehives?', a: `At least ${county.minHives} active hive${county.minHives > 1 ? 's' : ''}. Larger properties need 1 more hive for every ${county.additionalHivesPer} acres past ${county.minAcres}.` },
+              { q: 'What does that mean for my property?', a: `With ${acres} acres, you need ${requiredHives} hive${requiredHives > 1 ? 's' : ''}.` },
+              { q: 'Do I need to have been farming before?', a: 'Technically, the county looks for 5 out of the last 7 years of agricultural use. But many counties grant first-time exemptions — just ask.' },
+              { q: 'When is the deadline?', a: 'April 30th each year. File early if you can.' },
+            ].map(item => (
+              <div key={item.q} style={{ borderBottom: 'none', paddingBottom: 20 }}>
+                <p className="font-semibold text-gray-800 mb-1">{item.q}</p>
+                <p className="text-gray-500 leading-relaxed">{item.a}</p>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* Step-by-step process */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-6">Step-by-Step Application Process</h3>
-          <div className="space-y-6">
+        <div className="report-section avoid-break bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-3">How to Apply — 5 Simple Steps</h3>
+          <p className="text-sm text-gray-400 mb-8">Most people complete this process in a single afternoon.</p>
+          <div className="space-y-8">
             {[
-              { step: 1, title: 'Set Up Your Beekeeping Operation', time: 'Months 1-3', desc: `Install at least ${requiredHives} active bee colonies on your property. Place hives in a suitable location with morning sun, wind protection, and a nearby water source.` },
-              { step: 2, title: 'Start Keeping Records Immediately', time: 'Ongoing', desc: 'Document everything: purchase receipts, hive inspection logs, photos of your operation, honey production records, and management activities. The CAD may ask for proof.' },
-              { step: 3, title: 'Obtain the Application Form', time: 'January - March', desc: `Download the 1-D-1 Agricultural Use Application from ${county.cad.website} or call ${county.cad.phone} to request a copy.` },
-              { step: 4, title: 'Complete the Application', time: 'Before April 30', desc: `Fill out all sections. Mark "Beekeeping/Apiculture" as your agricultural use. List ${requiredHives} colonies on ${agEligibleAcres.toFixed(1)} ag-eligible acres. Attach your management documentation.` },
-              { step: 5, title: `Submit to ${county.cad.name}`, time: 'By April 30', desc: 'Submit your completed application with all supporting documentation. Keep a copy for your records. You can submit in person, by mail, or online (if available).' },
-              { step: 6, title: 'Property Inspection (If Required)', time: 'May - June', desc: 'The CAD may send an appraiser to verify your operation. Ensure hives are visible, actively managed, and appear healthy. Have your management log ready to show.' },
-              { step: 7, title: 'Receive Your New Appraisal', time: 'Mid-Year', desc: 'Review your updated property appraisal showing the ag valuation. Verify the productivity value was applied to qualifying acreage. If denied, you can protest to the Appraisal Review Board.' },
+              { step: 1, title: 'Set up your hives', desc: `Place ${requiredHives} beehive${requiredHives > 1 ? 's' : ''} on your property. Morning sun, near a water source, away from neighbors.` },
+              { step: 2, title: 'Get the application', desc: `Download the agricultural use form from your county website or call ${county.cad.phone}.` },
+              { step: 3, title: 'Fill it out and attach your receipts', desc: `Check "Beekeeping" as your farm use. Include photos of your hives and your purchase receipts.` },
+              { step: 4, title: 'Submit by April 30', desc: `Send it to ${county.cad.name} — by mail, in person, or online if they offer it.` },
+              { step: 5, title: 'Wait for approval', desc: 'The county may send someone to verify your hives are there. After that, your new (much lower!) tax bill kicks in.' },
             ].map(s => (
-              <div key={s.step} className="flex gap-4">
+              <div key={s.step} className="flex gap-5">
                 <div className="shrink-0">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{ background: 'linear-gradient(135deg, #16a34a, #22c55e)' }}>{s.step}</div>
+                  <span className="text-3xl font-black text-green-600">{s.step}</span>
                 </div>
-                <div className="flex-1 pb-6" style={{ borderBottom: s.step < 7 ? '1px solid #f3f4f6' : 'none' }}>
-                  <div className="flex items-center gap-3 mb-1">
-                    <h4 className="font-bold text-gray-900">{s.title}</h4>
-                    <span className="text-xs font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">{s.time}</span>
-                  </div>
-                  <p className="text-sm text-gray-600 leading-relaxed">{s.desc}</p>
+                <div className="flex-1">
+                  <h4 className="font-bold text-gray-800 mb-1">{s.title}</h4>
+                  <p className="text-gray-500 leading-relaxed">{s.desc}</p>
                 </div>
               </div>
             ))}
@@ -564,49 +591,48 @@ function ReportContent() {
         </div>
 
         {/* Documentation checklist */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">📝 Required Documentation Checklist</h3>
-          <p className="text-sm text-gray-500 mb-4">Check off each item as you gather your documents. All items should be ready before filing.</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="report-section avoid-break bg-white rounded-2xl p-10">
+          <h3 className="text-xl font-black text-gray-800 mb-3">What to Gather Before You Apply</h3>
+          <p className="text-sm text-gray-400 mb-8">A simple checklist. Most of this you&apos;ll already have.</p>
+          <div className="space-y-4">
             {[
-              '1-D-1 Agricultural Use Application (completed)',
-              'Property deed or proof of ownership',
-              'Receipts for hive equipment purchases',
-              'Receipts for bee colony (nuc) purchases',
-              'Hive management/inspection log',
-              'Photos of hives on property (quarterly)',
-              'Honey production records',
-              'Map showing hive placement on property',
-              'Equipment & supply receipts',
-              'Beekeeping course certificate (if available)',
-              'Annual expense summary',
-              'Prior year ag exemption (if renewing)',
-            ].map(item => (
-              <label key={item} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer">
-                <span className="mt-0.5 w-5 h-5 rounded border-2 border-gray-300 shrink-0 flex items-center justify-center text-xs">☐</span>
-                <span className="text-sm text-gray-700">{item}</span>
-              </label>
+              { item: 'The application form', note: 'Download from your county website or call them' },
+              { item: 'Your equipment receipts', note: 'Hive boxes, bee suit, tools — anything you bought' },
+              { item: 'Your bee purchase receipt', note: 'From your nuc/package bee supplier' },
+              { item: 'Photos of your hives on the property', note: 'Phone photos with dates are perfect' },
+              { item: 'A simple map of where hives are placed', note: 'A sketch or Google Maps screenshot works' },
+              { item: 'Proof you own the property', note: 'Deed or tax statement' },
+            ].map(d => (
+              <div key={d.item} className="flex items-start gap-4 py-1">
+                <span className="mt-0.5 text-lg shrink-0">☐</span>
+                <div>
+                  <p className="font-semibold text-gray-800">{d.item}</p>
+                  <p className="text-sm text-gray-400">{d.note}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 24px' }}><hr style={{ border: 'none', borderTop: '1px solid #e0e0e0' }} /></div>
+
       {/* ════════════════════════════════════════════
           SECTION 3: EQUIPMENT & AMAZON SHOPPING LIST
           ════════════════════════════════════════════ */}
-      <section id="section-3" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '40px 24px' }}>
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center text-xl">🛒</div>
+      <section id="section-3" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '48px 24px' }}>
+        <div className="flex items-start gap-5 mb-10">
+          <div className="text-5xl leading-none shrink-0 pt-1">🛒</div>
           <div>
-            <h2 className="text-2xl font-black text-gray-900">Your Personalized Shopping List</h2>
-            <p className="text-sm text-gray-500">Everything you need for {requiredHives} hive{requiredHives > 1 ? 's' : ''} in {county.name} County — ready to buy on Amazon</p>
+            <h2 className="text-2xl font-black text-gray-900" style={{ letterSpacing: '-0.01em' }}>What to Buy</h2>
+            <p className="text-sm text-gray-400 mt-0.5">Everything for {requiredHives} hive{requiredHives > 1 ? 's' : ''} — ready to order on Amazon</p>
           </div>
         </div>
 
         {/* Hive Anatomy Infographic — kept from original */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-2">Anatomy of a Beehive</h3>
-          <p className="text-sm text-gray-500 mb-6">A standard Langstroth hive — the most common type in Texas beekeeping</p>
+        <div className="report-section avoid-break bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-2">Anatomy of a Beehive</h3>
+          <p className="text-sm text-gray-400 mb-8">A standard Langstroth hive — the most common type in Texas beekeeping</p>
 
           <div className="flex flex-col items-center gap-0" style={{ maxWidth: 480, margin: '0 auto' }}>
             <div className="hive-part w-full rounded-t-xl p-3 text-center border-2" style={{ background: 'linear-gradient(135deg, #64748b, #475569)', borderColor: '#334155', color: 'white' }}>
@@ -657,198 +683,134 @@ function ReportContent() {
           </div>
         </div>
 
-        {/* ═══ AMAZON SHOPPING LIST ═══ */}
+        {/* ═══ YOUR SHOPPING LIST — VERIFIED PRODUCTS ═══ */}
         {(() => {
-          const tierOrder = [
-            { key: 'budget' as const, bg: 'linear-gradient(135deg, #14532d, #16a34a)', badgeBg: '#16a34a' },
-            { key: 'recommended' as const, bg: 'linear-gradient(135deg, #78350f, #d97706)', badgeBg: '#d97706' },
-            { key: 'premium' as const, bg: 'linear-gradient(135deg, #1e3a8a, #2563eb)', badgeBg: '#2563eb' },
-          ];
+          type VerifiedProduct = { asin: string | null; url: string; name: string; price: number; rating: number; reviews: number; brand: string; perHive?: boolean };
+          const products = (verifiedProducts as VerifiedProduct[]).map(p => ({
+            ...p,
+            qty: p.perHive ? requiredHives : 1,
+            total: p.price * (p.perHive ? requiredHives : 1),
+          }));
+          const grandTotal = products.reduce((s, p) => s + p.total, 0);
+          const annMaint = requiredHives * 75;
+          const netBenefit = annualSavings - annMaint;
+          const months = netBenefit > 0 ? Math.ceil((grandTotal / netBenefit) * 12) : 0;
 
           return (
-            <>
-              {/* Tier overview cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                {tierOrder.map(({ key, bg }) => {
-                  const t = shoppingTiers[key];
-                  const annMaint = requiredHives * 75;
-                  const netBenefit = annualSavings - annMaint;
-                  const months = netBenefit > 0 ? Math.ceil((t.total / netBenefit) * 12) : 0;
-                  return (
-                    <div key={key} className="rounded-2xl p-5 text-center text-white" style={{ background: bg }}>
-                      <p className="text-2xl mb-1">{t.emoji}</p>
-                      <p className="text-xs font-bold uppercase tracking-wider opacity-70">{t.label}</p>
-                      <p className="text-3xl font-black mt-1">{fmtMoney(Math.round(t.total))}</p>
-                      <p className="text-xs opacity-60 mt-1">{t.items.length} items</p>
-                      <div className="mt-3 pt-3" style={{ borderTop: '1px solid rgba(255,255,255,0.2)' }}>
-                        <p className="text-xs opacity-80">Pays for itself in</p>
-                        <p className="text-lg font-black">~{months} months</p>
-                      </div>
-                    </div>
-                  );
-                })}
+            <div className="report-section bg-white rounded-2xl mb-8 overflow-hidden">
+              {/* Header */}
+              <div className="px-6 py-5 md:px-8 md:py-6" style={{ background: 'linear-gradient(135deg, #fefce8, #fef9c3)' }}>
+                <div className="flex items-center justify-between flex-wrap gap-3">
+                  <div>
+                    <h3 className="text-xl font-black text-gray-900">Your Shopping List</h3>
+                    <p className="text-sm text-gray-500 mt-0.5">{products.length} items for {requiredHives} hive{requiredHives > 1 ? 's' : ''} — everything you need to get started</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-black text-gray-900">{fmtMoney(Math.round(grandTotal))}</p>
+                    <p className="text-xs text-green-700 font-semibold">Pays for itself in ~{months} months</p>
+                  </div>
+                </div>
               </div>
 
-              {/* Detailed tier tables */}
-              {tierOrder.map(({ key, bg, badgeBg }) => {
-                const t = shoppingTiers[key];
-                const annMaint = requiredHives * 75;
-                const netBenefit = annualSavings - annMaint;
-                const months = netBenefit > 0 ? Math.ceil((t.total / netBenefit) * 12) : 0;
-
-                return (
-                  <div key={key} className="report-section bg-white rounded-2xl shadow-sm border border-gray-100 mb-6 overflow-hidden">
-                    {/* Tier header */}
-                    <div className="p-6 text-white" style={{ background: bg }}>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-2xl font-black">{t.emoji} {t.label}</p>
-                          <p className="text-sm opacity-80 mt-1">{t.description}</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-3xl font-black">{fmtMoney(Math.round(t.total))}</p>
-                          <p className="text-xs opacity-60">{t.items.length} items for {requiredHives} hive{requiredHives > 1 ? 's' : ''}</p>
+              {/* Items */}
+              <div>
+                {products.map((item, i) => (
+                  <div key={`shop-${item.asin || item.name}-${i}`} className="px-5 py-5 md:px-8 md:py-6">
+                    <div className="flex items-start justify-between gap-3 mb-1">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-gray-800 leading-snug">{item.name}</p>
+                        <div className="flex items-center gap-2 mt-1 flex-wrap">
+                          <span className="text-amber-400 text-sm">{'★'.repeat(Math.round(item.rating))}</span>
+                          <span className="text-xs text-gray-400">{fmt(item.reviews)} reviews</span>
+                          {item.qty > 1 && <span className="text-xs text-gray-400">· Qty: {item.qty}</span>}
                         </div>
                       </div>
+                      <span className="text-xl font-bold text-gray-900 shrink-0">${item.total.toFixed(2)}</span>
                     </div>
-
-                    {/* Items table */}
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm">
-                        <thead>
-                          <tr className="bg-gray-50 border-b border-gray-200">
-                            <th className="text-left p-3 font-bold text-gray-600 text-xs uppercase tracking-wider">Product</th>
-                            <th className="text-center p-3 font-bold text-gray-600 text-xs uppercase tracking-wider">Qty</th>
-                            <th className="text-right p-3 font-bold text-gray-600 text-xs uppercase tracking-wider">Unit</th>
-                            <th className="text-right p-3 font-bold text-gray-600 text-xs uppercase tracking-wider">Total</th>
-                            <th className="text-center p-3 font-bold text-gray-600 text-xs uppercase tracking-wider no-print">Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {t.items.map((item, i) => (
-                            <tr key={`${key}-${item.product.asin}-${i}`} className={`${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'} border-b border-gray-100 hover:bg-amber-50 transition-colors`}>
-                              <td className="p-3">
-                                <div className="flex items-start gap-3">
-                                  <div className="shrink-0 w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-lg">📦</div>
-                                  <div className="min-w-0">
-                                    <div className="flex items-center gap-2 flex-wrap">
-                                      <p className="font-semibold text-gray-900 text-sm leading-tight">{item.product.name}</p>
-                                      {item.product.recommended && (
-                                        <span className="shrink-0 text-xs font-bold text-white px-2 py-0.5 rounded-full" style={{ background: '#16a34a' }}>🐝 BeeKings Pick</span>
-                                      )}
-                                      {key === 'budget' && i === 0 && (
-                                        <span className="shrink-0 text-xs font-bold text-white px-2 py-0.5 rounded-full" style={{ background: '#d97706' }}>💰 Best Value</span>
-                                      )}
-                                    </div>
-                                    <p className="text-xs text-gray-400 mt-0.5">{item.product.brand} • ⭐ {item.product.rating} ({fmt(item.product.reviews)} reviews)</p>
-                                  </div>
-                                </div>
-                              </td>
-                              <td className="p-3 text-center font-semibold text-gray-700">{item.qty}</td>
-                              <td className="p-3 text-right text-gray-700">${item.product.price.toFixed(2)}</td>
-                              <td className="p-3 text-right font-bold text-gray-900">${item.total.toFixed(2)}</td>
-                              <td className="p-3 text-center no-print">
-                                <a
-                                  href={item.product.amazonUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg transition-all hover:scale-105"
-                                  style={{ background: '#ff9900', color: '#0f172a' }}
-                                >
-                                  View on Amazon →
-                                </a>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                        <tfoot>
-                          <tr style={{ borderTop: '2px solid #fde68a' }}>
-                            <td colSpan={3} className="p-4 font-bold text-gray-900 text-right text-base">{t.emoji} {t.label} Total</td>
-                            <td className="p-4 text-right font-black text-xl" style={{ color: badgeBg }}>{fmtMoney(Math.round(t.total))}</td>
-                            <td className="p-4 no-print" />
-                          </tr>
-                        </tfoot>
-                      </table>
-                    </div>
-
-                    {/* ROI bar */}
-                    <div className="p-4 border-t border-gray-100" style={{ background: '#fefce8' }}>
-                      <div className="flex items-center justify-between flex-wrap gap-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-lg">📊</span>
-                          <span className="text-sm text-gray-700">
-                            <strong>{t.label} startup:</strong> {fmtMoney(Math.round(t.total))} → <strong className="text-green-700">Tax savings: {fmtMoney(annualSavings)}/yr</strong>
-                          </span>
-                        </div>
-                        <span className="text-sm font-black px-3 py-1 rounded-full text-white" style={{ background: badgeBg }}>
-                          Pays for itself in ~{months} months
-                        </span>
-                      </div>
+                    <div className="no-print mt-3">
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-3 text-base font-bold px-8 py-3 rounded-full transition-all hover:brightness-95 active:scale-95"
+                        style={{ background: '#FFD814', color: '#0F1111', border: 'none', boxShadow: '0 2px 5px rgba(0,0,0,.1)' }}
+                      >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><text x="4" y="16" fontFamily="Arial,Helvetica,sans-serif" fontWeight="900" fontSize="16" fill="#0F1111">a</text><path d="M5 17.5q4 3 10 0" stroke="#FF9900" strokeWidth="1.8" strokeLinecap="round" fill="none"/><path d="M15.5 16l1.5 2.5" stroke="#FF9900" strokeWidth="1.8" strokeLinecap="round" fill="none"/></svg>
+                        Buy Now
+                      </a>
                     </div>
                   </div>
-                );
-              })}
-
-              {/* Open Full Shopping List on Amazon button */}
-              <div className="no-print text-center mb-6">
-                <a
-                  href={`https://www.amazon.com/dp/${shoppingTiers.recommended.items[0]?.product.asin || 'B09P3TCT4T'}?tag=BeeKings-20`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl text-lg font-black transition-all hover:scale-105 shadow-lg"
-                  style={{ background: 'linear-gradient(135deg, #ff9900, #ffad33)', color: '#0f172a' }}
-                >
-                  🛒 Shop Beekeeping Equipment on Amazon
-                </a>
-                <p className="text-xs text-gray-400 mt-2">As an Amazon Associate, BeeKings earns from qualifying purchases</p>
+                ))}
               </div>
-            </>
+
+              {/* Total + CTA */}
+              <div className="px-6 py-5 md:px-8 md:py-6" style={{ background: '#fafafa' }}>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-lg font-bold text-gray-700">Total</span>
+                  <span className="text-2xl font-black text-gray-900">{fmtMoney(Math.round(grandTotal))}</span>
+                </div>
+                <div className="no-print text-center">
+                  <a
+                    href="https://www.amazon.com/s?k=beekeeping+starter+kit&tag=BeeKings-20"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-3 px-12 py-4 rounded-full text-lg font-bold transition-all hover:brightness-95 shadow-md"
+                    style={{ background: '#FFD814', color: '#0F1111', border: 'none' }}
+                  >
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><text x="4" y="16" fontFamily="Arial,Helvetica,sans-serif" fontWeight="900" fontSize="16" fill="#0F1111">a</text><path d="M5 17.5q4 3 10 0" stroke="#FF9900" strokeWidth="1.8" strokeLinecap="round" fill="none"/><path d="M15.5 16l1.5 2.5" stroke="#FF9900" strokeWidth="1.8" strokeLinecap="round" fill="none"/></svg>
+                    Buy Now on Amazon
+                  </a>
+                  <p className="text-xs text-gray-400 mt-2">As an Amazon Associate, BeeKings earns from qualifying purchases</p>
+                </div>
+              </div>
+            </div>
           );
         })()}
 
         {/* Hive Placement Guide */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-          <h3 className="text-lg font-bold text-gray-900 mb-6">Hive Placement Guide</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="report-section avoid-break bg-white rounded-2xl p-10">
+          <h3 className="text-xl font-black text-gray-800 mb-3">Where to Put Your Hives</h3>
+          <p className="text-sm text-gray-400 mb-8">Pick a spot that checks most of these boxes and you&apos;re good to go.</p>
+          <div className="space-y-5">
             {[
-              { icon: '☀️', title: 'Sun Exposure', desc: 'Face hive entrance south or southeast for morning sun. Full sun is ideal in Texas — bees get active earlier and stay productive longer.', tip: 'Afternoon shade is okay in summer to help with heat' },
-              { icon: '🌬️', title: 'Wind Protection', desc: 'Place hives near a windbreak (fence, building, tree line) on the north side. Cold north winds in winter can stress colonies.', tip: 'Don\'t block the entrance — bees need clear flight path' },
-              { icon: '💧', title: 'Water Source', desc: 'Bees need water within 200 feet. A bird bath, shallow pond, or dripping faucet works. Add rocks/corks for landing spots.', tip: 'If no natural water, set up a bee waterer before installing bees' },
-              { icon: '📏', title: 'Distance & Access', desc: 'Keep hives 25-50 feet from property lines and high-traffic areas. Face entrances away from paths and neighbors.', tip: 'A 6-foot privacy fence between hives and neighbors works great' },
-              { icon: '🏔️', title: 'Elevation', desc: 'Place on level ground slightly elevated (cinder blocks or hive stand). Avoid low spots where cold air pools or water collects.', tip: 'Tilt hive very slightly forward so rain runs off the landing board' },
-              { icon: '🚗', title: 'Vehicle Access', desc: 'You\'ll need to carry heavy honey supers. Make sure you can get a vehicle or cart within reasonable distance of the hive yard.', tip: 'A full honey super can weigh 60+ lbs' },
+              { icon: '☀️', rule: 'Morning sun', detail: 'Face the entrance south or southeast so bees catch the early light.' },
+              { icon: '💧', rule: 'Water nearby', detail: 'Within 200 feet. A bird bath or shallow dish with rocks for landing works great.' },
+              { icon: '🌬️', rule: 'Blocked from north wind', detail: 'A fence, tree line, or building on the north side keeps hives warm in winter.' },
+              { icon: '📏', rule: '25+ feet from neighbors', detail: 'Face entrances away from walkways. A privacy fence helps a lot.' },
+              { icon: '⬆️', rule: 'Slightly raised off the ground', detail: 'Cinder blocks or a hive stand. Keeps pests out and prevents flooding.' },
             ].map(g => (
-              <div key={g.title} className="p-5 rounded-xl bg-gray-50 border border-gray-100">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xl">{g.icon}</span>
-                  <h4 className="font-bold text-gray-900">{g.title}</h4>
+              <div key={g.rule} className="flex items-start gap-4" style={{ borderBottom: 'none', paddingBottom: 20 }}>
+                <span className="text-xl shrink-0 mt-0.5">{g.icon}</span>
+                <div>
+                  <p className="font-semibold text-gray-800">{g.rule}</p>
+                  <p className="text-gray-500 mt-0.5">{g.detail}</p>
                 </div>
-                <p className="text-sm text-gray-600 leading-relaxed mb-2">{g.desc}</p>
-                <p className="text-xs text-green-700 bg-green-50 px-3 py-1 rounded-full inline-block">💡 {g.tip}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 24px' }}><hr style={{ border: 'none', borderTop: '1px solid #e0e0e0' }} /></div>
+
       {/* ════════════════════════════════════════════
           SECTION 4: BEEKEEPING BASICS
           ════════════════════════════════════════════ */}
-      <section id="section-4" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '40px 24px' }}>
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-yellow-100 flex items-center justify-center text-xl">🐝</div>
+      <section id="section-4" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '48px 24px' }}>
+        <div className="flex items-start gap-5 mb-10">
+          <div className="text-5xl leading-none shrink-0 pt-1">🐝</div>
           <div>
-            <h2 className="text-2xl font-black text-gray-900">Beekeeping Basics</h2>
-            <p className="text-sm text-gray-500">Your crash course in becoming a Texas beekeeper</p>
+            <h2 className="text-2xl font-black text-gray-900" style={{ letterSpacing: '-0.01em' }}>What You Need to Know</h2>
+            <p className="text-sm text-gray-400 mt-0.5">A quick crash course — no experience needed</p>
           </div>
         </div>
 
         {/* The 3 Types of Bees */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-6">Meet the Colony — The 3 Types of Bees</h3>
+        <div className="report-section avoid-break bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-8">Meet the Colony — The 3 Types of Bees</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Queen */}
-            <div className="rounded-2xl overflow-hidden border-2 border-amber-200">
+            <div className="rounded-2xl overflow-hidden">
               <div className="p-4 text-center" style={{ background: 'linear-gradient(135deg, #fef3c7, #fde68a)' }}>
                 <div className="text-5xl mb-2">👑</div>
                 <h4 className="text-lg font-black text-amber-900">The Queen</h4>
@@ -866,7 +828,7 @@ function ReportContent() {
             </div>
 
             {/* Worker */}
-            <div className="rounded-2xl overflow-hidden border-2 border-green-200">
+            <div className="rounded-2xl overflow-hidden">
               <div className="p-4 text-center" style={{ background: 'linear-gradient(135deg, #dcfce7, #bbf7d0)' }}>
                 <div className="text-5xl mb-2">🐝</div>
                 <h4 className="text-lg font-black text-green-900">The Worker</h4>
@@ -884,7 +846,7 @@ function ReportContent() {
             </div>
 
             {/* Drone */}
-            <div className="rounded-2xl overflow-hidden border-2 border-blue-200">
+            <div className="rounded-2xl overflow-hidden">
               <div className="p-4 text-center" style={{ background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)' }}>
                 <div className="text-5xl mb-2">🎩</div>
                 <h4 className="text-lg font-black text-blue-900">The Drone</h4>
@@ -903,89 +865,93 @@ function ReportContent() {
           </div>
         </div>
 
-        {/* Seasonal Calendar */}
-        <div className="report-section bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-2">Texas Beekeeping Seasonal Calendar</h3>
-          <p className="text-sm text-gray-500 mb-6">Month-by-month guide for your first year and beyond</p>
+        {/* Seasonal Calendar — 4 seasons */}
+        <div className="report-section bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-3">What to Do Each Season</h3>
+          <p className="text-sm text-gray-400 mb-8">A simple year-round guide for your beehives</p>
 
-          <div className="space-y-3">
-            {seasonalCalendar.map(m => (
-              <div key={m.month} className="avoid-break flex gap-4 p-4 rounded-xl border border-gray-100 hover:bg-gray-50 transition-colors">
-                <div className="shrink-0 text-center" style={{ width: 70 }}>
-                  <div className="text-2xl mb-0.5">{m.icon}</div>
-                  <p className="text-xs font-bold text-gray-900">{m.month}</p>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm text-gray-700 leading-relaxed"><span className="font-bold text-gray-900">Tasks:</span> {m.tasks}</p>
-                  <p className="text-xs text-amber-700 mt-1 leading-relaxed"><span className="font-bold">⚠️ Watch for:</span> {m.watch}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* First-Year Timeline */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-6">Your First-Year Beekeeper Timeline</h3>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
-              { when: 'Month 1', title: 'Get Educated', desc: 'Read beginner books, watch videos below, join a local beekeeping association. Order equipment.' },
-              { when: 'Month 2', title: 'Set Up Your Apiary', desc: 'Prepare hive location. Assemble equipment. Set up water source. Install hive stands.' },
-              { when: 'Month 3', title: 'Install Your Bees', desc: `Install ${requiredHives} nuc(s) into your hive(s). Feed 1:1 sugar syrup. Leave them alone for a week.` },
-              { when: 'Month 4', title: 'First Inspections', desc: 'Check for queen, brood pattern, food stores. Add second box when 7/10 frames are drawn out.' },
-              { when: 'Months 5-6', title: 'Building Season', desc: 'Regular inspections every 10-14 days. Monitor for pests. Watch for swarm signs. Add supers.' },
-              { when: 'Months 7-8', title: 'First Harvest', desc: 'Harvest honey from capped supers (if any). Treat for varroa mites. Keep records.' },
-              { when: 'Months 9-12', title: 'Prepare for Winter', desc: 'Ensure adequate honey stores (60+ lbs). Reduce entrances. Add mouse guards. Minimal disturbance.' },
-            ].map((t, i) => (
-              <div key={t.when} className="flex gap-4">
-                <div className="shrink-0 w-24">
-                  <span className="text-xs font-bold text-white px-2 py-1 rounded-full" style={{ background: `hsl(${120 + i * 30}, 60%, 40%)` }}>{t.when}</span>
+              { season: 'Spring', months: 'Feb – Apr', icon: '🌸', color: '#f0fdf4', border: '#bbf7d0', textColor: '#166534', tasks: [
+                'Order and install your bees',
+                'Do your first hive inspections',
+                'File your ag exemption application (due April 30!)',
+                'Watch for swarming — give bees room to grow',
+              ]},
+              { season: 'Summer', months: 'May – Aug', icon: '☀️', color: '#fffbeb', border: '#fde68a', textColor: '#92400e', tasks: [
+                'Add extra boxes for honey storage',
+                'Harvest honey when frames are full',
+                'Treat for varroa mites (critical!)',
+                'Make sure bees have water nearby',
+              ]},
+              { season: 'Fall', months: 'Sep – Nov', icon: '🍂', color: '#fef2f2', border: '#fecaca', textColor: '#991b1b', tasks: [
+                'Check that hives have enough food for winter',
+                'Do a final mite treatment',
+                'Reduce hive entrances to keep pests out',
+                'Stop opening hives once it gets cold',
+              ]},
+              { season: 'Winter', months: 'Dec – Jan', icon: '❄️', color: '#eff6ff', border: '#bfdbfe', textColor: '#1e40af', tasks: [
+                'Leave hives alone — they know what to do',
+                'Check hive weight occasionally (lift one side)',
+                'Order next year\'s equipment and supplies',
+                'Plan any expansions for spring',
+              ]},
+            ].map(s => (
+              <div key={s.season} className="avoid-break rounded-2xl p-6" style={{ background: s.color }}>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-2xl">{s.icon}</span>
+                  <div>
+                    <p className="font-bold text-gray-900">{s.season}</p>
+                    <p className="text-xs text-gray-400">{s.months}</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h4 className="font-bold text-gray-900 text-sm">{t.title}</h4>
-                  <p className="text-sm text-gray-600">{t.desc}</p>
-                </div>
+                <ul className="space-y-2">
+                  {s.tasks.map(task => (
+                    <li key={task} className="flex items-start gap-2">
+                      <span className="text-xs mt-1.5" style={{ color: s.textColor }}>●</span>
+                      <span className="text-sm leading-relaxed" style={{ color: s.textColor }}>{task}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
         </div>
 
         {/* Common Mistakes */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">🚫 Common Beginner Mistakes to Avoid</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="report-section avoid-break bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-3">Four Mistakes That Kill Hives</h3>
+          <p className="text-sm text-gray-400 mb-8">Avoid these and you&apos;re already ahead of most beginners.</p>
+          <div className="space-y-5">
             {[
-              { mistake: 'Not treating for varroa mites', fix: 'Treat proactively — varroa kills more colonies than anything else' },
-              { mistake: 'Opening the hive too often', fix: 'Inspect every 10-14 days max. Each opening disrupts the colony.' },
-              { mistake: 'Not feeding new colonies', fix: 'New nucs need 1:1 sugar syrup until they build up comb and stores' },
-              { mistake: 'Harvesting too much honey', fix: 'Leave at least 60 lbs for winter. Greedy harvesting = dead colonies.' },
-              { mistake: 'Ignoring swarm prevention', fix: 'Give bees room! Add supers early. Check for swarm cells in spring.' },
-              { mistake: 'Not joining a local bee club', fix: 'Local mentors are invaluable. They know your climate and conditions.' },
-              { mistake: 'Placing hives in full shade', fix: 'Bees need morning sun. Full shade promotes hive beetles and disease.' },
-              { mistake: 'Not keeping records', fix: 'You need records for your CAD and for tracking hive health trends.' },
+              { mistake: 'Ignoring mite treatments', fix: 'Varroa mites are the #1 killer. Treat your hives in summer and fall — every year.' },
+              { mistake: 'Taking too much honey', fix: 'Your bees need about 60 lbs of honey to survive winter. Leave enough for them.' },
+              { mistake: 'Not keeping records', fix: 'The county can ask for proof at any time. Photos, receipts, and a simple log are all you need.' },
+              { mistake: 'Going it alone', fix: 'Join a local bee club. A mentor who knows your area is worth more than any book.' },
             ].map(m => (
-              <div key={m.mistake} className="p-4 rounded-xl bg-red-50 border border-red-100">
-                <p className="text-sm font-bold text-red-800 mb-1">❌ {m.mistake}</p>
-                <p className="text-xs text-green-800 bg-green-50 p-2 rounded-lg">✅ {m.fix}</p>
+              <div key={m.mistake} style={{ borderBottom: 'none', paddingBottom: 20 }}>
+                <p className="font-semibold text-gray-800 mb-1">{m.mistake}</p>
+                <p className="text-gray-500 leading-relaxed">{m.fix}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* YouTube Videos */}
-        <div className="report-section bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-          <h3 className="text-lg font-bold text-gray-900 mb-2">🎬 Recommended Video Tutorials</h3>
-          <p className="text-sm text-gray-500 mb-6">Free beekeeping education from top YouTube channels</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {videos.map(v => (
+        <div className="report-section bg-white rounded-2xl p-10">
+          <h3 className="text-xl font-black text-gray-800 mb-3">Watch These First</h3>
+          <p className="text-sm text-gray-400 mb-8">Five free YouTube videos that cover everything a beginner needs.</p>
+          <div className="space-y-4">
+            {videos.slice(0, 5).map(v => (
               <a
                 key={v.id}
                 href={`https://www.youtube.com/watch?v=${v.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex gap-3 p-3 rounded-xl border border-gray-100 hover:border-red-200 hover:bg-red-50 transition-all group"
+                className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition-all group"
+                style={{ borderBottom: 'none' }}
               >
-                <div className="shrink-0 w-28 h-20 rounded-lg overflow-hidden bg-gray-200 relative">
+                <div className="shrink-0 w-20 h-14 rounded-lg overflow-hidden bg-gray-200 relative">
                   <img
                     src={`https://img.youtube.com/vi/${v.id}/mqdefault.jpg`}
                     alt={v.title}
@@ -993,15 +959,14 @@ function ReportContent() {
                     loading="lazy"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="white"><polygon points="3,1 10,6 3,11" /></svg>
+                    <div className="w-7 h-7 bg-red-600 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100">
+                      <svg width="10" height="10" viewBox="0 0 12 12" fill="white"><polygon points="3,1 10,6 3,11" /></svg>
                     </div>
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-gray-900 group-hover:text-red-700 transition-colors leading-tight line-clamp-2">{v.title}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">{v.channel}</p>
-                  <p className="text-xs text-gray-500 mt-1 line-clamp-2">{v.desc}</p>
+                  <p className="font-semibold text-gray-800 group-hover:text-red-700 transition-colors leading-snug">{v.title}</p>
+                  <p className="text-sm text-gray-400 mt-0.5">{v.desc}</p>
                 </div>
               </a>
             ))}
@@ -1009,248 +974,154 @@ function ReportContent() {
         </div>
       </section>
 
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 24px' }}><hr style={{ border: 'none', borderTop: '1px solid #e0e0e0' }} /></div>
+
       {/* ════════════════════════════════════════════
           SECTION 5: EXPENSE TRACKING & RECORD KEEPING
           ════════════════════════════════════════════ */}
-      <section id="section-5" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '40px 24px' }}>
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center text-xl">📊</div>
+      <section id="section-5" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '48px 24px' }}>
+        <div className="flex items-start gap-5 mb-10">
+          <div className="text-5xl leading-none shrink-0 pt-1">📋</div>
           <div>
-            <h2 className="text-2xl font-black text-gray-900">Expense Tracking & Record Keeping</h2>
-            <p className="text-sm text-gray-500">Protect your exemption with proper documentation</p>
+            <h2 className="text-2xl font-black text-gray-900" style={{ letterSpacing: '-0.01em' }}>Keeping Your Records Straight</h2>
+            <p className="text-sm text-gray-400 mt-0.5">It&apos;s easier than you think — and it protects your savings</p>
           </div>
         </div>
 
-        {/* Why Records Matter */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">⚠️ Why You MUST Keep Records</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, #fef2f2, #fee2e2)', border: '1px solid #fecaca' }}>
-              <h4 className="font-bold text-red-900 mb-2">🏛️ County Appraisal District (CAD)</h4>
-              <ul className="text-sm text-red-800 space-y-1">
-                <li>• CAD can audit your ag exemption at any time</li>
-                <li>• Must prove active agricultural use</li>
-                <li>• No records = exemption denied or revoked</li>
-                <li>• Could face 5 years of rollback taxes + 7% interest</li>
-              </ul>
+        {/* Why Records Matter — simplified */}
+        <div className="report-section avoid-break bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-3">The Short Version: Keep Your Receipts</h3>
+          <p className="text-gray-500 leading-relaxed mb-8">The county can ask to see proof that you&apos;re actually keeping bees. If you can&apos;t show it, they can take your exemption away — and charge you back taxes with interest. The good news: this is easy.</p>
+
+          <div className="space-y-5">
+            <div style={{ borderBottom: 'none', paddingBottom: 20 }}>
+              <p className="font-semibold text-gray-800 mb-1">Save every receipt</p>
+              <p className="text-gray-500">Hives, bees, tools, treatments, feed — anything you spend money on. A folder or envelope per year works.</p>
             </div>
-            <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, #eff6ff, #dbeafe)', border: '1px solid #bfdbfe' }}>
-              <h4 className="font-bold text-blue-900 mb-2">🏦 IRS (Schedule F)</h4>
-              <ul className="text-sm text-blue-800 space-y-1">
-                <li>• Beekeeping expenses are tax-deductible</li>
-                <li>• File Schedule F for farm income/expenses</li>
-                <li>• Equipment may qualify for Section 179 deduction</li>
-                <li>• Must have records to substantiate deductions</li>
-              </ul>
+            <div style={{ borderBottom: 'none', paddingBottom: 20 }}>
+              <p className="font-semibold text-gray-800 mb-1">Take photos of your hives each season</p>
+              <p className="text-gray-500">Your phone timestamps them automatically. Four times a year is plenty.</p>
+            </div>
+            <div style={{ borderBottom: 'none', paddingBottom: 20 }}>
+              <p className="font-semibold text-gray-800 mb-1">Keep a simple log</p>
+              <p className="text-gray-500">A notebook or spreadsheet with dates and what you did. &ldquo;March 15 — inspected hives, all look healthy&rdquo; is enough.</p>
+            </div>
+            <div>
+              <p className="font-semibold text-gray-800 mb-1">Hold onto everything for 7 years</p>
+              <p className="text-gray-500">That&apos;s the standard rule for tax records. A shoebox in your closet works fine.</p>
             </div>
           </div>
-          <div className="p-4 rounded-xl bg-amber-50 border border-amber-200">
-            <p className="text-sm text-amber-800"><strong>💡 Pro Tip:</strong> Keep all records for at least 7 years. Use a dedicated folder (physical or digital) labeled by tax year. Take photos with timestamps — your phone&apos;s camera app auto-dates images.</p>
+
+          <div className="p-5 rounded-xl mt-8" style={{ background: '#fefcf3' }}>
+            <p className="text-sm text-amber-800"><strong>Bonus:</strong> These same records let you deduct beekeeping expenses on your federal taxes too (IRS Schedule F). Your tax preparer will love you.</p>
           </div>
         </div>
 
-        {/* Expense Tracking Template */}
-        <div className="report-section bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-2">Printable Expense Tracking Template</h3>
-          <p className="text-sm text-gray-500 mb-4">Print this page and use it to track your beekeeping expenses throughout the year</p>
+        {/* What it Costs to Run Your Hives */}
+        <div className="report-section avoid-break bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-3">What It Costs to Run Your Hives</h3>
+          <p className="text-sm text-gray-400 mb-8">Year 1 costs more because you&apos;re buying everything. After that, it&apos;s mostly just supplies.</p>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr style={{ background: '#0f172a', color: 'white' }}>
-                  <th className="p-3 text-left font-bold">Date</th>
-                  <th className="p-3 text-left font-bold">Category</th>
-                  <th className="p-3 text-left font-bold">Description</th>
-                  <th className="p-3 text-right font-bold">Amount</th>
-                  <th className="p-3 text-left font-bold">Receipt #</th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* Example rows */}
-                <tr className="bg-green-50 text-green-800">
-                  <td className="p-3 border-b border-gray-200 italic">3/15/2026</td>
-                  <td className="p-3 border-b border-gray-200 italic">Equipment</td>
-                  <td className="p-3 border-b border-gray-200 italic">6 complete hive setups (BeeKings)</td>
-                  <td className="p-3 border-b border-gray-200 text-right italic">{fmtMoney(requiredHives * hiveCost)}</td>
-                  <td className="p-3 border-b border-gray-200 italic">BK-001</td>
-                </tr>
-                <tr className="bg-green-50 text-green-800">
-                  <td className="p-3 border-b border-gray-200 italic">4/01/2026</td>
-                  <td className="p-3 border-b border-gray-200 italic">Bees</td>
-                  <td className="p-3 border-b border-gray-200 italic">{requiredHives} nucs — Italian bees</td>
-                  <td className="p-3 border-b border-gray-200 text-right italic">{fmtMoney(requiredHives * nucCost)}</td>
-                  <td className="p-3 border-b border-gray-200 italic">NUC-001</td>
-                </tr>
-                {/* Blank rows for user */}
-                {[...Array(12)].map((_, i) => (
-                  <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                    <td className="p-3 border-b border-gray-200" style={{ minWidth: 90 }}>&nbsp;</td>
-                    <td className="p-3 border-b border-gray-200" style={{ minWidth: 100 }}>&nbsp;</td>
-                    <td className="p-3 border-b border-gray-200" style={{ minWidth: 200 }}>&nbsp;</td>
-                    <td className="p-3 border-b border-gray-200">&nbsp;</td>
-                    <td className="p-3 border-b border-gray-200">&nbsp;</td>
-                  </tr>
-                ))}
-              </tbody>
-              <tfoot>
-                <tr className="bg-gray-100">
-                  <td colSpan={3} className="p-3 text-right font-bold">Year Total:</td>
-                  <td className="p-3 text-right font-bold">$________</td>
-                  <td className="p-3">&nbsp;</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
-
-        {/* What receipts to keep */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">What Receipts to Keep</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-0">
             {[
-              { cat: '🐝 Bees', items: ['Nucleus colonies (nucs)', 'Package bees', 'Queen bees (replacements)', 'Queen cages & supplies'] },
-              { cat: '📦 Equipment', items: ['Hive bodies & supers', 'Frames & foundation', 'Smoker, hive tool, brush', 'Protective clothing (suit, gloves, veil)'] },
-              { cat: '💊 Treatments', items: ['Varroa mite treatments (Apivar, OAV, etc.)', 'Antibiotics (if prescribed)', 'Beetle traps', 'Feed (sugar, pollen patties)'] },
-              { cat: '🔧 Maintenance', items: ['Paint, stain, wood preservative', 'Replacement parts', 'Extraction equipment', 'Bottling supplies, labels, jars'] },
-            ].map(c => (
-              <div key={c.cat} className="p-4 rounded-xl bg-gray-50">
-                <h4 className="font-bold text-gray-900 mb-2">{c.cat}</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  {c.items.map(item => <li key={item}>• {item}</li>)}
-                </ul>
+              { cat: 'Hive boxes & equipment', y1: fmtMoney(requiredHives * hiveCost), y2: '—', note: 'One-time purchase' },
+              { cat: 'Bees', y1: fmtMoney(requiredHives * nucCost), y2: fmtMoney(Math.round(requiredHives * 0.2) * nucCost), note: 'Replacements if any colonies die' },
+              { cat: 'Bee suit & tools', y1: '$148', y2: '$35', note: 'Suit, gloves, smoker, hive tool' },
+              { cat: 'Feed & mite treatments', y1: fmtMoney(requiredHives * 55), y2: fmtMoney(requiredHives * 45), note: 'Sugar syrup, pollen, Apivar strips' },
+              { cat: 'Honey supplies', y1: '—', y2: '$125', note: 'Jars, labels, extraction gear' },
+            ].map((item, i) => (
+              <div key={item.cat} className="flex items-center gap-4 py-4" style={{ borderBottom: 'none' }}>
+                <div className="flex-1">
+                  <p className="font-medium text-gray-700">{item.cat}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">{item.note}</p>
+                </div>
+                <div className="shrink-0 text-right w-20">
+                  <p className="text-xs text-gray-400">Year 1</p>
+                  <p className="font-semibold text-gray-800">{item.y1}</p>
+                </div>
+                <div className="shrink-0 text-right w-20">
+                  <p className="text-xs text-gray-400">Year 2+</p>
+                  <p className="font-semibold text-gray-600">{item.y2}</p>
+                </div>
               </div>
             ))}
           </div>
-        </div>
 
-        {/* Sample Annual Expense Report */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">Sample Annual Expense Report</h3>
-          <p className="text-sm text-gray-500 mb-4">Example for a {requiredHives}-hive operation in {county.name} County</p>
-
-          <div className="overflow-hidden rounded-xl border border-gray-200">
-            <table className="w-full text-sm">
-              <thead>
-                <tr style={{ background: '#0f172a', color: 'white' }}>
-                  <th className="p-3 text-left font-bold">Category</th>
-                  <th className="p-3 text-right font-bold">Year 1</th>
-                  <th className="p-3 text-right font-bold">Year 2+</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ['Hive Equipment', fmtMoney(requiredHives * hiveCost), '$0 (already purchased)'],
-                  ['Bee Colonies (nucs)', fmtMoney(requiredHives * nucCost), fmtMoney(Math.round(requiredHives * 0.2) * nucCost) + ' (20% replacement)'],
-                  ['Protective Gear', '$83', '$20 (replacements)'],
-                  ['Tools (smoker, hive tool, etc.)', '$65', '$15 (replacements)'],
-                  ['Feed (sugar syrup, pollen)', fmtMoney(requiredHives * 30), fmtMoney(requiredHives * 20)],
-                  ['Mite Treatments', fmtMoney(requiredHives * 25), fmtMoney(requiredHives * 25)],
-                  ['Extraction Supplies', '$0 (not harvesting year 1)', '$50'],
-                  ['Bottling & Labels', '$0', '$75'],
-                ].map(([cat, y1, y2], i) => (
-                  <tr key={cat} className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                    <td className="p-3 font-semibold">{cat}</td>
-                    <td className="p-3 text-right">{y1}</td>
-                    <td className="p-3 text-right">{y2}</td>
-                  </tr>
-                ))}
-              </tbody>
-              <tfoot>
-                <tr style={{ background: '#fef9ee', borderTop: '2px solid #fde68a' }}>
-                  <td className="p-3 font-bold">TOTAL EXPENSES</td>
-                  <td className="p-3 text-right font-black text-amber-800">{fmtMoney(totalUpfront + 83 + 65 + requiredHives * 30 + requiredHives * 25)}</td>
-                  <td className="p-3 text-right font-bold text-gray-700">{fmtMoney(Math.round(requiredHives * 0.2) * nucCost + 20 + 15 + requiredHives * 20 + requiredHives * 25 + 50 + 75)}</td>
-                </tr>
-                <tr className="bg-green-50">
-                  <td className="p-3 font-bold text-green-800">TAX SAVINGS</td>
-                  <td className="p-3 text-right font-black text-green-700">{fmtMoney(annualSavings)}</td>
-                  <td className="p-3 text-right font-black text-green-700">{fmtMoney(annualSavings)}</td>
-                </tr>
-              </tfoot>
-            </table>
+          <div className="flex items-center justify-between mt-8 pt-6 px-1" style={{ borderTop: 'none' }}>
+            <div>
+              <p className="font-bold text-gray-800">Your tax savings each year</p>
+              <p className="text-sm text-gray-400">This is what you save — every single year</p>
+            </div>
+            <p className="text-2xl font-bold text-green-700">{fmtMoney(annualSavings)}</p>
           </div>
         </div>
 
         {/* Hive Inspection Log Template */}
-        <div className="report-section bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-          <h3 className="text-lg font-bold text-gray-900 mb-2">Hive Inspection Log Template</h3>
-          <p className="text-sm text-gray-500 mb-4">Use this for each hive inspection. Print multiple copies.</p>
+        <div className="report-section bg-white rounded-2xl p-10">
+          <h3 className="text-xl font-black text-gray-800 mb-3">Quick Hive Check Template</h3>
+          <p className="text-sm text-gray-400 mb-8">Print this out and fill in one each time you check your hives. Keeps your records organized.</p>
 
-          <div className="p-6 border-2 border-dashed border-gray-300 rounded-xl">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div className="p-8 rounded-2xl" style={{ background: '#f9fafb' }}>
+            <div className="grid grid-cols-3 gap-6 mb-8">
               <div>
-                <p className="text-xs font-bold text-gray-500 uppercase">Hive #</p>
-                <div className="border-b-2 border-gray-300 h-6 mt-1" />
+                <p className="text-xs font-medium text-gray-400 mb-2">Date</p>
+                <div style={{ borderBottom: '1px solid #d1d5db', height: 24 }} />
               </div>
               <div>
-                <p className="text-xs font-bold text-gray-500 uppercase">Date</p>
-                <div className="border-b-2 border-gray-300 h-6 mt-1" />
+                <p className="text-xs font-medium text-gray-400 mb-2">Hive #</p>
+                <div style={{ borderBottom: '1px solid #d1d5db', height: 24 }} />
               </div>
               <div>
-                <p className="text-xs font-bold text-gray-500 uppercase">Weather</p>
-                <div className="border-b-2 border-gray-300 h-6 mt-1" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-gray-500 uppercase">Temp (°F)</p>
-                <div className="border-b-2 border-gray-300 h-6 mt-1" />
+                <p className="text-xs font-medium text-gray-400 mb-2">Weather</p>
+                <div style={{ borderBottom: '1px solid #d1d5db', height: 24 }} />
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-x-8 gap-y-2 mb-6">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-3 mb-8">
               {[
-                'Queen spotted?', 'Eggs visible?', 'Larvae present?', 'Capped brood?',
-                'Honey stores adequate?', 'Pollen visible?', 'Varroa signs?', 'Hive beetles?',
-                'Wax moths?', 'Queen cells?', 'Temperament (calm/agitated)?', 'Population (strong/weak)?',
+                'Queen spotted?', 'Eggs visible?', 'Enough food stored?', 'Any signs of mites?',
+                'Bees seem calm?', 'Colony looks strong?',
               ].map(item => (
-                <label key={item} className="flex items-center gap-2 p-1">
-                  <span className="w-4 h-4 rounded border-2 border-gray-300 shrink-0">☐</span>
-                  <span className="text-xs text-gray-700">{item}</span>
+                <label key={item} className="flex items-center gap-3">
+                  <span className="text-base">☐</span>
+                  <span className="text-sm text-gray-600">{item}</span>
                 </label>
               ))}
             </div>
 
-            <div className="space-y-3">
-              <div>
-                <p className="text-xs font-bold text-gray-500 uppercase mb-1">Actions Taken</p>
-                <div className="border-b border-gray-200 h-5" />
-                <div className="border-b border-gray-200 h-5 mt-2" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-gray-500 uppercase mb-1">Notes / Observations</p>
-                <div className="border-b border-gray-200 h-5" />
-                <div className="border-b border-gray-200 h-5 mt-2" />
-                <div className="border-b border-gray-200 h-5 mt-2" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-gray-500 uppercase mb-1">Next Inspection Plan</p>
-                <div className="border-b border-gray-200 h-5" />
-              </div>
+            <div>
+              <p className="text-xs font-medium text-gray-400 mb-2">Notes (what did you see? what did you do?)</p>
+              <div style={{ borderBottom: '1px solid #d1d5db', height: 24 }} />
+              <div style={{ borderBottom: '1px solid #d1d5db', height: 24, marginTop: 12 }} />
+              <div style={{ borderBottom: '1px solid #d1d5db', height: 24, marginTop: 12 }} />
             </div>
           </div>
         </div>
       </section>
 
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 24px' }}><hr style={{ border: 'none', borderTop: '1px solid #e0e0e0' }} /></div>
+
       {/* ════════════════════════════════════════════
           SECTION 6: LOCAL BEE RESOURCES
           ════════════════════════════════════════════ */}
-      <section id="section-6" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '40px 24px' }}>
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center text-xl">🗺️</div>
+      <section id="section-6" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '48px 24px' }}>
+        <div className="flex items-start gap-5 mb-10">
+          <div className="text-5xl leading-none shrink-0 pt-1">🗺️</div>
           <div>
-            <h2 className="text-2xl font-black text-gray-900">Local Bee Resources</h2>
-            <p className="text-sm text-gray-500">Suppliers, associations, and contacts near {county.name} County</p>
+            <h2 className="text-2xl font-black text-gray-900" style={{ letterSpacing: '-0.01em' }}>People Who Can Help</h2>
+            <p className="text-sm text-gray-400 mt-0.5">Suppliers, clubs, and contacts near {county.name} County</p>
           </div>
         </div>
 
         {/* Nuc Suppliers */}
-        <div className="report-section bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-2">🐝 Nuc & Bee Suppliers Near You</h3>
-          <p className="text-sm text-gray-500 mb-6">{county.region} region and surrounding areas — order early, nucs sell out fast!</p>
+        <div className="report-section bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-2">Nuc & Bee Suppliers Near You</h3>
+          <p className="text-sm text-gray-400 mb-8">{county.region} region and surrounding areas — order early, nucs sell out fast!</p>
 
           {nearbySuppliers.length > 0 ? (
             <div className="space-y-4">
               {nearbySuppliers.map(s => (
-                <div key={s.name} className="avoid-break p-5 rounded-xl border border-gray-200 hover:border-green-300 transition-colors">
+                <div key={s.name} className="avoid-break p-5 rounded-xl transition-colors">
                   <div className="flex items-start justify-between gap-4 mb-2">
                     <div>
                       <h4 className="font-bold text-gray-900">{s.name}</h4>
@@ -1289,12 +1160,12 @@ function ReportContent() {
         </div>
 
         {/* Local Beekeeping Associations */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">🤝 Beekeeping Associations</h3>
-          <p className="text-sm text-gray-500 mb-4">Local clubs are the #1 resource for new beekeepers. Monthly meetings, mentors, and equipment swaps.</p>
+        <div className="report-section avoid-break bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-2">Beekeeping Associations</h3>
+          <p className="text-sm text-gray-400 mb-6">Local clubs are the #1 resource for new beekeepers. Monthly meetings, mentors, and equipment swaps.</p>
 
           <div className="space-y-3">
-            <div className="p-4 rounded-xl bg-amber-50 border border-amber-200">
+            <div className="p-4 rounded-xl bg-amber-50">
               <h4 className="font-bold text-amber-900">Texas Beekeepers Association (TBA)</h4>
               <p className="text-sm text-amber-800 mt-1">Statewide organization with local chapters across Texas</p>
               <div className="flex flex-wrap gap-3 mt-2 text-xs">
@@ -1302,11 +1173,11 @@ function ReportContent() {
                 <span className="text-amber-700">📅 Annual convention in November</span>
               </div>
             </div>
-            <div className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+            <div className="p-4 rounded-xl bg-gray-50">
               <h4 className="font-bold text-gray-900">{county.region} Beekeeping Clubs</h4>
               <p className="text-sm text-gray-600 mt-1">Search for &ldquo;{county.name} County beekeeping association&rdquo; or visit the TBA website for a chapter locator. Most clubs meet monthly and welcome beginners.</p>
             </div>
-            <div className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+            <div className="p-4 rounded-xl bg-gray-50">
               <h4 className="font-bold text-gray-900">Texas Master Beekeeper Program</h4>
               <p className="text-sm text-gray-600 mt-1">Run by TBA — levels from Apprentice to Master. Great education and credentials for your ag exemption documentation.</p>
               <a href="https://texasbeekeepers.org/master-beekeeper-program/" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline mt-1 inline-block">Learn more →</a>
@@ -1315,9 +1186,9 @@ function ReportContent() {
         </div>
 
         {/* Texas Apiary Inspection Service */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">🔬 Texas Apiary Inspection Service (TAIS)</h3>
-          <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)', border: '1px solid #bbf7d0' }}>
+        <div className="report-section avoid-break bg-white rounded-2xl p-10 mb-8">
+          <h3 className="text-xl font-black text-gray-800 mb-6">Texas Apiary Inspection Service (TAIS)</h3>
+          <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)' }}>
             <p className="text-sm text-green-800 mb-3">The TAIS is part of Texas A&M AgriLife Extension. They provide free hive inspections, disease identification, and certification.</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
@@ -1339,10 +1210,10 @@ function ReportContent() {
         </div>
 
         {/* Emergency Contacts */}
-        <div className="report-section avoid-break bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">🆘 Emergency Contacts & Resources</h3>
+        <div className="report-section avoid-break bg-white rounded-2xl p-10">
+          <h3 className="text-xl font-black text-gray-800 mb-6">Emergency Contacts & Resources</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 rounded-xl bg-red-50 border border-red-200">
+            <div className="p-4 rounded-xl bg-red-50">
               <h4 className="font-bold text-red-900 mb-2">🐝 Swarm Removal</h4>
               <ul className="text-sm text-red-800 space-y-1">
                 <li>• Contact your local bee club first</li>
@@ -1350,7 +1221,7 @@ function ReportContent() {
                 <li>• {county.name} County Extension: call for local referrals</li>
               </ul>
             </div>
-            <div className="p-4 rounded-xl bg-blue-50 border border-blue-200">
+            <div className="p-4 rounded-xl bg-blue-50">
               <h4 className="font-bold text-blue-900 mb-2">👑 Queen Replacement Sources</h4>
               <ul className="text-sm text-blue-800 space-y-1">
                 <li>• BeeWeaver Apiaries — (737) 230-3435</li>
@@ -1358,7 +1229,7 @@ function ReportContent() {
                 <li>• Olivarez Honey Bees — (877) 865-0298</li>
               </ul>
             </div>
-            <div className="p-4 rounded-xl bg-amber-50 border border-amber-200">
+            <div className="p-4 rounded-xl bg-amber-50">
               <h4 className="font-bold text-amber-900 mb-2">🏥 Hive Health Emergency</h4>
               <ul className="text-sm text-amber-800 space-y-1">
                 <li>• TAIS Disease Lab: (979) 845-9713</li>
@@ -1366,7 +1237,7 @@ function ReportContent() {
                 <li>• Local beekeeping mentor</li>
               </ul>
             </div>
-            <div className="p-4 rounded-xl bg-green-50 border border-green-200">
+            <div className="p-4 rounded-xl bg-green-50">
               <h4 className="font-bold text-green-900 mb-2">📚 Additional Resources</h4>
               <ul className="text-sm text-green-800 space-y-1">
                 <li>• <a href="https://agrilifeextension.tamu.edu" className="underline" target="_blank" rel="noopener noreferrer">Texas A&M AgriLife Extension</a></li>
@@ -1381,14 +1252,14 @@ function ReportContent() {
       {/* ════════════════════════════════════════════
           FOOTER / CTA
           ════════════════════════════════════════════ */}
-      <footer className="page-break" style={{ background: 'linear-gradient(135deg, #0f172a, #1e3a5f)', color: 'white' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px' }}>
+      <footer className="page-break" style={{ background: 'linear-gradient(145deg, #1a2332, #2d4a6f)', color: 'white' }}>
+        <div style={{ maxWidth: 800, margin: '0 auto', padding: '64px 24px' }}>
           {/* CTA Box */}
           <div className="text-center mb-12 no-print">
             <div className="inline-block rounded-3xl p-10" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
               <div className="text-5xl mb-4">🐝</div>
-              <h2 className="text-3xl font-black mb-3">Ready to Start Saving {fmtMoney(annualSavings)}/Year?</h2>
-              <p className="text-lg opacity-70 mb-6">BeeKings provides everything: hives, bees, equipment, training, and ongoing support.</p>
+              <h2 className="text-3xl font-bold mb-4">Ready to Start Saving {fmtMoney(annualSavings)}/Year?</h2>
+              <p className="text-lg opacity-65 mb-8" style={{ lineHeight: 1.7 }}>BeeKings provides everything: hives, bees, equipment, training, and ongoing support.</p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a href="https://beekings.com" target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-4 rounded-xl font-bold text-lg transition-transform hover:scale-105" style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#0f172a' }}>
                   Visit BeeKings.com →
@@ -1436,7 +1307,7 @@ export default function ReportPage() {
         <div className="text-center">
           <div className="text-6xl mb-4 animate-bounce">🐝</div>
           <p className="text-lg font-bold text-gray-700">Generating your report...</p>
-          <p className="text-sm text-gray-400 mt-1">This may take a moment</p>
+          <p className="text-sm text-gray-400 mt-0.5">This may take a moment</p>
         </div>
       </div>
     }>
