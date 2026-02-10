@@ -704,10 +704,51 @@ function ReportContent() {
         })()}
 
         {/* Hive Anatomy Infographic */}
-        <div className="pdf-card avoid-break" style={{ padding: 36, marginBottom: 28, textAlign: 'center' }}>
+        <div className="pdf-card avoid-break" style={{ padding: '36px 24px', marginBottom: 28, textAlign: 'center' }}>
           <h3 style={{ fontSize: 18, fontWeight: 900, color: '#222', marginBottom: 4 }}>Anatomy of a Beehive</h3>
           <p style={{ fontSize: 13, color: '#888', marginBottom: 28 }}>A standard Langstroth hive — the most common type in Texas beekeeping</p>
-          <img src="/hive-anatomy.jpg" alt="Anatomy of a Langstroth Beehive" style={{ maxWidth: 420, width: '100%', margin: '0 auto' }} />
+          <div style={{ position: 'relative', maxWidth: 600, margin: '0 auto' }}>
+            <img src="/hive-anatomy.jpg" alt="Anatomy of a Langstroth Beehive" style={{ width: '100%', display: 'block' }} />
+            {/* Labels with arrows - positioned relative to image */}
+            {[
+              { label: 'Outer Cover', desc: 'Weather protection', top: '6%', left: '-2%', arrowTo: '32%', side: 'left' },
+              { label: 'Inner Cover', desc: 'Ventilation barrier', top: '18%', left: '-2%', arrowTo: '38%', side: 'left' },
+              { label: 'Honey Super', desc: 'Surplus honey storage', top: '30%', right: '-2%', arrowTo: '60%', side: 'right' },
+              { label: 'Queen Excluder', desc: 'Keeps queen in brood box', top: '44%', right: '-2%', arrowTo: '55%', side: 'right' },
+              { label: 'Deep Brood Box', desc: 'Queen lays eggs here', top: '60%', left: '-2%', arrowTo: '38%', side: 'left' },
+              { label: 'Bottom Board', desc: 'Screened for ventilation', top: '84%', right: '-2%', arrowTo: '55%', side: 'right' },
+            ].map((item) => (
+              <div key={item.label} style={{
+                position: 'absolute',
+                top: item.top,
+                ...(item.side === 'left' ? { left: item.left } : { right: item.right }),
+                display: 'flex',
+                alignItems: 'center',
+                gap: 0,
+                flexDirection: item.side === 'left' ? 'row' : 'row-reverse',
+              }}>
+                <div style={{
+                  background: 'white',
+                  border: '1px solid #e5e5e5',
+                  borderRadius: 6,
+                  padding: '4px 10px',
+                  boxShadow: '0 1px 4px rgba(0,0,0,.08)',
+                  whiteSpace: 'nowrap',
+                  zIndex: 2,
+                }}>
+                  <p style={{ fontSize: 11, fontWeight: 700, color: '#222', margin: 0, lineHeight: 1.3 }}>{item.label}</p>
+                  <p style={{ fontSize: 9, color: '#888', margin: 0, lineHeight: 1.2 }}>{item.desc}</p>
+                </div>
+                <svg width="40" height="2" style={{ flexShrink: 0 }}>
+                  <line x1="0" y1="1" x2="36" y2="1" stroke="#d4a843" strokeWidth="1.5" />
+                  {item.side === 'left'
+                    ? <polygon points="36,0 40,1 36,2" fill="#d4a843" />
+                    : <polygon points="4,0 0,1 4,2" fill="#d4a843" />
+                  }
+                </svg>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Pro Tip: Placement */}
