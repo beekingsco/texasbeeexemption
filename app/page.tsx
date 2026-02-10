@@ -55,7 +55,13 @@ function useBeekeeperActivity() {
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
     const scheduleNext = () => {
-      const delay = (20 + Math.random() * 25) * 1000; // 20-45 seconds
+      // Vary timing: sometimes rapid (5-8s), sometimes medium (12-18s), occasionally slower (25-35s)
+      const roll = Math.random();
+      const delay = roll < 0.35
+        ? (5 + Math.random() * 3) * 1000    // 35% chance: 5-8 seconds (rapid)
+        : roll < 0.75
+          ? (12 + Math.random() * 6) * 1000  // 40% chance: 12-18 seconds (medium)
+          : (25 + Math.random() * 10) * 1000; // 25% chance: 25-35 seconds (slower)
       timeout = setTimeout(() => {
         // Bump counter
         setCount(c => c + 1);
