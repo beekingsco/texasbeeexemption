@@ -265,9 +265,13 @@ export default function AgentLandingPage() {
               </button>
               <a
                 href="/report?county=Travis&acres=25&propertyValue=450000&name=Buzz%20B.%20Honeywell&access=demo"
-                style={{ padding: '16px 28px', borderRadius: 12, background: 'transparent', color: C.navy, fontWeight: 700, fontSize: 16, border: `2px solid ${C.blue}22`, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}
+                style={{ padding: '16px 28px', borderRadius: 12, background: 'transparent', color: C.navy, fontWeight: 700, fontSize: 16, border: `2px solid ${C.blue}22`, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 10, cursor: 'pointer', flexDirection: 'column' }}
               >
-                View Demo Report
+                <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                  View Demo Report
+                </span>
+                <span style={{ fontSize: 11, fontWeight: 500, color: C.gray }}>16-page personalized report</span>
               </a>
             </div>
             <p style={{ fontSize: 13, color: C.gray, marginTop: 14 }}>
@@ -858,9 +862,13 @@ export default function AgentLandingPage() {
           </button>
           <a
             href="/report?county=Travis&acres=25&propertyValue=450000&name=Buzz%20B.%20Honeywell&access=demo"
-            style={{ padding: '14px 28px', borderRadius: 12, background: 'transparent', color: C.white, fontWeight: 700, fontSize: 16, border: '2px solid rgba(255,255,255,0.2)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}
+            style={{ padding: '14px 28px', borderRadius: 12, background: 'transparent', color: C.white, fontWeight: 700, fontSize: 16, border: '2px solid rgba(255,255,255,0.2)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 10, cursor: 'pointer', flexDirection: 'column' }}
           >
-            View Demo Report
+            <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+              View Demo Report
+            </span>
+            <span style={{ fontSize: 11, fontWeight: 500, color: 'rgba(255,255,255,0.4)' }}>16-page personalized report</span>
           </a>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)', marginTop: 12 }}>
             No credit card required • Cancel anytime • Full access
