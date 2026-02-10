@@ -22,11 +22,35 @@ const AVAILABLE_STATES = ['TX', 'FL'];
 
 const BEEKEEPER_BASE = 153132;
 
+const TX_CITIES = [
+  'Athens', 'Canton', 'Tyler', 'Longview', 'Nacogdoches', 'Lufkin', 'Palestine',
+  'Corsicana', 'Waxahachie', 'Terrell', 'Kaufman', 'Mabank', 'Gun Barrel City',
+  'Cedar Creek', 'Kemp', 'Eustace', 'Murchison', 'Wills Point', 'Edgewood',
+  'Grand Saline', 'Lindale', 'Chandler', 'Brownsboro', 'Malakoff', 'Tool',
+  'Ennis', 'Hillsboro', 'Mexia', 'Fairfield', 'Buffalo', 'Crockett',
+  'Jacksonville', 'Rusk', 'Henderson', 'Carthage', 'Marshall', 'Jefferson',
+  'Mineola', 'Quitman', 'Emory', 'Sulphur Springs', 'Greenville', 'Commerce',
+  'Rockwall', 'Forney', 'Royse City', 'Weatherford', 'Granbury', 'Cleburne',
+  'Stephenville', 'Glen Rose', 'Gatesville', 'Lampasas', 'Burnet', 'Marble Falls',
+  'Dripping Springs', 'Wimberley', 'Bastrop', 'Smithville', 'La Grange',
+  'Brenham', 'Navasota', 'Huntsville', 'Conroe', 'Willis', 'Livingston',
+];
+
+function randomSavings() {
+  // $2,100 to $8,400 in $100 increments
+  return (Math.floor(Math.random() * 64) + 21) * 100;
+}
+
+function randomCity() {
+  return TX_CITIES[Math.floor(Math.random() * TX_CITIES.length)];
+}
+
 function useBeekeeperActivity() {
   const [count, setCount] = useState(BEEKEEPER_BASE);
   const [toastVisible, setToastVisible] = useState(false);
   const [toastExiting, setToastExiting] = useState(false);
   const [countBump, setCountBump] = useState(false);
+  const [toastData, setToastData] = useState({ savings: 3500, city: 'Athens' });
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
@@ -37,6 +61,9 @@ function useBeekeeperActivity() {
         setCount(c => c + 1);
         setCountBump(true);
         setTimeout(() => setCountBump(false), 600);
+
+        // Generate random savings + city
+        setToastData({ savings: randomSavings(), city: randomCity() });
 
         // Show toast
         setToastExiting(false);
@@ -55,13 +82,13 @@ function useBeekeeperActivity() {
     return () => clearTimeout(timeout);
   }, []);
 
-  return { count, toastVisible, toastExiting, countBump };
+  return { count, toastVisible, toastExiting, countBump, toastData };
 }
 
 export default function NationalLanding() {
   const router = useRouter();
   const [selectedState, setSelectedState] = useState('');
-  const { count: beekeeperCount, toastVisible, toastExiting, countBump } = useBeekeeperActivity();
+  const { count: beekeeperCount, toastVisible, toastExiting, countBump, toastData } = useBeekeeperActivity();
 
   const handleStateSelect = async (stateCode: string) => {
     if (!stateCode) return;
@@ -161,8 +188,11 @@ export default function NationalLanding() {
               border: `2px solid ${C.green}`, whiteSpace: 'nowrap',
             }}
           >
-            <span style={{ fontSize: 20 }}>🐝</span>
-            <p style={{ fontWeight: 800, color: C.navy, fontSize: 14, margin: 0 }}>New Beekeeper!</p>
+            <span style={{ fontSize: 20 }}>💰</span>
+            <div>
+              <p style={{ fontWeight: 800, color: C.navy, fontSize: 14, margin: 0 }}>${toastData.savings.toLocaleString()} Saved</p>
+              <p style={{ fontWeight: 600, color: C.gray, fontSize: 12, margin: 0 }}>in {toastData.city}, TX</p>
+            </div>
           </div>
         )}
       </div>
