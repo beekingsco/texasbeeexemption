@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import countiesData from '@/data/florida-counties.json';
 import DeadlineCountdown from '@/app/components/DeadlineCountdown';
+import StateBadge from '@/app/components/StateBadge';
 
 interface County {
   name: string;
@@ -373,6 +374,7 @@ export default function FloridaCalculator() {
 
   return (
     <div style={{ minHeight: '100vh', background: C.white }}>
+      <StateBadge stateCode="FL" stateName="Florida" />
       <style>{`
         * { box-sizing: border-box; }
         .r-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }

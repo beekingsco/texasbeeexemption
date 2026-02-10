@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import countiesData from '@/data/texas-counties.json';
 import DeadlineCountdown from '@/app/components/DeadlineCountdown';
+import StateBadge from '@/app/components/StateBadge';
 
 interface County {
   name: string;
