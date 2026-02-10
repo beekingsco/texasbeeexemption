@@ -272,7 +272,9 @@ function ReportContent() {
     verifyAccess();
   }, [accessToken]);
 
-  const isLocked = accessChecked && !hasAccess;
+  const isDemo = accessToken === 'demo';
+  const isLocked = accessChecked && !hasAccess && !isDemo;
+  const isDemoLocked = isDemo; // demo shows headlines but blurs detail sections
 
   const handleUnlock = useCallback(async () => {
     try {
@@ -585,7 +587,7 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 3 — HOW TO GET YOUR EXEMPTION
           ════════════════════════════════════════════════════════════ */}
-      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-2" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
         <SectionHeader emoji="📋" title="HOW TO GET YOUR EXEMPTION" />
 
@@ -688,7 +690,7 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 4 — WHAT TO BUY
           ════════════════════════════════════════════════════════════ */}
-      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-3" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
         <SectionHeader emoji="🛒" title="WHAT TO BUY" />
 
@@ -834,7 +836,7 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 5 — WHAT YOU NEED TO KNOW
           ════════════════════════════════════════════════════════════ */}
-      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-4" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
         <SectionHeader emoji="🐝" title="WHAT YOU NEED TO KNOW" />
 
@@ -949,7 +951,7 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 6 — LOCAL RESOURCES & SUPPLIERS
           ════════════════════════════════════════════════════════════ */}
-      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-6" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
         <SectionHeader emoji="🏪" title="LOCAL RESOURCES & SUPPLIERS" />
 
@@ -1087,7 +1089,7 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 5 — RECORD KEEPING & EXPENSES (kept from original)
           ════════════════════════════════════════════════════════════ */}
-      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-5" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
         <SectionHeader emoji="📋" title="KEEPING YOUR RECORDS STRAIGHT" />
 
