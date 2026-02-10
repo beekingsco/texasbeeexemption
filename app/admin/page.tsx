@@ -221,6 +221,21 @@ export default function AdminPage() {
                 Send Login Link
               </button>
             </form>
+            <div style={{ borderTop: '1px solid #e2e8f0', marginTop: 24, paddingTop: 20 }}>
+              <form onSubmit={handleAuth}>
+                <p style={{ color: C.gray, fontSize: 13, marginBottom: 12 }}>Or sign in with admin key:</p>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <input
+                    type="password" value={key} onChange={(e) => setKey(e.target.value)}
+                    placeholder="Admin key"
+                    style={{ flex: 1, padding: '10px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                  />
+                  <button type="submit" style={{ padding: '10px 18px', borderRadius: 10, background: C.navy, color: C.white, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                    Go
+                  </button>
+                </div>
+              </form>
+            </div>
           )}
         </div>
       </div>
