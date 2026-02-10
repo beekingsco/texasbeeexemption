@@ -555,7 +555,7 @@ export default function Home() {
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(135deg, rgba(13,27,42,0.6) 0%, rgba(26,58,91,0.45) 50%, rgba(13,27,42,0.4) 100%)' }} />
             <div style={{ position: 'relative', zIndex: 10, maxWidth: 800, margin: '0 auto', padding: '60px 24px 60px', textAlign: 'center' }}>
               <h1 className="r-hero-h1" style={{ fontWeight: 900, color: '#FFFFFF', lineHeight: 1.05, marginBottom: 16, letterSpacing: '-0.03em', maxWidth: '100%' }}>
-                Save Money on<br />Property Taxes<br /><span style={{ color: C.green }}>with Bees</span> 🐝
+                Save Money on<br />Property Taxes<br /><span style={{ color: C.green }}>with Bees</span>
               </h1>
               <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.85)', marginBottom: 32, fontWeight: 500 }}>
                 See how much you could save with a Texas bee exemption
