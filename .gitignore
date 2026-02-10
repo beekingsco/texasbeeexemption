@@ -38,3 +38,4 @@ next-env.d.ts
 /data/leads.json
 /data/analytics.json
 /data/contacts.json
+.env.local

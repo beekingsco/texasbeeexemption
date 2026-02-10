@@ -1,11 +1,13 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useMemo } from 'react';
+import { Suspense, useMemo, useState, useEffect, useCallback } from 'react';
 import countiesData from '@/data/texas-counties.json';
 import suppliersData from '@/data/texas-nuc-suppliers.json';
 import amazonProducts from '@/data/amazon-products.json';
 import verifiedProducts from '@/data/verified-products.json';
+import BlurredSection from '@/app/components/BlurredSection';
+import StickyUnlockBar from '@/app/components/StickyUnlockBar';
 
 /* ─────────────────────────── Types ─────────────────────────── */
 interface County {
@@ -241,6 +243,60 @@ function ReportContent() {
   /* ── Report number (stable per render) ── */
   const reportNumber = useMemo(() => Math.floor(Math.random() * 90000 + 10000), []);
 
+  /* ── Access control: check if user has paid ── */
+  const accessToken = params.get('access');
+  const [hasAccess, setHasAccess] = useState(false);
+  const [accessChecked, setAccessChecked] = useState(false);
+
+  useEffect(() => {
+    if (!accessToken) {
+      setAccessChecked(true);
+      return;
+    }
+    async function verifyAccess() {
+      try {
+        const res = await fetch(`/api/stripe/verify?session_id=${encodeURIComponent(accessToken!)}`);
+        const data = await res.json();
+        setHasAccess(data.paid === true);
+      } catch {
+        setHasAccess(false);
+      }
+      setAccessChecked(true);
+    }
+    verifyAccess();
+  }, [accessToken]);
+
+  const isLocked = accessChecked && !hasAccess;
+
+  const handleUnlock = useCallback(async () => {
+    try {
+      const propertyData: Record<string, string> = {};
+      if (name) propertyData.name = name;
+      if (email) propertyData.email = email;
+      if (acres) propertyData.acres = String(acres);
+      if (propertyValue) propertyData.propertyValue = String(propertyValue);
+      if (taxRateParam) propertyData.taxRate = taxRateParam;
+
+      const res = await fetch('/api/stripe/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tier: 'single',
+          propertyData,
+          county: countyName,
+        }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch {
+      alert('Failed to start checkout. Please try again.');
+    }
+  }, [name, email, acres, propertyValue, taxRateParam, countyName]);
+
   return (
     <div className="report-wrapper" style={{ background: colors.cream, fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif' }}>
       <style>{`
@@ -455,6 +511,7 @@ function ReportContent() {
         </div>
 
         {/* Is It Worth It? callout */}
+        <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
         <div className="avoid-break" style={{ background: '#e8f4fd', borderRadius: 12, padding: 32, marginBottom: 32 }}>
           <h3 style={{ fontSize: 20, fontWeight: 900, color: '#1a56db', marginBottom: 16 }}>💡 Is It Worth It?</h3>
           <div style={{ display: 'flex', gap: 12, marginBottom: 24, justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -491,6 +548,7 @@ function ReportContent() {
             </div>
           </div>
         </div>
+        </BlurredSection>
 
         {/* How we calculated */}
         <div className="pdf-card avoid-break" style={{ padding: 36 }}>
@@ -521,6 +579,7 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 3 — HOW TO GET YOUR EXEMPTION
           ════════════════════════════════════════════════════════════ */}
+      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-2" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
         <SectionHeader emoji="📋" title="HOW TO GET YOUR EXEMPTION" />
 
@@ -618,10 +677,12 @@ function ReportContent() {
 
         <PageFooter name={name} county={county.name} />
       </section>
+      </BlurredSection>
 
       {/* ════════════════════════════════════════════════════════════
           SECTION 4 — WHAT TO BUY
           ════════════════════════════════════════════════════════════ */}
+      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-3" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
         <SectionHeader emoji="🛒" title="WHAT TO BUY" />
 
@@ -762,10 +823,12 @@ function ReportContent() {
 
         <PageFooter name={name} county={county.name} />
       </section>
+      </BlurredSection>
 
       {/* ════════════════════════════════════════════════════════════
           SECTION 5 — WHAT YOU NEED TO KNOW
           ════════════════════════════════════════════════════════════ */}
+      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-4" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
         <SectionHeader emoji="🐝" title="WHAT YOU NEED TO KNOW" />
 
@@ -875,10 +938,12 @@ function ReportContent() {
 
         <PageFooter name={name} county={county.name} />
       </section>
+      </BlurredSection>
 
       {/* ════════════════════════════════════════════════════════════
           SECTION 6 — LOCAL RESOURCES & SUPPLIERS
           ════════════════════════════════════════════════════════════ */}
+      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-6" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
         <SectionHeader emoji="🏪" title="LOCAL RESOURCES & SUPPLIERS" />
 
@@ -1011,10 +1076,12 @@ function ReportContent() {
 
         <PageFooter name={name} county={county.name} />
       </section>
+      </BlurredSection>
 
       {/* ════════════════════════════════════════════════════════════
           SECTION 5 — RECORD KEEPING & EXPENSES (kept from original)
           ════════════════════════════════════════════════════════════ */}
+      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-5" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
         <SectionHeader emoji="📋" title="KEEPING YOUR RECORDS STRAIGHT" />
 
@@ -1122,6 +1189,7 @@ function ReportContent() {
 
         <PageFooter name={name} county={county.name} />
       </section>
+      </BlurredSection>
 
       {/* ════════════════════════════════════════════════════════════
           SECTION 7 — FOOTER
@@ -1176,6 +1244,13 @@ function ReportContent() {
           </div>
         </div>
       </footer>
+
+      {/* Sticky unlock bar — only shows when locked */}
+      <StickyUnlockBar
+        onUnlock={handleUnlock}
+        savingsAmount={fmtMoney(annualSavings)}
+        isVisible={isLocked}
+      />
     </div>
   );
 }
