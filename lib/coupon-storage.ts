@@ -43,8 +43,9 @@ const DEFAULT_COUPONS: Coupon[] = [
   },
   {
     code: 'BKDEMO',
-    description: 'Always free - BeeKings demo account only',
-    type: 'always_free',
+    description: 'BeeKings demo - 2 year free trial',
+    type: 'trial_extension',
+    trialDays: 730,
     maxCounties: 1,
     maxRedemptions: 1,
     redemptions: 0,
