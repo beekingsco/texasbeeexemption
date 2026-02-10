@@ -151,7 +151,7 @@ export default function AgentLandingPage() {
                 className="cta-btn"
                 style={{ padding: '16px 32px', borderRadius: 12, background: C.green, color: C.navy, fontWeight: 800, fontSize: 17, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)' }}
               >
-                {checkoutLoading ? 'Loading...' : 'Start Free 30-Day Trial →'}
+                {checkoutLoading ? 'Loading...' : 'Start Free 7-Day Trial →'}
               </button>
               <a
                 href="#how-it-works"
@@ -421,14 +421,14 @@ export default function AgentLandingPage() {
                 One Plan. Everything Included.
               </h2>
               <p style={{ fontSize: 16, color: C.gray, marginTop: 12, maxWidth: 480, margin: '12px auto 0' }}>
-                Start with a free 30-day trial. If it doesn&apos;t pay for itself, cancel anytime.
+                Start with a free 7-day trial. If it doesn&apos;t pay for itself, cancel anytime.
               </p>
             </div>
 
             <div style={{ maxWidth: 520, margin: '0 auto' }}>
               <div style={{ background: C.white, borderRadius: 24, padding: '40px 36px', border: `2px solid ${C.green}`, boxShadow: '0 8px 40px rgba(0,0,0,0.08)', position: 'relative' }}>
                 <div style={{ position: 'absolute', top: -16, left: '50%', transform: 'translateX(-50%)', background: C.green, color: C.navy, fontSize: 12, fontWeight: 800, padding: '6px 20px', borderRadius: 20, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-                  30 Days Free
+                  7 Days Free
                 </div>
 
                 <div style={{ textAlign: 'center', marginBottom: 28 }}>
@@ -471,7 +471,7 @@ export default function AgentLandingPage() {
                   className="cta-btn"
                   style={{ width: '100%', padding: '18px 24px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)', marginBottom: 12 }}
                 >
-                  {checkoutLoading ? 'Loading...' : 'Start Your Free 30-Day Trial →'}
+                  {checkoutLoading ? 'Loading...' : 'Start Your Free 7-Day Trial →'}
                 </button>
                 <p style={{ textAlign: 'center', fontSize: 13, color: C.gray }}>
                   Cancel anytime • One commission pays for 10+ years
@@ -515,8 +515,8 @@ export default function AgentLandingPage() {
                   a: 'BeeExemption provides personalized, data-driven reports with exact savings calculations based on real property data. It\'s not a generic pitch — it\'s a professional document with your branding that shows a specific dollar amount for a specific property. That\'s what gets clients to act.',
                 },
                 {
-                  q: 'What does the 30-day trial include?',
-                  a: 'Everything. Full access to your branded link, unlimited reports, lead notifications, and your client dashboard. If BeeExemption doesn\'t deliver value in 30 days, just cancel. No questions asked, no charges.',
+                  q: 'What does the 7-day trial include?',
+                  a: 'Everything. Full access to your branded link, unlimited reports, lead notifications, and your client dashboard. If BeeExemption doesn\'t deliver value in 7 days, just cancel. No questions asked, no charges.',
                 },
                 {
                   q: 'Can I share leads with my team or brokerage?',
@@ -576,10 +576,10 @@ export default function AgentLandingPage() {
             className="cta-btn"
             style={{ padding: '18px 40px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 6px 24px rgba(212,168,67,0.35)', marginBottom: 12 }}
           >
-            {checkoutLoading ? 'Loading...' : 'Start Your Free 30-Day Trial →'}
+            {checkoutLoading ? 'Loading...' : 'Start Your Free 7-Day Trial →'}
           </button>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)', marginTop: 12 }}>
-            No credit card required • Cancel anytime • Full access for 30 days
+            No credit card required • Cancel anytime • Full access for 7 days
           </p>
         </div>
       </section>
