@@ -72,8 +72,8 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // For agent tier without coupon, no trial (trial is coupon-based now)
-    const subscriptionTrialDays: number | undefined = tier === 'agent' ? trialDays : ('trialDays' in tierConfig ? (tierConfig as { trialDays?: number }).trialDays : undefined);
+    // Default 7-day trial for all agents; coupon can extend it
+    const subscriptionTrialDays: number | undefined = tier === 'agent' ? (trialDays || 7) : ('trialDays' in tierConfig ? (tierConfig as { trialDays?: number }).trialDays : undefined);
 
     // Create checkout session params
     const sessionParams: Stripe.Checkout.SessionCreateParams = {

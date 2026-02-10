@@ -93,9 +93,10 @@ export default function AgentLandingPage() {
 
   const hasValidTrial = promoStatus?.valid && promoStatus?.type === 'trial';
   const hasValidDiscount = promoStatus?.valid && promoStatus?.type === 'discount';
-  const ctaLabel = hasValidTrial
-    ? `Start Free ${promoStatus?.value}-Day Trial →`
-    : checkoutLoading ? 'Loading...' : 'Start Now — $297/year →';
+  const trialDays = hasValidTrial ? promoStatus?.value : 7;
+  const ctaLabel = checkoutLoading ? 'Loading...'
+    : hasValidTrial ? `Start Free ${promoStatus?.value}-Day Trial →`
+    : `Start Your 7-Day Free Trial →`;
 
   return (
     <div style={{ minHeight: '100vh', background: C.white }}>
@@ -194,7 +195,7 @@ export default function AgentLandingPage() {
             </div>
             {hasValidTrial && (
               <div style={{ marginTop: 12, background: 'rgba(87,201,117,0.12)', border: '1px solid rgba(87,201,117,0.3)', borderRadius: 10, padding: '10px 16px', display: 'inline-block' }}>
-                <span style={{ fontSize: 15, fontWeight: 700, color: '#1a6b3a' }}>🎉 {promoStatus?.value}-day free trial activated!</span>
+                <span style={{ fontSize: 15, fontWeight: 700, color: '#1a6b3a' }}>🎉 Trial upgraded to {promoStatus?.value} days free!</span>
               </div>
             )}
             {hasValidDiscount && (
@@ -491,18 +492,16 @@ export default function AgentLandingPage() {
               </h2>
               <p style={{ fontSize: 16, color: C.gray, marginTop: 12, maxWidth: 480, margin: '12px auto 0' }}>
                 {hasValidTrial
-                  ? `Start with a free ${promoStatus?.value}-day trial. If it doesn't pay for itself, cancel anytime.`
-                  : 'Everything you need to generate leads and close more rural land deals.'}
+                  ? `Start with a free ${promoStatus?.value}-day trial. If it doesn\u0027t pay for itself, cancel anytime.`
+                  : 'Start with a free 7-day trial. No credit card required.'}
               </p>
             </div>
 
             <div style={{ maxWidth: 520, margin: '0 auto' }}>
               <div style={{ background: C.white, borderRadius: 24, padding: '40px 36px', border: `2px solid ${C.green}`, boxShadow: '0 8px 40px rgba(0,0,0,0.08)', position: 'relative' }}>
-                {hasValidTrial && (
-                  <div style={{ position: 'absolute', top: -16, left: '50%', transform: 'translateX(-50%)', background: C.green, color: C.navy, fontSize: 12, fontWeight: 800, padding: '6px 20px', borderRadius: 20, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-                    {promoStatus?.value} Days Free
-                  </div>
-                )}
+                <div style={{ position: 'absolute', top: -16, left: '50%', transform: 'translateX(-50%)', background: C.green, color: C.navy, fontSize: 12, fontWeight: 800, padding: '6px 20px', borderRadius: 20, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                  {hasValidTrial ? `${promoStatus?.value} Days Free` : '7-Day Free Trial'}
+                </div>
 
                 <div style={{ textAlign: 'center', marginBottom: 28 }}>
                   <span style={{ fontSize: 40 }}>🏠</span>
@@ -589,7 +588,7 @@ export default function AgentLandingPage() {
                 },
                 {
                   q: 'Do you offer free trials?',
-                  a: 'Yes! If you have a promo code, enter it on this page to unlock a free trial. Trial codes are available through our partner campaigns and events. During the trial, you get full access to everything — branded link, unlimited reports, lead notifications, and your client dashboard.',
+                  a: 'Every agent gets a free 7-day trial — no promo code needed. If you have a promo code from one of our partner campaigns, enter it to unlock an extended trial (up to 30 days) or a discount. During any trial, you get full access to everything — branded link, unlimited reports, lead notifications, and your client dashboard.',
                 },
                 {
                   q: 'Can I share leads with my team or brokerage?',
