@@ -457,21 +457,21 @@ function ReportContent() {
         {/* Is It Worth It? callout */}
         <div className="avoid-break" style={{ background: '#e8f4fd', borderRadius: 12, padding: 32, marginBottom: 32 }}>
           <h3 style={{ fontSize: 20, fontWeight: 900, color: '#1a56db', marginBottom: 16 }}>💡 Is It Worth It?</h3>
-          <div className="grid grid-cols-3 gap-4 mb-6">
-            <div style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, color: '#666', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 }}>Startup cost</p>
-              <p style={{ fontSize: 28, fontWeight: 900, color: '#333' }}>{fmtMoney(totalUpfront)}</p>
-              <p style={{ fontSize: 11, color: '#888' }}>{requiredHives} hives + gear</p>
+          <div style={{ display: 'flex', gap: 12, marginBottom: 24, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <div style={{ textAlign: 'center', flex: '1 1 140px', maxWidth: 200, padding: '16px 12px', background: 'white', borderRadius: 10, border: '1px solid #d1d5db' }}>
+              <p style={{ fontSize: 11, fontWeight: 700, color: '#666', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6 }}>Startup cost</p>
+              <p style={{ fontSize: 24, fontWeight: 900, color: '#333', lineHeight: 1.1 }}>{fmtMoney(totalUpfront)}</p>
+              <p style={{ fontSize: 11, color: '#888', marginTop: 4 }}>{requiredHives} hives + gear</p>
             </div>
-            <div style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, color: colors.darkGreen, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 }}>Annual return</p>
-              <p style={{ fontSize: 28, fontWeight: 900, color: colors.darkGreen }}>{fmtMoney(netAnnualBenefit)}</p>
-              <p style={{ fontSize: 11, color: '#888' }}>savings + honey − upkeep</p>
+            <div style={{ textAlign: 'center', flex: '1 1 140px', maxWidth: 200, padding: '16px 12px', background: 'white', borderRadius: 10, border: '1px solid #d1d5db' }}>
+              <p style={{ fontSize: 11, fontWeight: 700, color: colors.darkGreen, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6 }}>Annual return</p>
+              <p style={{ fontSize: 24, fontWeight: 900, color: colors.darkGreen, lineHeight: 1.1 }}>{fmtMoney(netAnnualBenefit)}</p>
+              <p style={{ fontSize: 11, color: '#888', marginTop: 4 }}>savings + honey − upkeep</p>
             </div>
-            <div style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, color: '#b45309', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 }}>Payback period</p>
-              <p style={{ fontSize: 28, fontWeight: 900, color: '#b45309' }}>~{roiMonths} mo</p>
-              <p style={{ fontSize: 11, color: '#888' }}>then it&apos;s pure savings</p>
+            <div style={{ textAlign: 'center', flex: '1 1 140px', maxWidth: 200, padding: '16px 12px', background: 'white', borderRadius: 10, border: '1px solid #d1d5db' }}>
+              <p style={{ fontSize: 11, fontWeight: 700, color: '#b45309', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6 }}>Payback period</p>
+              <p style={{ fontSize: 24, fontWeight: 900, color: '#b45309', lineHeight: 1.1 }}>~{roiMonths} mo</p>
+              <p style={{ fontSize: 11, color: '#888', marginTop: 4 }}>then it&apos;s pure savings</p>
             </div>
           </div>
           <div style={{ borderTop: '1px solid rgba(26,86,219,0.15)', paddingTop: 16 }}>
