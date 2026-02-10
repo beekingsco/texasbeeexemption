@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createMagicToken } from '@/lib/auth-tokens';
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM_EMAIL = process.env.FROM_EMAIL || 'hello@beeexemption.com';
 const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || 'scout@beekings.com').split(',').map(e => e.trim().toLowerCase());
+const SESSION_SECRET = process.env.NEXTAUTH_SECRET || process.env.SESSION_SECRET || 'beeexemption-session-2026';
+
+function createAdminToken(email: string): string {
+  const expires = Date.now() + 15 * 60 * 1000; // 15 min
+  const payload = `${email}:${expires}`;
+  const signature = Buffer.from(`${payload}:${SESSION_SECRET}`).toString('base64url');
+  return Buffer.from(`${payload}:${signature}`).toString('base64url');
+}
 
 function buildAdminMagicEmail(loginUrl: string): string {
   return `
@@ -45,14 +52,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true, message: 'If this is an admin email, a login link has been sent.' });
     }
 
-    let token: string;
-    try {
-      token = await createMagicToken(normalizedEmail);
-    } catch (tokenError) {
-      console.error('Failed to create magic token (blob storage issue?):', tokenError);
-      // Fallback: create a simple time-based token without blob storage
-      token = Buffer.from(`${normalizedEmail}:${Date.now()}:${crypto.randomUUID()}`).toString('base64url');
-    }
+    const token = createAdminToken(normalizedEmail);
     const origin = req.headers.get('origin') || 'https://beeexemption.com';
     const loginUrl = `${origin}/api/auth/admin-verify?token=${token}`;
 
