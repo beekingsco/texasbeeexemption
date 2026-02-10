@@ -264,10 +264,10 @@ export default function AgentLandingPage() {
                 Start Free Trial →
               </button>
               <a
-                href="#how-it-works"
+                href="/report?county=Travis&acres=25&propertyValue=450000&name=Buzz%20B.%20Honeywell&access=demo"
                 style={{ padding: '16px 28px', borderRadius: 12, background: 'transparent', color: C.navy, fontWeight: 700, fontSize: 16, border: `2px solid ${C.blue}22`, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}
               >
-                See How It Works
+                View Demo Report
               </a>
             </div>
             <p style={{ fontSize: 13, color: C.gray, marginTop: 14 }}>
@@ -856,6 +856,12 @@ export default function AgentLandingPage() {
           >
             Start Your Free Trial →
           </button>
+          <a
+            href="/report?county=Travis&acres=25&propertyValue=450000&name=Buzz%20B.%20Honeywell&access=demo"
+            style={{ padding: '14px 28px', borderRadius: 12, background: 'transparent', color: C.white, fontWeight: 700, fontSize: 16, border: '2px solid rgba(255,255,255,0.2)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}
+          >
+            View Demo Report
+          </a>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)', marginTop: 12 }}>
             No credit card required • Cancel anytime • Full access
           </p>

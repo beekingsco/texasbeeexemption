@@ -249,6 +249,12 @@ function ReportContent() {
   const [accessChecked, setAccessChecked] = useState(false);
 
   useEffect(() => {
+    // Demo report — fully unlocked
+    if (accessToken === 'demo') {
+      setHasAccess(true);
+      setAccessChecked(true);
+      return;
+    }
     if (!accessToken) {
       setAccessChecked(true);
       return;
