@@ -704,57 +704,10 @@ function ReportContent() {
         })()}
 
         {/* Hive Anatomy Infographic */}
-        <div className="pdf-card avoid-break" style={{ padding: 36, marginBottom: 28 }}>
+        <div className="pdf-card avoid-break" style={{ padding: 36, marginBottom: 28, textAlign: 'center' }}>
           <h3 style={{ fontSize: 18, fontWeight: 900, color: '#222', marginBottom: 4 }}>Anatomy of a Beehive</h3>
           <p style={{ fontSize: 13, color: '#888', marginBottom: 28 }}>A standard Langstroth hive — the most common type in Texas beekeeping</p>
-
-          <div className="flex flex-col items-center gap-0" style={{ maxWidth: 480, margin: '0 auto' }}>
-            <div className="hive-part w-full rounded-t-xl p-3 text-center border-2" style={{ background: 'linear-gradient(135deg, #64748b, #475569)', borderColor: '#334155', color: 'white' }}>
-              <p className="text-xs font-bold uppercase tracking-wider">Outer Cover (Telescoping Lid)</p>
-              <p className="text-xs opacity-70">Protects from rain, snow & sun</p>
-            </div>
-            <div className="hive-part w-11/12 p-2 text-center border-x-2 border-b-2" style={{ background: '#f8fafc', borderColor: '#94a3b8' }}>
-              <p className="text-xs font-bold text-gray-700">Inner Cover</p>
-              <p className="text-xs text-gray-500">Ventilation & insulation barrier</p>
-            </div>
-            <div className="hive-part w-11/12 p-4 text-center border-x-2 border-b-2" style={{ background: 'linear-gradient(135deg, #fef3c7, #fde68a)', borderColor: '#d97706' }}>
-              <p className="text-sm font-bold text-amber-800">🍯 Honey Super (Medium Box)</p>
-              <p className="text-xs text-amber-700">Where bees store surplus honey for harvest</p>
-              <div className="flex justify-center gap-1 mt-2">
-                {[...Array(8)].map((_, i) => (
-                  <div key={i} className="w-5 h-8 rounded-sm" style={{ background: 'linear-gradient(to bottom, #fbbf24, #f59e0b)', border: '1px solid #d97706' }} />
-                ))}
-              </div>
-              <p className="text-xs text-amber-600 mt-1">← Frames with honeycomb →</p>
-            </div>
-            <div className="hive-part w-11/12 p-2 text-center border-x-2 border-b-2" style={{ background: 'repeating-linear-gradient(90deg, #e2e8f0 0px, #e2e8f0 3px, transparent 3px, transparent 6px)', borderColor: '#64748b' }}>
-              <p className="text-xs font-bold text-gray-700">⚡ Queen Excluder</p>
-              <p className="text-xs text-gray-500">Keeps queen below — workers pass through to store honey</p>
-            </div>
-            <div className="hive-part w-11/12 p-5 text-center border-x-2 border-b-2" style={{ background: 'linear-gradient(135deg, #fed7aa, #fdba74)', borderColor: '#c2410c' }}>
-              <p className="text-sm font-bold text-orange-900">👑 Deep Brood Box</p>
-              <p className="text-xs text-orange-800">Queen lives & lays eggs here — the heart of the colony</p>
-              <div className="flex justify-center gap-1 mt-2">
-                {[...Array(10)].map((_, i) => (
-                  <div key={i} className="w-4 h-10 rounded-sm" style={{ background: i < 3 || i > 6 ? 'linear-gradient(to bottom, #fbbf24, #d97706)' : 'linear-gradient(to bottom, #fb923c, #ea580c)', border: '1px solid #c2410c' }} />
-                ))}
-              </div>
-              <p className="text-xs text-orange-700 mt-1">Honey frames | Brood frames | Honey frames</p>
-            </div>
-            <div className="hive-part w-full p-3 text-center border-2 border-t-0" style={{ background: 'linear-gradient(135deg, #a8a29e, #78716c)', borderColor: '#57534e', color: 'white' }}>
-              <p className="text-xs font-bold">Bottom Board (Screened)</p>
-              <p className="text-xs opacity-80">Ventilation & mite monitoring</p>
-            </div>
-            <div className="hive-part w-8/12 p-2 text-center rounded-b-lg border-2 border-t-0" style={{ background: '#44403c', borderColor: '#292524', color: 'white' }}>
-              <p className="text-xs font-bold">🚪 Entrance Reducer</p>
-              <p className="text-xs opacity-70">Controls access & defends against robbing</p>
-            </div>
-            <div className="flex justify-center gap-16 mt-2">
-              <div className="w-4 h-6 rounded-sm" style={{ background: '#78716c' }} />
-              <div className="w-4 h-6 rounded-sm" style={{ background: '#78716c' }} />
-            </div>
-            <p className="text-xs text-gray-400 mt-1">Hive Stand (keeps hive off ground)</p>
-          </div>
+          <img src="/hive-anatomy.jpg" alt="Anatomy of a Langstroth Beehive" style={{ maxWidth: 420, width: '100%', margin: '0 auto' }} />
         </div>
 
         {/* Pro Tip: Placement */}
