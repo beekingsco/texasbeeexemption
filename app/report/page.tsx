@@ -629,9 +629,11 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 3 — HOW TO GET YOUR EXEMPTION
           ════════════════════════════════════════════════════════════ */}
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
+        <SectionHeader emoji="📋" title="HOW TO GET YOUR EXEMPTION" />
+      </div>
       <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-2" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
-        <SectionHeader emoji="📋" title="HOW TO GET YOUR EXEMPTION" />
 
         {/* Where to Apply — gold border card */}
         <div className="gold-border-card avoid-break" style={{ marginBottom: 28 }}>
@@ -732,9 +734,11 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 4 — WHAT TO BUY
           ════════════════════════════════════════════════════════════ */}
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
+        <SectionHeader emoji="🛒" title="WHAT TO BUY" />
+      </div>
       <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-3" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
-        <SectionHeader emoji="🛒" title="WHAT TO BUY" />
 
         {/* ═══ VERIFIED PRODUCTS SHOPPING LIST ═══ */}
         {(() => {
@@ -878,9 +882,11 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 5 — WHAT YOU NEED TO KNOW
           ════════════════════════════════════════════════════════════ */}
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
+        <SectionHeader emoji="🐝" title="WHAT YOU NEED TO KNOW" />
+      </div>
       <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-4" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
-        <SectionHeader emoji="🐝" title="WHAT YOU NEED TO KNOW" />
 
         {/* Two side-by-side cards: Queen & Workers */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
@@ -993,9 +999,11 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 6 — LOCAL RESOURCES & SUPPLIERS
           ════════════════════════════════════════════════════════════ */}
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
+        <SectionHeader emoji="🏪" title="LOCAL RESOURCES & SUPPLIERS" />
+      </div>
       <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-6" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
-        <SectionHeader emoji="🏪" title="LOCAL RESOURCES & SUPPLIERS" />
 
         {/* Nuc Suppliers */}
         <div className="pdf-card" style={{ padding: 32, marginBottom: 28 }}>
@@ -1131,9 +1139,11 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 5 — RECORD KEEPING & EXPENSES (kept from original)
           ════════════════════════════════════════════════════════════ */}
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
+        <SectionHeader emoji="📋" title="KEEPING YOUR RECORDS STRAIGHT" />
+      </div>
       <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
       <section id="section-5" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
-        <SectionHeader emoji="📋" title="KEEPING YOUR RECORDS STRAIGHT" />
 
         <div className="pdf-card avoid-break" style={{ padding: 32, marginBottom: 28 }}>
           <h3 style={{ fontSize: 18, fontWeight: 900, color: '#222', marginBottom: 8 }}>The Short Version: Keep Your Receipts</h3>
