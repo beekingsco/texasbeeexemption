@@ -250,12 +250,12 @@ export default function AgentLandingPage() {
       {/* ===================== HERO BOTTOM — No Background Image ===================== */}
       <section style={{ padding: '48px 24px 64px', background: C.sky }}>
         <div className="hero-animate hero-flex" style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 48 }}>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' as const }}>
             <p style={{ fontSize: 18, color: C.gray, lineHeight: 1.7, marginBottom: 36, maxWidth: 520 }}>
               Give your clients something no other agent offers — a personalized property tax savings report. 
               Generate qualified leads, close more deals, and become the go-to agent for rural land.
             </p>
-            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
               <button
                 onClick={() => scrollToSignup()}
                 className="cta-btn"
