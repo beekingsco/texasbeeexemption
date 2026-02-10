@@ -218,7 +218,7 @@ export default function NationalLanding() {
       </div>
 
       {/* HERO — full background photo */}
-      <section className="hero-section" style={{ position: 'relative', padding: '220px 24px 80px', overflow: 'hidden', minHeight: 540 }}>
+      <section className="hero-section" style={{ position: 'relative', padding: '220px 24px 32px', overflow: 'hidden', minHeight: 540 }}>
         {/* Full-screen background photo */}
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/beekeeper-frame.jpg)', backgroundSize: 'cover', backgroundPosition: 'center 30%' }} />
         {/* Dark overlay for text readability */}
@@ -226,7 +226,7 @@ export default function NationalLanding() {
 
         <div style={{ maxWidth: 700, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div className="hero-text fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <br /><br /><br />
+            <br /><br /><br /><br /><br />
             <h1 style={{ fontSize: 'clamp(28px, 5vw, 52px)', fontWeight: 900, color: C.white, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: 16 }}>
               Could bees lower<br />your property taxes?
             </h1>
