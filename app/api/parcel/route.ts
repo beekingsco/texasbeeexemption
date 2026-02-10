@@ -39,8 +39,11 @@ export async function GET(request: NextRequest) {
   try {
     const url = new URL(TNRIS_PARCEL_URL);
     url.searchParams.set('f', 'json');
-    url.searchParams.set('geometry', `${lng},${lat}`);
-    url.searchParams.set('geometryType', 'esriGeometryPoint');
+    // Use a small envelope (buffer) around the point to catch parcels where
+    // the geocoded pin lands slightly outside the parcel boundary (common with rural addresses)
+    const buf = 0.0005; // ~55 meters
+    url.searchParams.set('geometry', `${parseFloat(lng) - buf},${parseFloat(lat) - buf},${parseFloat(lng) + buf},${parseFloat(lat) + buf}`);
+    url.searchParams.set('geometryType', 'esriGeometryEnvelope');
     url.searchParams.set('spatialRel', 'esriSpatialRelIntersects');
     url.searchParams.set('outFields', '*');
     url.searchParams.set('returnGeometry', 'false');
