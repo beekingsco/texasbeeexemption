@@ -410,7 +410,7 @@ export default function FloridaCalculator() {
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           {/* Left: back arrow */}
           <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 600, color: C.gray }}>
-            <span style={{ fontWeight: 800 }}><span style={{ fontSize: 18 }}>←</span>lt; Back</span>
+            <span style={{ fontSize: 28, lineHeight: 1 }}>🔙</span>
           </a>
           {/* Center: BeeKings logo */}
           <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
