@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { US_STATES, STATE_SUBDIVISION_LABEL, SUBDIVISIONS } from '@/lib/us-subdivisions';
 
 const C = {
   sky: '#F0F4FA',
@@ -57,6 +58,11 @@ export default function AgentLandingPage() {
   const [promoChecking, setPromoChecking] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<PlanType>('agent_state');
   const [formData, setFormData] = useState({ name: '', email: '', brokerage: '', phone: '', counties: '' });
+  const [selectedState, setSelectedState] = useState('');
+  const [selectedCounty, setSelectedCounty] = useState('');
+
+  const countyLabel = selectedState ? (STATE_SUBDIVISION_LABEL[selectedState] || 'County') : 'County';
+  const countyOptions = selectedState ? (SUBDIVISIONS[selectedState] || []) : [];
   const [formError, setFormError] = useState('');
   const signupRef = useRef<HTMLDivElement>(null);
 
@@ -684,7 +690,29 @@ export default function AgentLandingPage() {
                   <input type="text" placeholder="Brokerage Name" value={formData.brokerage} onChange={e => setFormData(d => ({ ...d, brokerage: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
                   <input type="tel" placeholder="Phone Number" value={formData.phone} onChange={e => setFormData(d => ({ ...d, phone: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
                   {selectedPlan === 'agent' && (
-                    <input type="text" placeholder="County (e.g. Van Zandt, Henderson)" value={formData.counties} onChange={e => setFormData(d => ({ ...d, counties: e.target.value }))} style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none' }} />
+                    <>
+                      <select
+                        value={selectedState}
+                        onChange={e => { setSelectedState(e.target.value); setSelectedCounty(''); setFormData(d => ({ ...d, counties: '' })); }}
+                        style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none', background: C.white, color: selectedState ? C.navy : C.gray, appearance: 'none', backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'8\'%3E%3Cpath d=\'M1 1l5 5 5-5\' stroke=\'%235A6A7A\' stroke-width=\'2\' fill=\'none\'/%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 14px center' }}
+                      >
+                        <option value="" disabled>Select State</option>
+                        {US_STATES.map(s => (
+                          <option key={s.value} value={s.value}>{s.label}</option>
+                        ))}
+                      </select>
+                      <select
+                        value={selectedCounty}
+                        onChange={e => { setSelectedCounty(e.target.value); setFormData(d => ({ ...d, counties: e.target.value })); }}
+                        disabled={!selectedState}
+                        style={{ padding: '12px 14px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 15, fontFamily: 'inherit', outline: 'none', background: C.white, color: selectedCounty ? C.navy : C.gray, opacity: selectedState ? 1 : 0.5, appearance: 'none', backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'8\'%3E%3Cpath d=\'M1 1l5 5 5-5\' stroke=\'%235A6A7A\' stroke-width=\'2\' fill=\'none\'/%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 14px center' }}
+                      >
+                        <option value="" disabled>Select {countyLabel}</option>
+                        {countyOptions.map(c => (
+                          <option key={c} value={c}>{c}</option>
+                        ))}
+                      </select>
+                    </>
                   )}
                 </div>
 
