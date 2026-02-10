@@ -18,7 +18,7 @@ const C = {
   amber: '#D4A843',
 };
 
-const AVAILABLE_STATES = ['TX', 'FL', 'AR', 'LA'];
+const AVAILABLE_STATES = ['TX', 'FL'];
 
 const BEEKEEPER_BASE = 153132;
 
