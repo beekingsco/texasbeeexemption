@@ -196,13 +196,13 @@ export default function AgentLandingPage() {
         <section style={{ padding: '80px 24px', background: C.white }}>
           <div style={{ maxWidth: 780, margin: '0 auto', textAlign: 'center' }}>
             <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: 800, color: C.navy, marginBottom: 16, lineHeight: 1.2 }}>
-              Rural Land Listings Are Hard to Sell. <br />
-              <span style={{ color: C.green }}>They Don&apos;t Have to Be.</span>
+              6–20 Acres? Your Buyers Are Overpaying <br />
+              <span style={{ color: C.green }}>Thousands in Property Taxes.</span>
             </h2>
             <p style={{ fontSize: 17, color: C.gray, lineHeight: 1.8, maxWidth: 640, margin: '0 auto 48px' }}>
-              Every agent fights over the same leads with the same pitch. Rural listings sit for months 
-              because buyers don&apos;t see the full value. Meanwhile, your marketing budget goes to Zillow 
-              and you&apos;re one of 20 agents competing for the same click.
+              Show them how beekeeping can cut their tax bill by 90% — and close the deal faster. 
+              Properties in this range hit the sweet spot: taxes are painful enough to matter, 
+              and qualifying for an ag exemption through beekeeping is surprisingly simple.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 24 }}>
               {[
