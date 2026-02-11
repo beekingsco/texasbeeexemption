@@ -383,7 +383,7 @@ export default function NationalLanding() {
           </div>
 
           <p style={{ fontSize: 14, color: C.gray, marginTop: 32 }}>
-            Don&apos;t see your state? <a href="#" onClick={(e) => { e.preventDefault(); setSelectedState(''); const el = document.querySelector('select'); el?.focus(); }} style={{ color: C.blue, fontWeight: 600, textDecoration: 'none' }}>Select it above</a> to join the waitlist — we&apos;ll notify you when we launch.
+            <a href="/states" style={{ color: C.blue, fontWeight: 600, textDecoration: 'none' }}>View all 50 states →</a>
           </p>
         </div>
       </section>
