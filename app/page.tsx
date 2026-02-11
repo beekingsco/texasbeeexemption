@@ -18,7 +18,8 @@ const C = {
   amber: '#D4A843',
 };
 
-const AVAILABLE_STATES = ['TX', 'FL'];
+const CALCULATOR_STATES = ['TX', 'FL', 'AR', 'LA'];
+const INFO_STATES = ['AZ', 'CA', 'CO', 'CT', 'GA', 'HI', 'ID', 'IL', 'KY', 'ME', 'MD', 'MA', 'NH', 'NJ', 'NY', 'NC', 'OH', 'OK', 'OR', 'PA', 'SC', 'TN', 'UT', 'VT', 'VA', 'WA', 'WI'];
 
 const BEEKEEPER_BASE = 153132;
 
@@ -258,11 +259,18 @@ export default function NationalLanding() {
                   onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.3)'}
                 >
                   <option value="">Choose your state...</option>
-                  {US_STATES.map(state => (
-                    <option key={state.code} value={state.code}>
-                      {state.name}{AVAILABLE_STATES.includes(state.code) ? ' ✓' : ''}
-                    </option>
-                  ))}
+                  {US_STATES.map(state => {
+                    const label = CALCULATOR_STATES.includes(state.code) 
+                      ? ' ✓ Calculator' 
+                      : INFO_STATES.includes(state.code) 
+                        ? ' • Info' 
+                        : '';
+                    return (
+                      <option key={state.code} value={state.code}>
+                        {state.name}{label}
+                      </option>
+                    );
+                  })}
                 </select>
                 <button
                   onClick={() => handleStateSelect(selectedState)}
@@ -356,6 +364,8 @@ export default function NationalLanding() {
             {[
               { code: 'TX', name: 'Texas', emoji: '🤠', counties: 254, desc: 'Real property data' },
               { code: 'FL', name: 'Florida', emoji: '🌴', counties: 67, desc: 'No min acreage' },
+              { code: 'AR', name: 'Arkansas', emoji: '💎', counties: 75, desc: 'Beekeeping explicit' },
+              { code: 'LA', name: 'Louisiana', emoji: '⚜️', counties: 64, desc: '64 parishes' },
             ].map(state => (
               <button
                 key={state.code}
