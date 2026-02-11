@@ -877,6 +877,11 @@ export default function Home() {
                   📋 Get Your Free {selectedCounty.name} County Guide
                   <span>Step-by-step filing instructions, deadlines & requirements</span>
                 </button>
+                <div style={{ marginTop: 16, padding: '12px 16px', background: '#EFF6FF', border: '1px solid #BFDBFE', borderRadius: 10, textAlign: 'left' }}>
+                  <p style={{ fontSize: 13, color: '#1E40AF', lineHeight: 1.5, margin: 0 }}>
+                    <strong>📋 Eligibility note:</strong> Texas requires land to have been used for agriculture 5 of the past 7 years. If your land already has ag history, you may qualify now. Starting beekeeping today begins building your qualifying history.
+                  </p>
+                </div>
               </div>
             )}
 

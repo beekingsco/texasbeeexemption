@@ -779,6 +779,11 @@ export default function FloridaCalculator() {
                     {fmtMoney(results.annualSavings)}
                   </div>
                   <p style={{ fontSize: 15, color: C.gray, marginTop: 8 }}>per year on property taxes</p>
+                  <div style={{ marginTop: 16, padding: '12px 16px', background: '#ECFDF5', border: '1px solid #A7F3D0', borderRadius: 10, textAlign: 'left' }}>
+                    <p style={{ fontSize: 13, color: '#065F46', lineHeight: 1.5, margin: 0 }}>
+                      <strong>✅ Good news:</strong> Florida has no waiting period — you can qualify for agricultural classification in your first year with bona fide agricultural use.
+                    </p>
+                  </div>
                 </div>
 
                 {/* Tax Comparison */}

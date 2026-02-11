@@ -782,6 +782,11 @@ export default function LouisianaCalculator() {
                     {fmtMoney(results.annualSavings)}
                   </div>
                   <p style={{ fontSize: 15, color: C.gray, marginTop: 8 }}>per year on property taxes</p>
+                  <div style={{ marginTop: 16, padding: '12px 16px', background: '#ECFDF5', border: '1px solid #A7F3D0', borderRadius: 10, textAlign: 'left' }}>
+                    <p style={{ fontSize: 13, color: '#065F46', lineHeight: 1.5, margin: 0 }}>
+                      <strong>✅ Good news:</strong> Louisiana properties with 3+ acres can qualify for agricultural use value in year 1 — no waiting period. Properties under 3 acres need 4 years of income history.
+                    </p>
+                  </div>
                 </div>
 
                 {/* Tax Comparison */}
