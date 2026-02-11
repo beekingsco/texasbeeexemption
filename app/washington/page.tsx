@@ -96,16 +96,32 @@ export default function WashingtonPage() {
             </div>
           </div>
 
-          {/* 2015 Change */}
+          {/* Tax Benefits */}
           <div className="info-card">
-            <h3>🎉 Good News: 2015 Tax Changes</h3>
+            <h3>🎉 Washington Beekeeper Tax Benefits</h3>
             <p>
-              In 2015, Washington State (Senate Bill 6057) designated eligible apiarists as <strong>&quot;farmers&quot; for excise tax purposes</strong>, 
-              providing B&O tax and sales tax exemptions for beekeeping operations.
+              Washington designates eligible beekeepers as <strong>&quot;farmers&quot;</strong>, providing multiple tax exemptions:
             </p>
-            <p style={{ marginTop: 12 }}>
-              While this doesn&apos;t directly address property taxes, it demonstrates Washington&apos;s recognition of beekeeping as legitimate agriculture.
-            </p>
+            <ul>
+              <li><strong>Sales Tax Exemption:</strong> No sales tax on bee feed and bees for eligible apiarists</li>
+              <li><strong>B&O Tax Exemption:</strong> Pollination services to farmers and wholesale honey sales exempt</li>
+              <li><strong>Equipment Exemption:</strong> Replacement parts and repairs for farm equipment (if $10K+ annual income)</li>
+              <li><strong>Property Tax:</strong> May qualify for agricultural land valuation (5+ acres, 6+ colonies typical)</li>
+            </ul>
+            <div className="highlight-box">
+              <p><strong>Eligible Apiarist Requirements:</strong> Own 1+ bee colonies (7,000+ workers + queen), produce honey bee products for wholesale sale, and register with WA Dept. of Agriculture.</p>
+            </div>
+          </div>
+          
+          {/* Documentation */}
+          <div className="info-card">
+            <h3>📄 Required Documentation</h3>
+            <p>To claim exemptions, you&apos;ll need:</p>
+            <ul>
+              <li><strong>WSDA Registration:</strong> Register your apiary with Washington Dept. of Agriculture</li>
+              <li><strong>Farmer&apos;s Certificate:</strong> Provide vendors with completed &quot;Farmers&apos; Certificate for Wholesale Purchases and Sales Tax Exemptions&quot;</li>
+              <li><strong>Income Records:</strong> Document $10K+ annual income (for equipment exemptions)</li>
+            </ul>
           </div>
 
           {/* Acreage Tiers */}
