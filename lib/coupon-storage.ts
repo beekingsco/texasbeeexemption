@@ -53,6 +53,18 @@ const DEFAULT_COUPONS: Coupon[] = [
     enabled: true,
     createdAt: new Date().toISOString(),
   },
+  {
+    code: 'BKFRIENDS',
+    description: 'Friends of BeeKings - 30-day free trial',
+    type: 'trial_extension',
+    trialDays: 30,
+    maxCounties: 1,
+    maxRedemptions: 0, // unlimited
+    redemptions: 0,
+    redeemedBy: [],
+    enabled: true,
+    createdAt: new Date().toISOString(),
+  },
 ];
 
 export async function getCoupons(): Promise<Coupon[]> {
