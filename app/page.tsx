@@ -21,6 +21,13 @@ const C = {
 const CALCULATOR_STATES = ['TX', 'FL', 'AR', 'LA'];
 const INFO_STATES = ['AZ', 'CA', 'CO', 'CT', 'GA', 'HI', 'ID', 'IL', 'KY', 'ME', 'MD', 'MA', 'NH', 'NJ', 'NY', 'NC', 'OH', 'OK', 'OR', 'PA', 'SC', 'TN', 'UT', 'VT', 'VA', 'WA', 'WI'];
 
+const STATE_FLAGS: Record<string, string> = {
+  TX: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Texas.svg/66px-Flag_of_Texas.svg.png',
+  FL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Florida.svg/66px-Flag_of_Florida.svg.png',
+  AR: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Flag_of_Arkansas.svg/66px-Flag_of_Arkansas.svg.png',
+  LA: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Flag_of_Louisiana.svg/66px-Flag_of_Louisiana.svg.png',
+};
+
 const BEEKEEPER_BASE = 153132;
 
 const CITIES = [
@@ -362,10 +369,10 @@ export default function NationalLanding() {
 
           <div style={{ maxWidth: 480, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
             {[
-              { code: 'TX', name: 'Texas', emoji: '🤠', counties: 254, desc: 'Real property data' },
-              { code: 'FL', name: 'Florida', emoji: '🌴', counties: 67, desc: 'No min acreage' },
-              { code: 'AR', name: 'Arkansas', emoji: '💎', counties: 75, desc: 'Beekeeping explicit' },
-              { code: 'LA', name: 'Louisiana', emoji: '⚜️', counties: 64, desc: '64 parishes' },
+              { code: 'TX', name: 'Texas', counties: 254, desc: 'Real property data' },
+              { code: 'FL', name: 'Florida', counties: 67, desc: 'No min acreage' },
+              { code: 'AR', name: 'Arkansas', counties: 75, desc: 'Beekeeping explicit' },
+              { code: 'LA', name: 'Louisiana', counties: 64, desc: '64 parishes' },
             ].map(state => (
               <button
                 key={state.code}
@@ -374,10 +381,14 @@ export default function NationalLanding() {
                 style={{
                   background: C.white, border: '2px solid #D5EAFF', borderRadius: 12,
                   padding: '14px 20px', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit',
-                  display: 'flex', alignItems: 'center', gap: 14,
+                  display: 'flex', alignItems: 'center', gap: 14, position: 'relative',
                 }}
               >
-                <span style={{ fontSize: 24 }}>{state.emoji}</span>
+                <img 
+                  src={STATE_FLAGS[state.code]} 
+                  alt={`${state.name} flag`}
+                  style={{ position: 'absolute', top: 10, right: 10, width: 32, height: 21, objectFit: 'cover', borderRadius: 3, border: '1px solid #e2e8f0' }}
+                />
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <p style={{ fontSize: 17, fontWeight: 800, color: C.navy }}>{state.name}</p>
@@ -385,7 +396,7 @@ export default function NationalLanding() {
                   </div>
                   <p style={{ fontSize: 13, color: C.gray }}>{state.desc}</p>
                 </div>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={C.blue} strokeWidth="2.5" style={{ flexShrink: 0 }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={C.blue} strokeWidth="2.5" style={{ flexShrink: 0, marginRight: 28 }}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
               </button>
