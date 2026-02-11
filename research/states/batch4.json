@@ -1,0 +1,79 @@
+{
+  "OR": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Oregon has Exclusive Farm Use (EFU) zoning with special assessment but no explicit bee provisions",
+    "notes": "Oregon uses EFU zoning for agricultural tax benefits. Requires active farm use. No minimum acreage statewide but must demonstrate commercial agricultural activity. Beekeeping may qualify as part of broader farm operation but not explicitly listed. Contact county assessor."
+  },
+  "PA": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Pennsylvania Clean and Green explicitly includes apiaries as qualifying agricultural use",
+    "notes": "Act 319 (Clean and Green) requires 10+ acres devoted to agricultural use OR $2,000+ annual gross agricultural income from land. Beekeeping/apiaries explicitly listed as qualifying agricultural activity. 3-year agricultural use history typically required. Rollback tax applies if land use changes."
+  },
+  "RI": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Rhode Island Farm, Forest, and Open Space program - beekeeping status unclear",
+    "notes": "RI has Farm, Forest, and Open Space tax program. Minimum 5 acres for farmland, requires active agricultural use. Beekeeping not explicitly mentioned. Very small state with limited ag exemption info available. Contact local assessor for bee qualification."
+  },
+  "SC": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "South Carolina agricultural use assessment includes beekeeping under livestock provisions",
+    "notes": "SC Code Title 12 Chapter 43 provides agricultural use valuation. Land must be 10+ acres actively used for agricultural purposes OR produce $1,000+ gross farm income on smaller tracts. Bees qualify under broad agricultural/livestock definitions. 5-year rollback tax on conversion."
+  },
+  "SD": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "South Dakota uses productivity-based ag valuation but beekeeping alone may not qualify",
+    "notes": "SD assesses agricultural land based on productivity values. Focus is on cropland, rangeland, and hay land. No minimum acreage but must be in agricultural use. Beekeeping alone unlikely to qualify without associated crop/grazing land. Contact county director of equalization."
+  },
+  "TN": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Tennessee Greenbelt Law includes beekeeping - 15+ acres required for agriculture",
+    "notes": "Agricultural Greenbelt requires minimum 15 acres and $1,500+ gross agricultural income. Beekeeping qualifies as agricultural activity. Land must have been in farm use for 3+ years. Rollback tax of 3 years applies upon disqualification. Apply through county assessor by March 1."
+  },
+  "UT": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Utah Farmland Assessment Act (Greenbelt) includes beekeeping as qualifying use",
+    "notes": "FAA/Greenbelt program assesses land at productive value not market value. Minimum 5 contiguous acres actively devoted to agricultural use. Beekeeping/apiaries qualify. Must produce agricultural products for sale. 5-year rollback tax on withdrawal. Apply through county assessor."
+  },
+  "VT": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Vermont Current Use program - agricultural land valued at $510/acre for 2025",
+    "notes": "Current Use program (1978) provides reduced valuation. Agricultural land at $510/acre (2025). Minimum 25 acres for agricultural enrollment. Must demonstrate agricultural income and management. Beekeeping qualifies as part of farm operation. Land Use Change Tax applies on withdrawal."
+  },
+  "VA": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Virginia Land Use program explicitly covers 'production of animals useful to man' including bees",
+    "notes": "VA Code 58.1-3230 defines agricultural use as 'production of plants and animals useful to man.' Beekeeping clearly qualifies. Localities must adopt ordinances. Generally 5+ acres, uniform standards set by Commissioner of Agriculture. Rollback tax of 5 years on conversion."
+  },
+  "WV": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "West Virginia Farmland/Managed Timberland program - beekeeping not explicitly addressed",
+    "notes": "WV has preferential assessment for farmland and managed timberland. Minimum acreage and income requirements vary by county. Beekeeping may qualify under general agricultural definitions but not explicitly listed. Contact county assessor for specific guidance."
+  },
+  "WI": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Wisconsin Use Value Assessment includes beekeeping as qualifying agricultural activity",
+    "notes": "Agricultural land assessed at use value rather than market value. Broadly defines agricultural use to include livestock (bees qualify). No specific minimum acreage but must be in actual agricultural use. Assessed based on soil productivity. Contact local assessor for application."
+  },
+  "WY": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Wyoming agricultural land valued at productivity - beekeeping status uncertain",
+    "notes": "WY values agricultural land based on productive capability. Focus on grazing, cropland, hay. No minimum acreage specified. Beekeeping alone unlikely to trigger ag valuation without associated land use. Contact county assessor for bee-specific guidance."
+  },
+  "_metadata": {
+    "researchDate": "2026-02-10",
+    "source": "State government websites, legal codes, and extension services",
+    "disclaimer": "Basic research only - verify with county/state tax officials before relying on this information"
+  }
+}
