@@ -118,6 +118,31 @@ export default function Home() {
     }).catch(() => {});
   }, []);
 
+  // Sync step with browser history so back button works
+  useEffect(() => {
+    const onPopState = (e: PopStateEvent) => {
+      if (e.state?.step) {
+        setStep(e.state.step);
+      } else {
+        setStep('search');
+      }
+    };
+    window.addEventListener('popstate', onPopState);
+    // Replace initial state
+    window.history.replaceState({ step: 'search' }, '');
+    return () => window.removeEventListener('popstate', onPopState);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Push history when step changes (skip initial mount)
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    if (isInitialMount.current) { isInitialMount.current = false; return; }
+    if (window.history.state?.step !== step) {
+      window.history.pushState({ step }, '');
+    }
+  }, [step]);
+
   // Track page view on mount + capture agent ref
   useEffect(() => {
     track('page_view', { referrer: document.referrer });
