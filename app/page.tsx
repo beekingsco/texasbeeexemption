@@ -190,7 +190,7 @@ export default function NationalLanding() {
           </a>
           <nav className="r-nav">
             <a href="#how-it-works" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>How It Works</a>
-            <a href="#about" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>About</a>
+            <a href="/blog" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>Blog</a>
             <a href="/agents" style={{ fontSize: 14, fontWeight: 600, color: C.green, textDecoration: 'none' }}>For Agents</a>
             <a href="https://beekings.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>BeeKings</a>
           </nav>
@@ -555,6 +555,7 @@ export default function NationalLanding() {
             </div>
             <div>
               <p style={{ fontWeight: 700, color: C.white, marginBottom: 8, fontSize: 14 }}>Resources</p>
+              <p style={{ marginBottom: 4 }}><a href="/blog" style={{ color: '#8DA4B5', fontSize: 14, textDecoration: 'none' }}>Blog</a></p>
               <p style={{ marginBottom: 4 }}><a href="https://beekings.com" target="_blank" rel="noopener noreferrer" style={{ color: '#8DA4B5', fontSize: 14, textDecoration: 'none' }}>BeeKings.com</a></p>
               <p><a href="mailto:info@beekings.com" style={{ color: '#8DA4B5', fontSize: 14, textDecoration: 'none' }}>info@beekings.com</a></p>
             </div>
