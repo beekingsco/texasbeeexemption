@@ -188,9 +188,31 @@ export default function AgentLogin() {
           )}
         </div>
 
-        <p style={{ textAlign: 'center', color: C.gray, fontSize: 12, marginTop: 24 }}>
-          © {new Date().getFullYear()} BeeExemption · <a href="/" style={{ color: C.gray }}>Home</a>
-        </p>
+        <div style={{ textAlign: 'center', marginTop: 24 }}>
+          <a
+            href="mailto:scout@beekings.com?subject=BeeExemption%20Support%20Request"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              background: C.white,
+              border: `1px solid #E2E8F0`,
+              borderRadius: 8,
+              padding: '10px 20px',
+              color: C.navy,
+              fontSize: 14,
+              fontWeight: 600,
+              textDecoration: 'none',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+              transition: 'border-color 0.2s',
+            }}
+          >
+            📧 Contact Help
+          </a>
+          <p style={{ color: C.gray, fontSize: 12, marginTop: 12 }}>
+            © {new Date().getFullYear()} BeeExemption · <a href="/" style={{ color: C.gray }}>Home</a>
+          </p>
+        </div>
       </div>
     </div>
   );
