@@ -214,7 +214,7 @@ export default function AgentSettingsPage() {
       const resp = await fetch('/api/stripe/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier: 'county_addon', county }),
+        body: JSON.stringify({ tier: 'agent_state', county }),
       });
       const data = await resp.json();
       if (data.url) {
@@ -598,7 +598,7 @@ export default function AgentSettingsPage() {
               </div>
             )}
             <p style={{ fontSize: 12, color: C.gray, marginTop: 8 }}>
-              Adding a county starts a new $97/yr subscription for that county.
+              Upgrade to the Entire State plan ($497/yr) for access to all counties.
               {!changeCheck.allowed && (
                 <span style={{ display: 'block', marginTop: 4, color: C.amber }}>
                   ⏳ County changes available after {changeCheck.nextDate}

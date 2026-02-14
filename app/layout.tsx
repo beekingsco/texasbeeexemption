@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/react';
 import { Lato } from 'next/font/google';
 import './globals.css';
 
@@ -180,7 +181,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={lato.className}>{children}</body>
+      <body className={lato.className}>{children}<Analytics /></body>
     </html>
   );
 }

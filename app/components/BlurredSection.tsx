@@ -7,9 +7,10 @@ interface BlurredSectionProps {
   isLocked: boolean;
   onUnlock: () => void;
   savingsAmount?: string;
+  isDemo?: boolean;
 }
 
-export default function BlurredSection({ children, isLocked, onUnlock, savingsAmount }: BlurredSectionProps) {
+export default function BlurredSection({ children, isLocked, onUnlock, savingsAmount, isDemo }: BlurredSectionProps) {
   if (!isLocked) {
     return <>{children}</>;
   }
@@ -54,7 +55,7 @@ export default function BlurredSection({ children, isLocked, onUnlock, savingsAm
             border: '1px solid rgba(212, 168, 67, 0.3)',
           }}
         >
-          <div style={{ fontSize: 40, marginBottom: 12 }}>🔒</div>
+          <div style={{ fontSize: 40, marginBottom: 12 }}>{isDemo ? '🐝' : '🔒'}</div>
           <h3
             style={{
               fontSize: 22,
@@ -64,39 +65,68 @@ export default function BlurredSection({ children, isLocked, onUnlock, savingsAm
               fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
             }}
           >
-            This Section Is Locked
+            {isDemo ? 'Full Reports for Your Clients' : 'This Section Is Locked'}
           </h3>
           <p style={{ fontSize: 14, color: '#666', lineHeight: 1.6, marginBottom: 20 }}>
-            Get your complete personalized report with step-by-step instructions, shopping lists, and local resources.
+            {isDemo
+              ? 'As a BeeExemption agent, your clients get the complete report — white-labeled with your branding, logo, and contact info.'
+              : 'Get your complete personalized report with step-by-step instructions, shopping lists, and local resources.'}
           </p>
-          {savingsAmount && (
+          {savingsAmount && !isDemo && (
             <p style={{ fontSize: 13, color: '#15803d', fontWeight: 700, marginBottom: 20 }}>
               💰 Your report shows {savingsAmount}/year in savings
             </p>
           )}
-          <button
-            onClick={onUnlock}
-            style={{
-              display: 'inline-block',
-              background: '#d4a843',
-              color: '#2d2d2d',
-              fontWeight: 800,
-              fontSize: 16,
-              padding: '14px 32px',
-              borderRadius: 12,
-              border: 'none',
-              cursor: 'pointer',
-              width: '100%',
-              transition: 'all 0.2s',
-              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
-            }}
-            onMouseOver={(e) => (e.currentTarget.style.transform = 'translateY(-1px)')}
-            onMouseOut={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
-          >
-            Unlock Full Report — $14.99
-          </button>
+          {isDemo ? (
+            <a
+              href="/agents"
+              style={{
+                display: 'block',
+                background: '#d4a843',
+                color: '#2d2d2d',
+                fontWeight: 800,
+                fontSize: 16,
+                padding: '14px 24px',
+                borderRadius: 12,
+                border: 'none',
+                cursor: 'pointer',
+                width: '100%',
+                boxSizing: 'border-box',
+                textAlign: 'center',
+                textDecoration: 'none',
+                transition: 'all 0.2s',
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
+              }}
+            >
+              Start Your Free Trial →
+            </a>
+          ) : (
+            <button
+              onClick={onUnlock}
+              style={{
+                display: 'inline-block',
+                background: '#d4a843',
+                color: '#2d2d2d',
+                fontWeight: 800,
+                fontSize: 16,
+                padding: '14px 32px',
+                borderRadius: 12,
+                border: 'none',
+                cursor: 'pointer',
+                width: '100%',
+                transition: 'all 0.2s',
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.transform = 'translateY(-1px)')}
+              onMouseOut={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+            >
+              Unlock Full Report — $14.99
+            </button>
+          )}
           <p style={{ fontSize: 11, color: '#999', marginTop: 12 }}>
-            One-time payment · Instant access · Secure checkout
+            {isDemo
+              ? 'Branded reports · Unlimited leads · Cancel anytime'
+              : 'One-time payment · Instant access · Secure checkout'}
           </p>
         </div>
       </div>

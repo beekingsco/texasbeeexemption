@@ -178,10 +178,10 @@ export default function AgentLogin() {
 
               <div style={{ textAlign: 'center', marginTop: 24 }}>
                 <a
-                  href="/agent/signup"
+                  href="/agents"
                   style={{ color: C.amber, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}
                 >
-                  Don&apos;t have an account? Sign up →
+                  Don&apos;t have an account? Get started →
                 </a>
               </div>
             </>

@@ -18,7 +18,15 @@ const C = {
   amber: '#D4A843',
 };
 
-const AVAILABLE_STATES = ['TX', 'FL'];
+const CALCULATOR_STATES = ['TX', 'FL', 'AR', 'LA'];
+const INFO_STATES = ['AZ', 'CA', 'CO', 'CT', 'GA', 'HI', 'ID', 'IL', 'KY', 'ME', 'MD', 'MA', 'NH', 'NJ', 'NY', 'NC', 'OH', 'OK', 'OR', 'PA', 'SC', 'TN', 'UT', 'VT', 'VA', 'WA', 'WI'];
+
+const STATE_FLAGS: Record<string, string> = {
+  TX: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Texas.svg/66px-Flag_of_Texas.svg.png',
+  FL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Florida.svg/66px-Flag_of_Florida.svg.png',
+  AR: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Flag_of_Arkansas.svg/66px-Flag_of_Arkansas.svg.png',
+  LA: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Flag_of_Louisiana.svg/66px-Flag_of_Louisiana.svg.png',
+};
 
 const BEEKEEPER_BASE = 153132;
 
@@ -129,6 +137,10 @@ export default function NationalLanding() {
       router.push('/texas');
     } else if (stateCode === 'FL') {
       router.push('/florida');
+    } else if (stateCode === 'AR') {
+      router.push('/arkansas');
+    } else if (stateCode === 'LA') {
+      router.push('/louisiana');
     } else {
       router.push(`/state/${stateCode.toLowerCase()}`);
     }
@@ -178,7 +190,7 @@ export default function NationalLanding() {
           </a>
           <nav className="r-nav">
             <a href="#how-it-works" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>How It Works</a>
-            <a href="#about" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>About</a>
+            <a href="/blog" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>Blog</a>
             <a href="/agents" style={{ fontSize: 14, fontWeight: 600, color: C.green, textDecoration: 'none' }}>For Agents</a>
             <a href="https://beekings.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>BeeKings</a>
           </nav>
@@ -254,11 +266,18 @@ export default function NationalLanding() {
                   onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.3)'}
                 >
                   <option value="">Choose your state...</option>
-                  {US_STATES.map(state => (
-                    <option key={state.code} value={state.code}>
-                      {state.name}{AVAILABLE_STATES.includes(state.code) ? ' ✓' : ''}
-                    </option>
-                  ))}
+                  {US_STATES.map(state => {
+                    const label = CALCULATOR_STATES.includes(state.code) 
+                      ? ' ✓ Calculator' 
+                      : INFO_STATES.includes(state.code) 
+                        ? ' • Info' 
+                        : '';
+                    return (
+                      <option key={state.code} value={state.code}>
+                        {state.name}{label}
+                      </option>
+                    );
+                  })}
                 </select>
                 <button
                   onClick={() => handleStateSelect(selectedState)}
@@ -350,8 +369,10 @@ export default function NationalLanding() {
 
           <div style={{ maxWidth: 480, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
             {[
-              { code: 'TX', name: 'Texas', emoji: '🤠', counties: 254, desc: 'Real property data' },
-              { code: 'FL', name: 'Florida', emoji: '🌴', counties: 67, desc: 'No min acreage' },
+              { code: 'TX', name: 'Texas', counties: 254, desc: 'Real property data' },
+              { code: 'FL', name: 'Florida', counties: 67, desc: 'No min acreage' },
+              { code: 'AR', name: 'Arkansas', counties: 75, desc: 'Beekeeping explicit' },
+              { code: 'LA', name: 'Louisiana', counties: 64, desc: '64 parishes' },
             ].map(state => (
               <button
                 key={state.code}
@@ -360,10 +381,14 @@ export default function NationalLanding() {
                 style={{
                   background: C.white, border: '2px solid #D5EAFF', borderRadius: 12,
                   padding: '14px 20px', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit',
-                  display: 'flex', alignItems: 'center', gap: 14,
+                  display: 'flex', alignItems: 'center', gap: 14, position: 'relative',
                 }}
               >
-                <span style={{ fontSize: 24 }}>{state.emoji}</span>
+                <img 
+                  src={STATE_FLAGS[state.code]} 
+                  alt={`${state.name} flag`}
+                  style={{ position: 'absolute', top: 10, right: 10, width: 32, height: 21, objectFit: 'cover', borderRadius: 3, border: '1px solid #e2e8f0' }}
+                />
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <p style={{ fontSize: 17, fontWeight: 800, color: C.navy }}>{state.name}</p>
@@ -371,7 +396,7 @@ export default function NationalLanding() {
                   </div>
                   <p style={{ fontSize: 13, color: C.gray }}>{state.desc}</p>
                 </div>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={C.blue} strokeWidth="2.5" style={{ flexShrink: 0 }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={C.blue} strokeWidth="2.5" style={{ flexShrink: 0, marginRight: 28 }}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
               </button>
@@ -379,7 +404,7 @@ export default function NationalLanding() {
           </div>
 
           <p style={{ fontSize: 14, color: C.gray, marginTop: 32 }}>
-            Don&apos;t see your state? <a href="#" onClick={(e) => { e.preventDefault(); setSelectedState(''); const el = document.querySelector('select'); el?.focus(); }} style={{ color: C.blue, fontWeight: 600, textDecoration: 'none' }}>Select it above</a> to join the waitlist — we&apos;ll notify you when we launch.
+            <a href="/states" style={{ color: C.blue, fontWeight: 600, textDecoration: 'none' }}>View all 50 states →</a>
           </p>
         </div>
       </section>
@@ -530,6 +555,7 @@ export default function NationalLanding() {
             </div>
             <div>
               <p style={{ fontWeight: 700, color: C.white, marginBottom: 8, fontSize: 14 }}>Resources</p>
+              <p style={{ marginBottom: 4 }}><a href="/blog" style={{ color: '#8DA4B5', fontSize: 14, textDecoration: 'none' }}>Blog</a></p>
               <p style={{ marginBottom: 4 }}><a href="https://beekings.com" target="_blank" rel="noopener noreferrer" style={{ color: '#8DA4B5', fontSize: 14, textDecoration: 'none' }}>BeeKings.com</a></p>
               <p><a href="mailto:info@beekings.com" style={{ color: '#8DA4B5', fontSize: 14, textDecoration: 'none' }}>info@beekings.com</a></p>
             </div>

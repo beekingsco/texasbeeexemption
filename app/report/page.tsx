@@ -65,13 +65,16 @@ const colors = {
 };
 
 /* ──────────────────── Section Header Component ────────────────────── */
-function SectionHeader({ emoji, title }: { emoji: string; title: string }) {
+function SectionHeader({ emoji, title, subtitle }: { emoji: string; title: string; subtitle?: string }) {
   return (
     <div className="mb-10">
       <h2 style={{ fontSize: 28, fontWeight: 900, color: colors.darkGreen, letterSpacing: '0.03em', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif' }}>
         <span style={{ marginRight: 12 }}>{emoji}</span>
         {title}
       </h2>
+      {subtitle && (
+        <p style={{ fontSize: 15, color: '#666', marginTop: 8, lineHeight: 1.6 }}>{subtitle}</p>
+      )}
       <div style={{ width: 80, height: 4, background: colors.gold, borderRadius: 2, marginTop: 10 }} />
     </div>
   );
@@ -249,6 +252,12 @@ function ReportContent() {
   const [accessChecked, setAccessChecked] = useState(false);
 
   useEffect(() => {
+    // Demo report — fully unlocked
+    if (accessToken === 'demo') {
+      setHasAccess(true);
+      setAccessChecked(true);
+      return;
+    }
     if (!accessToken) {
       setAccessChecked(true);
       return;
@@ -266,7 +275,9 @@ function ReportContent() {
     verifyAccess();
   }, [accessToken]);
 
-  const isLocked = accessChecked && !hasAccess;
+  const isDemo = accessToken === 'demo';
+  const isLocked = accessChecked && !hasAccess && !isDemo;
+  const isDemoLocked = isDemo; // demo shows headlines but blurs detail sections
 
   const handleUnlock = useCallback(async () => {
     try {
@@ -362,16 +373,35 @@ function ReportContent() {
       {/* ════════════════════════════════════════════
           FLOATING PRINT BUTTON
           ════════════════════════════════════════════ */}
-      <div className="no-print fixed top-4 right-4 z-50 flex gap-2">
+      <div className="no-print" style={{ position: 'fixed', top: 16, left: 16, zIndex: 50 }}>
         <button
           onClick={() => window.print()}
-          className="text-white font-bold px-6 py-3 rounded-xl shadow-lg flex items-center gap-2 transition-all hover:brightness-110"
-          style={{ background: colors.darkGreen }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            background: '#C1272D',
+            color: 'white',
+            fontWeight: 700,
+            fontSize: 12,
+            padding: '8px 14px',
+            borderRadius: 8,
+            border: 'none',
+            cursor: 'pointer',
+            boxShadow: '0 2px 8px rgba(193,39,45,0.3)',
+            transition: 'all 0.2s',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
+            letterSpacing: '0.04em',
+            whiteSpace: 'nowrap' as const,
+          }}
+          onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(193,39,45,0.45)'; }}
+          onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(193,39,45,0.35)'; }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clipRule="evenodd" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/>
+            <path d="M8 12h8v2H8zm0 4h5v2H8z"/>
           </svg>
-          Save as PDF
+          Download PDF
         </button>
       </div>
 
@@ -380,6 +410,17 @@ function ReportContent() {
           ════════════════════════════════════════════════════════════ */}
       <header style={{ background: colors.darkGreen, color: 'white', padding: '64px 24px 72px' }}>
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
+          {/* Logo */}
+          <div className="text-center fade-up" style={{ marginBottom: 32 }}>
+            {isDemo ? (
+              <div style={{ display: 'inline-block', border: '2px dashed rgba(255,255,255,0.3)', borderRadius: 12, padding: '16px 32px' }}>
+                <p style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>[ Your Agency Logo ]</p>
+              </div>
+            ) : (
+              <img src="/beekings-logo.png" alt="BeeKings" style={{ height: 60, margin: '0 auto' }} />
+            )}
+          </div>
+
           {/* Top line: report # and date */}
           <div className="text-center mb-6 fade-up">
             <p style={{ color: colors.gold, fontSize: 13, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' }}>
@@ -429,6 +470,37 @@ function ReportContent() {
           </div>
         </div>
       </header>
+
+      {/* ════════════════════════════════════════════════════════════
+          AGENT INTRO LETTER (Demo only)
+          ════════════════════════════════════════════════════════════ */}
+      {isDemo && (
+        <section style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
+          <div style={{ background: colors.white, borderRadius: 16, padding: '40px 36px', boxShadow: colors.cardShadow, borderLeft: `4px solid ${colors.gold}` }}>
+            <p style={{ fontSize: 15, color: '#555', lineHeight: 1.8, marginBottom: 16 }}>
+              Dear {name},
+            </p>
+            <p style={{ fontSize: 15, color: '#555', lineHeight: 1.8, marginBottom: 16 }}>
+              Thank you for your interest in learning more about property tax savings on your land in <strong>{county.name} County</strong>. I put together this personalized report to show you exactly how much you could save with an agricultural exemption through beekeeping — and how straightforward the process really is.
+            </p>
+            <p style={{ fontSize: 15, color: '#555', lineHeight: 1.8, marginBottom: 16 }}>
+              Based on your <strong>{acres}-acre</strong> property valued at <strong>{fmtMoney(propertyValue)}</strong>, the potential savings are significant. This report covers everything: what you need, what it costs, how to apply, and where to get started locally.
+            </p>
+            <p style={{ fontSize: 15, color: '#555', lineHeight: 1.8, marginBottom: 16 }}>
+              I&apos;m here to help with any questions — whether it&apos;s about the exemption process, finding the right property, or connecting you with local beekeeping resources. Don&apos;t hesitate to reach out.
+            </p>
+            <p style={{ fontSize: 15, color: '#555', lineHeight: 1.8, marginBottom: 4 }}>
+              Looking forward to helping you save,
+            </p>
+            <p style={{ fontSize: 17, fontWeight: 800, color: colors.darkGreen, marginTop: 8 }}>
+              <span style={{ color: 'rgba(0,0,0,0.35)', fontStyle: 'italic', fontWeight: 600 }}>[ Your Name ]</span>
+            </p>
+            <p style={{ fontSize: 13, color: '#999', marginTop: 4 }}>
+              <span style={{ fontStyle: 'italic', color: 'rgba(0,0,0,0.35)' }}>[ Your Agency ]</span> · Powered by BeeExemption
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* ════════════════════════════════════════════════════════════
           SECTION 2 — HOW MUCH YOU'LL SAVE
@@ -579,9 +651,11 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 3 — HOW TO GET YOUR EXEMPTION
           ════════════════════════════════════════════════════════════ */}
-      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
+        <SectionHeader emoji="📋" title="HOW TO GET YOUR EXEMPTION" subtitle="Step-by-step instructions for applying to your county appraisal district." />
+      </div>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)} isDemo={isDemo}>
       <section id="section-2" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
-        <SectionHeader emoji="📋" title="HOW TO GET YOUR EXEMPTION" />
 
         {/* Where to Apply — gold border card */}
         <div className="gold-border-card avoid-break" style={{ marginBottom: 28 }}>
@@ -682,9 +756,11 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 4 — WHAT TO BUY
           ════════════════════════════════════════════════════════════ */}
-      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
+        <SectionHeader emoji="🛒" title="WHAT TO BUY" subtitle="Everything you need to get started — hives, equipment, bees, and protective gear." />
+      </div>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)} isDemo={isDemo}>
       <section id="section-3" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
-        <SectionHeader emoji="🛒" title="WHAT TO BUY" />
 
         {/* ═══ VERIFIED PRODUCTS SHOPPING LIST ═══ */}
         {(() => {
@@ -828,9 +904,11 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 5 — WHAT YOU NEED TO KNOW
           ════════════════════════════════════════════════════════════ */}
-      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
+        <SectionHeader emoji="🐝" title="WHAT YOU NEED TO KNOW" subtitle="Beekeeping basics, seasonal care, and what your county requires." />
+      </div>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)} isDemo={isDemo}>
       <section id="section-4" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
-        <SectionHeader emoji="🐝" title="WHAT YOU NEED TO KNOW" />
 
         {/* Two side-by-side cards: Queen & Workers */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
@@ -943,9 +1021,11 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 6 — LOCAL RESOURCES & SUPPLIERS
           ════════════════════════════════════════════════════════════ */}
-      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
+        <SectionHeader emoji="🏪" title="LOCAL RESOURCES &amp; SUPPLIERS" subtitle="Nearby bee suppliers, associations, and mentors in your area." />
+      </div>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)} isDemo={isDemo}>
       <section id="section-6" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
-        <SectionHeader emoji="🏪" title="LOCAL RESOURCES & SUPPLIERS" />
 
         {/* Nuc Suppliers */}
         <div className="pdf-card" style={{ padding: 32, marginBottom: 28 }}>
@@ -1081,9 +1161,11 @@ function ReportContent() {
       {/* ════════════════════════════════════════════════════════════
           SECTION 5 — RECORD KEEPING & EXPENSES (kept from original)
           ════════════════════════════════════════════════════════════ */}
-      <BlurredSection isLocked={isLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)}>
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 0' }}>
+        <SectionHeader emoji="📋" title="KEEPING YOUR RECORDS STRAIGHT" subtitle="What to document and how to stay compliant year after year." />
+      </div>
+      <BlurredSection isLocked={isLocked || isDemoLocked} onUnlock={handleUnlock} savingsAmount={fmtMoney(annualSavings)} isDemo={isDemo}>
       <section id="section-5" className="page-break" style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px 40px' }}>
-        <SectionHeader emoji="📋" title="KEEPING YOUR RECORDS STRAIGHT" />
 
         <div className="pdf-card avoid-break" style={{ padding: 32, marginBottom: 28 }}>
           <h3 style={{ fontSize: 18, fontWeight: 900, color: '#222', marginBottom: 8 }}>The Short Version: Keep Your Receipts</h3>

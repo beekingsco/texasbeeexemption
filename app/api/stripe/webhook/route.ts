@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import Stripe from 'stripe';
 import { notifyAdmin } from '@/lib/notify';
-import { getAgentByEmail, updateAgent } from '@/lib/agent-storage';
+import { getAgentByEmail, updateAgent, createAgent } from '@/lib/agent-storage';
+import { Agent } from '@/lib/types/agent';
+import { randomUUID } from 'crypto';
 
 // Stripe sends raw body, so we need to handle it manually
 export async function POST(req: NextRequest) {
@@ -60,29 +62,71 @@ export async function POST(req: NextRequest) {
             amount: session.amount_total || 2999,
             tier: 'unlimited',
           });
-        } else if (tier === 'agent') {
-          // Agent subscription — update agent record
+        } else if (tier === 'agent' || tier === 'agent_state') {
+          // Agent subscription — create or update agent record
+          const agentEmail = session.metadata?.agent_email || customerEmail;
+          const agentName = session.metadata?.agent_name || customerName || '';
+          const agentBrokerage = session.metadata?.agent_brokerage || '';
+          const agentPhone = session.metadata?.agent_phone || '';
+          const agentCounties = session.metadata?.agent_counties || '';
+          const customerId = typeof session.customer === 'string'
+            ? session.customer
+            : session.customer?.id;
+
           notifyAdmin('agent_trial_started', {
-            agentName: customerName,
-            agentEmail: customerEmail || undefined,
+            agentName,
+            agentEmail: agentEmail || undefined,
             tier: 'agent',
           });
 
-          // Update agent's Stripe customer ID
-          if (customerEmail) {
-            const agent = await getAgentByEmail(customerEmail);
-            if (agent) {
-              const customerId = typeof session.customer === 'string'
-                ? session.customer
-                : session.customer?.id;
-              await updateAgent(agent.id, {
+          if (agentEmail) {
+            const existingAgent = await getAgentByEmail(agentEmail);
+            if (existingAgent) {
+              // Update existing agent
+              await updateAgent(existingAgent.id, {
+                name: agentName || existingAgent.name,
+                brokerage: agentBrokerage || existingAgent.brokerage,
+                phone: agentPhone || existingAgent.phone,
+                licensedCounties: tier === 'agent_state' ? ['ALL'] : agentCounties ? agentCounties.split(',').map((c: string) => c.trim()).filter(Boolean) : existingAgent.licensedCounties,
                 subscription: {
-                  ...agent.subscription,
+                  ...existingAgent.subscription,
                   status: 'trial',
                   stripeCustomerId: customerId || undefined,
                   currentPeriodEnd: undefined,
                 },
               });
+            } else {
+              // Create new agent account
+              // Hash a random UUID as password (agents will use magic link later)
+              const bcrypt = await import('bcryptjs');
+              const randomPassword = randomUUID();
+              const passwordHash = await bcrypt.hash(randomPassword, 10);
+
+              const counties = tier === 'agent_state'
+                ? ['ALL']
+                : agentCounties
+                  ? agentCounties.split(',').map((c: string) => c.trim()).filter(Boolean)
+                  : [];
+
+              const newAgent: Agent = {
+                id: randomUUID(),
+                email: agentEmail,
+                passwordHash,
+                name: agentName,
+                brokerage: agentBrokerage,
+                phone: agentPhone,
+                licenseNumber: '',
+                licensedCounties: counties,
+                createdAt: new Date().toISOString(),
+                subscription: {
+                  status: 'trial',
+                  stripeCustomerId: customerId || undefined,
+                  currentPeriodEnd: undefined,
+                },
+              };
+
+              await createAgent(newAgent);
+              console.log('✅ Created new agent account:', agentEmail);
             }
           }
         } else {
@@ -112,7 +156,7 @@ export async function POST(req: NextRequest) {
         const tier = subscription.metadata?.tier;
 
         // Check if agent trial converted to active
-        if (tier === 'agent' && subscription.status === 'active') {
+        if ((tier === 'agent' || tier === 'agent_state') && subscription.status === 'active') {
           // Find agent by looking up Stripe customer email
           const customerId = typeof subscription.customer === 'string'
             ? subscription.customer
@@ -156,7 +200,7 @@ export async function POST(req: NextRequest) {
         });
 
         // Update agent status if agent subscription
-        if (subscription.metadata?.tier === 'agent') {
+        if (subscription.metadata?.tier === 'agent' || subscription.metadata?.tier === 'agent_state') {
           const customerId = typeof subscription.customer === 'string'
             ? subscription.customer
             : subscription.customer?.id || '';

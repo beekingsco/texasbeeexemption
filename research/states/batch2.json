@@ -1,0 +1,68 @@
+{
+  "IA": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Iowa values ag land on productivity, not market value; beekeeping not explicitly addressed",
+    "notes": "Iowa uses productivity-based valuation for agricultural land under Code 441.21. Land must be used for agricultural purposes. No minimum acreage in statute. Beekeeping not explicitly listed but may qualify if land is primarily agricultural. Counties have discretion. Contact local assessor."
+  },
+  "KS": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Kansas ag use valuation focuses on crop/grazing land productivity; beekeeping status unclear",
+    "notes": "Under KSA 79-1476, Kansas values agricultural land based on inherent productive capability for crops and grazing. Four categories: dryland, irrigated, tame grass, native grass. Beekeeping not explicitly addressed in statute. Land must be 'devoted to agricultural use' - interpretation varies by county."
+  },
+  "KY": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Kentucky explicitly includes beekeeping in agricultural land definition",
+    "notes": "Kentucky Constitution Section 172A and KRS 132.010 define 'agricultural land' to include 'apiculture' (beekeeping). Minimum 10 contiguous acres required, OR 5+ acres with $1,000+ gross agricultural income. Land must be used for ag purposes for 5 years prior. One of few states explicitly including beekeeping."
+  },
+  "ME": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Maine Farmland Current Use includes apiaries under 'horticultural use'",
+    "notes": "Maine's Farmland Current Use Program (36 MRSA §1101-1121) includes horticultural products. Apiaries qualify. Minimum 5 contiguous acres required. Must produce $2,000+ gross income from farming over any 2 of last 3 years, OR evidence of sound farm management practices. Apply to local assessor."
+  },
+  "MD": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Maryland agricultural use assessment includes apiaries; small-farm friendly",
+    "notes": "Maryland Tax-Property Article §8-209 provides agricultural use assessment. Apiaries explicitly qualify. No minimum acreage. Must generate $2,500+ gross income, OR have bona fide ag use intention with reasonable expectation of profit. Active program with good enforcement."
+  },
+  "MA": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Massachusetts Chapter 61A explicitly includes beekeeping; 5-acre minimum",
+    "notes": "Chapter 61A farmland assessment law explicitly includes 'apiary' as agricultural use. Minimum 5 acres required. Must generate $500 gross sales for first 5 acres + $5/acre thereafter in any 2-year period. 3-year rollback tax applies if land converted. Strong program."
+  },
+  "MI": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Michigan's PA 116 program focuses on traditional farming; beekeeping status varies",
+    "notes": "Michigan's Farmland and Open Space Preservation (PA 116) and agricultural property exemptions focus on traditional farming. No explicit beekeeping provision found. Agricultural land classified as such based on primary use. Minimum 40 acres for PA 116, or 5 acres with $200+ gross sales. County assessors determine classification."
+  },
+  "MN": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Minnesota Green Acres program for ag land; beekeeping qualification unclear",
+    "notes": "Minnesota's Green Acres and Agricultural Preserve programs provide preferential assessment. Land must be 10+ acres or $2,500+ gross sales. 'Agricultural use' broadly defined but beekeeping not explicitly mentioned. Classification as 2a agricultural property provides 0.5% tax rate vs 1% for other property."
+  },
+  "MS": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Mississippi assesses 'bona fide agricultural' land at current use value",
+    "notes": "Mississippi Code §27-35-50 provides current use valuation for bona fide agricultural land. Assessed at 15% of true value vs 30% for other property. Must be 10+ acres actively used for ag/forestry/horticulture purposes. Beekeeping not explicitly addressed. County tax assessors determine eligibility."
+  },
+  "MO": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Missouri's constitutional ag classification based on raising crops/livestock",
+    "notes": "Missouri Constitution Article X, Section 4(b) creates agricultural/horticultural subclass assessed at 12% vs 19% for other property. §137.016 defines as land 'devoted primarily to raising and harvesting of crops' or 'feeding, breeding and management of livestock.' Beekeeping not explicitly mentioned. Classification by immediate most suitable economic use."
+  },
+  "_metadata": {
+    "researchDate": "2026-02-10",
+    "researchNotes": "Web search unavailable; data compiled from known statutory sources and direct web fetch attempts. Kansas statute and FAQ pages confirmed. Missouri statute §137.016 confirmed. Some state government websites blocked/404. Recommend verification with local assessors for beekeeping-specific eligibility.",
+    "confidenceLevel": "medium",
+    "sourceLimitations": "Brave Search API unavailable; many state government pages returned 404 or 403 errors"
+  }
+}

@@ -1,4 +1,5 @@
-import { put, del, list } from '@vercel/blob';
+import { del } from '@vercel/blob';
+import { blobPut, blobRead } from './blob-helpers';
 import { Agent, AgentLead } from './types/agent';
 
 const AGENTS_BLOB_PATH = 'agents/agents.json';
@@ -7,12 +8,8 @@ const LEADS_BLOB_PATH_PREFIX = 'agents/leads/';
 // Helper to get agents data
 export async function getAgents(): Promise<Agent[]> {
   try {
-    const blobs = await list({ prefix: 'agents/agents' });
-    if (blobs.blobs.length === 0) return [];
-    
-    const response = await fetch(blobs.blobs[0].url);
-    const data = await response.json();
-    return data.agents || [];
+    const data = await blobRead<{ agents: Agent[] }>('agents/agents');
+    return data?.agents || [];
   } catch (error) {
     console.error('Error fetching agents:', error);
     return [];
@@ -21,16 +18,8 @@ export async function getAgents(): Promise<Agent[]> {
 
 // Helper to save agents data
 export async function saveAgents(agents: Agent[]): Promise<void> {
-  try {
-    const blob = await put(AGENTS_BLOB_PATH, JSON.stringify({ agents }, null, 2), {
-      access: 'public',
-      contentType: 'application/json',
-    });
-    console.log('Agents saved to blob:', blob.url);
-  } catch (error) {
-    console.error('Error saving agents:', error);
-    throw error;
-  }
+  const blob = await blobPut(AGENTS_BLOB_PATH, JSON.stringify({ agents }, null, 2));
+  console.log('Agents saved to blob:', blob.url);
 }
 
 // Helper to get agent by email
@@ -67,12 +56,8 @@ export async function updateAgent(id: string, updates: Partial<Agent>): Promise<
 // Helper to get leads for an agent
 export async function getAgentLeads(agentId: string): Promise<AgentLead[]> {
   try {
-    const blobs = await list({ prefix: `${LEADS_BLOB_PATH_PREFIX}${agentId}` });
-    if (blobs.blobs.length === 0) return [];
-    
-    const response = await fetch(blobs.blobs[0].url);
-    const data = await response.json();
-    return data.leads || [];
+    const data = await blobRead<{ leads: AgentLead[] }>(`${LEADS_BLOB_PATH_PREFIX}${agentId}`);
+    return data?.leads || [];
   } catch (error) {
     console.error('Error fetching agent leads:', error);
     return [];
@@ -81,16 +66,8 @@ export async function getAgentLeads(agentId: string): Promise<AgentLead[]> {
 
 // Helper to save leads for an agent
 export async function saveAgentLeads(agentId: string, leads: AgentLead[]): Promise<void> {
-  try {
-    const blob = await put(`${LEADS_BLOB_PATH_PREFIX}${agentId}.json`, JSON.stringify({ leads }, null, 2), {
-      access: 'public',
-      contentType: 'application/json',
-    });
-    console.log('Leads saved to blob:', blob.url);
-  } catch (error) {
-    console.error('Error saving leads:', error);
-    throw error;
-  }
+  const blob = await blobPut(`${LEADS_BLOB_PATH_PREFIX}${agentId}.json`, JSON.stringify({ leads }, null, 2));
+  console.log('Leads saved to blob:', blob.url);
 }
 
 // Helper to add a lead

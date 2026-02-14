@@ -16,6 +16,7 @@ export interface Agent {
     stripeCustomerId?: string;
     currentPeriodEnd?: string;
   };
+  couponCode?: string;
 }
 
 export interface AgentLead {

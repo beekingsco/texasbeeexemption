@@ -1,0 +1,63 @@
+'use client';
+import Link from 'next/link';
+
+const C = { sky: '#F0F4FA', blue: '#1A3A6B', navy: '#0D1B2A', green: '#D4A843', white: '#FFFFFF', gray: '#5A6A7A', lightGray: '#F5F7FB' };
+
+export default function ColoradoPage() {
+  return (
+    <div style={{ minHeight: '100vh', background: C.white }}>
+      <style>{`
+        .info-card { background: white; border-radius: 16px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 20px; }
+        .info-card h3 { font-size: 18px; font-weight: 700; color: ${C.navy}; margin-bottom: 12px; }
+        .info-card p, .info-card li { font-size: 15px; color: ${C.gray}; line-height: 1.7; }
+        .info-card ul { padding-left: 20px; margin: 12px 0; }
+        .highlight { background: #DCFCE7; border: 1px solid #86EFAC; border-radius: 12px; padding: 16px; margin: 16px 0; }
+        .highlight p { color: #166534; margin: 0; }
+      `}</style>
+      <header style={{ background: C.white, borderBottom: '1px solid #e2e8f0' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Link href="/states" style={{ textDecoration: 'none', fontSize: 14, fontWeight: 600, color: C.gray }}>← All States</Link>
+          <Link href="/"><img src="/beekings-logo.png" alt="BeeKings" style={{ height: 36 }} /></Link>
+          <a href="mailto:info@beekings.com" style={{ background: C.blue, color: C.white, fontSize: 13, fontWeight: 700, padding: '8px 16px', borderRadius: 8, textDecoration: 'none' }}>Contact</a>
+        </div>
+      </header>
+      <section style={{ background: `linear-gradient(135deg, ${C.navy} 0%, ${C.blue} 100%)`, padding: '48px 24px', textAlign: 'center' }}>
+        <h1 style={{ fontSize: 36, fontWeight: 900, color: C.white, marginBottom: 12 }}>Colorado Beekeeping<br/>Tax Exemptions</h1>
+        <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.8)' }}>Agricultural Land Classification</p>
+        <div style={{ display: 'inline-block', background: '#DCFCE7', color: '#166534', fontWeight: 700, fontSize: 14, padding: '8px 16px', borderRadius: 8, marginTop: 16 }}>✅ Beekeeping Explicitly Qualifies</div>
+      </section>
+      <section style={{ padding: '48px 24px' }}>
+        <div style={{ maxWidth: 700, margin: '0 auto' }}>
+          <div style={{ background: '#EFF6FF', border: '2px solid #3B82F6', borderRadius: 16, padding: '24px', marginBottom: 32, textAlign: 'center' }}>
+            <div style={{ fontSize: 32, marginBottom: 8 }}>🔧</div>
+            <h2 style={{ fontSize: 20, fontWeight: 800, color: C.navy, marginBottom: 8 }}>Property Search Coming Soon</h2>
+            <p style={{ fontSize: 15, color: C.gray }}>We&apos;re building Colorado county data. Contact us for personalized guidance.</p>
+          </div>
+          <div className="info-card">
+            <h3>🐝 Overview</h3>
+            <p>Colorado explicitly includes <strong>&quot;apiculture&quot;</strong> in its agricultural land classification statute (C.R.S. § 39-1-102). This makes Colorado one of the clearest states for beekeeping tax benefits.</p>
+            <div className="highlight"><p><strong>Key Advantage:</strong> No minimum acreage if you meet the income threshold of $1,000 gross agricultural income.</p></div>
+          </div>
+          <div className="info-card">
+            <h3>📋 Requirements</h3>
+            <ul>
+              <li><strong>Income Threshold:</strong> $1,000 gross income from agricultural products</li>
+              <li><strong>History:</strong> Must meet income threshold in 3 of last 5 years</li>
+              <li><strong>Minimum Acreage:</strong> No minimum if income threshold is met</li>
+              <li><strong>Deadline:</strong> March 20th annually</li>
+            </ul>
+          </div>
+          <div className="info-card">
+            <h3>⚖️ Legal Reference</h3>
+            <p><strong>C.R.S. § 39-1-102</strong> — Defines agricultural land to include land used for &quot;apiculture&quot; (beekeeping).</p>
+          </div>
+          <div style={{ background: C.navy, borderRadius: 16, padding: '32px 24px', textAlign: 'center', marginTop: 32 }}>
+            <h3 style={{ fontSize: 22, fontWeight: 800, color: C.white, marginBottom: 12 }}>Need Help?</h3>
+            <a href="mailto:info@beekings.com?subject=Colorado%20Beekeeping%20Exemption" style={{ display: 'inline-block', background: C.green, color: C.navy, fontWeight: 700, fontSize: 16, padding: '14px 28px', borderRadius: 10, textDecoration: 'none' }}>Contact Us →</a>
+          </div>
+          <p style={{ fontSize: 13, color: C.gray, textAlign: 'center', marginTop: 32, fontStyle: 'italic' }}>🌱 We&apos;re always growing. Last updated: February 2026</p>
+        </div>
+      </section>
+    </div>
+  );
+}

@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import countiesData from '@/data/texas-counties.json';
 import DeadlineCountdown from '@/app/components/DeadlineCountdown';
+import StateBadge from '@/app/components/StateBadge';
 
 interface County {
   name: string;
@@ -116,6 +117,31 @@ export default function Home() {
       body: JSON.stringify({ action, sessionId: sessionIdRef.current, ...data }),
     }).catch(() => {});
   }, []);
+
+  // Sync step with browser history so back button works
+  useEffect(() => {
+    const onPopState = (e: PopStateEvent) => {
+      if (e.state?.step) {
+        setStep(e.state.step);
+      } else {
+        setStep('search');
+      }
+    };
+    window.addEventListener('popstate', onPopState);
+    // Replace initial state
+    window.history.replaceState({ step: 'search' }, '');
+    return () => window.removeEventListener('popstate', onPopState);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Push history when step changes (skip initial mount)
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    if (isInitialMount.current) { isInitialMount.current = false; return; }
+    if (window.history.state?.step !== step) {
+      window.history.pushState({ step }, '');
+    }
+  }, [step]);
 
   // Track page view on mount + capture agent ref
   useEffect(() => {
@@ -461,6 +487,7 @@ export default function Home() {
 
   return (
     <div style={{ minHeight: '100vh', background: C.white }}>
+      <StateBadge stateCode="TX" stateName="Texas" />
       <style>{`
         * { box-sizing: border-box; }
         .r-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
@@ -509,10 +536,9 @@ export default function Home() {
       {/* HEADER */}
       <header style={{ background: C.white, borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          {/* Left: US flag + back arrow */}
-          <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 700, color: C.navy }}>
-            <span style={{ fontSize: 18 }}>◀</span>
-            <span style={{ fontSize: 24 }}>🇺🇸</span>
+          {/* Left: back arrow */}
+          <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 600, color: C.gray }}>
+            <span style={{ fontSize: 28, lineHeight: 1 }}>🔙</span>
           </a>
           {/* Center: BeeKings logo */}
           <a href="/" onClick={(e) => { e.preventDefault(); startOver(); }} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
@@ -530,7 +556,6 @@ export default function Home() {
               <a href="https://beekings.com" style={{ fontSize: 14, fontWeight: 600, color: C.navy, textDecoration: 'none' }}>BeeKings.com</a>
               <a href="mailto:info@beekings.com" style={{ background: C.blue, color: C.white, fontSize: 14, fontWeight: 700, padding: '10px 20px', borderRadius: 8, textDecoration: 'none' }}>Contact Us</a>
             </nav>
-            <img src="/texas-bees-badge.jpg" alt="Texas Bees Save You Money" style={{ height: 48, borderRadius: 8 }} />
           </div>
         </div>
       </header>
@@ -549,20 +574,15 @@ export default function Home() {
       {/* ===== STEP 1: SEARCH ===== */}
       {step === 'search' && (
         <>
-          <section style={{ background: C.sky, position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 180, background: C.green }} />
-            <svg style={{ position: 'absolute', bottom: 172, left: 0, right: 0, width: '100%' }} height="40" viewBox="0 0 1200 40" preserveAspectRatio="none">
-              <path d="M0,40 C150,5 350,30 500,12 C650,-5 800,25 950,8 C1050,0 1150,18 1200,5 L1200,40 Z" fill={C.green} />
-            </svg>
-            {/* Hero illustration */}
-            <div style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 5, width: '100%', maxWidth: 600, pointerEvents: 'none' }}>
-              <img src="/hero-beekeeper.png" alt="Beekeeper illustration" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
-            </div>
-            <div style={{ position: 'relative', zIndex: 10, maxWidth: 800, margin: '0 auto', padding: '24px 24px 280px', textAlign: 'center' }}>
-              <h1 className="r-hero-h1" style={{ fontWeight: 900, color: C.navy, lineHeight: 1.05, marginBottom: 16, letterSpacing: '-0.03em', maxWidth: '100%' }}>
-                Save Money on<br />Property Taxes<br /><span style={{ color: C.blue }}>with Bees</span> 🐝
+          {/* Hero with background photo */}
+          <section style={{ position: 'relative', overflow: 'hidden', minHeight: 420 }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/hero-landowner.jpg)', backgroundSize: 'cover', backgroundPosition: 'center 25%' }} />
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(135deg, rgba(13,27,42,0.6) 0%, rgba(26,58,91,0.45) 50%, rgba(13,27,42,0.4) 100%)' }} />
+            <div style={{ position: 'relative', zIndex: 10, maxWidth: 800, margin: '0 auto', padding: '60px 24px 60px', textAlign: 'center' }}>
+              <h1 className="r-hero-h1" style={{ fontWeight: 900, color: '#FFFFFF', lineHeight: 1.05, marginBottom: 16, letterSpacing: '-0.03em', maxWidth: '100%' }}>
+                Save Money on<br />Property Taxes<br /><span style={{ color: C.green }}>with Bees</span>
               </h1>
-              <p style={{ fontSize: 16, color: '#5A7A8A', marginBottom: 32, fontWeight: 500 }}>
+              <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.85)', marginBottom: 32, fontWeight: 500 }}>
                 See how much you could save with a Texas bee exemption
               </p>
 
@@ -626,16 +646,16 @@ export default function Home() {
                 )}
               </div>
 
-              <p style={{ fontSize: 13, color: '#8DA4B5', marginTop: 12, fontWeight: 500 }}>
+              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginTop: 12, fontWeight: 500 }}>
                 Instant estimate — no phone calls, no spam
               </p>
 
               <div className="r-vprops" style={{ marginTop: 16 }}>
                 {['Real property data', 'Free instant estimate', 'All 254 TX counties'].map(text => (
-                  <span key={text} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 600, color: C.navy }}>
+                  <span key={text} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 600, color: '#FFFFFF' }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
-                      <circle cx="12" cy="12" r="12" fill={C.blue} opacity={0.15} />
-                      <path d="M7 12l3 3 7-7" stroke={C.blue} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                      <circle cx="12" cy="12" r="12" fill="#FFFFFF" opacity={0.2} />
+                      <path d="M7 12l3 3 7-7" stroke={C.green} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     {text}
                   </span>
@@ -676,7 +696,10 @@ export default function Home() {
           {/* How It Works */}
           <section id="how-it-works" className="r-section" style={{ background: C.white, textAlign: 'center' }}>
             <div style={{ maxWidth: 900, margin: '0 auto' }}>
-              <h2 style={{ fontSize: 36, fontWeight: 800, color: C.navy, marginBottom: 8 }}>How It Works</h2>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 8 }}>
+                <img src="/hero-beekeeper.png" alt="Beekeeper illustration" style={{ width: 220, height: 'auto', marginBottom: 12 }} />
+                <h2 style={{ fontSize: 36, fontWeight: 800, color: C.navy, marginBottom: 8 }}>How It Works</h2>
+              </div>
               <p style={{ color: C.gray, fontSize: 16, marginBottom: 60 }}>Get your estimate in less than <strong style={{ color: C.navy }}>60 seconds</strong></p>
               <div className="r-grid3" style={{ gap: 48 }}>
                 {[
@@ -824,10 +847,16 @@ export default function Home() {
                 {results.totalAcres === 0 ? (
                   <>
                     <h2 style={{ fontSize: 22, fontWeight: 800, color: C.navy, marginBottom: 12 }}>We Couldn&apos;t Find Your Property Size</h2>
-                    <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.6, maxWidth: 400, margin: '0 auto 20px' }}>
-                      We verified your address but couldn&apos;t pull acreage data from county records. 
-                      Enter your property size below to see your savings estimate.
+                    <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.6, maxWidth: 400, margin: '0 auto 16px' }}>
+                      We verified your address but couldn&apos;t pull acreage data from county records. This can happen with rural properties or if the data source was temporarily unavailable.
                     </p>
+                    <button
+                      onClick={() => handleSearch()}
+                      style={{ background: C.blue, color: C.white, fontWeight: 700, fontSize: 14, padding: '10px 24px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'inherit', marginBottom: 20 }}
+                    >
+                      🔄 Try Again
+                    </button>
+                    <p style={{ fontSize: 13, color: C.gray, marginBottom: 16 }}>Or enter your property size manually:</p>
                     <div style={{ maxWidth: 300, margin: '0 auto 20px' }}>
                       <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 6, textAlign: 'left' }}>How many acres is your property?</label>
                       <input type="number" value={acres} onChange={(e) => setAcres(e.target.value)} placeholder={`Min. ${selectedCounty?.minAcres} acres needed`}
@@ -873,6 +902,11 @@ export default function Home() {
                   📋 Get Your Free {selectedCounty.name} County Guide
                   <span>Step-by-step filing instructions, deadlines & requirements</span>
                 </button>
+                <div style={{ marginTop: 16, padding: '12px 16px', background: '#EFF6FF', border: '1px solid #BFDBFE', borderRadius: 10, textAlign: 'left' }}>
+                  <p style={{ fontSize: 13, color: '#1E40AF', lineHeight: 1.5, margin: 0 }}>
+                    <strong>📋 Eligibility note:</strong> Texas requires land to have been used for agriculture 5 of the past 7 years. If your land already has ag history, you may qualify now. Starting beekeeping today begins building your qualifying history.
+                  </p>
+                </div>
               </div>
             )}
 

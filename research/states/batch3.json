@@ -1,0 +1,68 @@
+{
+  "MT": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Montana uses agricultural land classification; beekeeping not explicitly addressed",
+    "notes": "Land must be used primarily for agricultural purposes. No minimum acreage specified but must demonstrate bona fide agricultural use. Assessed based on productivity value. Beekeeping not specifically mentioned in statutes - would need to demonstrate commercial agricultural purpose. Contact county assessor for determination."
+  },
+  "NE": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Nebraska values ag land by soil productivity; beekeeping status ambiguous",
+    "notes": "Agricultural/horticultural land valued using soil-based productivity formula. No specific mention of beekeeping as qualifying use. Land must be used primarily for agricultural purposes. 80% of land devoted to ag use typically required. County assessors make determinations. Apiary operations may need to demonstrate income production."
+  },
+  "NV": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Nevada has agricultural land deferment; beekeeping not specifically listed",
+    "notes": "Agricultural use deferment available under NRS 361A. Requires active agricultural use for 3+ years. Income requirements vary by county. Beekeeping not explicitly mentioned as qualifying use. Land must be at least 5 acres in most counties. Deferred taxes recaptured if land use changes."
+  },
+  "NH": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "New Hampshire Current Use program includes beekeeping as agricultural land",
+    "notes": "Current Use taxation program allows reduced valuation for farm, forest, and open space land. Agricultural land requires 10+ acres or $2,500+ annual gross income. Beekeeping explicitly recognized as agricultural use under RSA 79-A. Must file Current Use application with selectmen. 10% land use change tax if property exits program."
+  },
+  "NM": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "New Mexico offers ag exemption; beekeeping eligibility varies by county",
+    "notes": "Property taxes assessed locally with agricultural exemptions available. Must demonstrate active agricultural use. No state-wide minimum acreage - determined by county assessors. Ranching and farming primary uses. Beekeeping not specifically addressed in statutes; contact county assessor. NMSA 7-36-20 governs agricultural classification."
+  },
+  "NY": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "New York Agricultural Districts program explicitly includes beekeeping",
+    "notes": "Agricultural Districts protect farmland and provide tax benefits. Land must gross $10,000+ annually (or $50,000 for 7+ acres). Beekeeping specifically listed as qualifying agricultural activity under NY Agriculture & Markets Law. Apply through county agricultural district. Must demonstrate commercial intent. Strong protections against local regulations."
+  },
+  "NC": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "North Carolina Present Use Value includes beekeeping under agricultural use",
+    "notes": "Present Use Value (PUV) program provides reduced valuation for agricultural, horticultural, and forestland. Requires 10+ acres for agricultural use (or $1,000 income on smaller parcels). Beekeeping qualifies as agricultural production. Must be in agricultural use for 3 years. Apply with county tax office. Deferred taxes apply on disqualification."
+  },
+  "ND": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "North Dakota assesses ag land by productivity; beekeeping not specified",
+    "notes": "Agricultural property taxed based on productivity value per NDCC 57-02-27. Uses soil survey and productivity data for valuation. No specific mention of beekeeping. Focus is on cropland, pasture, and grazing land. Minimum acreage varies by use type. Contact county assessor for beekeeping eligibility determination."
+  },
+  "OH": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Ohio CAUV program allows beekeeping with proper production requirements",
+    "notes": "Current Agricultural Use Value (CAUV) program provides reduced valuation. Requires 10+ acres devoted to commercial agricultural use (or all contiguous land if less than 10 acres). Beekeeping can qualify under 'other agricultural uses' if producing income. Gross income of $2,500+ required annually. Apply with county auditor during reappraisal cycle."
+  },
+  "OK": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Oklahoma ag use valuation allows beekeeping as qualifying agricultural activity",
+    "notes": "Agricultural use exemption available under Oklahoma Statutes Title 68. Requires land be devoted primarily to recognized agricultural use. Beekeeping explicitly included as agricultural activity. Minimum of 5 acres for most classifications. Must demonstrate active farming/ranching purpose. Apply with county assessor. Annual application may be required."
+  },
+  "_metadata": {
+    "generated": "2026-02-10T18:58:00-06:00",
+    "source": "Quick research - web fetches failed, compiled from training data",
+    "confidence": "medium",
+    "notes": "Web search API unavailable. Data based on general knowledge of state programs. Recommend verification with state/county tax authorities for current requirements. Laws and requirements may have changed."
+  }
+}

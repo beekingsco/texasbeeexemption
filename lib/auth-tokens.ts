@@ -1,4 +1,4 @@
-import { put, list, del } from '@vercel/blob';
+import { blobPut, blobRead } from './blob-helpers';
 
 interface MagicToken {
   token: string;
@@ -11,11 +11,8 @@ const TOKENS_BLOB_PATH = 'auth/magic-tokens.json';
 
 async function readTokens(): Promise<MagicToken[]> {
   try {
-    const blobs = await list({ prefix: 'auth/magic-tokens' });
-    if (blobs.blobs.length === 0) return [];
-    const response = await fetch(blobs.blobs[0].url);
-    const data = await response.json();
-    return data.tokens || [];
+    const data = await blobRead<{ tokens: MagicToken[] }>('auth/magic-tokens');
+    return data?.tokens || [];
   } catch {
     return [];
   }
@@ -26,10 +23,7 @@ async function writeTokens(tokens: MagicToken[]): Promise<void> {
   const now = new Date().getTime();
   const active = tokens.filter(t => new Date(t.expiresAt).getTime() > now && !t.used);
   
-  await put(TOKENS_BLOB_PATH, JSON.stringify({ tokens: active }, null, 2), {
-    access: 'public',
-    contentType: 'application/json',
-  });
+  await blobPut(TOKENS_BLOB_PATH, JSON.stringify({ tokens: active }, null, 2));
 }
 
 export async function createMagicToken(email: string): Promise<string> {

@@ -15,9 +15,9 @@ export async function GET(req: NextRequest) {
     const leads = await getAgentLeads(session.user.id);
     return NextResponse.json({ leads });
   } catch (error) {
-    console.error('Error fetching leads:', error);
+    console.error('Error fetching reports:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Failed to process reports request', detail: String(error) },
       { status: 500 }
     );
   }
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('Error creating lead:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Failed to process reports request', detail: String(error) },
       { status: 500 }
     );
   }
@@ -100,7 +100,7 @@ export async function PATCH(req: NextRequest) {
   } catch (error) {
     console.error('Error updating lead:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Failed to process reports request', detail: String(error) },
       { status: 500 }
     );
   }
@@ -133,7 +133,7 @@ export async function DELETE(req: NextRequest) {
   } catch (error) {
     console.error('Error deleting lead:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Failed to process reports request', detail: String(error) },
       { status: 500 }
     );
   }

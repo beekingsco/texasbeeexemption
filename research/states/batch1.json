@@ -1,0 +1,117 @@
+{
+  "_meta": {
+    "generated": "2026-02-10",
+    "source": "Training knowledge - web search unavailable",
+    "confidence": "moderate - verify current requirements with state agencies"
+  },
+  "AL": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Current Use valuation available; beekeeping not explicitly listed",
+    "requirements": {
+      "minAcreage": "No state minimum, varies by county",
+      "minIncome": "Not income-based",
+      "history": "Must be in agricultural use"
+    },
+    "notes": "Alabama's Current Use program (Ala. Code § 40-7-25.1) values agricultural land at use value. Focuses on traditional farming, timber, and pasture. Apiculture not explicitly mentioned but may qualify as 'agricultural production' - check with county assessor."
+  },
+  "AK": {
+    "hasProgram": false,
+    "beekeepingQualifies": "N/A",
+    "headline": "No statewide agricultural use valuation program",
+    "requirements": {
+      "minAcreage": "N/A",
+      "minIncome": "N/A",
+      "history": "N/A"
+    },
+    "notes": "Alaska has no statewide property tax. Boroughs (counties) set their own rules. Some boroughs may offer agricultural exemptions but no uniform statewide program exists. Limited commercial beekeeping due to climate."
+  },
+  "AZ": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Agricultural classification available; beekeeping can qualify",
+    "requirements": {
+      "minAcreage": "Varies by county and use",
+      "minIncome": "$1,000+ gross income typically",
+      "history": "Active agricultural use required"
+    },
+    "notes": "Arizona uses Class 3 agricultural classification (A.R.S. § 42-12001). Beekeeping can qualify as agricultural production. County assessor determines eligibility. Must demonstrate commercial agricultural operation."
+  },
+  "CO": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Agricultural land classification with explicit beekeeping provisions",
+    "requirements": {
+      "minAcreage": "No minimum if income threshold met",
+      "minIncome": "$1,000 gross income (3 of last 5 years)",
+      "history": "3 of 5 year income history"
+    },
+    "notes": "Colorado allows agricultural classification for land used for 'apiculture' (C.R.S. § 39-1-102). Must generate $1,000+ income from agricultural products. One of the clearer states for beekeeping qualification."
+  },
+  "CT": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "PA 490 program explicitly includes beekeeping",
+    "requirements": {
+      "minAcreage": "Typically 2+ acres for farmland",
+      "minIncome": "$15,000 gross sales (or $2,500 for small farms)",
+      "history": "2 years farming history typically"
+    },
+    "notes": "Connecticut's PA 490 (Public Act 490) explicitly lists 'the keeping of bees' as a qualifying agricultural use. Very bee-friendly state for tax purposes. Apply through local assessor."
+  },
+  "DE": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Agricultural use assessment exists; beekeeping status unclear",
+    "requirements": {
+      "minAcreage": "10+ acres typically",
+      "minIncome": "Varies by county",
+      "history": "Active agricultural use"
+    },
+    "notes": "Delaware offers agricultural use valuation but beekeeping is not explicitly addressed in statutes. Traditional farming and timber are primary focus. Contact county assessment office for interpretation."
+  },
+  "HI": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Agricultural dedication program; beekeeping qualifies",
+    "requirements": {
+      "minAcreage": "Varies by island/county",
+      "minIncome": "Income requirements vary",
+      "history": "Agricultural dedication required"
+    },
+    "notes": "Hawaii's agricultural land dedication program (HRS Chapter 205) recognizes beekeeping. Strong honey industry due to climate. Each county administers differently. Agricultural use dedication provides significant tax reduction."
+  },
+  "ID": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Agricultural exemption available; beekeeping qualifies",
+    "requirements": {
+      "minAcreage": "No minimum specified",
+      "minIncome": "Commercial agricultural operation",
+      "history": "Active agricultural production"
+    },
+    "notes": "Idaho provides agricultural property tax exemption for land in agricultural use (Idaho Code § 63-604). Beekeeping operations can qualify as agricultural production. Must be operated commercially, not as hobby."
+  },
+  "IL": {
+    "hasProgram": true,
+    "beekeepingQualifies": true,
+    "headline": "Farmland assessment with specific beekeeping provisions",
+    "requirements": {
+      "minAcreage": "10+ acres or on contiguous farmland",
+      "minIncome": "Land farmed for 2 years minimum",
+      "history": "2 years in agricultural use"
+    },
+    "notes": "Illinois farmland assessment (35 ILCS 200/10-110) explicitly includes 'apiculture' as agricultural use. Land must be 10+ acres or contiguous to farmland. Well-defined beekeeping provision."
+  },
+  "IN": {
+    "hasProgram": true,
+    "beekeepingQualifies": "unclear",
+    "headline": "Agricultural land base rate applies; beekeeping not explicitly listed",
+    "requirements": {
+      "minAcreage": "1+ acre typically",
+      "minIncome": "Must be in agricultural production",
+      "history": "Land in agricultural use"
+    },
+    "notes": "Indiana uses agricultural land base rate value (IC 6-1.1-4-13). Focuses on soil productivity for cropland. Beekeeping not explicitly addressed - may qualify if land otherwise qualifies for agricultural assessment. Check with county assessor."
+  }
+}
