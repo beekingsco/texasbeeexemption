@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
 export interface Coupon {
@@ -14,6 +14,31 @@ export interface Coupon {
 }
 
 const COUPONS_PATH = join(process.cwd(), 'data', 'coupons.json');
+const LOCK_PATH = join(process.cwd(), 'data', 'coupons.lock');
+
+// Simple file-based locking mechanism
+const locks = new Map<string, Promise<void>>();
+
+async function withLock<T>(key: string, fn: () => T): Promise<T> {
+  // Wait for existing lock
+  while (locks.has(key)) {
+    await locks.get(key);
+  }
+  
+  // Create new lock
+  let releaseLock: () => void;
+  const lockPromise = new Promise<void>((resolve) => {
+    releaseLock = resolve;
+  });
+  locks.set(key, lockPromise);
+  
+  try {
+    return fn();
+  } finally {
+    locks.delete(key);
+    releaseLock!();
+  }
+}
 
 export function readCoupons(): Coupon[] {
   try {
@@ -45,11 +70,13 @@ export function validateCoupon(code: string): { valid: boolean; error?: string; 
   return { valid: true, coupon };
 }
 
-export function redeemCoupon(code: string): boolean {
-  const coupons = readCoupons();
-  const idx = coupons.findIndex(c => c.code.toUpperCase() === code.toUpperCase());
-  if (idx === -1) return false;
-  coupons[idx].currentRedemptions++;
-  writeCoupons(coupons);
-  return true;
+export async function redeemCoupon(code: string): Promise<boolean> {
+  return withLock('coupons', () => {
+    const coupons = readCoupons();
+    const idx = coupons.findIndex(c => c.code.toUpperCase() === code.toUpperCase());
+    if (idx === -1) return false;
+    coupons[idx].currentRedemptions++;
+    writeCoupons(coupons);
+    return true;
+  });
 }

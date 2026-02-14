@@ -11,17 +11,72 @@ const C = {
   white: '#FFFFFF',
   gray: '#5A6A7A',
   charcoal: '#2d2d2d',
+  red: '#DC2626',
+  lightGreen: '#10B981',
 };
 
 export default function PricingPage() {
   const [agentExpanded, setAgentExpanded] = useState(false);
+  const [promoCode, setPromoCode] = useState<{ [key: string]: string }>({});
+  const [promoStatus, setPromoStatus] = useState<{ [key: string]: { valid: boolean; message: string } | null }>({});
+  const [validatingPromo, setValidatingPromo] = useState<{ [key: string]: boolean }>({});
+
+  const validatePromoCode = async (tier: string, code: string) => {
+    if (!code.trim()) {
+      setPromoStatus({ ...promoStatus, [tier]: null });
+      return;
+    }
+
+    setValidatingPromo({ ...validatingPromo, [tier]: true });
+    
+    try {
+      const res = await fetch('/api/promo/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: code.trim() }),
+      });
+      const data = await res.json();
+      
+      if (data.valid) {
+        setPromoStatus({
+          ...promoStatus,
+          [tier]: {
+            valid: true,
+            message: data.coupon.type === 'discount' 
+              ? `${data.coupon.value}% off applied!` 
+              : `${data.coupon.value} day trial applied!`
+          }
+        });
+      } else {
+        setPromoStatus({
+          ...promoStatus,
+          [tier]: {
+            valid: false,
+            message: data.error || 'Invalid promo code'
+          }
+        });
+      }
+    } catch (err) {
+      console.error('Promo validation error:', err);
+      setPromoStatus({
+        ...promoStatus,
+        [tier]: {
+          valid: false,
+          message: 'Error validating code'
+        }
+      });
+    } finally {
+      setValidatingPromo({ ...validatingPromo, [tier]: false });
+    }
+  };
 
   const handleCheckout = async (tier: string) => {
     try {
+      const couponCode = promoCode[tier]?.trim() || undefined;
       const res = await fetch('/api/stripe/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier, propertyData: {} }),
+        body: JSON.stringify({ tier, propertyData: {}, couponCode }),
       });
       const data = await res.json();
       if (data.url) window.location.href = data.url;
@@ -84,6 +139,60 @@ export default function PricingPage() {
               ))}
             </div>
 
+            {/* Promo Code Input */}
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <input
+                  type="text"
+                  placeholder="Promo code"
+                  value={promoCode['single'] || ''}
+                  onChange={(e) => {
+                    const value = e.target.value.toUpperCase();
+                    setPromoCode({ ...promoCode, single: value });
+                    if (!value) setPromoStatus({ ...promoStatus, single: null });
+                  }}
+                  onBlur={(e) => validatePromoCode('single', e.target.value)}
+                  style={{
+                    flex: 1,
+                    padding: '10px 14px',
+                    borderRadius: 8,
+                    border: `1px solid ${promoStatus['single']?.valid === false ? C.red : '#d1d5db'}`,
+                    fontSize: 14,
+                    fontFamily: 'inherit',
+                    outline: 'none',
+                  }}
+                />
+                <button
+                  onClick={() => validatePromoCode('single', promoCode['single'] || '')}
+                  disabled={!promoCode['single'] || validatingPromo['single']}
+                  style={{
+                    padding: '10px 16px',
+                    background: C.navy,
+                    color: C.white,
+                    border: 'none',
+                    borderRadius: 8,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    cursor: promoCode['single'] && !validatingPromo['single'] ? 'pointer' : 'not-allowed',
+                    opacity: promoCode['single'] && !validatingPromo['single'] ? 1 : 0.5,
+                    fontFamily: 'inherit',
+                  }}
+                >
+                  {validatingPromo['single'] ? '...' : 'Apply'}
+                </button>
+              </div>
+              {promoStatus['single'] && (
+                <p style={{
+                  fontSize: 12,
+                  marginTop: 6,
+                  color: promoStatus['single'].valid ? C.lightGreen : C.red,
+                  fontWeight: 600,
+                }}>
+                  {promoStatus['single'].message}
+                </p>
+              )}
+            </div>
+
             <button
               onClick={() => handleCheckout('single')}
               className="cta-wiggle"
@@ -120,6 +229,60 @@ export default function PricingPage() {
                   <span style={{ fontSize: 14, color: '#444' }}>{item}</span>
                 </div>
               ))}
+            </div>
+
+            {/* Promo Code Input */}
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <input
+                  type="text"
+                  placeholder="Promo code"
+                  value={promoCode['unlimited'] || ''}
+                  onChange={(e) => {
+                    const value = e.target.value.toUpperCase();
+                    setPromoCode({ ...promoCode, unlimited: value });
+                    if (!value) setPromoStatus({ ...promoStatus, unlimited: null });
+                  }}
+                  onBlur={(e) => validatePromoCode('unlimited', e.target.value)}
+                  style={{
+                    flex: 1,
+                    padding: '10px 14px',
+                    borderRadius: 8,
+                    border: `1px solid ${promoStatus['unlimited']?.valid === false ? C.red : '#d1d5db'}`,
+                    fontSize: 14,
+                    fontFamily: 'inherit',
+                    outline: 'none',
+                  }}
+                />
+                <button
+                  onClick={() => validatePromoCode('unlimited', promoCode['unlimited'] || '')}
+                  disabled={!promoCode['unlimited'] || validatingPromo['unlimited']}
+                  style={{
+                    padding: '10px 16px',
+                    background: C.navy,
+                    color: C.white,
+                    border: 'none',
+                    borderRadius: 8,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    cursor: promoCode['unlimited'] && !validatingPromo['unlimited'] ? 'pointer' : 'not-allowed',
+                    opacity: promoCode['unlimited'] && !validatingPromo['unlimited'] ? 1 : 0.5,
+                    fontFamily: 'inherit',
+                  }}
+                >
+                  {validatingPromo['unlimited'] ? '...' : 'Apply'}
+                </button>
+              </div>
+              {promoStatus['unlimited'] && (
+                <p style={{
+                  fontSize: 12,
+                  marginTop: 6,
+                  color: promoStatus['unlimited'].valid ? C.lightGreen : C.red,
+                  fontWeight: 600,
+                }}>
+                  {promoStatus['unlimited'].message}
+                </p>
+              )}
             </div>
 
             <button
@@ -204,6 +367,60 @@ export default function PricingPage() {
               </div>
             </div>
           )}
+
+          {/* Promo Code Input */}
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <input
+                type="text"
+                placeholder="Promo code (e.g., REALTOR50)"
+                value={promoCode['agent'] || ''}
+                onChange={(e) => {
+                  const value = e.target.value.toUpperCase();
+                  setPromoCode({ ...promoCode, agent: value });
+                  if (!value) setPromoStatus({ ...promoStatus, agent: null });
+                }}
+                onBlur={(e) => validatePromoCode('agent', e.target.value)}
+                style={{
+                  flex: 1,
+                  padding: '10px 14px',
+                  borderRadius: 8,
+                  border: `1px solid ${promoStatus['agent']?.valid === false ? C.red : '#d1d5db'}`,
+                  fontSize: 14,
+                  fontFamily: 'inherit',
+                  outline: 'none',
+                }}
+              />
+              <button
+                onClick={() => validatePromoCode('agent', promoCode['agent'] || '')}
+                disabled={!promoCode['agent'] || validatingPromo['agent']}
+                style={{
+                  padding: '10px 16px',
+                  background: C.navy,
+                  color: C.white,
+                  border: 'none',
+                  borderRadius: 8,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: promoCode['agent'] && !validatingPromo['agent'] ? 'pointer' : 'not-allowed',
+                  opacity: promoCode['agent'] && !validatingPromo['agent'] ? 1 : 0.5,
+                  fontFamily: 'inherit',
+                }}
+              >
+                {validatingPromo['agent'] ? '...' : 'Apply'}
+              </button>
+            </div>
+            {promoStatus['agent'] && (
+              <p style={{
+                fontSize: 12,
+                marginTop: 6,
+                color: promoStatus['agent'].valid ? C.lightGreen : C.red,
+                fontWeight: 600,
+              }}>
+                {promoStatus['agent'].message}
+              </p>
+            )}
+          </div>
 
           <button
             onClick={() => handleCheckout('agent')}

@@ -20,5 +20,16 @@
     "campaign": "partner",
     "active": true,
     "createdAt": "2026-02-10T00:00:00.000Z"
+  },
+  {
+    "code": "REALTOR50",
+    "type": "discount",
+    "value": 50,
+    "maxRedemptions": null,
+    "currentRedemptions": 0,
+    "expiresAt": "2026-03-15T23:59:59.000Z",
+    "campaign": "realtor-launch",
+    "active": true,
+    "createdAt": "2026-02-13T00:00:00.000Z"
   }
 ]

@@ -46,14 +46,23 @@ export async function POST(req: NextRequest) {
     const successUrl = `${origin}/report/success?session_id={CHECKOUT_SESSION_ID}&${reportParams.toString()}`;
     const cancelUrl = `${origin}/report?${reportParams.toString()}`;
 
-    // Handle coupon logic for agent tier
+    // Handle coupon logic for all tiers
     let trialDays: number | undefined;
     let stripeCouponId: string | undefined;
 
-    if (tier === 'agent' && couponCode) {
+    if (couponCode) {
       const couponResult = validateCoupon(couponCode);
       if (couponResult.valid && couponResult.coupon) {
         const c = couponResult.coupon;
+        
+        // Fix 6: Tier compatibility check - trial promos only for subscriptions
+        if (c.type === 'trial' && tierConfig.mode !== 'subscription') {
+          return NextResponse.json(
+            { error: 'This promo code cannot be applied to one-time payments' },
+            { status: 400 }
+          );
+        }
+        
         metadata.coupon_code = c.code;
         metadata.coupon_campaign = c.campaign;
 
@@ -68,12 +77,15 @@ export async function POST(req: NextRequest) {
           });
           stripeCouponId = sc.id;
         }
-        redeemCoupon(couponCode);
+        await redeemCoupon(couponCode);
       }
     }
 
-    // Default 7-day trial for all agents; coupon can extend it
-    const subscriptionTrialDays: number | undefined = tier === 'agent' ? (trialDays || 7) : ('trialDays' in tierConfig ? (tierConfig as { trialDays?: number }).trialDays : undefined);
+    // Fix 7: Default 7-day trial for all agents; coupon can extend it
+    // Use !== undefined to handle 0-day trials correctly
+    const subscriptionTrialDays: number | undefined = tier === 'agent' 
+      ? (trialDays !== undefined ? trialDays : 7) 
+      : ('trialDays' in tierConfig ? (tierConfig as { trialDays?: number }).trialDays : undefined);
 
     // Create checkout session params
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
