@@ -1278,6 +1278,23 @@ function ReportContent() {
           ════════════════════════════════════════════════════════════ */}
       <footer className="page-break" style={{ background: colors.darkGreen, color: 'white' }}>
         <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 24px' }}>
+          {/* Agent Referral CTA */}
+          <div className="no-print" style={{ marginBottom: 32 }}>
+            <div style={{ borderRadius: 16, padding: '28px 32px', background: 'rgba(212,168,67,0.08)', border: '1px solid rgba(212,168,67,0.25)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 12 }}>
+              <div style={{ fontSize: 32 }}>🏠</div>
+              <h3 style={{ fontSize: 20, fontWeight: 800, color: colors.gold, margin: 0 }}>Are You a Real Estate Agent?</h3>
+              <p style={{ fontSize: 14, opacity: 0.7, lineHeight: 1.6, margin: 0, maxWidth: 480 }}>
+                Give your clients this report as a selling tool. Partner with BeeExemption to white-label reports, generate qualified leads, and help buyers see the full value of rural properties — before they sign.
+              </p>
+              <a
+                href="/agents"
+                style={{ display: 'inline-block', marginTop: 4, padding: '11px 24px', borderRadius: 10, fontWeight: 700, fontSize: 14, background: colors.gold, color: colors.darkGreen, textDecoration: 'none', letterSpacing: '0.01em' }}
+              >
+                Learn About the Agent Program →
+              </a>
+            </div>
+          </div>
+
           {/* CTA Box */}
           <div className="text-center mb-12 no-print">
             <div style={{ display: 'inline-block', borderRadius: 20, padding: '40px 48px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
