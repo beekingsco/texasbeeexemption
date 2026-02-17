@@ -30,6 +30,18 @@ const DEFAULT_COUPONS: Coupon[] = [
     createdAt: new Date().toISOString(),
   },
   {
+    code: 'REALTOR30',
+    description: '30-day free trial for real estate agents - no card required',
+    type: 'trial_extension',
+    trialDays: 30,
+    maxCounties: 1,
+    maxRedemptions: 0, // unlimited
+    redemptions: 0,
+    redeemedBy: [],
+    enabled: true,
+    createdAt: new Date().toISOString(),
+  },
+  {
     code: 'PARTNER30',
     description: '30-day free trial - Partner outreach',
     type: 'trial_extension',
