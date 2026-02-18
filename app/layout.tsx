@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { Lato } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 
 const lato = Lato({ 
@@ -181,7 +182,22 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={lato.className}>{children}<Analytics /></body>
+      <body className={lato.className}>
+        {children}
+        <Analytics />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-17FMT1LKZZ"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-17FMT1LKZZ');
+          `}
+        </Script>
+      </body>
     </html>
   );
 }
