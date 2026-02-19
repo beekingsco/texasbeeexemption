@@ -6,11 +6,13 @@ import { validateCoupon, redeemCoupon } from '@/lib/coupons';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { tier, propertyData, county, couponCode } = body as {
+    const { tier, propertyData, county, couponCode, customerEmail, customerName } = body as {
       tier: TierKey;
       propertyData?: Record<string, string>;
       county?: string;
       couponCode?: string;
+      customerEmail?: string;
+      customerName?: string;
     };
 
     if (!tier || !TIERS[tier]) {
@@ -43,8 +45,13 @@ export async function POST(req: NextRequest) {
     }
     if (county) reportParams.set('county', county);
     
-    const successUrl = `${origin}/report/success?session_id={CHECKOUT_SESSION_ID}&${reportParams.toString()}`;
-    const cancelUrl = `${origin}/report?${reportParams.toString()}`;
+    // Agent tier gets its own onboarding success page
+    const successUrl = tier === 'agent'
+      ? `${origin}/agent/onboard?session_id={CHECKOUT_SESSION_ID}`
+      : `${origin}/report/success?session_id={CHECKOUT_SESSION_ID}&${reportParams.toString()}`;
+    const cancelUrl = tier === 'agent'
+      ? `${origin}/agents`
+      : `${origin}/report?${reportParams.toString()}`;
 
     // Handle coupon logic for all tiers
     let trialDays: number | undefined;
@@ -102,8 +109,10 @@ export async function POST(req: NextRequest) {
       } : undefined,
     };
 
-    // If we have an email, prefill it
-    if (propertyData?.email) {
+    // If we have an email, prefill it (customerEmail takes priority for agent tier)
+    if (customerEmail) {
+      sessionParams.customer_email = customerEmail;
+    } else if (propertyData?.email) {
       sessionParams.customer_email = propertyData.email;
     }
 

@@ -53,6 +53,10 @@ export default function AgentLandingPage() {
   const [promoStatus, setPromoStatus] = useState<null | { valid: boolean; type?: string; value?: number; error?: string }>(null);
   const [promoChecking, setPromoChecking] = useState(false);
   const [showPromoInput, setShowPromoInput] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [agentEmail, setAgentEmail] = useState('');
+  const [agentName, setAgentName] = useState('');
+  const [emailError, setEmailError] = useState('');
 
   const checkPromoCode = async (code: string) => {
     if (!code.trim()) { setPromoStatus(null); return; }
@@ -71,14 +75,28 @@ export default function AgentLandingPage() {
     setPromoChecking(false);
   };
 
+  const handleCheckoutClick = () => {
+    setShowEmailModal(true);
+    setEmailError('');
+  };
+
   const handleCheckout = async () => {
+    // Validate email
+    if (!agentEmail.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(agentEmail.trim())) {
+      setEmailError('Please enter a valid email address.');
+      return;
+    }
+    setEmailError('');
     setCheckoutLoading(true);
+    setShowEmailModal(false);
     try {
       const res = await fetch('/api/stripe/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           tier: 'agent',
+          customerEmail: agentEmail.trim(),
+          customerName: agentName.trim() || undefined,
           propertyData: {},
           ...(promoStatus?.valid && promoCode ? { couponCode: promoCode.trim() } : {}),
         }),
@@ -149,7 +167,7 @@ export default function AgentLandingPage() {
             <a href="/pricing" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>Pricing</a>
             <a href="/agent/login" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>Agent Login</a>
             <button
-              onClick={handleCheckout}
+              onClick={handleCheckoutClick}
               style={{ padding: '10px 20px', borderRadius: 10, background: C.green, color: C.navy, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
             >
               Get Started
@@ -184,7 +202,7 @@ export default function AgentLandingPage() {
             </p>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
               <button
-                onClick={handleCheckout}
+                onClick={handleCheckoutClick}
                 disabled={checkoutLoading}
                 className="cta-btn"
                 style={{ padding: '16px 32px', borderRadius: 12, background: C.green, color: C.navy, fontWeight: 800, fontSize: 17, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)' }}
@@ -543,7 +561,7 @@ export default function AgentLandingPage() {
                 </div>
 
                 <button
-                  onClick={handleCheckout}
+                  onClick={handleCheckoutClick}
                   disabled={checkoutLoading}
                   className="cta-btn"
                   style={{ width: '100%', padding: '18px 24px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)', marginBottom: 12 }}
@@ -648,7 +666,7 @@ export default function AgentLandingPage() {
             and give their clients something no one else can.
           </p>
           <button
-            onClick={handleCheckout}
+            onClick={handleCheckoutClick}
             disabled={checkoutLoading}
             className="cta-btn"
             style={{ padding: '18px 40px', borderRadius: 14, background: C.green, color: C.navy, fontWeight: 800, fontSize: 18, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 6px 24px rgba(212,168,67,0.35)', marginBottom: 12 }}
@@ -690,6 +708,96 @@ export default function AgentLandingPage() {
           </div>
         </div>
       </footer>
+
+      {/* Email Collection Modal */}
+      {showEmailModal && (
+        <div
+          onClick={() => { setShowEmailModal(false); setEmailError(''); }}
+          style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(13,27,42,0.6)', backdropFilter: 'blur(4px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 9999, padding: 24,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: C.white, borderRadius: 20, padding: 36, maxWidth: 440, width: '100%',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
+            }}
+          >
+            <div style={{ textAlign: 'center', marginBottom: 24 }}>
+              <span style={{ fontSize: 40 }}>🐝</span>
+              <h3 style={{ fontSize: 22, fontWeight: 800, color: C.navy, marginTop: 8, marginBottom: 8 }}>
+                Almost There!
+              </h3>
+              <p style={{ fontSize: 15, color: C.gray, lineHeight: 1.6 }}>
+                Enter your info below and we&apos;ll take you to secure checkout.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 20 }}>
+              <div>
+                <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: C.navy, marginBottom: 6 }}>
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  value={agentName}
+                  onChange={(e) => setAgentName(e.target.value)}
+                  placeholder="Jane Smith"
+                  style={{
+                    width: '100%', padding: '12px 16px', border: '2px solid #e2e8f0', borderRadius: 10,
+                    fontSize: 15, outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
+                  }}
+                  onFocus={(e) => e.currentTarget.style.borderColor = C.blue}
+                  onBlur={(e) => e.currentTarget.style.borderColor = '#e2e8f0'}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: C.navy, marginBottom: 6 }}>
+                  Email Address <span style={{ color: '#DC2626' }}>*</span>
+                </label>
+                <input
+                  type="email"
+                  value={agentEmail}
+                  onChange={(e) => { setAgentEmail(e.target.value); setEmailError(''); }}
+                  placeholder="jane@realestate.com"
+                  style={{
+                    width: '100%', padding: '12px 16px', border: `2px solid ${emailError ? '#DC2626' : '#e2e8f0'}`,
+                    borderRadius: 10, fontSize: 15, outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
+                  }}
+                  onFocus={(e) => e.currentTarget.style.borderColor = emailError ? '#DC2626' : C.blue}
+                  onBlur={(e) => e.currentTarget.style.borderColor = emailError ? '#DC2626' : '#e2e8f0'}
+                  onKeyDown={(e) => { if (e.key === 'Enter') handleCheckout(); }}
+                  autoFocus
+                />
+                {emailError && (
+                  <p style={{ fontSize: 13, color: '#DC2626', marginTop: 6 }}>{emailError}</p>
+                )}
+              </div>
+            </div>
+
+            <button
+              onClick={handleCheckout}
+              disabled={checkoutLoading}
+              className="cta-btn"
+              style={{
+                width: '100%', padding: '16px 24px', borderRadius: 12, background: C.green,
+                color: C.navy, fontWeight: 800, fontSize: 17, border: 'none', cursor: 'pointer',
+                fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.3)',
+                opacity: checkoutLoading ? 0.6 : 1, marginBottom: 12,
+              }}
+            >
+              {checkoutLoading ? 'Loading...' : 'Continue to Checkout →'}
+            </button>
+            <p style={{ fontSize: 12, color: C.gray, textAlign: 'center' }}>
+              🔒 Your info is secure. We&apos;ll use this to set up your agent account.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

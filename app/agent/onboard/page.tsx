@@ -1,6 +1,6 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, useRef, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import countiesData from '@/data/texas-counties.json';
 
 const C = {
@@ -28,11 +28,13 @@ interface Agent {
   licensedCounties: string[];
 }
 
-export default function AgentOnboarding() {
+function AgentOnboardingInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
   const [agent, setAgent] = useState<Agent | null>(null);
   const [loading, setLoading] = useState(true);
+  const [onboardError, setOnboardError] = useState('');
   const [uploading, setUploading] = useState(false);
   const [uploadMsg, setUploadMsg] = useState('');
   const [selectedCounty, setSelectedCounty] = useState('');
@@ -49,23 +51,59 @@ export default function AgentOnboarding() {
 
   useEffect(() => {
     async function load() {
+      const sessionId = searchParams.get('session_id');
+
+      // First check if user already has a session
       try {
         const resp = await fetch('/api/auth/session');
-        if (resp.status === 401) { router.push('/agent/login'); return; }
-        const data = await resp.json();
-        setAgent(data.agent);
-        // If already has counties, start at step 3
-        if (data.agent.licensedCounties?.length > 0) {
-          setSelectedCounty(data.agent.licensedCounties[0]?.replace('TX-', '') || '');
-          setStep(3);
+        if (resp.ok) {
+          const data = await resp.json();
+          setAgent(data.agent);
+          if (data.agent.licensedCounties?.length > 0) {
+            setSelectedCounty(data.agent.licensedCounties[0]?.replace('TX-', '') || '');
+            setStep(3);
+          }
+          setLoading(false);
+          return;
         }
       } catch {
+        // No existing session — continue
+      }
+
+      // If we have a session_id from Stripe, create the agent account
+      if (sessionId) {
+        try {
+          const resp = await fetch('/api/stripe/onboard-agent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sessionId }),
+          });
+          const data = await resp.json();
+          if (resp.ok && data.ok) {
+            setAgent(data.agent);
+            if (data.agent.licensedCounties?.length > 0) {
+              setSelectedCounty(data.agent.licensedCounties[0]?.replace('TX-', '') || '');
+              setStep(3);
+            }
+            setLoading(false);
+            return;
+          } else {
+            setOnboardError(data.error || 'Failed to set up your account. Please try logging in.');
+          }
+        } catch {
+          setOnboardError('Something went wrong setting up your account. Please try logging in.');
+        }
+      }
+
+      // No session and no session_id (or onboard failed) — redirect to login
+      if (!onboardError) {
         router.push('/agent/login');
       }
       setLoading(false);
     }
     load();
-  }, [router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router, searchParams]);
 
   const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -122,7 +160,29 @@ export default function AgentOnboarding() {
       <div style={{ minHeight: '100vh', background: C.sky, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: 48, marginBottom: 16 }}>🐝</div>
-          <p style={{ color: C.gray }}>Loading...</p>
+          <p style={{ color: C.gray }}>Setting up your account...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (onboardError) {
+    return (
+      <div style={{ minHeight: '100vh', background: C.sky, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center', maxWidth: 440, padding: '0 24px' }}>
+          <div style={{ fontSize: 48, marginBottom: 16 }}>⚠️</div>
+          <h2 style={{ fontSize: 20, fontWeight: 700, color: C.navy, marginBottom: 12 }}>Account Setup Issue</h2>
+          <p style={{ color: C.gray, fontSize: 15, lineHeight: 1.6, marginBottom: 24 }}>{onboardError}</p>
+          <a
+            href="/agent/login"
+            style={{
+              display: 'inline-block', padding: '14px 28px', borderRadius: 10,
+              background: C.blue, color: C.white, fontWeight: 700, fontSize: 15,
+              textDecoration: 'none',
+            }}
+          >
+            Go to Login →
+          </a>
         </div>
       </div>
     );
@@ -325,5 +385,20 @@ export default function AgentOnboarding() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function AgentOnboarding() {
+  return (
+    <Suspense fallback={
+      <div style={{ minHeight: '100vh', background: '#EDF6FF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: 48, marginBottom: 16 }}>🐝</div>
+          <p style={{ color: '#64748B' }}>Loading...</p>
+        </div>
+      </div>
+    }>
+      <AgentOnboardingInner />
+    </Suspense>
   );
 }
