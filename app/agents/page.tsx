@@ -84,7 +84,12 @@ export default function AgentLandingPage() {
         }),
       });
       const data = await res.json();
-      if (data.url) window.location.href = data.url;
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error('Checkout error — no URL returned:', data);
+        setCheckoutLoading(false);
+      }
     } catch (err) {
       console.error('Checkout error:', err);
       setCheckoutLoading(false);

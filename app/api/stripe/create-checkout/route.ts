@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
           });
           stripeCouponId = sc.id;
         }
-        await redeemCoupon(couponCode);
+        try { await redeemCoupon(couponCode); } catch { /* file-system write not available in serverless — non-fatal */ }
       }
     }
 
