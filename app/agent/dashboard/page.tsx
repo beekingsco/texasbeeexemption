@@ -186,13 +186,13 @@ export default function AgentDashboard() {
           <div style={{ background: `linear-gradient(135deg, ${C.navy}, #0a2540)`, borderRadius: 12, padding: 24, color: C.white }}>
             <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>🔗 Your Branded Link</h3>
             <p style={{ color: '#8DA4B5', fontSize: 13, marginBottom: 16 }}>Share this link with your clients:</p>
-            <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 8, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <code style={{ fontSize: 13, flex: 1, wordBreak: 'break-all' }}>beeexemption.com/r/{slug}</code>
+            <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 8, padding: '12px 16px' }}>
+              <code style={{ display: 'block', fontSize: 13, wordBreak: 'break-all', overflowWrap: 'anywhere', marginBottom: 10 }}>beeexemption.com/r/{slug}</code>
               <button
                 onClick={() => navigator.clipboard?.writeText(`https://beeexemption.com/r/${slug}`)}
-                style={{ background: C.amber, border: 'none', color: C.white, padding: '6px 12px', borderRadius: 6, fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}
+                style={{ background: C.amber, border: 'none', color: C.white, padding: '7px 18px', borderRadius: 6, fontSize: 12, fontWeight: 700, cursor: 'pointer', width: '100%' }}
               >
-                Copy
+                Copy Link
               </button>
             </div>
           </div>
