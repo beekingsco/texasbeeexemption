@@ -91,6 +91,7 @@ export default function AdminPage() {
   const [recentEvents, setRecentEvents] = useState<AnalyticsEvent[]>([]);
   const [coupons, setCoupons] = useState<Array<{ code: string; type: string; value: number; maxRedemptions: number | null; currentRedemptions: number; expiresAt: string | null; campaign: string; active: boolean; createdAt: string }>>([]);
   const [newCoupon, setNewCoupon] = useState({ code: '', type: 'trial', value: 30, campaign: '', maxRedemptions: '' });
+  const [agentStatusFilter, setAgentStatusFilter] = useState<'all' | 'active' | 'trial' | 'cancelled'>('all');
 
   const fetchLeads = async (apiKey: string) => {
     setLoading(true);
@@ -223,7 +224,13 @@ export default function AdminPage() {
   const unlimitedMRR = activeUnlimited * 2999;
   const trialAgents = agents.filter(a => a.subscription?.status === 'trial').length;
   const activeAgents = agents.filter(a => a.subscription?.status === 'active').length;
+  const cancelledAgents = agents.filter(a => a.subscription?.status === 'cancelled').length;
   const agentRevenue = activeAgents * 29700; // $297/yr per agent
+
+  // Filter agents by status
+  const filteredAgents = agentStatusFilter === 'all'
+    ? agents
+    : agents.filter(a => a.subscription?.status === agentStatusFilter);
 
   if (!authed) {
     return (
@@ -463,8 +470,8 @@ export default function AdminPage() {
             { label: 'Total Leads', value: total.toString(), color: C.blue },
             { label: 'Today', value: leads.filter(l => new Date(l.createdAt).toDateString() === new Date().toDateString()).length.toString(), color: C.green },
             { label: 'Agents', value: agents.length.toString(), color: C.amber },
-            { label: 'Active Agents', value: activeAgents.toString(), color: C.green },
-            { label: 'Trial Agents', value: trialAgents.toString(), color: C.amber },
+            { label: 'Active', value: activeAgents.toString(), color: C.green },
+            { label: 'Trial / Cancelled', value: `${trialAgents} / ${cancelledAgents}`, color: C.amber },
           ].map(s => (
             <div key={s.label} style={{ background: C.white, borderRadius: 12, padding: 20, textAlign: 'center', border: '1px solid #e2e8f0' }}>
               <p style={{ fontSize: 12, fontWeight: 700, color: C.gray, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>{s.label}</p>
@@ -608,18 +615,37 @@ export default function AdminPage() {
         {/* AGENTS TAB */}
         {activeTab === 'agents' && (
           <div style={{ background: C.white, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-            <div style={{ padding: '16px 24px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ padding: '16px 24px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
               <h2 style={{ fontSize: 16, fontWeight: 700, color: C.navy, margin: 0 }}>🐝 Agent Management</h2>
-              <span style={{ fontSize: 13, color: C.gray }}>{agents.length} agents total</span>
+              <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                {(['all', 'active', 'trial', 'cancelled'] as const).map(s => {
+                  const count = s === 'all' ? agents.length : agents.filter(a => a.subscription?.status === s).length;
+                  return (
+                    <button
+                      key={s}
+                      onClick={() => setAgentStatusFilter(s)}
+                      style={{
+                        padding: '5px 12px', borderRadius: 16, fontSize: 12, fontWeight: 700,
+                        border: agentStatusFilter === s ? 'none' : '1px solid #e2e8f0',
+                        background: agentStatusFilter === s ? C.navy : C.white,
+                        color: agentStatusFilter === s ? C.white : C.gray,
+                        cursor: 'pointer', textTransform: 'capitalize', fontFamily: 'inherit',
+                      }}
+                    >
+                      {s} ({count})
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            {agents.length === 0 ? (
+            {filteredAgents.length === 0 ? (
               <div style={{ padding: 40, textAlign: 'center' }}>
                 <p style={{ fontSize: 40, marginBottom: 8 }}>🐝</p>
                 <p style={{ color: C.gray, fontSize: 14 }}>No agents registered yet.</p>
               </div>
             ) : (
               <div>
-                {agents.map(agent => {
+                {filteredAgents.map(agent => {
                   const statusColor = agent.subscription?.status === 'trial' ? C.amber : agent.subscription?.status === 'active' ? C.green : C.red;
                   const statusLabel = agent.subscription?.status || 'unknown';
                   const isExpanded = expandedAgent === agent.id;

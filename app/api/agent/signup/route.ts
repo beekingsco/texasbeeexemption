@@ -4,9 +4,20 @@ import { createAgent, getAgentByEmail } from '@/lib/agent-storage';
 import { Agent } from '@/lib/types/agent';
 import { put } from '@vercel/blob';
 import { validateCoupon, redeemCoupon } from '@/lib/coupon-storage';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit: 5 signups per IP per 15 minutes
+    const ip = getClientIp(req);
+    const rl = checkRateLimit('agent-signup', ip, 5, 15 * 60 * 1000);
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: 'Too many signup attempts. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const body = await req.json();
     const { name, email, password, brokerage, phone, licenseNumber, licensedCounties, subdomain, logo, couponCode } = body;
 

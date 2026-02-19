@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminEmail } from '@/lib/admin-auth';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM_EMAIL = process.env.FROM_EMAIL || 'hello@beeexemption.com';
@@ -38,6 +39,14 @@ function buildAdminMagicEmail(email: string, loginUrl: string): string {
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit: 3 admin magic link requests per IP per 15 minutes
+    const ip = getClientIp(req);
+    const rl = checkRateLimit('admin-magic-link', ip, 3, 15 * 60 * 1000);
+    if (!rl.allowed) {
+      // Return success-like response to avoid leaking rate limit info
+      return NextResponse.json({ ok: true, message: 'If this email is authorized, a login link has been sent.' });
+    }
+
     const { email } = await req.json();
 
     if (!email || typeof email !== 'string') {

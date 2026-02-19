@@ -5,9 +5,20 @@ import { createAgent, getAgentByEmail } from '@/lib/agent-storage';
 import { Agent } from '@/lib/types/agent';
 import { validateCoupon, redeemCoupon } from '@/lib/coupon-storage';
 import { notifyAdmin } from '@/lib/notify';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit: 5 signups per IP per 15 minutes
+    const ip = getClientIp(req);
+    const rl = checkRateLimit('agent-signup-free', ip, 5, 15 * 60 * 1000);
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: 'Too many signup attempts. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const { name, email, brokerage, phone, counties, couponCode, plan } = await req.json();
 
     if (!name || !email || !brokerage || !phone || !couponCode) {

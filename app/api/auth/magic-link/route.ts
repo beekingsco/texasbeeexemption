@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createMagicToken } from '@/lib/auth-tokens';
 import { getAgentByEmail } from '@/lib/agent-storage';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM_EMAIL = process.env.FROM_EMAIL || 'hello@beeexemption.com';
@@ -39,6 +40,15 @@ function buildMagicLinkEmail(name: string, loginUrl: string): string {
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit: 5 magic link requests per IP per 15 minutes
+    const ip = getClientIp(req);
+    const rl = checkRateLimit('magic-link', ip, 5, 15 * 60 * 1000);
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { ok: true, message: 'If an account exists, a login link has been sent.' }
+      );
+    }
+
     const body = await req.json();
     const { email } = body;
 

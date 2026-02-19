@@ -36,6 +36,7 @@ interface Lead {
   propertyAddress: string;
   county: string;
   ownerName?: string;
+  ownerEmail?: string;
   acres: number;
   appraisedValue: number;
   estimatedSavings: number;
@@ -88,6 +89,8 @@ export default function AgentDashboard() {
     return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
   });
 
+  const totalSavings = leads.reduce((sum, l) => sum + (l.estimatedSavings || 0), 0);
+
   const statusColors: Record<string, string> = {
     new: '#3B82F6',
     contacted: C.amber,
@@ -135,6 +138,9 @@ export default function AgentDashboard() {
           </h1>
           <p style={{ color: C.gray, fontSize: 14 }}>
             {agent.brokerage} · {agent.subscription?.status === 'trial' ? '🟡 Free Trial' : agent.subscription?.status === 'active' ? '🟢 Active' : '🔴 Cancelled'}
+            {agent.subscription?.currentPeriodEnd && agent.subscription.status === 'trial' && (
+              <span> · Ends {new Date(agent.subscription.currentPeriodEnd).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+            )}
           </p>
         </div>
 
@@ -143,7 +149,7 @@ export default function AgentDashboard() {
           {[
             { label: 'Total Leads', value: leads.length.toString(), icon: '📋', color: C.blue },
             { label: 'This Month', value: thisMonthLeads.length.toString(), icon: '📅', color: C.green },
-            { label: 'Total Reports', value: leads.length.toString(), icon: '📊', color: C.amber },
+            { label: 'Total Savings', value: fmtMoney(totalSavings), icon: '💰', color: C.amber },
             { label: 'Counties', value: agent.licensedCounties.length.toString(), icon: '🗺️', color: C.navy },
           ].map(s => (
             <div key={s.label} style={{ background: C.white, borderRadius: 12, padding: 20, border: '1px solid #e2e8f0' }}>
@@ -151,7 +157,7 @@ export default function AgentDashboard() {
                 <span style={{ fontSize: 11, fontWeight: 700, color: C.gray, textTransform: 'uppercase', letterSpacing: 1 }}>{s.label}</span>
                 <span style={{ fontSize: 20 }}>{s.icon}</span>
               </div>
-              <p style={{ fontSize: 32, fontWeight: 900, color: s.color, margin: 0 }}>{s.value}</p>
+              <p style={{ fontSize: 28, fontWeight: 900, color: s.color, margin: 0 }}>{s.value}</p>
             </div>
           ))}
         </div>
@@ -197,30 +203,42 @@ export default function AgentDashboard() {
           <div style={{ padding: '16px 24px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3 style={{ fontSize: 16, fontWeight: 700, color: C.navy, margin: 0 }}>📋 Recent Leads</h3>
             {leads.length > 0 && (
-              <a href="/agent/leads" style={{ color: C.amber, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>View All →</a>
+              <a href="/agent/leads" style={{ color: C.amber, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>View All ({leads.length}) →</a>
             )}
           </div>
 
           {leads.length === 0 ? (
             <div style={{ padding: 40, textAlign: 'center' }}>
               <p style={{ fontSize: 40, marginBottom: 8 }}>📭</p>
-              <p style={{ color: C.gray, fontSize: 14 }}>No leads yet. Share your branded link to start generating leads!</p>
+              <h3 style={{ color: C.navy, fontWeight: 700, fontSize: 16, marginBottom: 4 }}>No leads yet</h3>
+              <p style={{ color: C.gray, fontSize: 14, marginBottom: 16 }}>Share your branded link to start generating leads!</p>
+              <button
+                onClick={() => navigator.clipboard?.writeText(`https://beeexemption.com/r/${slug}`)}
+                style={{ background: C.amber, border: 'none', color: C.white, padding: '10px 20px', borderRadius: 8, fontSize: 14, fontWeight: 700, cursor: 'pointer' }}
+              >
+                📋 Copy Your Link
+              </button>
             </div>
           ) : (
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
                 <thead>
                   <tr style={{ background: '#F8FAFC' }}>
-                    {['Date', 'Address', 'County', 'Acres', 'Savings', 'Status'].map(h => (
+                    {['Date', 'Name', 'Email', 'County', 'Acres', 'Savings', 'Status'].map(h => (
                       <th key={h} style={{ padding: '10px 16px', textAlign: 'left', fontWeight: 700, color: C.navy, fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {leads.slice(0, 10).map(lead => (
+                  {leads.slice(0, 5).map(lead => (
                     <tr key={lead.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
                       <td style={{ padding: '10px 16px', color: C.gray, whiteSpace: 'nowrap' }}>{fmtDate(lead.createdAt)}</td>
-                      <td style={{ padding: '10px 16px', color: C.navy, fontWeight: 600, maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{lead.propertyAddress}</td>
+                      <td style={{ padding: '10px 16px', color: C.navy, fontWeight: 600, maxWidth: 160, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{lead.ownerName || '—'}</td>
+                      <td style={{ padding: '10px 16px', color: C.blue, maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {lead.ownerEmail ? (
+                          <a href={`mailto:${lead.ownerEmail}`} style={{ color: C.blue, textDecoration: 'none' }}>{lead.ownerEmail}</a>
+                        ) : '—'}
+                      </td>
                       <td style={{ padding: '10px 16px', color: C.navy }}>{lead.county}</td>
                       <td style={{ padding: '10px 16px', color: C.gray }}>{lead.acres}</td>
                       <td style={{ padding: '10px 16px', color: C.green, fontWeight: 700 }}>{fmtMoney(lead.estimatedSavings)}</td>
@@ -242,6 +260,13 @@ export default function AgentDashboard() {
                   ))}
                 </tbody>
               </table>
+              {leads.length > 5 && (
+                <div style={{ padding: '12px 16px', textAlign: 'center', borderTop: '1px solid #f1f5f9' }}>
+                  <a href="/agent/leads" style={{ color: C.blue, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+                    View all {leads.length} leads →
+                  </a>
+                </div>
+              )}
             </div>
           )}
         </div>

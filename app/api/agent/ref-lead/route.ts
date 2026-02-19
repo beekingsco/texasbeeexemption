@@ -2,10 +2,21 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAgentById, addAgentLead } from '@/lib/agent-storage';
 import { AgentLead } from '@/lib/types/agent';
 import { notifyAdmin } from '@/lib/notify';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 // POST — create a lead from a branded link referral (no auth needed, called from client)
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit: 10 lead submissions per IP per 15 minutes
+    const ip = getClientIp(req);
+    const rl = checkRateLimit('ref-lead', ip, 10, 15 * 60 * 1000);
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const body = await req.json();
     const { agentId, propertyAddress, county, ownerName, acres, appraisedValue, estimatedSavings } = body;
 
