@@ -152,21 +152,17 @@ export default function AgentSettingsPage() {
   };
 
   const handleBillingPortal = async () => {
-    if (!agent?.subscription?.stripeCustomerId) {
-      alert('No billing account linked. Contact support.');
-      return;
-    }
     try {
       const resp = await fetch('/api/stripe/portal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ customerId: agent.subscription.stripeCustomerId }),
+        body: JSON.stringify({}),
       });
       const data = await resp.json();
       if (data.url) {
         window.location.href = data.url;
       } else {
-        alert('Could not open billing portal. Contact support.');
+        alert(data.error || 'Could not open billing portal. Contact support.');
       }
     } catch {
       alert('Error opening billing portal.');

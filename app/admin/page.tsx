@@ -641,7 +641,9 @@ export default function AdminPage() {
             {filteredAgents.length === 0 ? (
               <div style={{ padding: 40, textAlign: 'center' }}>
                 <p style={{ fontSize: 40, marginBottom: 8 }}>🐝</p>
-                <p style={{ color: C.gray, fontSize: 14 }}>No agents registered yet.</p>
+                <p style={{ color: C.gray, fontSize: 14 }}>
+                  {agentStatusFilter === 'all' ? 'No agents registered yet.' : `No ${agentStatusFilter} agents.`}
+                </p>
               </div>
             ) : (
               <div>

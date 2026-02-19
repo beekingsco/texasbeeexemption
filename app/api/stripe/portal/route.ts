@@ -20,16 +20,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Agent not found' }, { status: 404 });
     }
 
-    const body = await req.json();
-    const customerId = body.customerId || agent.subscription?.stripeCustomerId;
-
+    // SECURITY: Only use the agent's own Stripe customer ID, never accept from client
+    const customerId = agent.subscription?.stripeCustomerId;
     if (!customerId) {
-      return NextResponse.json({ error: 'No Stripe customer found' }, { status: 400 });
-    }
-
-    // Verify the customer ID matches the agent's records
-    if (agent.subscription?.stripeCustomerId && customerId !== agent.subscription.stripeCustomerId) {
-      return NextResponse.json({ error: 'Customer mismatch' }, { status: 403 });
+      return NextResponse.json({ error: 'No Stripe customer found. Contact support.' }, { status: 400 });
     }
 
     const portalSession = await stripe.billingPortal.sessions.create({
