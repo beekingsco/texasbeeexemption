@@ -164,10 +164,37 @@ export default function NationalLanding() {
         .r-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         .r-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
         .r-nav { display: flex; align-items: center; gap: 24px; }
+        @keyframes rock {
+          0%   { transform: rotate(-8deg); }
+          25%  { transform: rotate(8deg); }
+          50%  { transform: rotate(-5deg); }
+          75%  { transform: rotate(5deg); }
+          100% { transform: rotate(0deg); }
+        }
+        .realtor-btn {
+          display: inline-block;
+          background: #D4A843;
+          color: #0D1B2A !important;
+          font-weight: 800;
+          font-size: 13px;
+          padding: 8px 16px;
+          border-radius: 24px;
+          text-decoration: none !important;
+          white-space: nowrap;
+          box-shadow: 0 2px 8px rgba(212,168,67,0.5);
+          animation: rock 1.2s ease-in-out infinite;
+          transform-origin: center bottom;
+        }
+        .realtor-btn:hover {
+          animation: none;
+          transform: scale(1.06);
+          box-shadow: 0 4px 16px rgba(212,168,67,0.6);
+        }
         @media (max-width: 768px) {
           .r-grid2 { grid-template-columns: 1fr; }
           .r-grid3 { grid-template-columns: 1fr; gap: 24px; }
           .r-nav { display: none; }
+          .realtor-btn-mobile { display: inline-block !important; font-size: 12px !important; padding: 6px 12px !important; }
           .hero-section { padding-top: 40px !important; padding-bottom: 40px !important; min-height: 320px !important; }
           .hero-text { align-items: center !important; text-align: center !important; }
           .hero-text h1 { font-size: 26px !important; margin-bottom: 8px !important; }
@@ -191,9 +218,11 @@ export default function NationalLanding() {
           <nav className="r-nav">
             <a href="#how-it-works" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>How It Works</a>
             <a href="/blog" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>Blog</a>
-            <a href="/agents" style={{ fontSize: 14, fontWeight: 600, color: C.green, textDecoration: 'none' }}>For Agents</a>
             <a href="https://beekings.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, fontWeight: 600, color: C.gray, textDecoration: 'none' }}>BeeKings</a>
+            <a href="/agents" className="realtor-btn">🏠 Realtors Click Here</a>
           </nav>
+          {/* Mobile-only realtor button — shown when r-nav is hidden */}
+          <a href="/agents" className="realtor-btn realtor-btn-mobile" style={{ display: 'none' }}>🏠 Realtors</a>
         </div>
       </header>
 
