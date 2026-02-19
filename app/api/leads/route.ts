@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { put, list } from '@vercel/blob';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 // Telegram lead alert
 const TG_BOT_TOKEN = process.env.TG_BOT_TOKEN || '';
@@ -119,6 +120,16 @@ async function sendTelegramAlert(lead: Lead): Promise<void> {
 /* ─── POST — capture a new lead ─── */
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit: 10 lead submissions per IP per 15 minutes
+    const ip = getClientIp(req);
+    const rl = checkRateLimit('lead-capture', ip, 10, 15 * 60 * 1000);
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: 'Too many submissions. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const body = await req.json();
     const { firstName, lastName, email, phone, address, county, lat, lng, acres, appraisedValue, estimatedSavings, parcelData, source, agentRef } = body;
 
