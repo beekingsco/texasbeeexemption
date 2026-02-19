@@ -31,5 +31,16 @@
     "campaign": "realtor-launch",
     "active": true,
     "createdAt": "2026-02-13T00:00:00.000Z"
+  },
+  {
+    "code": "BEES4EVER",
+    "type": "trial",
+    "value": 365,
+    "maxRedemptions": 1,
+    "currentRedemptions": 0,
+    "expiresAt": null,
+    "campaign": "owner-test",
+    "active": true,
+    "createdAt": "2026-02-19T00:00:00.000Z"
   }
 ]
