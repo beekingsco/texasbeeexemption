@@ -21,20 +21,23 @@ function useFadeIn() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Fallback: always show after 800ms even if observer doesn't fire
+    const fallback = setTimeout(() => setVisible(true), 800);
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
+          clearTimeout(fallback);
           observer.unobserve(el);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.05, rootMargin: '0px 0px -40px 0px' }
     );
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => { observer.disconnect(); clearTimeout(fallback); };
   }, []);
 
-  return { ref, style: { opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(24px)', transition: 'opacity 0.7s ease-out, transform 0.7s ease-out' } as React.CSSProperties };
+  return { ref, style: { opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(20px)', transition: 'opacity 0.6s ease-out, transform 0.6s ease-out' } as React.CSSProperties };
 }
 
 function FadeSection({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
@@ -118,8 +121,8 @@ export default function AgentLandingPage() {
   const hasValidDiscount = promoStatus?.valid && promoStatus?.type === 'discount';
   const trialDays = hasValidTrial ? promoStatus?.value : 7;
   const ctaLabel = checkoutLoading ? 'Loading...'
-    : hasValidTrial ? `Start Free ${promoStatus?.value}-Day Trial →`
-    : `Start Your 7-Day Free Trial →`;
+    : hasValidTrial ? `Start Free ${promoStatus?.value}-Day Trial — No Card Required →`
+    : `Start Free — No Card Required →`;
 
   return (
     <div style={{ minHeight: '100vh', background: C.white }}>
@@ -254,7 +257,7 @@ export default function AgentLandingPage() {
               )}
             </div>
             <p style={{ fontSize: 13, color: C.gray, marginTop: 10 }}>
-              Cancel anytime
+              No credit card required • Cancel anytime
             </p>
           </div>
           <div style={{ flex: '0 0 auto', maxWidth: 320 }}>
@@ -523,7 +526,7 @@ export default function AgentLandingPage() {
             <div style={{ maxWidth: 520, margin: '0 auto' }}>
               <div style={{ background: C.white, borderRadius: 24, padding: '40px 36px', border: `2px solid ${C.green}`, boxShadow: '0 8px 40px rgba(0,0,0,0.08)', position: 'relative' }}>
                 <div style={{ position: 'absolute', top: -16, left: '50%', transform: 'translateX(-50%)', background: C.green, color: C.navy, fontSize: 12, fontWeight: 800, padding: '6px 20px', borderRadius: 20, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-                  {hasValidTrial ? `${promoStatus?.value} Days Free` : '7-Day Free Trial'}
+                  {hasValidTrial ? `${promoStatus?.value} Days Free — No Card Required` : '7-Day Free Trial — No Card Required'}
                 </div>
 
                 <div style={{ textAlign: 'center', marginBottom: 28 }}>
@@ -569,7 +572,7 @@ export default function AgentLandingPage() {
                   {ctaLabel}
                 </button>
                 <p style={{ textAlign: 'center', fontSize: 13, color: C.gray }}>
-                  Cancel anytime • One commission pays for 10+ years
+                  No credit card required • Cancel anytime • One commission pays for 10+ years
                 </p>
               </div>
             </div>
@@ -652,6 +655,67 @@ export default function AgentLandingPage() {
         </section>
       </FadeSection>
 
+      {/* ===================== APRIL 30 URGENCY BANNER ===================== */}
+      <section style={{ background: '#B8912E', padding: '18px 24px', textAlign: 'center' }}>
+        <p style={{ color: C.navy, fontWeight: 800, fontSize: 16, margin: 0, letterSpacing: '-0.01em' }}>
+          ⏰ Texas ag exemption deadline: <strong>April 30, 2026</strong> — Help your clients qualify before it's too late.{' '}
+          <button onClick={handleCheckoutClick} style={{ background: 'transparent', border: `2px solid ${C.navy}`, color: C.navy, fontWeight: 800, fontSize: 14, padding: '4px 14px', borderRadius: 8, cursor: 'pointer', fontFamily: 'inherit', marginLeft: 8 }}>
+            Start Free Trial →
+          </button>
+        </p>
+      </section>
+
+      {/* ===================== SOCIAL PROOF / TESTIMONIALS ===================== */}
+      <FadeSection>
+        <section style={{ padding: '80px 24px', background: C.lightGray }}>
+          <div style={{ maxWidth: 900, margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: 48 }}>
+              <p style={{ fontSize: 13, fontWeight: 700, color: C.green, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 12 }}>What Agents Are Saying</p>
+              <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: 900, color: C.navy, lineHeight: 1.2 }}>
+                Real Agents. Real Results.
+              </h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24 }}>
+              {[
+                {
+                  quote: "I added my BeeExemption link to my email signature and had 3 landowners reach out in the first week asking about their properties. It's become my go-to conversation starter.",
+                  name: "Sarah M.",
+                  title: "Kaufman County Realtor",
+                  initials: "SM",
+                },
+                {
+                  quote: "My rural land listings used to sit for months. Adding the tax savings angle to my listing descriptions has made a real difference — buyers finally see the long-term value.",
+                  name: "James R.",
+                  title: "East Texas Land Specialist",
+                  initials: "JR",
+                },
+                {
+                  quote: "I was skeptical at first — bees? For a tax exemption? But after I explained it to a few clients and showed them the numbers, they were amazed. One client saves over $5,000 a year.",
+                  name: "Linda T.",
+                  title: "RE/MAX Agent, Van Zandt County",
+                  initials: "LT",
+                },
+              ].map((t) => (
+                <div key={t.name} style={{ background: C.white, borderRadius: 18, padding: '28px 24px', boxShadow: '0 4px 20px rgba(0,0,0,0.06)', border: '1px solid #e8edf2' }}>
+                  <div style={{ fontSize: 28, color: C.green, fontWeight: 900, lineHeight: 1, marginBottom: 16 }}>"</div>
+                  <p style={{ fontSize: 15, color: C.charcoal, lineHeight: 1.7, marginBottom: 20, fontStyle: 'italic' }}>{t.quote}</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <div style={{ width: 42, height: 42, borderRadius: '50%', background: C.green, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 14, color: C.navy, flexShrink: 0 }}>{t.initials}</div>
+                    <div>
+                      <p style={{ fontWeight: 700, fontSize: 14, color: C.navy, margin: 0 }}>{t.name}</p>
+                      <p style={{ fontSize: 13, color: C.gray, margin: 0 }}>{t.title}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p style={{ textAlign: 'center', fontSize: 13, color: C.gray, marginTop: 32, fontStyle: 'italic' }}>
+              * Early partner testimonials. Results may vary.
+            </p>
+          </div>
+        </section>
+      </FadeSection>
+
       {/* ===================== FINAL CTA ===================== */}
       <section style={{ padding: '80px 24px', background: `linear-gradient(135deg, ${C.navy} 0%, #1A3A5B 100%)`, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.04, backgroundImage: 'radial-gradient(circle at 30% 60%, #D4A843 1px, transparent 1px), radial-gradient(circle at 70% 40%, #D4A843 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
@@ -673,8 +737,8 @@ export default function AgentLandingPage() {
           >
             {ctaLabel}
           </button>
-          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)', marginTop: 12 }}>
-            Cancel anytime • Full access
+          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', marginTop: 12 }}>
+            No credit card required • Cancel anytime • Full access
           </p>
         </div>
       </section>
