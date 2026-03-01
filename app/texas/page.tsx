@@ -488,6 +488,9 @@ export default function Home() {
     setSelectedCounty(null); setSuggestions([]); setAcres(''); setAppraisedValue('');
     setSearchError(''); setShowCustomize(false);
     setLead({ firstName: '', lastName: '', email: '', phone: '' });
+    // Reset adjacent plot merge state
+    setCoords(null); setNearbyParcels([]); setSelectedNearbyIds(new Set());
+    setShowNearby(false); setCombinedSummary(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -984,7 +987,7 @@ export default function Home() {
                       setShowNearby(true);
                       setIsLoadingNearby(true);
                       try {
-                        const resp = await fetch(`/api/nearby-parcels?lat=${coords.lat}&lng=${coords.lng}&excludeId=${parcelData.propertyId || ''}`);
+                        const resp = await fetch(`/api/nearby-parcels?lat=${coords.lat}&lng=${coords.lng}&excludeId=${parcelData?.propertyId || ''}`);
                         const data = await resp.json();
                         setNearbyParcels(data.parcels || []);
                       } catch {
@@ -1051,8 +1054,8 @@ export default function Home() {
                     {selectedNearbyIds.size > 0 && (
                       <button
                         onClick={() => {
-                          const primaryAcres = parcelData.legalArea || 0;
-                          const primaryValue = parcelData.marketValue || 0;
+                          const primaryAcres = parcelData?.legalArea || 0;
+                          const primaryValue = parcelData?.marketValue || 0;
                           let addedAcres = 0;
                           let addedValue = 0;
                           nearbyParcels.forEach((p, i) => {
@@ -1090,8 +1093,8 @@ export default function Home() {
                       onClick={() => {
                         setCombinedSummary(null);
                         setSelectedNearbyIds(new Set());
-                        if (parcelData.legalArea) setAcres(parcelData.legalArea.toString());
-                        if (parcelData.marketValue) setAppraisedValue(parcelData.marketValue.toString());
+                        if (parcelData?.legalArea) setAcres(parcelData.legalArea.toString());
+                        if (parcelData?.marketValue) setAppraisedValue(parcelData.marketValue.toString());
                       }}
                       style={{ fontSize: 12, color: C.gray, background: 'none', border: '1px solid #ddd', borderRadius: 8, padding: '6px 12px', cursor: 'pointer' }}
                     >
