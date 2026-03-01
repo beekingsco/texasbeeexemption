@@ -46,8 +46,6 @@ interface ParcelData {
   improvementValue?: number;
   marketValue?: number;
   situsAddress?: string;
-  situsCity?: string;
-  situsZip?: string;
   county?: string;
   taxYear?: number;
   yearBuilt?: string;
@@ -92,14 +90,6 @@ export default function Home() {
   const [lead, setLead] = useState<LeadData>({ firstName: '', lastName: '', email: '', phone: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchError, setSearchError] = useState('');
-
-  // Adjacent plot merge state
-  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
-  const [nearbyParcels, setNearbyParcels] = useState<ParcelData[]>([]);
-  const [selectedNearbyIds, setSelectedNearbyIds] = useState<Set<string>>(new Set());
-  const [showNearby, setShowNearby] = useState(false);
-  const [isLoadingNearby, setIsLoadingNearby] = useState(false);
-  const [combinedSummary, setCombinedSummary] = useState<{ acres: number; count: number } | null>(null);
 
   const [agentRef, setAgentRef] = useState<string | null>(null);
   const [agentLogo, setAgentLogo] = useState<string | null>(null);
@@ -259,11 +249,6 @@ export default function Home() {
       setIsSearching(false);
       setIsLoadingParcel(true);
       setStep('results');
-      setCoords({ lat: geo.lat, lng: geo.lng });
-      setNearbyParcels([]);
-      setSelectedNearbyIds(new Set());
-      setShowNearby(false);
-      setCombinedSummary(null);
       track('address_searched', { county: matchedCounty.name, address: geo.address });
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -971,133 +956,6 @@ export default function Home() {
                 </div>
                 {parcelData.legalDesc && (
                   <p style={{ fontSize: 12, color: C.gray, marginTop: 12, fontStyle: 'italic' }}>Legal: {parcelData.legalDesc}</p>
-                )}
-              </div>
-            )}
-
-            {/* Adjacent Plots Merger */}
-            {parcelData?.found && coords && (
-              <div style={{ background: C.white, borderRadius: 16, padding: 24, marginBottom: 24, border: '1px solid #e2e8f0' }}>
-                {!showNearby && !combinedSummary && (
-                  <button
-                    onClick={async () => {
-                      setShowNearby(true);
-                      setIsLoadingNearby(true);
-                      try {
-                        const resp = await fetch(`/api/nearby-parcels?lat=${coords.lat}&lng=${coords.lng}&excludeId=${parcelData.propertyId || ''}`);
-                        const data = await resp.json();
-                        setNearbyParcels(data.parcels || []);
-                      } catch {
-                        setNearbyParcels([]);
-                      } finally {
-                        setIsLoadingNearby(false);
-                      }
-                    }}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, color: C.navy, fontSize: 14, fontWeight: 700, padding: 0 }}
-                  >
-                    <span style={{ fontSize: 18 }}>🗺️</span>
-                    <span>Own adjacent land plots? Add them to combine acreage →</span>
-                  </button>
-                )}
-
-                {showNearby && isLoadingNearby && (
-                  <p style={{ fontSize: 14, color: C.gray }}>🔍 Searching nearby parcels...</p>
-                )}
-
-                {showNearby && !isLoadingNearby && nearbyParcels.length === 0 && (
-                  <p style={{ fontSize: 14, color: C.gray }}>No additional parcels found within ~1km. You can still manually adjust acreage above.</p>
-                )}
-
-                {showNearby && !isLoadingNearby && nearbyParcels.length > 0 && (
-                  <>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
-                      <span style={{ fontSize: 14, fontWeight: 700, color: C.navy }}>🗺️ Nearby Parcels</span>
-                      <span style={{ fontSize: 12, color: C.gray, background: C.sky, padding: '2px 8px', borderRadius: 6 }}>Select plots you own</span>
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                      {nearbyParcels.map((p, i) => {
-                        const id = p.propertyId || `nearby-${i}`;
-                        const checked = selectedNearbyIds.has(id);
-                        return (
-                          <label key={id} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '12px 14px', background: checked ? 'rgba(34,197,94,0.06)' : C.lightGray, borderRadius: 10, border: checked ? '1.5px solid #22c55e' : '1.5px solid transparent', cursor: 'pointer' }}>
-                            <input
-                              type="checkbox"
-                              checked={checked}
-                              onChange={() => {
-                                setSelectedNearbyIds(prev => {
-                                  const next = new Set(prev);
-                                  if (next.has(id)) next.delete(id); else next.add(id);
-                                  return next;
-                                });
-                              }}
-                              style={{ marginTop: 2, accentColor: '#22c55e', width: 16, height: 16 }}
-                            />
-                            <div style={{ flex: 1 }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 4 }}>
-                                <span style={{ fontSize: 14, fontWeight: 700, color: C.navy }}>
-                                  {p.legalArea ? `${p.legalArea.toFixed(2)} acres` : 'Unknown size'}
-                                </span>
-                                {p.marketValue ? <span style={{ fontSize: 13, color: C.gray }}>${p.marketValue.toLocaleString()}</span> : null}
-                              </div>
-                              {p.ownerName && <p style={{ fontSize: 12, color: C.gray, marginTop: 2 }}>{p.ownerName}</p>}
-                              {p.situsAddress && <p style={{ fontSize: 12, color: C.gray }}>{p.situsAddress}{p.situsCity ? `, ${p.situsCity}` : ''}</p>}
-                              {p.legalDesc && <p style={{ fontSize: 11, color: '#aaa', marginTop: 2, fontStyle: 'italic' }}>{p.legalDesc}</p>}
-                            </div>
-                          </label>
-                        );
-                      })}
-                    </div>
-
-                    {selectedNearbyIds.size > 0 && (
-                      <button
-                        onClick={() => {
-                          const primaryAcres = parcelData.legalArea || 0;
-                          const primaryValue = parcelData.marketValue || 0;
-                          let addedAcres = 0;
-                          let addedValue = 0;
-                          nearbyParcels.forEach((p, i) => {
-                            const id = p.propertyId || `nearby-${i}`;
-                            if (selectedNearbyIds.has(id)) {
-                              addedAcres += p.legalArea || 0;
-                              addedValue += p.marketValue || 0;
-                            }
-                          });
-                          const totalAcres = primaryAcres + addedAcres;
-                          const totalValue = primaryValue + addedValue;
-                          setAcres(totalAcres.toFixed(2));
-                          if (totalValue > 0) setAppraisedValue(totalValue.toString());
-                          setCombinedSummary({ acres: totalAcres, count: 1 + selectedNearbyIds.size });
-                          setShowNearby(false);
-                        }}
-                        style={{ marginTop: 16, background: '#22c55e', color: '#fff', border: 'none', borderRadius: 10, padding: '12px 20px', fontSize: 14, fontWeight: 700, cursor: 'pointer', width: '100%' }}
-                      >
-                        ✅ Combine {selectedNearbyIds.size + 1} Plots into Report
-                      </button>
-                    )}
-                  </>
-                )}
-
-                {combinedSummary && (
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <span style={{ fontSize: 20 }}>✅</span>
-                      <div>
-                        <p style={{ fontSize: 14, fontWeight: 700, color: C.navy }}>Combined: {combinedSummary.acres.toFixed(2)} acres across {combinedSummary.count} plots</p>
-                        <p style={{ fontSize: 12, color: C.gray }}>Exemption estimate updated with combined acreage</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => {
-                        setCombinedSummary(null);
-                        setSelectedNearbyIds(new Set());
-                        if (parcelData.legalArea) setAcres(parcelData.legalArea.toString());
-                        if (parcelData.marketValue) setAppraisedValue(parcelData.marketValue.toString());
-                      }}
-                      style={{ fontSize: 12, color: C.gray, background: 'none', border: '1px solid #ddd', borderRadius: 8, padding: '6px 12px', cursor: 'pointer' }}
-                    >
-                      Reset
-                    </button>
-                  </div>
                 )}
               </div>
             )}
