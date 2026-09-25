@@ -2,12 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import { ensureDB, isPostgresConfigured } from '@/lib/db';
 import { readJSON, writeJSON, forwardToWebhook } from '@/lib/storage';
+import { leadAttribution } from '@/lib/lead-source';
+import { notifyFromRequest } from '@/lib/notify';
 
 interface WaitlistEntry {
   email: string;
   name: string;
   state: string;
   timestamp: string;
+  source?: string;
+  entry?: string;
 }
 
 export async function POST(req: NextRequest) {
@@ -26,20 +30,44 @@ export async function POST(req: NextRequest) {
     if (usePg) await ensureDB();
 
     const timestamp = new Date().toISOString();
+    const attribution = leadAttribution(req);
 
     if (usePg) {
-      await sql`
-        INSERT INTO waitlist (email, name, state, timestamp)
-        VALUES (${email}, ${name}, ${state}, ${timestamp})
-      `;
+      try {
+        await sql`
+          INSERT INTO waitlist (email, name, state, timestamp, source, entry)
+          VALUES (${email}, ${name}, ${state}, ${timestamp}, ${attribution.source}, ${attribution.entryLabel})
+        `;
+      } catch (error) {
+        console.error('waitlist saved without source columns', error);
+        await sql`
+          INSERT INTO waitlist (email, name, state, timestamp)
+          VALUES (${email}, ${name}, ${state}, ${timestamp})
+        `;
+      }
     } else {
-      const entry: WaitlistEntry = { email, name, state, timestamp };
+      const entry: WaitlistEntry = {
+        email,
+        name,
+        state,
+        timestamp,
+        source: attribution.source,
+        entry: attribution.entryLabel,
+      };
       const waitlist = await readJSON<WaitlistEntry[]>('waitlist.json', []);
       waitlist.push(entry);
       await writeJSON('waitlist.json', waitlist);
     }
 
-    await forwardToWebhook('waitlist_signup', { email, name, state, timestamp });
+    await forwardToWebhook('waitlist_signup', {
+      email,
+      name,
+      state,
+      timestamp,
+      source: attribution.source,
+      entry: attribution.entryLabel,
+    });
+    notifyFromRequest(req, 'new_lead_captured', { name, email, address: state });
 
     return NextResponse.json({ success: true });
   } catch (error) {

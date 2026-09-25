@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { notifyAdmin } from '@/lib/notify';
+import { notifyFromRequest } from '@/lib/notify';
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM_EMAIL = process.env.FROM_EMAIL || 'hello@beeexemption.com';
@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Notify admin (fire-and-forget)
-    notifyAdmin('guide_downloaded', {
+    notifyFromRequest(req, 'guide_downloaded', {
       name: firstName,
       email: to,
       county,

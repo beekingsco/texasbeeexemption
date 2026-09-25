@@ -1,5 +1,4 @@
-import { sql } from '@vercel/postgres';
-import { isPostgresConfigured } from '@/lib/db';
+import texasCounties from '@/data/texas-counties.json';
 import {
   blankToNull,
   cleanCounty,
@@ -9,7 +8,16 @@ import {
   hashIp,
   isNorthTexas,
 } from '@/lib/address-search';
+import { entryFromContext, SITE_SOURCE } from '@/lib/lead-source';
 import type { SearchContext } from '@/lib/search-attribution';
+import { supabaseInsert, supabaseLatestId, supabasePatchById, supabaseServiceKey } from '@/lib/supabase-rest';
+
+const TABLE = 'address_searches';
+
+type CountyRule = { name: string; minAcres: number };
+const TEXAS_MIN_ACRES = new Map(
+  (texasCounties as CountyRule[]).map((county) => [county.name.toLowerCase(), county.minAcres]),
+);
 
 export type AddressSearchEntry = {
   rawAddress: string;
@@ -18,6 +26,10 @@ export type AddressSearchEntry = {
   lng?: number | null;
   state?: string | null;
   county?: string | null;
+  parcelId?: string | null;
+  acres?: number | null;
+  marketValue?: number | null;
+  eligibility?: string | null;
   resultShown?: string | null;
   savingsShown?: number | null;
   context: SearchContext;
@@ -27,153 +39,129 @@ export type AddressSearchEntry = {
   phone?: string | null;
 };
 
-let tableReady: Promise<void> | null = null;
-
-/** Creates only the new search log. Does not read or write existing tables. */
-export function ensureAddressSearchTable(): Promise<void> {
-  if (!tableReady) {
-    tableReady = createAddressSearchTable().catch((error) => {
-      tableReady = null;
-      throw error;
-    });
-  }
-  return tableReady;
+export function texasEligibility(county: string | null | undefined, acres: number | null | undefined): string | null {
+  const cleaned = cleanCounty(county);
+  const acreage = finiteOrNull(acres ?? null);
+  if (!cleaned || acreage == null) return null;
+  const minAcres = TEXAS_MIN_ACRES.get(cleaned.toLowerCase());
+  if (minAcres == null) return null;
+  const agEligible = Math.max(0, acreage - 1);
+  return agEligible >= minAcres ? 'eligible' : 'not_eligible';
 }
 
-async function createAddressSearchTable(): Promise<void> {
-  await sql`
-    CREATE TABLE IF NOT EXISTS address_searches (
-      id BIGSERIAL PRIMARY KEY,
-      searched_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-      raw_address TEXT,
-      normalized_address TEXT,
-      lat DOUBLE PRECISION,
-      lng DOUBLE PRECISION,
-      state TEXT,
-      county TEXT,
-      result_shown TEXT,
-      savings_shown NUMERIC,
-      utm_source TEXT,
-      utm_medium TEXT,
-      utm_campaign TEXT,
-      gclid TEXT,
-      fbclid TEXT,
-      referrer TEXT,
-      landing_path TEXT,
-      user_agent TEXT,
-      ip_hash TEXT,
-      ip_country TEXT,
-      ip_region TEXT,
-      ip_city TEXT,
-      email TEXT,
-      phone TEXT,
-      session_id TEXT,
-      is_north_texas BOOLEAN NOT NULL DEFAULT FALSE
-    )
-  `;
-  await sql`CREATE INDEX IF NOT EXISTS address_searches_searched_at_idx ON address_searches (searched_at)`;
-  await sql`CREATE INDEX IF NOT EXISTS address_searches_session_id_idx ON address_searches (session_id)`;
-  await sql`CREATE INDEX IF NOT EXISTS address_searches_state_county_idx ON address_searches (state, county)`;
-  await sql`
-    CREATE OR REPLACE VIEW address_search_daily AS
-    SELECT
-      search_day,
-      state,
-      county,
-      region,
-      COUNT(*)::bigint AS searches
-    FROM (
-      SELECT
-        (searched_at AT TIME ZONE 'America/Chicago')::date AS search_day,
-        COALESCE(NULLIF(btrim(state), ''), 'unknown') AS state,
-        COALESCE(NULLIF(btrim(county), ''), 'unknown') AS county,
-        CASE
-          WHEN is_north_texas THEN 'north_texas'
-          WHEN upper(btrim(COALESCE(state, ''))) IN ('FL', 'FLORIDA') THEN 'florida'
-          ELSE 'other'
-        END AS region
-      FROM address_searches
-    ) AS classified
-    GROUP BY search_day, state, county, region
-  `;
+function utmValue(context: SearchContext): string | null {
+  return entryFromContext(context).code;
 }
 
-async function sessionContact(sessionId: string | null): Promise<{ email: string | null; phone: string | null }> {
-  if (!sessionId) return { email: null, phone: null };
-  const existing = await sql`
-    SELECT email, phone
-    FROM address_searches
-    WHERE session_id = ${sessionId}
-      AND searched_at > NOW() - INTERVAL '30 days'
-      AND (NULLIF(email, '') IS NOT NULL OR NULLIF(phone, '') IS NOT NULL)
-    ORDER BY searched_at DESC
-    LIMIT 1
-  `;
-  const row = existing.rows[0];
+function searchRow(entry: AddressSearchEntry): Record<string, unknown> {
+  const state = blankToNull(entry.state, 40);
+  const county = cleanCounty(entry.county);
+  const ip = clientIpFromHeaders(entry.headers);
+  const entryPoint = entryFromContext(entry.context);
+  const eligibility = blankToNull(entry.eligibility, 200)
+    || texasEligibility(county, entry.acres)
+    || blankToNull(entry.resultShown, 200);
+
   return {
-    email: (row?.email as string | undefined) || null,
-    phone: (row?.phone as string | undefined) || null,
+    created_at: new Date().toISOString(),
+    raw_address: blankToNull(entry.rawAddress, 1000),
+    normalized_address: blankToNull(entry.normalizedAddress, 1000),
+    lat: finiteOrNull(entry.lat),
+    lng: finiteOrNull(entry.lng),
+    state,
+    county,
+    parcel_id: blankToNull(entry.parcelId, 120),
+    acreage: finiteOrNull(entry.acres),
+    market_value: finiteOrNull(entry.marketValue),
+    estimated_annual_savings: finiteOrNull(entry.savingsShown),
+    eligibility,
+    utm_source: entry.context.utmSource,
+    utm_medium: entry.context.utmMedium,
+    utm_campaign: entry.context.utmCampaign,
+    gclid: entry.context.gclid,
+    fbclid: entry.context.fbclid,
+    referrer: entry.context.referrer,
+    landing_page_path: entry.context.landingPath,
+    user_agent: blankToNull(entry.userAgent, 500),
+    ip_hash: ip ? hashIp(ip) : null,
+    ip_country: decodeGeoHeader(entry.headers.get('x-vercel-ip-country')),
+    ip_region: decodeGeoHeader(entry.headers.get('x-vercel-ip-country-region')),
+    ip_city: decodeGeoHeader(entry.headers.get('x-vercel-ip-city')),
+    email: blankToNull(entry.email, 320),
+    phone: blankToNull(entry.phone, 40),
+    is_north_texas: isNorthTexas(state, county),
+    source: SITE_SOURCE,
+    ip,
+    city: decodeGeoHeader(entry.headers.get('x-vercel-ip-city')),
+    region: decodeGeoHeader(entry.headers.get('x-vercel-ip-country-region')),
+    country: decodeGeoHeader(entry.headers.get('x-vercel-ip-country')),
+    utm: utmValue(entry.context) || entryPoint.code,
   };
 }
 
 export async function insertAddressSearch(entry: AddressSearchEntry): Promise<Record<string, unknown> | null> {
-  if (!isPostgresConfigured()) return null;
-  await ensureAddressSearchTable();
-
-  const state = blankToNull(entry.state, 40);
-  const county = cleanCounty(entry.county);
-  const prior = await sessionContact(entry.context.sessionId);
-  const email = blankToNull(entry.email, 320) || prior.email;
-  const phone = blankToNull(entry.phone, 40) || prior.phone;
-  const ip = clientIpFromHeaders(entry.headers);
-
-  const inserted = await sql`
-    INSERT INTO address_searches (
-      searched_at, raw_address, normalized_address, lat, lng, state, county,
-      result_shown, savings_shown, utm_source, utm_medium, utm_campaign, gclid, fbclid,
-      referrer, landing_path, user_agent, ip_hash, ip_country, ip_region, ip_city,
-      email, phone, session_id, is_north_texas
-    ) VALUES (
-      NOW(),
-      ${blankToNull(entry.rawAddress, 1000)},
-      ${blankToNull(entry.normalizedAddress, 1000)},
-      ${finiteOrNull(entry.lat)},
-      ${finiteOrNull(entry.lng)},
-      ${state},
-      ${county},
-      ${blankToNull(entry.resultShown, 500)},
-      ${finiteOrNull(entry.savingsShown)},
-      ${entry.context.utmSource},
-      ${entry.context.utmMedium},
-      ${entry.context.utmCampaign},
-      ${entry.context.gclid},
-      ${entry.context.fbclid},
-      ${entry.context.referrer},
-      ${entry.context.landingPath},
-      ${blankToNull(entry.userAgent, 500)},
-      ${ip ? hashIp(ip) : null},
-      ${decodeGeoHeader(entry.headers.get('x-vercel-ip-country'))},
-      ${decodeGeoHeader(entry.headers.get('x-vercel-ip-country-region'))},
-      ${decodeGeoHeader(entry.headers.get('x-vercel-ip-city'))},
-      ${email},
-      ${phone},
-      ${entry.context.sessionId},
-      ${isNorthTexas(state, county)}
-    )
-    RETURNING id, searched_at, raw_address, normalized_address, lat, lng, state, county,
-      result_shown, savings_shown, utm_source, utm_medium, utm_campaign, gclid, fbclid,
-      referrer, landing_path, user_agent, ip_hash, ip_country, ip_region, ip_city,
-      email, phone, session_id, is_north_texas
-  `;
-  return (inserted.rows[0] as Record<string, unknown> | undefined) ?? null;
+  return supabaseInsert(TABLE, searchRow(entry));
 }
 
-/** Fire-and-forget wrapper. Failures are logged and never thrown. */
-export async function logAddressSearch(entry: AddressSearchEntry): Promise<void> {
+const CONTACT_REUSE_MS = 2 * 60 * 1000;
+
+async function recentCoordinateId(lat: number, lng: number, withinMs: number): Promise<string | null> {
+  const since = new Date(Date.now() - withinMs).toISOString();
+  const pad = 0.0002;
+  return supabaseLatestId(
+    TABLE,
+    `created_at=gte.${encodeURIComponent(since)}&lat=gte.${lat - pad}&lat=lte.${lat + pad}&lng=gte.${lng - pad}&lng=lte.${lng + pad}`,
+  );
+}
+
+function enrichPatch(row: Record<string, unknown>): Record<string, unknown> {
+  const patch: Record<string, unknown> = {};
+  for (const key of [
+    'state',
+    'county',
+    'acreage',
+    'market_value',
+    'estimated_annual_savings',
+    'referrer',
+    'source',
+    'utm',
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+  ]) {
+    const value = row[key];
+    if (value != null && value !== '') patch[key] = value;
+  }
+  return patch;
+}
+
+/**
+ * Writes one Contractor Command address_searches row.
+ * When reuseRecentMs is set, a geocode row for the same coordinates in that
+ * window is updated instead of inserting a second copy of the same search.
+ */
+export async function logAddressSearch(
+  entry: AddressSearchEntry,
+  options?: { reuseRecentMs?: number },
+): Promise<void> {
   try {
     await new Promise<void>((resolve, reject) => {
       const timer = setTimeout(() => reject(new Error('address search log timeout')), 4000);
-      insertAddressSearch(entry).then(() => {
+      const write = async () => {
+        const lat = finiteOrNull(entry.lat);
+        const lng = finiteOrNull(entry.lng);
+        const reuseMs = options?.reuseRecentMs ?? 0;
+        if (reuseMs > 0 && lat != null && lng != null && supabaseServiceKey()) {
+          const id = await recentCoordinateId(lat, lng, reuseMs);
+          if (id) {
+            const patch = enrichPatch(searchRow(entry));
+            if (Object.keys(patch).length > 0) await supabasePatchById(TABLE, id, patch);
+            return;
+          }
+        }
+        await insertAddressSearch(entry);
+      };
+      write().then(() => {
         clearTimeout(timer);
         resolve();
       }, (error) => {
@@ -186,62 +174,77 @@ export async function logAddressSearch(entry: AddressSearchEntry): Promise<void>
   }
 }
 
+export const CONTACT_SEARCH_REUSE_MS = CONTACT_REUSE_MS;
+
+async function recentSearchId(input: {
+  headers?: { get(name: string): string | null };
+  lat?: number | null;
+  lng?: number | null;
+}): Promise<string | null> {
+  const since = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
+  const lat = finiteOrNull(input.lat);
+  const lng = finiteOrNull(input.lng);
+  if (lat != null && lng != null) {
+    const pad = 0.0002;
+    const id = await supabaseLatestId(
+      TABLE,
+      `created_at=gte.${encodeURIComponent(since)}&lat=gte.${lat - pad}&lat=lte.${lat + pad}&lng=gte.${lng - pad}&lng=lte.${lng + pad}`,
+    );
+    if (id) return id;
+  }
+  const ip = input.headers ? clientIpFromHeaders(input.headers) : null;
+  if (!ip) return null;
+  return supabaseLatestId(
+    TABLE,
+    `created_at=gte.${encodeURIComponent(since)}&ip_hash=eq.${encodeURIComponent(hashIp(ip))}`,
+  );
+}
+
 /**
- * Fills email, phone, or savings onto rows in the new search log only.
- * Called when a later request in the same session already has that information.
+ * Fills parcel, eligibility, email, phone, or savings onto the central search row
+ * for this visitor. Used when a later request already has that information.
  */
 export async function recordSearchFollowUp(input: {
-  sessionId: string | null;
+  sessionId?: string | null;
   email?: string | null;
   phone?: string | null;
   savings?: number | null;
   resultNote?: string | null;
+  headers?: { get(name: string): string | null };
+  lat?: number | null;
+  lng?: number | null;
+  parcelId?: string | null;
+  county?: string | null;
+  acres?: number | null;
+  marketValue?: number | null;
+  eligibility?: string | null;
 }): Promise<void> {
   try {
-    if (!isPostgresConfigured() || !input.sessionId) return;
+    if (!supabaseServiceKey()) return;
     const email = blankToNull(input.email, 320);
     const phone = blankToNull(input.phone, 40);
-    const note = blankToNull(input.resultNote, 200);
     const savings = finiteOrNull(input.savings);
-    if (!email && !phone && savings == null && !note) return;
-    await ensureAddressSearchTable();
+    const parcelId = blankToNull(input.parcelId, 120);
+    const county = cleanCounty(input.county);
+    const acres = finiteOrNull(input.acres);
+    const marketValue = finiteOrNull(input.marketValue);
+    const eligibility = blankToNull(input.eligibility, 200) || texasEligibility(county, acres);
+    if (!email && !phone && savings == null && !parcelId && !eligibility && acres == null && marketValue == null) return;
 
-    if (email || phone) {
-      await sql`
-        UPDATE address_searches
-        SET
-          email = CASE
-            WHEN ${email}::text IS NOT NULL AND ${email}::text <> '' THEN ${email}
-            ELSE email
-          END,
-          phone = CASE
-            WHEN ${phone}::text IS NOT NULL AND ${phone}::text <> '' THEN ${phone}
-            ELSE phone
-          END
-        WHERE session_id = ${input.sessionId}
-          AND searched_at > NOW() - INTERVAL '30 days'
-      `;
-    }
+    const id = await recentSearchId(input);
+    if (!id) return;
 
-    if (savings != null || note) {
-      await sql`
-        UPDATE address_searches
-        SET
-          savings_shown = COALESCE(${savings}, savings_shown),
-          result_shown = CASE
-            WHEN ${note}::text IS NULL OR ${note}::text = '' THEN result_shown
-            WHEN result_shown IS NULL OR result_shown = '' THEN ${note}
-            WHEN position(${note} in result_shown) > 0 THEN result_shown
-            ELSE left(result_shown || ' | ' || ${note}, 500)
-          END
-        WHERE id = (
-          SELECT id FROM address_searches
-          WHERE session_id = ${input.sessionId}
-          ORDER BY searched_at DESC
-          LIMIT 1
-        )
-      `;
-    }
+    const patch: Record<string, unknown> = {};
+    if (email) patch.email = email;
+    if (phone) patch.phone = phone;
+    if (savings != null) patch.estimated_annual_savings = savings;
+    if (parcelId) patch.parcel_id = parcelId;
+    if (county) patch.county = county;
+    if (acres != null) patch.acreage = acres;
+    if (marketValue != null) patch.market_value = marketValue;
+    if (eligibility) patch.eligibility = eligibility;
+    if (Object.keys(patch).length === 0) return;
+    await supabasePatchById(TABLE, id, patch);
   } catch (error) {
     console.error('address search follow-up failed', error);
   }

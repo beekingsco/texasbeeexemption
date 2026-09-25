@@ -72,6 +72,7 @@ export async function POST(req: NextRequest) {
         sessionId: context.sessionId,
         savings: savingsShown,
         resultNote: `savings shown on ${String(event).slice(0, 80)}`,
+        headers: req.headers,
       });
     }
 

@@ -25,6 +25,12 @@ function resultLabel(candidate: GeocodeCandidate | undefined): string {
   return place ? `resolved: ${place}` : 'resolved';
 }
 
+function eligibilityFor(candidate: GeocodeCandidate | undefined, resultShown: string): string {
+  if (resultShown === 'geocode failed') return 'geocode_failed';
+  if (!candidate) return 'no_match';
+  return 'matched';
+}
+
 function logResolvedSearch(request: NextRequest, rawAddress: string, candidate: GeocodeCandidate | undefined, resultShown: string) {
   return logAddressSearch({
     rawAddress,
@@ -34,6 +40,7 @@ function logResolvedSearch(request: NextRequest, rawAddress: string, candidate: 
     state: candidate?.state ?? null,
     county: candidate?.county ?? null,
     resultShown,
+    eligibility: eligibilityFor(candidate, resultShown),
     context: readServerSearchContext(request),
     userAgent: request.headers.get('user-agent'),
     headers: request.headers,

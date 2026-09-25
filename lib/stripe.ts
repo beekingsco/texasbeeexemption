@@ -1,10 +1,26 @@
 import Stripe from 'stripe';
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing STRIPE_SECRET_KEY environment variable');
+// Lazy init — page-data collection must not crash when STRIPE_SECRET_KEY
+// is absent from a Vercel project at build time.
+let stripeClient: Stripe | null = null;
+
+export function getStripe(): Stripe {
+  if (!stripeClient) {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error('Missing STRIPE_SECRET_KEY environment variable');
+    }
+    stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY);
+  }
+  return stripeClient;
 }
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+export const stripe = new Proxy({} as Stripe, {
+  get(_target, prop) {
+    const client = getStripe() as unknown as Record<PropertyKey, unknown>;
+    const value = client[prop];
+    return typeof value === 'function' ? (value as (...args: unknown[]) => unknown).bind(client) : value;
+  },
+});
 
 /* ─── Pricing tiers ─── */
 export const TIERS = {

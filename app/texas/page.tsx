@@ -114,7 +114,7 @@ export default function Home() {
     fetch('/api/contacts', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action, sessionId: sessionIdRef.current, ...data }),
+      body: JSON.stringify({ action, sessionId: sessionIdRef.current, state: 'TX', ...data }),
     }).catch(() => {});
   }, []);
 
