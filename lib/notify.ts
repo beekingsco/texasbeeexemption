@@ -1,4 +1,5 @@
-import { leadAttribution, SITE_SOURCE } from '@/lib/lead-source';
+import { clientIpFromHeaders, decodeGeoHeader } from '@/lib/address-search';
+import { entryPoint, externalReferrer, leadAttribution, SITE_SOURCE } from '@/lib/lead-source';
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM_EMAIL = process.env.FROM_EMAIL || 'hello@beeexemption.com';
@@ -60,6 +61,27 @@ function leadName(data: NotifyData): string {
   return 'Unknown';
 }
 
+const VISITOR_KEYS = new Set(['source', 'entry', 'city', 'region', 'country', 'ip']);
+
+/** America/Chicago wall time with CST or CDT, whichever is in effect. */
+export function centralTimeLabel(date = new Date()): string {
+  return new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Chicago',
+    month: 'numeric',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true,
+    timeZoneName: 'short',
+  }).format(date);
+}
+
+function shown(value: unknown): string {
+  return typeof value === 'string' && value.trim() ? value.trim() : 'unknown';
+}
+
 function buildSubject(event: NotifyEvent, data: NotifyData): string {
   const source = sourceOf(data);
   if (LEAD_SUBJECT_EVENTS.has(event)) {
@@ -91,12 +113,16 @@ function subjectFor(event: NotifyEvent, data: NotifyData): string {
 }
 
 function buildEmailBody(event: NotifyEvent, data: NotifyData): string {
-  const timestamp = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
-  const source = escapeHtml(sourceOf(data));
-  const entry = escapeHtml(entryOf(data));
+  const timestamp = centralTimeLabel();
+  const source = escapeHtml(shown(sourceOf(data)));
+  const entry = escapeHtml(shown(entryOf(data)));
+  const city = escapeHtml(shown(data.city));
+  const region = escapeHtml(shown(data.region));
+  const country = escapeHtml(shown(data.country));
+  const ip = escapeHtml(shown(data.ip));
   
   const rows = Object.entries(data)
-    .filter(([k, v]) => k !== 'source' && k !== 'entry' && v !== undefined && v !== null && v !== '')
+    .filter(([k, v]) => !VISITOR_KEYS.has(k) && v !== undefined && v !== null && v !== '')
     .map(([k, v]) => {
       const label = k.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase());
       return `<tr><td style="padding:6px 12px;color:#6B7280;font-size:14px;border-bottom:1px solid #f1f5f9;">${escapeHtml(label)}</td><td style="padding:6px 12px;color:#053249;font-size:14px;font-weight:600;border-bottom:1px solid #f1f5f9;">${escapeHtml(v)}</td></tr>`;
@@ -126,9 +152,13 @@ function buildEmailBody(event: NotifyEvent, data: NotifyData): string {
       <div style="background:#F4F8FB;border:1px solid #D6E4EE;border-radius:10px;padding:12px 14px;margin:0 0 16px;">
         <p style="margin:0;font-size:16px;font-weight:800;color:#053249;">Source: ${source}</p>
         <p style="margin:6px 0 0;font-size:16px;font-weight:800;color:#053249;">Entry: ${entry}</p>
+        <p style="margin:6px 0 0;font-size:14px;font-weight:700;color:#053249;">City: ${city}</p>
+        <p style="margin:4px 0 0;font-size:14px;font-weight:700;color:#053249;">Region: ${region}</p>
+        <p style="margin:4px 0 0;font-size:14px;font-weight:700;color:#053249;">Country: ${country}</p>
+        <p style="margin:4px 0 0;font-size:14px;font-weight:700;color:#053249;">IP: ${ip}</p>
       </div>
       <table style="width:100%;border-collapse:collapse;">${rows}</table>
-      <p style="color:#8DA4B5;font-size:12px;margin:20px 0 0;text-align:center;">${timestamp} CST</p>
+      <p style="color:#8DA4B5;font-size:12px;margin:20px 0 0;text-align:center;">${timestamp}</p>
     </div>
   </div>
 </body>
@@ -162,8 +192,12 @@ function buildTelegramText(event: NotifyEvent, data: NotifyData): string {
   const lines = [
     `${emoji} *${label}*`,
     '',
-    `Source: ${sourceOf(data)}`,
-    `Entry: ${entryOf(data)}`,
+    `Source: ${shown(sourceOf(data))}`,
+    `Entry: ${shown(entryOf(data))}`,
+    `City: ${shown(data.city)}`,
+    `Region: ${shown(data.region)}`,
+    `Country: ${shown(data.country)}`,
+    `IP: ${shown(data.ip)}`,
     '',
   ];
   
@@ -179,7 +213,7 @@ function buildTelegramText(event: NotifyEvent, data: NotifyData): string {
   if (data.tier) lines.push(`📦 Tier: ${data.tier}`);
 
   lines.push('');
-  lines.push(`⏰ ${new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' })}`);
+  lines.push(`⏰ ${centralTimeLabel()}`);
 
   return lines.join('\n');
 }
@@ -196,10 +230,23 @@ type RequestLike = {
 /** Stamps this site's source and the visit entry point, then sends the alert. */
 export function notifyFromRequest(request: RequestLike, event: NotifyEvent, data: NotifyData): void {
   const attribution = leadAttribution(request);
+  const bodyReferrer = typeof data.referrer === 'string' ? data.referrer : null;
+  const referrer = attribution.context.referrer || externalReferrer(bodyReferrer);
+  const entry = entryPoint({
+    utmSource: attribution.context.utmSource,
+    utmMedium: attribution.context.utmMedium,
+    utmCampaign: attribution.context.utmCampaign,
+    src: attribution.context.src,
+    referrer,
+  });
   notifyAdmin(event, {
     ...data,
     source: attribution.source,
-    entry: attribution.entryLabel,
+    entry: entry.label,
+    city: decodeGeoHeader(request.headers.get('x-vercel-ip-city')) || undefined,
+    region: decodeGeoHeader(request.headers.get('x-vercel-ip-country-region')) || undefined,
+    country: decodeGeoHeader(request.headers.get('x-vercel-ip-country')) || undefined,
+    ip: clientIpFromHeaders(request.headers) || undefined,
   });
 }
 

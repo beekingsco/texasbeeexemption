@@ -103,12 +103,65 @@ export async function insertAddressSearch(entry: AddressSearchEntry): Promise<Re
   return supabaseInsert(TABLE, searchRow(entry));
 }
 
-/** Fire-and-forget wrapper. Failures are logged and never thrown. */
-export async function logAddressSearch(entry: AddressSearchEntry): Promise<void> {
+const CONTACT_REUSE_MS = 2 * 60 * 1000;
+
+async function recentCoordinateId(lat: number, lng: number, withinMs: number): Promise<string | null> {
+  const since = new Date(Date.now() - withinMs).toISOString();
+  const pad = 0.0002;
+  return supabaseLatestId(
+    TABLE,
+    `created_at=gte.${encodeURIComponent(since)}&lat=gte.${lat - pad}&lat=lte.${lat + pad}&lng=gte.${lng - pad}&lng=lte.${lng + pad}`,
+  );
+}
+
+function enrichPatch(row: Record<string, unknown>): Record<string, unknown> {
+  const patch: Record<string, unknown> = {};
+  for (const key of [
+    'state',
+    'county',
+    'acreage',
+    'market_value',
+    'estimated_annual_savings',
+    'referrer',
+    'source',
+    'utm',
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+  ]) {
+    const value = row[key];
+    if (value != null && value !== '') patch[key] = value;
+  }
+  return patch;
+}
+
+/**
+ * Writes one Contractor Command address_searches row.
+ * When reuseRecentMs is set, a geocode row for the same coordinates in that
+ * window is updated instead of inserting a second copy of the same search.
+ */
+export async function logAddressSearch(
+  entry: AddressSearchEntry,
+  options?: { reuseRecentMs?: number },
+): Promise<void> {
   try {
     await new Promise<void>((resolve, reject) => {
       const timer = setTimeout(() => reject(new Error('address search log timeout')), 4000);
-      insertAddressSearch(entry).then(() => {
+      const write = async () => {
+        const lat = finiteOrNull(entry.lat);
+        const lng = finiteOrNull(entry.lng);
+        const reuseMs = options?.reuseRecentMs ?? 0;
+        if (reuseMs > 0 && lat != null && lng != null && supabaseServiceKey()) {
+          const id = await recentCoordinateId(lat, lng, reuseMs);
+          if (id) {
+            const patch = enrichPatch(searchRow(entry));
+            if (Object.keys(patch).length > 0) await supabasePatchById(TABLE, id, patch);
+            return;
+          }
+        }
+        await insertAddressSearch(entry);
+      };
+      write().then(() => {
         clearTimeout(timer);
         resolve();
       }, (error) => {
@@ -120,6 +173,8 @@ export async function logAddressSearch(entry: AddressSearchEntry): Promise<void>
     console.error('address search log failed', error);
   }
 }
+
+export const CONTACT_SEARCH_REUSE_MS = CONTACT_REUSE_MS;
 
 async function recentSearchId(input: {
   headers?: { get(name: string): string | null };

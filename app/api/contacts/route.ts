@@ -3,7 +3,8 @@ import { sql } from '@vercel/postgres';
 import { ensureDB, isPostgresConfigured } from '@/lib/db';
 import { readJSON, writeJSON, forwardToWebhook } from '@/lib/storage';
 import { notifyFromRequest } from '@/lib/notify';
-import { recordSearchFollowUp } from '@/lib/address-search-log';
+import { CONTACT_SEARCH_REUSE_MS, logAddressSearch, recordSearchFollowUp } from '@/lib/address-search-log';
+import { externalReferrer, leadAttribution } from '@/lib/lead-source';
 import { readServerSearchContext } from '@/lib/search-attribution';
 
 interface Contact {
@@ -190,8 +191,13 @@ export async function POST(req: NextRequest) {
     if (usePg) await ensureDB();
 
     if (action === 'search') {
-      const { address, county, lat, lng, ownerName, acres, marketValue, landValue,
+      const { address, lat, lng, ownerName, acres, marketValue, landValue,
               improvementValue, estimatedSavings, requiredHives, sessionId, referrer } = body;
+      const parish = typeof body.parish === 'string' ? body.parish : '';
+      const state = typeof body.state === 'string' ? body.state : '';
+      const county = (typeof body.county === 'string' && body.county.trim())
+        ? body.county
+        : parish;
 
       let contact: Contact | null | undefined;
 
@@ -273,12 +279,32 @@ export async function POST(req: NextRequest) {
 
       await forwardToWebhook('contact_search', contact as unknown as Record<string, unknown>);
 
-      // Fire admin notification (non-blocking)
+      const attribution = leadAttribution(req);
+      const visitReferrer = attribution.context.referrer
+        || externalReferrer(typeof referrer === 'string' ? referrer : null);
+      await logAddressSearch({
+        rawAddress: contact.address || contact.county || '',
+        normalizedAddress: contact.address || null,
+        lat: contact.lat,
+        lng: contact.lng,
+        state: state || null,
+        county: contact.county,
+        acres: contact.acres,
+        marketValue: contact.marketValue,
+        savingsShown: contact.estimatedSavings,
+        resultShown: contact.address ? 'searched' : (contact.county ? 'county_only' : null),
+        context: { ...attribution.context, referrer: visitReferrer },
+        userAgent: req.headers.get('user-agent'),
+        headers: req.headers,
+      }, { reuseRecentMs: CONTACT_SEARCH_REUSE_MS });
+
+      // Fire admin notification (non-blocking). Contacts row above is unchanged.
       notifyFromRequest(req, 'address_searched', {
         address: contact.address,
         county: contact.county,
         acres: contact.acres || undefined,
         estimatedSavings: contact.estimatedSavings || undefined,
+        referrer: visitReferrer || undefined,
       });
 
       return NextResponse.json({ ok: true, id: contact.id, tier: contact.tier });
