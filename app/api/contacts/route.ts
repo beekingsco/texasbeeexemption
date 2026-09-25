@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import { ensureDB, isPostgresConfigured } from '@/lib/db';
 import { readJSON, writeJSON, forwardToWebhook } from '@/lib/storage';
-import { notifyAdmin } from '@/lib/notify';
+import { notifyFromRequest } from '@/lib/notify';
 import { recordSearchFollowUp } from '@/lib/address-search-log';
 import { readServerSearchContext } from '@/lib/search-attribution';
 
@@ -274,7 +274,7 @@ export async function POST(req: NextRequest) {
       await forwardToWebhook('contact_search', contact as unknown as Record<string, unknown>);
 
       // Fire admin notification (non-blocking)
-      notifyAdmin('address_searched', {
+      notifyFromRequest(req, 'address_searched', {
         address: contact.address,
         county: contact.county,
         acres: contact.acres || undefined,
@@ -368,6 +368,7 @@ export async function POST(req: NextRequest) {
         sessionId: context.sessionId,
         email: typeof email === 'string' ? email : null,
         phone: typeof phone === 'string' ? phone : null,
+        headers: req.headers,
       });
       return NextResponse.json({ ok: true });
     }

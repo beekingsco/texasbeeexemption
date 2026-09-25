@@ -5,6 +5,7 @@ import { Agent } from '@/lib/types/agent';
 import { put } from '@vercel/blob';
 import { validateCoupon, redeemCoupon } from '@/lib/coupon-storage';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { notifyFromRequest } from '@/lib/notify';
 
 export async function POST(req: NextRequest) {
   try {
@@ -103,6 +104,14 @@ export async function POST(req: NextRequest) {
     };
 
     await createAgent(agent);
+    notifyFromRequest(req, 'new_lead_captured', {
+      name,
+      email,
+      phone,
+      agentName: name,
+      agentEmail: email,
+      tier: 'agent_signup',
+    });
 
     // Redeem coupon after successful creation
     if (couponCode && appliedCoupon) {

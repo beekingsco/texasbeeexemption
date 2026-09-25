@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import { ensureDB, isPostgresConfigured } from '@/lib/db';
 import { readJSON, writeJSON, forwardToWebhook } from '@/lib/storage';
+import { leadAttribution } from '@/lib/lead-source';
+import { notifyFromRequest } from '@/lib/notify';
 
 interface StateInterest {
   state: string;
   timestamp: string;
   userAgent?: string;
+  source?: string;
+  entry?: string;
 }
 
 export async function POST(req: NextRequest) {
@@ -26,20 +30,42 @@ export async function POST(req: NextRequest) {
 
     const timestamp = new Date().toISOString();
     const userAgent = req.headers.get('user-agent') || undefined;
+    const attribution = leadAttribution(req);
 
     if (usePg) {
-      await sql`
-        INSERT INTO state_interest (state, user_agent, timestamp)
-        VALUES (${state}, ${userAgent || null}, ${timestamp})
-      `;
+      try {
+        await sql`
+          INSERT INTO state_interest (state, user_agent, timestamp, source, entry)
+          VALUES (${state}, ${userAgent || null}, ${timestamp}, ${attribution.source}, ${attribution.entryLabel})
+        `;
+      } catch (error) {
+        console.error('state interest saved without source columns', error);
+        await sql`
+          INSERT INTO state_interest (state, user_agent, timestamp)
+          VALUES (${state}, ${userAgent || null}, ${timestamp})
+        `;
+      }
     } else {
-      const interest: StateInterest = { state, timestamp, userAgent };
+      const interest: StateInterest = {
+        state,
+        timestamp,
+        userAgent,
+        source: attribution.source,
+        entry: attribution.entryLabel,
+      };
       const interests = await readJSON<StateInterest[]>('state-interest.json', []);
       interests.push(interest);
       await writeJSON('state-interest.json', interests);
     }
 
-    await forwardToWebhook('state_interest', { state, timestamp, userAgent });
+    await forwardToWebhook('state_interest', {
+      state,
+      timestamp,
+      userAgent,
+      source: attribution.source,
+      entry: attribution.entryLabel,
+    });
+    notifyFromRequest(req, 'new_lead_captured', { name: String(state), address: String(state) });
 
     return NextResponse.json({ success: true });
   } catch (error) {

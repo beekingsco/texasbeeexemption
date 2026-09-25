@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { recordSearchFollowUp } from '@/lib/address-search-log';
 
 // Texas Natural Resources Information System (TNRIS) statewide parcel layer
 // Free, no API key, covers all 254 Texas counties
@@ -59,6 +60,12 @@ export async function GET(request: NextRequest) {
 
     const features = data.features || [];
     if (features.length === 0) {
+      await recordSearchFollowUp({
+        headers: request.headers,
+        lat: Number(lat),
+        lng: Number(lng),
+        eligibility: 'no_parcel',
+      });
       return NextResponse.json({ found: false, error: 'No parcel found at these coordinates' });
     }
 
@@ -119,14 +126,34 @@ export async function GET(request: NextRequest) {
           bestScore = score;
         }
       }
+      await rememberParcel(request, lat, lng, best);
       return NextResponse.json(best);
     }
 
+    await rememberParcel(request, lat, lng, parcel);
     return NextResponse.json(parcel);
   } catch (err) {
     console.error('Parcel lookup error:', err);
+    await recordSearchFollowUp({
+      headers: request.headers,
+      lat: Number(lat),
+      lng: Number(lng),
+      eligibility: 'parcel_lookup_failed',
+    });
     return NextResponse.json({ found: false, error: 'Failed to fetch parcel data' });
   }
+}
+
+function rememberParcel(request: NextRequest, lat: string, lng: string, parcel: ParcelData) {
+  return recordSearchFollowUp({
+    headers: request.headers,
+    lat: Number(lat),
+    lng: Number(lng),
+    parcelId: parcel.propertyId ? String(parcel.propertyId) : null,
+    county: parcel.county ?? null,
+    acres: parcel.legalArea ?? null,
+    marketValue: parcel.marketValue ?? null,
+  });
 }
 
 function cleanString(val: string | null | undefined): string | undefined {

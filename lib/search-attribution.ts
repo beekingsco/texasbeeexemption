@@ -13,6 +13,7 @@ export type StoredAttribution = {
   gclid: string | null;
   fbclid: string | null;
   ref: string | null;
+  src: string | null;
 };
 
 export type SearchContext = {
@@ -24,6 +25,7 @@ export type SearchContext = {
   fbclid: string | null;
   referrer: string | null;
   landingPath: string | null;
+  src: string | null;
 };
 
 type HeaderReader = { get(name: string): string | null };
@@ -63,6 +65,7 @@ function paramsFromUrl(url: URL): StoredAttribution {
     gclid: clip(url.searchParams.get('gclid'), 200),
     fbclid: clip(url.searchParams.get('fbclid'), 200),
     ref: null,
+    src: clip(url.searchParams.get('src'), 200),
   };
 }
 
@@ -72,6 +75,7 @@ function fillMissing(target: StoredAttribution, extra: StoredAttribution) {
   target.uc ||= extra.uc;
   target.gclid ||= extra.gclid;
   target.fbclid ||= extra.fbclid;
+  target.src ||= extra.src;
   if (!target.lp) target.lp = extra.lp;
 }
 
@@ -116,6 +120,7 @@ export function decodeAttribution(value: string | null | undefined): StoredAttri
       gclid: clip(parsed.gclid, 200),
       fbclid: clip(parsed.fbclid, 200),
       ref: clip(parsed.ref, 500),
+      src: clip(parsed.src, 200),
     };
   } catch {
     return null;
@@ -132,6 +137,7 @@ function contextFromAttribution(sessionId: string | null, attribution: StoredAtt
     fbclid: attribution?.fbclid ?? null,
     referrer: attribution?.ref ?? null,
     landingPath: attribution?.lp ?? null,
+    src: attribution?.src ?? null,
   };
 }
 
@@ -148,6 +154,7 @@ function attributionFromReferer(refererHeader: string | null): StoredAttribution
       gclid: null,
       fbclid: null,
       ref: clip(refererHeader, 500),
+      src: null,
     };
   } catch {
     return null;

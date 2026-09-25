@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAgentById, addAgentLead } from '@/lib/agent-storage';
 import { AgentLead } from '@/lib/types/agent';
-import { notifyAdmin } from '@/lib/notify';
+import { notifyFromRequest } from '@/lib/notify';
+import { leadAttribution } from '@/lib/lead-source';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 // POST — create a lead from a branded link referral (no auth needed, called from client)
@@ -50,7 +51,8 @@ export async function POST(req: NextRequest) {
     await addAgentLead(agentId, lead);
 
     // Notify admin and agent
-    notifyAdmin('new_lead_captured', {
+    const attribution = leadAttribution(req);
+    notifyFromRequest(req, 'new_lead_captured', {
       name: ownerName,
       address: propertyAddress,
       county,
@@ -73,7 +75,7 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify({
           from: `BeeExemption <${FROM_EMAIL}>`,
           to: [agent.email],
-          subject: `📋 New Lead from Your Branded Link: ${county || 'Unknown'} County`,
+          subject: `Bee exemption lead [${attribution.source}]: ${ownerName || county || 'Unknown'}`,
           html: `
 <!DOCTYPE html>
 <html><body style="margin:0;padding:0;background:#EDF6FF;font-family:'Helvetica Neue',Arial,sans-serif;">
@@ -83,6 +85,8 @@ export async function POST(req: NextRequest) {
   </div>
   <div style="background:#fff;padding:24px;border-radius:0 0 16px 16px;">
     <p style="color:#053249;font-size:16px;margin:0 0 16px;">Hi ${agent.name.split(' ')[0]},</p>
+    <p style="margin:0 0 8px;font-size:16px;font-weight:800;color:#053249;">Source: ${attribution.source}</p>
+    <p style="margin:0 0 16px;font-size:16px;font-weight:800;color:#053249;">Entry: ${attribution.entryLabel.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
     <p style="color:#6B7280;font-size:15px;line-height:1.6;margin:0 0 20px;">
       Someone just used your branded link and submitted their property info!
     </p>

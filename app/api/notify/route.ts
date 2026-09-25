@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { notifyAdmin } from '@/lib/notify';
+import { notifyFromRequest } from '@/lib/notify';
 
 /**
  * POST /api/notify
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Event type required' }, { status: 400 });
     }
 
-    notifyAdmin(event, data || {});
+    notifyFromRequest(req, event, data || {});
 
     return NextResponse.json({ ok: true });
   } catch (error) {

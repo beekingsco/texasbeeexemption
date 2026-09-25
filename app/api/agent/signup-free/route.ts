@@ -4,7 +4,7 @@ import { randomUUID } from 'crypto';
 import { createAgent, getAgentByEmail } from '@/lib/agent-storage';
 import { Agent } from '@/lib/types/agent';
 import { validateCoupon, redeemCoupon } from '@/lib/coupon-storage';
-import { notifyAdmin } from '@/lib/notify';
+import { notifyFromRequest } from '@/lib/notify';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 export async function POST(req: NextRequest) {
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     await createAgent(agent);
     await redeemCoupon(couponCode, agent.id);
 
-    notifyAdmin('agent_trial_started', {
+    notifyFromRequest(req, 'agent_trial_started', {
       agentName: agent.name,
       agentEmail: agent.email,
       tier: 'agent_free',

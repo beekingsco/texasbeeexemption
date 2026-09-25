@@ -1,5 +1,7 @@
--- Additive search log for beeexemption.com.
--- Creates one new table and one read-only view.
+-- UNUSED by the app. Address searches are inserted server-side into
+-- public.address_searches on the Contractor Command Supabase project
+-- (ref ixvlatpjzbqhccuniqwy), not into this database.
+-- Kept so an existing local log can still be created by hand if needed.
 -- Does not alter, update, or delete any existing table or row.
 
 CREATE TABLE IF NOT EXISTS address_searches (

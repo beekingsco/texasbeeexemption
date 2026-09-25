@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { put, list } from '@vercel/blob';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { leadAttribution } from '@/lib/lead-source';
+import { notifyFromRequest } from '@/lib/notify';
 
 // Telegram lead alert
 const TG_BOT_TOKEN = process.env.TG_BOT_TOKEN || '';
@@ -25,6 +27,8 @@ interface Lead {
   estimatedSavings: number | null;
   parcelData: Record<string, unknown> | null;
   source: string;
+  entry?: string;
+  channel?: string;
   agentRef?: string;
   createdAt: string;
 }
@@ -96,6 +100,8 @@ async function sendTelegramAlert(lead: Lead): Promise<void> {
   try {
     const savings = lead.estimatedSavings ? `$${Math.round(lead.estimatedSavings).toLocaleString()}` : 'N/A';
     const text = `🐝 *New Lead!*\n\n` +
+      `Source: ${lead.source}\n` +
+      `Entry: ${lead.entry || 'direct'}\n\n` +
       `*${lead.firstName} ${lead.lastName}*\n` +
       `📧 ${lead.email}\n` +
       (lead.phone ? `📱 ${lead.phone}\n` : '') +
@@ -132,6 +138,7 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const { firstName, lastName, email, phone, address, county, lat, lng, acres, appraisedValue, estimatedSavings, parcelData, source, agentRef } = body;
+    const attribution = leadAttribution(req);
 
     if (!firstName || !lastName || !email) {
       return NextResponse.json({ error: 'First name, last name, and email are required' }, { status: 400 });
@@ -151,7 +158,9 @@ export async function POST(req: NextRequest) {
       appraisedValue: appraisedValue || null,
       estimatedSavings: estimatedSavings || null,
       parcelData: parcelData || null,
-      source: source || 'calculator',
+      source: attribution.source,
+      entry: attribution.entryLabel,
+      channel: typeof source === 'string' && source.trim() ? source.trim() : 'calculator',
       agentRef: agentRef || undefined,
       createdAt: new Date().toISOString(),
     };
@@ -161,6 +170,15 @@ export async function POST(req: NextRequest) {
 
     // Fire alerts (non-blocking)
     sendTelegramAlert(lead).catch(() => {});
+    notifyFromRequest(req, 'new_lead_captured', {
+      name: `${lead.firstName} ${lead.lastName}`.trim(),
+      email: lead.email,
+      phone: lead.phone || undefined,
+      address: lead.address || undefined,
+      county: lead.county || undefined,
+      acres: lead.acres || undefined,
+      estimatedSavings: lead.estimatedSavings || undefined,
+    });
 
     return NextResponse.json({ success: true, id: lead.id });
   } catch (error) {

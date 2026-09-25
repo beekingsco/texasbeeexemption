@@ -14,6 +14,8 @@ interface Lead {
   appraisedValue: number | null;
   estimatedSavings: number | null;
   source: string;
+  entry?: string;
+  channel?: string;
   createdAt: string;
 }
 
@@ -218,7 +220,10 @@ export default function AdminPage() {
   const fmtDate = (d: string) => new Date(d).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 
   // Revenue calculations
-  const reportSales = leads.filter(l => l.source === 'report' || l.source === 'calculator').length;
+  const reportSales = leads.filter(l => {
+    const channel = l.channel || l.source;
+    return channel === 'report' || channel === 'calculator';
+  }).length;
   const singleRevenue = reportSales * 1499; // $14.99 per report in cents
   const activeUnlimited = 0; // Would come from Stripe data
   const unlimitedMRR = activeUnlimited * 2999;
