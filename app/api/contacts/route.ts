@@ -3,6 +3,8 @@ import { sql } from '@vercel/postgres';
 import { ensureDB, isPostgresConfigured } from '@/lib/db';
 import { readJSON, writeJSON, forwardToWebhook } from '@/lib/storage';
 import { notifyAdmin } from '@/lib/notify';
+import { recordSearchFollowUp } from '@/lib/address-search-log';
+import { readServerSearchContext } from '@/lib/search-attribution';
 
 interface Contact {
   id: string;
@@ -361,6 +363,12 @@ export async function POST(req: NextRequest) {
           await writeContacts(contacts);
         }
       }
+      const context = readServerSearchContext(req);
+      await recordSearchFollowUp({
+        sessionId: context.sessionId,
+        email: typeof email === 'string' ? email : null,
+        phone: typeof phone === 'string' ? phone : null,
+      });
       return NextResponse.json({ ok: true });
     }
 

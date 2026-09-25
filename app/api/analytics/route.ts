@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import { ensureDB, isPostgresConfigured } from '@/lib/db';
 import { readJSON, writeJSON } from '@/lib/storage';
+import { parseSavings } from '@/lib/address-search';
+import { recordSearchFollowUp } from '@/lib/address-search-log';
+import { readServerSearchContext } from '@/lib/search-attribution';
 
 interface AnalyticsEvent {
   event: string;
@@ -60,6 +63,16 @@ export async function POST(req: NextRequest) {
         timestamp,
       });
       await writeEvents(events);
+    }
+
+    const savingsShown = parseSavings(savings);
+    if (savingsShown != null) {
+      const context = readServerSearchContext(req);
+      await recordSearchFollowUp({
+        sessionId: context.sessionId,
+        savings: savingsShown,
+        resultNote: `savings shown on ${String(event).slice(0, 80)}`,
+      });
     }
 
     return NextResponse.json({ ok: true });

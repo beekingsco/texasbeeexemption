@@ -1,7 +1,44 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { logAddressSearch } from '@/lib/address-search-log';
+import { readServerSearchContext } from '@/lib/search-attribution';
 
 // ArcGIS World Geocoder - free, no API key, excellent quality
 // Two modes: suggest (autocomplete) and findAddressCandidates (full geocode)
+
+type GeocodeCandidate = {
+  address: string;
+  lat: number;
+  lng: number;
+  score: number;
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+  county: string;
+  addrType: string;
+  structType: string;
+};
+
+function resultLabel(candidate: GeocodeCandidate | undefined): string {
+  if (!candidate) return 'no address match';
+  const place = [candidate.county, candidate.state].filter(Boolean).join(', ');
+  return place ? `resolved: ${place}` : 'resolved';
+}
+
+function logResolvedSearch(request: NextRequest, rawAddress: string, candidate: GeocodeCandidate | undefined, resultShown: string) {
+  return logAddressSearch({
+    rawAddress,
+    normalizedAddress: candidate?.address ?? null,
+    lat: candidate?.lat ?? null,
+    lng: candidate?.lng ?? null,
+    state: candidate?.state ?? null,
+    county: candidate?.county ?? null,
+    resultShown,
+    context: readServerSearchContext(request),
+    userAgent: request.headers.get('user-agent'),
+    headers: request.headers,
+  });
+}
 
 export async function GET(request: NextRequest) {
   const q = request.nextUrl.searchParams.get('q');
@@ -16,11 +53,15 @@ export async function GET(request: NextRequest) {
   try {
     if (mode === 'suggest') {
       return await suggestAddresses(q, state);
-    } else {
-      return await geocodeAddress(q, magicKey || undefined);
     }
+    const results = await geocodeAddress(q, magicKey || undefined);
+    await logResolvedSearch(request, q, results[0], resultLabel(results[0]));
+    return NextResponse.json({ results });
   } catch (err) {
     console.error('Geocode error:', err);
+    if (mode !== 'suggest') {
+      await logResolvedSearch(request, q, undefined, 'geocode failed');
+    }
     return NextResponse.json({ results: [], error: 'Geocoding failed' });
   }
 }
@@ -73,7 +114,7 @@ async function suggestAddresses(query: string, state: string) {
   return NextResponse.json({ suggestions });
 }
 
-async function geocodeAddress(query: string, magicKey?: string) {
+async function geocodeAddress(query: string, magicKey?: string): Promise<GeocodeCandidate[]> {
   const url = new URL('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates');
   url.searchParams.set('f', 'json');
   url.searchParams.set('singleLine', query);
@@ -92,7 +133,7 @@ async function geocodeAddress(query: string, magicKey?: string) {
   if (!resp.ok) throw new Error(`ArcGIS geocode ${resp.status}`);
   const data = await resp.json();
 
-  const candidates = (data.candidates || []).map((c: Record<string, unknown>) => {
+  return (data.candidates || []).map((c: Record<string, unknown>) => {
     const a = c.attributes as Record<string, string>;
     const loc = c.location as { x: number; y: number };
     return {
@@ -109,6 +150,4 @@ async function geocodeAddress(query: string, magicKey?: string) {
       structType: a.StrucType || '',
     };
   });
-
-  return NextResponse.json({ results: candidates });
 }
