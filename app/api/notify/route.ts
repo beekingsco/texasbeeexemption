@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Event type required' }, { status: 400 });
     }
 
-    notifyFromRequest(req, event, data || {});
+    await notifyFromRequest(req, event, data || {});
 
     return NextResponse.json({ ok: true });
   } catch (error) {

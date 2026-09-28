@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       source: attribution.source,
       entry: attribution.entryLabel,
     });
-    notifyFromRequest(req, 'new_lead_captured', { name: String(state), address: String(state) });
+    await notifyFromRequest(req, 'new_lead_captured', { name: String(state), address: String(state) });
 
     return NextResponse.json({ success: true });
   } catch (error) {

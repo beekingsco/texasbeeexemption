@@ -1,16 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import countiesData from '@/data/texas-counties.json';
 import productsData from '@/data/amazon-products.json';
+import { loadTexasCounties } from '@/lib/county-rules';
+import type { CountyRules } from '@/lib/county-types';
+import { requiredHivesFor } from '@/lib/hive-requirement';
 
-interface County {
-  name: string;
-  region: string;
-  minAcres: number;
-  minHives: number;
-  additionalHivesPer: number;
-  avgTaxRate: number;
-  agProductivityValue: number;
-}
+type County = CountyRules;
 
 interface Product {
   name: string;
@@ -59,11 +53,7 @@ interface TierResult {
 function calculateRequiredHives(county: County, acres: number): number {
   const homesteadAcres = Math.min(1, acres);
   const agEligibleAcres = Math.max(0, acres - homesteadAcres);
-  let requiredHives = county.minHives;
-  if (agEligibleAcres > county.minAcres) {
-    requiredHives += Math.ceil((agEligibleAcres - county.minAcres) / county.additionalHivesPer);
-  }
-  return requiredHives;
+  return requiredHivesFor(county, agEligibleAcres);
 }
 
 function calculateAnnualSavings(county: County, acres: number, propertyValue: number): number {
@@ -125,7 +115,7 @@ export async function GET(request: NextRequest) {
   const acres = parseFloat(searchParams.get('acres') || '10');
   const propertyValue = parseFloat(searchParams.get('propertyValue') || '300000');
 
-  const counties = countiesData as County[];
+  const { counties } = await loadTexasCounties();
   const county = counties.find(c => c.name.toLowerCase() === countyName.toLowerCase());
 
   if (!county) {

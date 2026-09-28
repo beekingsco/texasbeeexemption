@@ -1,18 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import countiesData from '@/data/texas-counties.json';
 import suppliersData from '@/data/texas-nuc-suppliers.json';
+import { loadTexasCounties } from '@/lib/county-rules';
+import type { CountyRules } from '@/lib/county-types';
+import { requiredHivesFor } from '@/lib/hive-requirement';
 
-interface County {
-  name: string;
-  region: string;
-  cad: { name: string; website: string; phone: string };
-  minAcres: number;
-  minHives: number;
-  additionalHivesPer: number;
-  avgTaxRate: number;
-  agProductivityValue: number;
-  notes: string;
-}
+type County = CountyRules;
 
 interface Supplier {
   name: string;
@@ -56,7 +48,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'County is required' }, { status: 400 });
   }
 
-  const counties = countiesData as County[];
+  const { counties } = await loadTexasCounties();
   const county = counties.find(
     (c) => c.name.toLowerCase() === countyName.toLowerCase()
   );
@@ -81,12 +73,7 @@ export async function GET(request: NextRequest) {
   const totalWithAg = homesteadTaxes + agTaxes;
   const annualSavings = Math.max(0, currentTaxes - totalWithAg);
 
-  let requiredHives = county.minHives;
-  if (agEligibleAcres > county.minAcres) {
-    requiredHives += Math.ceil(
-      (agEligibleAcres - county.minAcres) / county.additionalHivesPer
-    );
-  }
+  const requiredHives = requiredHivesFor(county, agEligibleAcres);
 
   // Equipment costs
   const hiveCost = 197;

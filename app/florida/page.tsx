@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { finishSearch, startSearch } from '@/lib/search-submit-guard';
 import countiesData from '@/data/florida-counties.json';
 import DeadlineCountdown from '@/app/components/DeadlineCountdown';
 import StateBadge from '@/app/components/StateBadge';
@@ -63,6 +64,7 @@ export default function FloridaCalculator() {
   const [appraisedValue, setAppraisedValue] = useState('');
   const [lead, setLead] = useState<LeadData>({ firstName: '', lastName: '', email: '', phone: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [leadError, setLeadError] = useState('');
   const [searchError, setSearchError] = useState('');
 
   // Address search state
@@ -111,7 +113,7 @@ export default function FloridaCalculator() {
     fetch('/api/contacts', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action, sessionId: sessionIdRef.current, state: 'FL', ...data }),
+      body: JSON.stringify({ action, sessionId: sessionIdRef.current, state: 'FL', ...data, parcelStatus: 'geocode_only' }),
     }).catch(() => {});
   }, []);
 
@@ -151,6 +153,11 @@ export default function FloridaCalculator() {
   };
 
   const processAddress = async (addressText: string, magicKey?: string) => {
+    const claim = startSearch(addressText);
+    if (claim === 'ignore') return;
+    let alertSearch = claim === 'run';
+    let accepted = false;
+    let resolvedAddress = '';
     setIsSearching(true);
     setSearchError('');
     setShowSuggestions(false);
@@ -168,6 +175,7 @@ export default function FloridaCalculator() {
       }
 
       const geo: GeocodedAddress = geoData.results[0];
+      resolvedAddress = geo.address;
 
       // Check it's Florida
       if (geo.state && !['FL', 'Florida'].includes(geo.state)) {
@@ -199,9 +207,12 @@ export default function FloridaCalculator() {
       setStep('results');
 
       track('address_searched', { county: matchedCounty.name, address: geo.address, state: 'FL' });
-      trackContact('search', { address: geo.address, county: countyClean, lat: geo.lat, lng: geo.lng, referrer: document.referrer });
+      if (alertSearch) trackContact('search', { address: geo.address, county: countyClean, lat: geo.lat, lng: geo.lng, referrer: document.referrer });
+      accepted = true;
     } catch {
       setSearchError('Something went wrong. Please try again.');
+    } finally {
+      finishSearch(accepted, [addressText, resolvedAddress]);
     }
     setIsSearching(false);
   };
@@ -331,6 +342,7 @@ export default function FloridaCalculator() {
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setLeadError('');
     try {
       const payload = {
         ...lead,
@@ -341,16 +353,23 @@ export default function FloridaCalculator() {
         estimatedSavings: results?.annualSavings,
         source: 'florida-calculator',
       };
-      await fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const leadResp = await fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (!leadResp.ok) {
+        const leadBody = await leadResp.json().catch(() => null);
+        setLeadError(leadBody && typeof leadBody.error === 'string' ? leadBody.error : 'We could not save your information. Please try again.');
+        setIsSubmitting(false);
+        return;
+      }
       track('lead_captured', { county: selectedCounty?.name, savings: results?.annualSavings, state: 'FL' });
       trackContact('identify', { firstName: lead.firstName, lastName: lead.lastName, email: lead.email, phone: lead.phone });
       trackContact('engage', { event: 'completed_signup' });
+      setStep('thankyou');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
       console.error('Lead save error:', err);
+      setLeadError('We could not save your information. Please try again.');
     }
-    setStep('thankyou');
     setIsSubmitting(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const startOver = () => {
@@ -476,12 +495,12 @@ export default function FloridaCalculator() {
                       type="text" value={searchInput}
                       onChange={(e) => handleAddressInput(e.target.value)}
                       onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
-                      onKeyDown={(e) => { if (e.key === 'Enter' && searchInput.trim()) handleAddressSearch(); }}
+                      onKeyDown={(e) => { if (e.key === 'Enter' && searchInput.trim()) { e.preventDefault(); handleAddressSearch(); } }}
                       placeholder="Enter your address"
                       style={{ flex: 1, fontSize: 16, fontWeight: 500, color: C.navy, border: 'none', outline: 'none', background: 'transparent', padding: '14px 0', fontFamily: 'inherit', minWidth: 0 }}
                     />
                   </div>
-                  <button onClick={handleAddressSearch} disabled={!searchInput.trim() || isSearching} className="r-pill-btn" style={{
+                  <button type="button" onClick={handleAddressSearch} disabled={!searchInput.trim() || isSearching} className="r-pill-btn" style={{
                     background: searchInput.trim() && !isSearching ? C.blue : '#93C5FD', color: C.white, fontWeight: 700, border: 'none',
                     cursor: searchInput.trim() && !isSearching ? 'pointer' : 'not-allowed', fontFamily: 'inherit',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
@@ -503,7 +522,7 @@ export default function FloridaCalculator() {
                       const street = parts[0] || '';
                       const rest = parts.slice(1).join(', ');
                       return (
-                        <button key={i} onClick={() => handleSuggestionSelect(s)}
+                        <button type="button" key={i} onClick={() => handleSuggestionSelect(s)}
                           style={{ width: '100%', padding: '14px 20px', textAlign: 'left', background: 'transparent', border: 'none', borderBottom: '1px solid #f1f5f9', cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 12 }}
                           onMouseEnter={(e) => (e.currentTarget.style.background = C.sky)}
                           onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
@@ -1014,6 +1033,11 @@ export default function FloridaCalculator() {
                   <input type="tel" value={lead.phone} onChange={(e) => setLead({ ...lead, phone: e.target.value })} placeholder="(305) 555-1234"
                     style={{ width: '100%', padding: '12px 16px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 16, fontWeight: 500, color: C.navy, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }} />
                 </div>
+                {leadError && (
+                  <div style={{ marginBottom: 16, padding: '12px 16px', background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 12 }}>
+                    <p style={{ fontSize: 14, color: '#991B1B', fontWeight: 600 }}>{leadError}</p>
+                  </div>
+                )}
                 <button type="submit" disabled={isSubmitting || !lead.firstName || !lead.lastName || !lead.email}
                   style={{ width: '100%', padding: '16px 32px', borderRadius: 12, background: !isSubmitting && lead.firstName && lead.lastName && lead.email ? C.blue : '#93C5FD', color: C.white, fontWeight: 700, fontSize: 17, border: 'none', cursor: !isSubmitting && lead.firstName && lead.lastName && lead.email ? 'pointer' : 'not-allowed', fontFamily: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
                   {isSubmitting ? <><span className="spinner" /> Sending...</> : 'Email My Free Guide'}

@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Notify admin (fire-and-forget)
-    notifyFromRequest(req, 'guide_downloaded', {
+    await notifyFromRequest(req, 'guide_downloaded', {
       name: firstName,
       email: to,
       county,

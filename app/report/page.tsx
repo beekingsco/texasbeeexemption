@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useMemo, useState, useEffect, useCallback } from 'react';
 import countiesData from '@/data/texas-counties.json';
+import { requiredHivesFor } from '@/lib/hive-requirement';
 import suppliersData from '@/data/texas-nuc-suppliers.json';
 import amazonProducts from '@/data/amazon-products.json';
 import verifiedProducts from '@/data/verified-products.json';
@@ -17,6 +18,7 @@ interface County {
   minAcres: number;
   minHives: number;
   additionalHivesPer: number;
+  hiveScaleRule?: string;
   avgTaxRate: number;
   agProductivityValue: number;
   notes: string;
@@ -103,7 +105,15 @@ function ReportContent() {
   const name = params.get('name') || 'Property Owner';
   const email = params.get('email') || '';
 
-  const counties = useMemo(() => countiesData as County[], []);
+  const [counties, setCounties] = useState<County[]>(() => countiesData as County[]);
+  useEffect(() => {
+    fetch('/api/counties?state=TX')
+      .then((response) => response.json())
+      .then((data) => {
+        if (Array.isArray(data.counties) && data.counties.length > 0) setCounties(data.counties);
+      })
+      .catch(() => {});
+  }, []);
   const suppliers = useMemo(() => suppliersData as Supplier[], []);
 
   const county = counties.find(c => c.name.toLowerCase() === countyName.toLowerCase());
@@ -135,10 +145,7 @@ function ReportContent() {
   const annualSavings = Math.max(0, currentTaxes - totalWithAg);
   const savingsPercent = currentTaxes > 0 ? (annualSavings / currentTaxes) * 100 : 0;
 
-  let requiredHives = county.minHives;
-  if (agEligibleAcres > county.minAcres) {
-    requiredHives += Math.ceil((agEligibleAcres - county.minAcres) / county.additionalHivesPer);
-  }
+  const requiredHives = requiredHivesFor(county, agEligibleAcres);
 
   const hiveCost = 197;
   const nucCost = 260;

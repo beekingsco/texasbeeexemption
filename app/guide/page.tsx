@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useMemo } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import countiesData from '@/data/texas-counties.json';
 
 interface County {
@@ -11,6 +11,7 @@ interface County {
   minAcres: number;
   minHives: number;
   additionalHivesPer: number;
+  hiveScaleRule?: string;
   avgTaxRate: number;
   agProductivityValue: number;
   notes: string;
@@ -26,7 +27,15 @@ const C = {
 function GuideContent() {
   const params = useSearchParams();
   const countyName = params.get('county');
-  const counties = useMemo(() => countiesData as County[], []);
+  const [counties, setCounties] = useState<County[]>(() => countiesData as County[]);
+  useEffect(() => {
+    fetch('/api/counties?state=TX')
+      .then((response) => response.json())
+      .then((data) => {
+        if (Array.isArray(data.counties) && data.counties.length > 0) setCounties(data.counties);
+      })
+      .catch(() => {});
+  }, []);
   const county = counties.find(c => c.name.toLowerCase() === (countyName || '').toLowerCase());
 
   if (!county) {

@@ -14,6 +14,25 @@ export function supabaseServiceKey(): string | null {
   return trimmed || null;
 }
 
+let missingKeyLogged = false;
+
+/**
+ * Logs a stable warning when the service role key is absent.
+ * Address searches, leads, and contacts all skip their Supabase write in that case.
+ * Returns true when the key is missing.
+ */
+export function warnIfSupabaseServiceKeyMissing(context: string): boolean {
+  if (supabaseServiceKey()) return false;
+  const message = `SUPABASE_SERVICE_ROLE_KEY is missing (${context}). Contractor Command writes are skipped until this env var is set on the Vercel tax-calculator project.`;
+  if (!missingKeyLogged) {
+    missingKeyLogged = true;
+    console.warn(message);
+  } else {
+    console.warn(`SUPABASE_SERVICE_ROLE_KEY is missing (${context}).`);
+  }
+  return true;
+}
+
 /** PostgREST / Postgres errors when an insert names a column the migration has not added yet. */
 export function missingColumnName(message: string): string | null {
   const patterns = [
@@ -88,7 +107,7 @@ export async function supabaseInsert(
 ): Promise<Record<string, unknown> | null> {
   const key = supabaseServiceKey();
   if (!key) {
-    console.error('address search log skipped: SUPABASE_SERVICE_ROLE_KEY is not set');
+    warnIfSupabaseServiceKeyMissing(`insert ${table}`);
     return null;
   }
 
@@ -114,7 +133,10 @@ export async function supabasePatchById(
   row: Record<string, unknown>,
 ): Promise<boolean> {
   const key = supabaseServiceKey();
-  if (!key) return false;
+  if (!key) {
+    warnIfSupabaseServiceKeyMissing(`update ${table}`);
+    return false;
+  }
   const payload: Record<string, unknown> = { ...row };
   for (let attempt = 0; attempt < 12; attempt++) {
     const response = await fetch(
@@ -138,9 +160,69 @@ export async function supabasePatchById(
   return false;
 }
 
+export async function supabaseSelect(
+  table: string,
+  query: string,
+): Promise<Record<string, unknown>[] | null> {
+  const key = supabaseServiceKey();
+  if (!key) {
+    warnIfSupabaseServiceKeyMissing(`select ${table}`);
+    return null;
+  }
+  const response = await fetch(`${ADDRESS_SEARCH_SUPABASE_URL}/rest/v1/${table}?${query}`, {
+    headers: authHeaders(key, 'return=representation'),
+    signal: AbortSignal.timeout(8000),
+  });
+  const text = await response.text();
+  if (!response.ok) {
+    console.error('supabase select failed', table, response.status, text.slice(0, 300));
+    return null;
+  }
+  try {
+    const parsed = JSON.parse(text) as unknown;
+    return Array.isArray(parsed) ? parsed as Record<string, unknown>[] : [];
+  } catch {
+    console.error('supabase select returned non-json', table);
+    return null;
+  }
+}
+
+/** Calls a Postgres function. null means the function is missing or the request failed. */
+export async function supabaseRpc(
+  fn: string,
+  args: Record<string, unknown>,
+): Promise<unknown | null> {
+  const key = supabaseServiceKey();
+  if (!key) {
+    warnIfSupabaseServiceKeyMissing(`rpc ${fn}`);
+    return null;
+  }
+  const response = await fetch(`${ADDRESS_SEARCH_SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+    method: 'POST',
+    headers: authHeaders(key, 'return=representation'),
+    body: JSON.stringify(args),
+    signal: AbortSignal.timeout(8000),
+  });
+  const text = await response.text();
+  if (!response.ok) {
+    const missing = response.status === 404 || /PGRST202|Could not find the function/i.test(text);
+    if (!missing) console.error('supabase rpc failed', fn, response.status, text.slice(0, 300));
+    return null;
+  }
+  if (!text) return null;
+  try {
+    return JSON.parse(text) as unknown;
+  } catch {
+    return text;
+  }
+}
+
 export async function supabaseLatestId(table: string, filter: string): Promise<string | null> {
   const key = supabaseServiceKey();
-  if (!key) return null;
+  if (!key) {
+    warnIfSupabaseServiceKeyMissing(`lookup ${table}`);
+    return null;
+  }
   const response = await fetch(
     `${ADDRESS_SEARCH_SUPABASE_URL}/rest/v1/${table}?select=id&${filter}&order=created_at.desc&limit=1`,
     { headers: authHeaders(key, 'return=representation') },

@@ -6,12 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --experimental-strip-types --import ./scripts/register-test-loader.mjs --test lib/*.test.ts"
   },
   "dependencies": {
     "@stripe/stripe-js": "^8.7.0",
     "@vercel/analytics": "^1.6.1",
     "@vercel/blob": "^2.2.0",
+    "@vercel/functions": "^3.9.9",
     "@vercel/postgres": "^0.10.0",
     "bcryptjs": "^3.0.3",
     "cheerio": "^1.2.0",
