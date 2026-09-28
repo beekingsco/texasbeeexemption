@@ -5,8 +5,7 @@ import countiesData from '@/data/texas-counties.json';
 import DeadlineCountdown from '@/app/components/DeadlineCountdown';
 import StateBadge from '@/app/components/StateBadge';
 import { requiredHivesFor } from '@/lib/hive-requirement';
-import { beginSearch, cancelSearch, completeSearch } from '@/lib/search-submit-guard';
-import { normalizeAlertAddress } from '@/lib/normalize-address';
+import { finishSearch, startSearch } from '@/lib/search-submit-guard';
 
 interface County {
   name: string;
@@ -228,7 +227,7 @@ export default function Home() {
 
   // Full pipeline: geocode → find county → fetch parcel data → show results
   const processAddress = async (addressText: string, magicKey?: string) => {
-    const claim = beginSearch(addressText);
+    const claim = startSearch(addressText);
     if (claim === 'ignore') return;
     let alertSearch = claim === 'run';
     let accepted = false;
@@ -251,14 +250,6 @@ export default function Home() {
       }
 
       const geo: GeocodedAddress = geoData.results[0];
-      if (normalizeAlertAddress(geo.address) !== normalizeAlertAddress(addressText)) {
-        const resolvedClaim = beginSearch(geo.address);
-        if (resolvedClaim === 'ignore') {
-          setIsSearching(false);
-          return;
-        }
-        if (resolvedClaim === 'run-silent') alertSearch = false;
-      }
       resolvedAddress = geo.address;
 
       if (geo.state && !['TX', 'Texas'].includes(geo.state)) {
@@ -333,9 +324,7 @@ export default function Home() {
       setIsSearching(false);
       setIsLoadingParcel(false);
     } finally {
-      const finish = accepted ? completeSearch : cancelSearch;
-      finish(addressText);
-      if (resolvedAddress) finish(resolvedAddress);
+      finishSearch(accepted, [addressText, resolvedAddress]);
     }
   };
 

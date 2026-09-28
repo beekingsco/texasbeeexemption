@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --experimental-strip-types --import ./scripts/register-test-loader.mjs --test lib/*.test.ts"
   },
   "dependencies": {
     "@stripe/stripe-js": "^8.7.0",

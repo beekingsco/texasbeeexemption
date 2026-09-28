@@ -5,7 +5,7 @@ import { CONTACT_SEARCH_REUSE_MS, logAddressSearch, recordSearchFollowUp } from 
 import { externalReferrer, leadAttribution } from '@/lib/lead-source';
 import { readServerSearchContext } from '@/lib/search-attribution';
 import { clientIpFromHeaders } from '@/lib/address-search';
-import { claimSearchAlert } from '@/lib/search-alert-dedupe';
+import { claimSearchAlert, searchAlertIdempotencyKey } from '@/lib/search-alert-dedupe';
 import {
   findBeeContact,
   findBeeContactBySession,
@@ -75,7 +75,9 @@ export async function POST(req: NextRequest) {
       const alertKey = (typeof address === 'string' && address.trim())
         ? address
         : [county, body.acres, body.marketValue].filter((part) => part != null && part !== '').join(' ');
-      const sendAlert = await claimSearchAlert(alertKey, clientIpFromHeaders(req.headers));
+      const visitorIp = clientIpFromHeaders(req.headers);
+      const sendAlert = await claimSearchAlert(alertKey, visitorIp);
+      const searchIdempotencyKey = searchAlertIdempotencyKey(alertKey, visitorIp);
       let contact = await findBeeContact(address || null, sessionId || null);
 
       if (contact) {
@@ -173,6 +175,7 @@ export async function POST(req: NextRequest) {
           county: contact.county,
           state: state || undefined,
           parcelStatus: parcelStatus || undefined,
+          searchIdempotencyKey,
           acres: contact.acres || undefined,
           estimatedSavings: contact.estimatedSavings || undefined,
           referrer: visitReferrer || undefined,

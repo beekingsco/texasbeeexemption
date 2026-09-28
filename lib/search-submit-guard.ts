@@ -1,37 +1,39 @@
 import { normalizeAlertAddress } from '@/lib/normalize-address';
 
 const WINDOW_MS = 60_000;
-const inflight = new Set<string>();
+let inFlight = false;
 const recent = new Map<string, number>();
 
 export type SearchClaim = 'run' | 'run-silent' | 'ignore';
 
 /**
- * run: this is the first search, and it should send the alert.
- * run-silent: the same address already alerted within 60s, so the lookup
- * can run again but the caller must not post another search alert.
- * ignore: a search for this address is already in flight (double click,
- * Enter plus suggestion click, or two events in the same frame).
+ * One search at a time in this tab.
+ * run: first search, and it should email.
+ * run-silent: this address already emailed within 60s. The lookup can run
+ * again (Try Again) but the caller must not post another search alert.
+ * ignore: a search is already in flight. Enter plus a suggestion click, or a
+ * second click before React re-renders, hits this even when the two address
+ * strings are not the same.
  */
-export function beginSearch(address: string): SearchClaim {
+export function startSearch(address: string, now = Date.now()): SearchClaim {
   const key = normalizeAlertAddress(address);
-  if (!key) return 'ignore';
-  if (inflight.has(key)) return 'ignore';
+  if (!key || inFlight) return 'ignore';
+  inFlight = true;
   const prev = recent.get(key);
-  inflight.add(key);
-  if (prev && Date.now() - prev < WINDOW_MS) return 'run-silent';
+  if (prev != null && now - prev < WINDOW_MS) return 'run-silent';
   return 'run';
 }
 
-export function completeSearch(address: string): void {
-  const key = normalizeAlertAddress(address);
-  if (!key) return;
-  inflight.delete(key);
-  recent.set(key, Date.now());
+export function finishSearch(accepted: boolean, addresses: string[], now = Date.now()): void {
+  inFlight = false;
+  if (!accepted) return;
+  for (const address of addresses) {
+    const key = normalizeAlertAddress(address);
+    if (key) recent.set(key, now);
+  }
 }
 
-export function cancelSearch(address: string): void {
-  const key = normalizeAlertAddress(address);
-  if (!key) return;
-  inflight.delete(key);
+export function resetSearchSubmitGuardForTests(): void {
+  inFlight = false;
+  recent.clear();
 }

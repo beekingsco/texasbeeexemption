@@ -281,11 +281,15 @@ async function deliverAlerts(event: NotifyEvent, stamped: NotifyData): Promise<v
   const jobs: Promise<void>[] = [];
 
   if (RESEND_API_KEY) {
+    const idempotencyKey = typeof stamped.searchIdempotencyKey === 'string'
+      ? stamped.searchIdempotencyKey.trim()
+      : '';
     jobs.push(fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
         'Content-Type': 'application/json',
+        ...(idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : {}),
       },
       body: JSON.stringify({
         from: `BeeExemption Alerts <${FROM_EMAIL}>`,

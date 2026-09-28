@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
-import { beginSearch, cancelSearch, completeSearch } from '@/lib/search-submit-guard';
-import { normalizeAlertAddress } from '@/lib/normalize-address';
+import { finishSearch, startSearch } from '@/lib/search-submit-guard';
 import countiesData from '@/data/arkansas-counties.json';
 import DeadlineCountdown from '@/app/components/DeadlineCountdown';
 import StateBadge from '@/app/components/StateBadge';
@@ -154,7 +153,7 @@ export default function ArkansasCalculator() {
   };
 
   const processAddress = async (addressText: string, magicKey?: string) => {
-    const claim = beginSearch(addressText);
+    const claim = startSearch(addressText);
     if (claim === 'ignore') return;
     let alertSearch = claim === 'run';
     let accepted = false;
@@ -176,14 +175,6 @@ export default function ArkansasCalculator() {
       }
 
       const geo: GeocodedAddress = geoData.results[0];
-      if (normalizeAlertAddress(geo.address) !== normalizeAlertAddress(addressText)) {
-        const resolvedClaim = beginSearch(geo.address);
-        if (resolvedClaim === 'ignore') {
-          setIsSearching(false);
-          return;
-        }
-        if (resolvedClaim === 'run-silent') alertSearch = false;
-      }
       resolvedAddress = geo.address;
 
       // Check it's Arkansas
@@ -221,9 +212,7 @@ export default function ArkansasCalculator() {
     } catch {
       setSearchError('Something went wrong. Please try again.');
     } finally {
-      const finish = accepted ? completeSearch : cancelSearch;
-      finish(addressText);
-      if (resolvedAddress) finish(resolvedAddress);
+      finishSearch(accepted, [addressText, resolvedAddress]);
     }
     setIsSearching(false);
   };
