@@ -44,13 +44,4 @@ find "$BACKUP_DIR" -name "backup_*.sql.gz" -mtime +30 -delete
 KEPT=$(ls "$BACKUP_DIR" | wc -l | tr -d ' ')
 echo "📁 $KEPT backup(s) retained in $BACKUP_DIR"
 
-# Telegram alert
-TG_BOT_TOKEN="${TG_BOT_TOKEN:-}"
-TG_CHAT_ID="${TG_ALERT_CHAT_ID:-8331764023}"
-if [ -n "$TG_BOT_TOKEN" ]; then
-  MSG="✅ BeeExemption DB backup complete — ${TIMESTAMP} (${SIZE}gz)"
-  curl -s -X POST "https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage" \
-    -d "chat_id=${TG_CHAT_ID}&text=${MSG}" > /dev/null
-fi
-
 echo "Done."
