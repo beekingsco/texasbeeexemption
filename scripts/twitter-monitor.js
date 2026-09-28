@@ -336,9 +336,9 @@ function getQueryIndex() {
   return hour % QUERIES.length;
 }
 
-// ─── Telegram Markdown Formatting ──────────────────────────────────────────────
+// ─── Markdown Formatting ───────────────────────────────────────────────────────
 
-function formatResultsForTelegram(query, tweets, users, topTweets) {
+function formatResults(query, tweets, users, topTweets) {
   const userMap = {};
   if (users) {
     for (const u of users) {
@@ -586,7 +586,7 @@ async function main() {
       })));
 
       // ── Format ──
-      const output = formatResultsForTelegram(currentQuery, tweets, users, top5);
+      const output = formatResults(currentQuery, tweets, users, top5);
       allOutput += output;
 
       if (!isJson) {
@@ -620,19 +620,10 @@ async function main() {
       timestamp: new Date().toISOString(),
       queries: queriesToRun,
       topTweets: allTopTweets,
-      telegramOutput: allOutput,
+      output: allOutput,
     };
     console.log(JSON.stringify(jsonOutput, null, 2));
   }
-
-  // ── Telegram output marker ──
-  console.log('\n══════════════════════════════════');
-  console.log('TELEGRAM_OUTPUT_START');
-  console.log('══════════════════════════════════');
-  console.log(allOutput);
-  console.log('══════════════════════════════════');
-  console.log('TELEGRAM_OUTPUT_END');
-  console.log('══════════════════════════════════');
 
   return allOutput;
 }

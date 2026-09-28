@@ -192,63 +192,6 @@ function buildEmailBody(event: NotifyEvent, data: NotifyData): string {
 </html>`;
 }
 
-function buildTelegramText(event: NotifyEvent, data: NotifyData): string {
-  const emojiMap: Record<NotifyEvent, string> = {
-    address_searched: '🔍',
-    guide_downloaded: '📥',
-    report_purchased: '💰',
-    unlimited_signup: '🎉',
-    agent_trial_started: '🐝',
-    agent_trial_converted: '✅',
-    new_lead_captured: '📋',
-  };
-
-  const labelMap: Record<NotifyEvent, string> = {
-    address_searched: 'Address Searched',
-    guide_downloaded: 'Guide Downloaded',
-    report_purchased: 'Report Purchased',
-    unlimited_signup: 'Unlimited Signup',
-    agent_trial_started: 'Agent Trial Started',
-    agent_trial_converted: 'Agent Converted',
-    new_lead_captured: 'New Lead',
-  };
-
-  const emoji = emojiMap[event] || '📣';
-  const label = labelMap[event] || event;
-
-  const lines = [
-    `${emoji} *${label}*`,
-    '',
-    `Source: ${shown(sourceOf(data))}`,
-    `Entry: ${shown(entryOf(data))}`,
-    `City: ${shown(data.city)}`,
-    `Region: ${shown(data.region)}`,
-    `Country: ${shown(data.country)}`,
-    `IP: ${shown(data.ip)}`,
-    '',
-  ];
-  
-  if (data.name) lines.push(`👤 ${data.name}`);
-  if (data.email) lines.push(`📧 ${data.email}`);
-  if (data.address) lines.push(`📍 ${data.address}`);
-  if (data.county) lines.push(`🗺️ ${data.county} County`);
-  if (data.acres) lines.push(`🏡 ${data.acres} acres`);
-  if (data.estimatedSavings) lines.push(`💵 Est. savings: $${data.estimatedSavings.toLocaleString()}`);
-  if (data.amount) lines.push(`💰 Amount: ${formatMoney(data.amount)}`);
-  if (data.agentName) lines.push(`🐝 Agent: ${data.agentName}`);
-  if (data.agentEmail) lines.push(`📧 Agent: ${data.agentEmail}`);
-  if (data.tier) lines.push(`📦 Tier: ${data.tier}`);
-  if (event === 'address_searched') {
-    const statusLine = searchStatusSentence(data);
-    if (statusLine) lines.push(statusLine);
-  }
-
-  lines.push('');
-  lines.push(`⏰ ${centralTimeLabel()}`);
-
-  return lines.join('\n');
-}
-
 type RequestLike = {
   headers: { get(name: string): string | null };
   cookies: { get(name: string): { value: string } | undefined };
@@ -307,27 +250,6 @@ async function deliverAlerts(event: NotifyEvent, stamped: NotifyData): Promise<v
     }));
   } else {
     console.warn('RESEND_API_KEY is missing; admin email was not sent');
-  }
-
-  const tgBotToken = process.env.TG_BOT_TOKEN;
-  const tgChatId = process.env.TG_ALERT_CHAT_ID;
-  if (tgBotToken && tgChatId) {
-    jobs.push(fetch(`https://api.telegram.org/bot${tgBotToken}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: tgChatId,
-        text: buildTelegramText(event, stamped),
-        parse_mode: 'Markdown',
-      }),
-    }).then(async (response) => {
-      if (!response.ok) {
-        const body = await response.text();
-        console.error('Telegram alert failed', response.status, body.slice(0, 300));
-      }
-    }).catch((error) => {
-      console.error('Telegram alert failed', error);
-    }));
   }
 
   await Promise.all(jobs);

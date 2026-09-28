@@ -4,44 +4,11 @@ import { leadAttribution } from '@/lib/lead-source';
 import { notifyFromRequest } from '@/lib/notify';
 import { listBeeLeads, saveBeeLead, type BeeLead } from '@/lib/bee-store';
 
-// Telegram lead alert
-const TG_BOT_TOKEN = process.env.TG_BOT_TOKEN || '';
-const TG_CHAT_ID = process.env.TG_ALERT_CHAT_ID || '';
-
-// OpenClaw notification (Scout → Chris via Telegram)
+// OpenClaw notification (Scout → Chris)
 const OPENCLAW_GATEWAY = process.env.OPENCLAW_GATEWAY_URL || '';
 const OPENCLAW_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN || '';
 
 type Lead = BeeLead;
-
-/* ─── Telegram alert ─── */
-async function sendTelegramAlert(lead: Lead): Promise<void> {
-  if (!TG_BOT_TOKEN || !TG_CHAT_ID) return;
-  try {
-    const savings = lead.estimatedSavings ? `$${Math.round(lead.estimatedSavings).toLocaleString()}` : 'N/A';
-    const text = `🐝 *New Lead!*\n\n` +
-      `Source: ${lead.source}\n` +
-      `Entry: ${lead.entry || 'direct'}\n\n` +
-      `*${lead.firstName} ${lead.lastName}*\n` +
-      `📧 ${lead.email}\n` +
-      (lead.phone ? `📱 ${lead.phone}\n` : '') +
-      `📍 ${lead.county || 'Unknown'} County\n` +
-      (lead.address ? `🏠 ${lead.address}\n` : '') +
-      (lead.acres ? `🏡 ${lead.acres} acres\n` : '') +
-      (lead.appraisedValue ? `💰 Appraised: $${Math.round(lead.appraisedValue).toLocaleString()}\n` : '') +
-      `💵 Est. savings: ${savings}/yr\n` +
-      (lead.agentRef ? `🤝 Agent ref: ${lead.agentRef}\n` : '') +
-      `\n⏰ ${new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' })}`;
-
-    await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: TG_CHAT_ID, text, parse_mode: 'Markdown' }),
-    });
-  } catch {
-    // Silent fail
-  }
-}
 
 /* ─── POST — capture a new lead ─── */
 export async function POST(req: NextRequest) {
@@ -88,7 +55,6 @@ export async function POST(req: NextRequest) {
 
     await saveBeeLead(lead);
 
-    await sendTelegramAlert(lead);
     await notifyFromRequest(req, 'new_lead_captured', {
       name: `${lead.firstName} ${lead.lastName}`.trim(),
       email: lead.email,
