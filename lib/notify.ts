@@ -82,6 +82,28 @@ function shown(value: unknown): string {
   return typeof value === 'string' && value.trim() ? value.trim() : 'unknown';
 }
 
+const GEOCODE_ONLY_STATES = new Set(['fl', 'florida', 'ar', 'arkansas', 'la', 'louisiana']);
+
+/** Subject marker for a search alert. null means a normal successful Texas parcel search. */
+export function searchStatusMarker(data: NotifyData): string | null {
+  const status = typeof data.parcelStatus === 'string' ? data.parcelStatus.trim().toLowerCase() : '';
+  if (status === 'no_parcel') return '[NO PARCEL]';
+  if (status === 'lookup_failed') return '[LOOKUP FAILED]';
+  if (status === 'geocode_only') return '[GEOCODE ONLY — no parcel lookup]';
+  const state = typeof data.state === 'string' ? data.state.trim().toLowerCase() : '';
+  if (GEOCODE_ONLY_STATES.has(state)) return '[GEOCODE ONLY — no parcel lookup]';
+  if ((state === 'tx' || state === 'texas') && status !== 'ok') return '[LOOKUP FAILED]';
+  return null;
+}
+
+export function searchStatusSentence(data: NotifyData): string | null {
+  const marker = searchStatusMarker(data);
+  if (!marker) return null;
+  if (marker.includes('GEOCODE')) return 'Geocode only, no parcel lookup.';
+  if (marker.includes('NO PARCEL')) return 'NO PARCEL. The lookup ran and did not find a parcel.';
+  return 'LOOKUP FAILED. The parcel service did not return a property.';
+}
+
 function buildSubject(event: NotifyEvent, data: NotifyData): string {
   const source = sourceOf(data);
   if (LEAD_SUBJECT_EVENTS.has(event)) {
@@ -93,8 +115,11 @@ function buildSubject(event: NotifyEvent, data: NotifyData): string {
 
 function subjectFor(event: NotifyEvent, data: NotifyData): string {
   switch (event) {
-    case 'address_searched':
-      return `🔍 New Search: ${data.address || data.county || 'Unknown'}`;
+    case 'address_searched': {
+      const marker = searchStatusMarker(data);
+      const place = data.address || data.county || 'Unknown';
+      return marker ? `🔍 New Search ${marker}: ${place}` : `🔍 New Search: ${place}`;
+    }
     case 'guide_downloaded':
       return `📥 Guide Downloaded: ${data.name || data.email || 'Unknown'} — ${data.county || 'Unknown'} County`;
     case 'report_purchased':
@@ -120,7 +145,8 @@ function buildEmailBody(event: NotifyEvent, data: NotifyData): string {
   const region = escapeHtml(shown(data.region));
   const country = escapeHtml(shown(data.country));
   const ip = escapeHtml(shown(data.ip));
-  
+  const statusLine = event === 'address_searched' ? searchStatusSentence(data) : null;
+
   const rows = Object.entries(data)
     .filter(([k, v]) => !VISITOR_KEYS.has(k) && v !== undefined && v !== null && v !== '')
     .map(([k, v]) => {
@@ -156,6 +182,7 @@ function buildEmailBody(event: NotifyEvent, data: NotifyData): string {
         <p style="margin:4px 0 0;font-size:14px;font-weight:700;color:#053249;">Region: ${region}</p>
         <p style="margin:4px 0 0;font-size:14px;font-weight:700;color:#053249;">Country: ${country}</p>
         <p style="margin:4px 0 0;font-size:14px;font-weight:700;color:#053249;">IP: ${ip}</p>
+        ${statusLine ? `<p style="margin:10px 0 0;font-size:16px;font-weight:800;color:#9a3412;">${escapeHtml(statusLine)}</p>` : ''}
       </div>
       <table style="width:100%;border-collapse:collapse;">${rows}</table>
       <p style="color:#8DA4B5;font-size:12px;margin:20px 0 0;text-align:center;">${timestamp}</p>
@@ -211,6 +238,10 @@ function buildTelegramText(event: NotifyEvent, data: NotifyData): string {
   if (data.agentName) lines.push(`🐝 Agent: ${data.agentName}`);
   if (data.agentEmail) lines.push(`📧 Agent: ${data.agentEmail}`);
   if (data.tier) lines.push(`📦 Tier: ${data.tier}`);
+  if (event === 'address_searched') {
+    const statusLine = searchStatusSentence(data);
+    if (statusLine) lines.push(statusLine);
+  }
 
   lines.push('');
   lines.push(`⏰ ${centralTimeLabel()}`);
@@ -218,17 +249,13 @@ function buildTelegramText(event: NotifyEvent, data: NotifyData): string {
   return lines.join('\n');
 }
 
-/**
- * Send admin notification via email (Resend) and Telegram.
- * Fire-and-forget — never throws, never blocks.
- */
 type RequestLike = {
   headers: { get(name: string): string | null };
   cookies: { get(name: string): { value: string } | undefined };
 };
 
 /** Stamps this site's source and the visit entry point, then sends the alert. */
-export function notifyFromRequest(request: RequestLike, event: NotifyEvent, data: NotifyData): void {
+export async function notifyFromRequest(request: RequestLike, event: NotifyEvent, data: NotifyData): Promise<void> {
   const attribution = leadAttribution(request);
   const bodyReferrer = typeof data.referrer === 'string' ? data.referrer : null;
   const referrer = attribution.context.referrer || externalReferrer(bodyReferrer);
@@ -239,7 +266,7 @@ export function notifyFromRequest(request: RequestLike, event: NotifyEvent, data
     src: attribution.context.src,
     referrer,
   });
-  notifyAdmin(event, {
+  await notifyAdmin(event, {
     ...data,
     source: attribution.source,
     entry: entry.label,
@@ -250,15 +277,11 @@ export function notifyFromRequest(request: RequestLike, event: NotifyEvent, data
   });
 }
 
-export function notifyAdmin(event: NotifyEvent, data: NotifyData): void {
-  const stamped: NotifyData = {
-    ...data,
-    source: sourceOf(data),
-    entry: entryOf(data),
-  };
-  // Email via Resend (fire-and-forget)
+async function deliverAlerts(event: NotifyEvent, stamped: NotifyData): Promise<void> {
+  const jobs: Promise<void>[] = [];
+
   if (RESEND_API_KEY) {
-    fetch('https://api.resend.com/emails', {
+    jobs.push(fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
@@ -270,14 +293,22 @@ export function notifyAdmin(event: NotifyEvent, data: NotifyData): void {
         subject: buildSubject(event, stamped),
         html: buildEmailBody(event, stamped),
       }),
-    }).catch(() => { /* silent */ });
+    }).then(async (response) => {
+      if (!response.ok) {
+        const body = await response.text();
+        console.error('Resend alert failed', response.status, body.slice(0, 300));
+      }
+    }).catch((error) => {
+      console.error('Resend alert failed', error);
+    }));
+  } else {
+    console.warn('RESEND_API_KEY is missing; admin email was not sent');
   }
 
-  // Telegram via bot (fire-and-forget)
   const tgBotToken = process.env.TG_BOT_TOKEN;
   const tgChatId = process.env.TG_ALERT_CHAT_ID;
   if (tgBotToken && tgChatId) {
-    fetch(`https://api.telegram.org/bot${tgBotToken}/sendMessage`, {
+    jobs.push(fetch(`https://api.telegram.org/bot${tgBotToken}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -285,6 +316,31 @@ export function notifyAdmin(event: NotifyEvent, data: NotifyData): void {
         text: buildTelegramText(event, stamped),
         parse_mode: 'Markdown',
       }),
-    }).catch(() => { /* silent */ });
+    }).then(async (response) => {
+      if (!response.ok) {
+        const body = await response.text();
+        console.error('Telegram alert failed', response.status, body.slice(0, 300));
+      }
+    }).catch((error) => {
+      console.error('Telegram alert failed', error);
+    }));
   }
+
+  await Promise.all(jobs);
+}
+
+export async function notifyAdmin(event: NotifyEvent, data: NotifyData): Promise<void> {
+  const stamped: NotifyData = {
+    ...data,
+    source: sourceOf(data),
+    entry: entryOf(data),
+  };
+  const task = deliverAlerts(event, stamped);
+  try {
+    const { waitUntil } = await import('@vercel/functions');
+    waitUntil(task);
+  } catch {
+    // Local runs and non-request contexts have no waitUntil. The await below still finishes the send.
+  }
+  await task;
 }

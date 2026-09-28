@@ -1,46 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sql } from '@vercel/postgres';
-import { ensureDB, isPostgresConfigured } from '@/lib/db';
-import { readJSON, writeJSON, forwardToWebhook } from '@/lib/storage';
+import { forwardToWebhook } from '@/lib/storage';
 import { notifyFromRequest } from '@/lib/notify';
 import { CONTACT_SEARCH_REUSE_MS, logAddressSearch, recordSearchFollowUp } from '@/lib/address-search-log';
 import { externalReferrer, leadAttribution } from '@/lib/lead-source';
 import { readServerSearchContext } from '@/lib/search-attribution';
-
-interface Contact {
-  id: string;
-  address: string;
-  county: string;
-  lat: number | null;
-  lng: number | null;
-  ownerName: string;
-  acres: number | null;
-  marketValue: number | null;
-  landValue: number | null;
-  improvementValue: number | null;
-  estimatedSavings: number | null;
-  requiredHives: number | null;
-  searchCount: number;
-  viewedResults: boolean;
-  viewedDetails: boolean;
-  adjustedEstimate: boolean;
-  startedSignup: boolean;
-  completedSignup: boolean;
-  viewedGuide: boolean;
-  timeOnResultsMs: number;
-  score: number;
-  tier: 'hot' | 'warm' | 'curious' | 'unknown';
-  tags: string[];
-  referrer: string;
-  userAgent: string;
-  sessionId: string;
-  firstSeen: string;
-  lastSeen: string;
-  email: string;
-  phone: string;
-  firstName: string;
-  lastName: string;
-}
+import { clientIpFromHeaders } from '@/lib/address-search';
+import { claimSearchAlert } from '@/lib/search-alert-dedupe';
+import {
+  findBeeContact,
+  findBeeContactBySession,
+  listBeeContacts,
+  saveBeeContact,
+  type BeeContact as Contact,
+} from '@/lib/bee-store';
 
 function scoreContact(c: Contact): { score: number; tier: 'hot' | 'warm' | 'curious' | 'unknown'; tags: string[] } {
   let score = 0;
@@ -84,111 +56,11 @@ function scoreContact(c: Contact): { score: number; tier: 'hot' | 'warm' | 'curi
   return { score, tier, tags };
 }
 
-// Convert DB row to Contact object
-function rowToContact(row: Record<string, unknown>): Contact {
-  return {
-    id: row.id as string,
-    address: (row.address as string) || '',
-    county: (row.county as string) || '',
-    lat: row.lat as number | null,
-    lng: row.lng as number | null,
-    ownerName: (row.owner_name as string) || '',
-    acres: row.acres as number | null,
-    marketValue: row.market_value as number | null,
-    landValue: row.land_value as number | null,
-    improvementValue: row.improvement_value as number | null,
-    estimatedSavings: row.estimated_savings as number | null,
-    requiredHives: row.required_hives as number | null,
-    searchCount: (row.search_count as number) || 1,
-    viewedResults: (row.viewed_results as boolean) || false,
-    viewedDetails: (row.viewed_details as boolean) || false,
-    adjustedEstimate: (row.adjusted_estimate as boolean) || false,
-    startedSignup: (row.started_signup as boolean) || false,
-    completedSignup: (row.completed_signup as boolean) || false,
-    viewedGuide: (row.viewed_guide as boolean) || false,
-    timeOnResultsMs: (row.time_on_results_ms as number) || 0,
-    score: (row.score as number) || 0,
-    tier: (row.tier as 'hot' | 'warm' | 'curious' | 'unknown') || 'unknown',
-    tags: row.tags ? (row.tags as string).split(',').filter(Boolean) : [],
-    referrer: (row.referrer as string) || '',
-    userAgent: (row.user_agent as string) || '',
-    sessionId: (row.session_id as string) || '',
-    firstSeen: row.first_seen ? new Date(row.first_seen as string).toISOString() : new Date().toISOString(),
-    lastSeen: row.last_seen ? new Date(row.last_seen as string).toISOString() : new Date().toISOString(),
-    email: (row.email as string) || '',
-    phone: (row.phone as string) || '',
-    firstName: (row.first_name as string) || '',
-    lastName: (row.last_name as string) || '',
-  };
-}
-
-// ── Postgres-backed functions ──
-
-async function pgFindContact(address: string | null, sessionId: string | null): Promise<Contact | null> {
-  if (address) {
-    const result = await sql`SELECT * FROM contacts WHERE address = ${address} LIMIT 1`;
-    if (result.rows.length > 0) return rowToContact(result.rows[0]);
-  }
-  if (sessionId) {
-    const result = await sql`SELECT * FROM contacts WHERE session_id = ${sessionId} AND completed_signup = false LIMIT 1`;
-    if (result.rows.length > 0) return rowToContact(result.rows[0]);
-  }
-  return null;
-}
-
-async function pgUpsertContact(contact: Contact): Promise<void> {
-  const tagsStr = contact.tags.join(',');
-  await sql`
-    INSERT INTO contacts (id, address, county, lat, lng, owner_name, acres, market_value, land_value,
-      improvement_value, estimated_savings, required_hives, search_count, viewed_results, viewed_details,
-      adjusted_estimate, started_signup, completed_signup, viewed_guide, time_on_results_ms, score, tier,
-      tags, referrer, user_agent, session_id, first_seen, last_seen, email, phone, first_name, last_name)
-    VALUES (${contact.id}, ${contact.address}, ${contact.county}, ${contact.lat}, ${contact.lng},
-      ${contact.ownerName}, ${contact.acres}, ${contact.marketValue}, ${contact.landValue},
-      ${contact.improvementValue}, ${contact.estimatedSavings}, ${contact.requiredHives},
-      ${contact.searchCount}, ${contact.viewedResults}, ${contact.viewedDetails},
-      ${contact.adjustedEstimate}, ${contact.startedSignup}, ${contact.completedSignup},
-      ${contact.viewedGuide}, ${contact.timeOnResultsMs}, ${contact.score}, ${contact.tier},
-      ${tagsStr}, ${contact.referrer}, ${contact.userAgent}, ${contact.sessionId},
-      ${contact.firstSeen}, ${contact.lastSeen}, ${contact.email}, ${contact.phone},
-      ${contact.firstName}, ${contact.lastName})
-    ON CONFLICT (id) DO UPDATE SET
-      address = ${contact.address}, county = ${contact.county}, lat = ${contact.lat}, lng = ${contact.lng},
-      owner_name = ${contact.ownerName}, acres = ${contact.acres}, market_value = ${contact.marketValue},
-      land_value = ${contact.landValue}, improvement_value = ${contact.improvementValue},
-      estimated_savings = ${contact.estimatedSavings}, required_hives = ${contact.requiredHives},
-      search_count = ${contact.searchCount}, viewed_results = ${contact.viewedResults},
-      viewed_details = ${contact.viewedDetails}, adjusted_estimate = ${contact.adjustedEstimate},
-      started_signup = ${contact.startedSignup}, completed_signup = ${contact.completedSignup},
-      viewed_guide = ${contact.viewedGuide}, time_on_results_ms = ${contact.timeOnResultsMs},
-      score = ${contact.score}, tier = ${contact.tier}, tags = ${tagsStr},
-      last_seen = ${contact.lastSeen}, email = ${contact.email}, phone = ${contact.phone},
-      first_name = ${contact.firstName}, last_name = ${contact.lastName}
-  `;
-}
-
-async function pgGetAllContacts(): Promise<Contact[]> {
-  const result = await sql`SELECT * FROM contacts ORDER BY score DESC`;
-  return result.rows.map(rowToContact);
-}
-
-// ── JSON file-backed functions (fallback) ──
-
-async function readContacts(): Promise<Contact[]> {
-  return readJSON<Contact[]>('contacts.json', []);
-}
-
-async function writeContacts(contacts: Contact[]): Promise<void> {
-  await writeJSON('contacts.json', contacts);
-}
-
 // ── POST — track a search or update engagement ──
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { action } = body;
-    const usePg = isPostgresConfigured();
-    if (usePg) await ensureDB();
 
     if (action === 'search') {
       const { address, lat, lng, ownerName, acres, marketValue, landValue,
@@ -199,17 +71,12 @@ export async function POST(req: NextRequest) {
         ? body.county
         : parish;
 
-      let contact: Contact | null | undefined;
-
-      if (usePg) {
-        contact = await pgFindContact(address || null, sessionId || null);
-      } else {
-        const contacts = await readContacts();
-        contact = contacts.find(c => 
-          (address && c.address === address) || 
-          (sessionId && c.sessionId === sessionId && !c.completedSignup)
-        );
-      }
+      const parcelStatus = typeof body.parcelStatus === 'string' ? body.parcelStatus : '';
+      const alertKey = (typeof address === 'string' && address.trim())
+        ? address
+        : [county, body.acres, body.marketValue].filter((part) => part != null && part !== '').join(' ');
+      const sendAlert = await claimSearchAlert(alertKey, clientIpFromHeaders(req.headers));
+      let contact = await findBeeContact(address || null, sessionId || null);
 
       if (contact) {
         contact.searchCount += 1;
@@ -259,22 +126,24 @@ export async function POST(req: NextRequest) {
           phone: '',
           firstName: '',
           lastName: '',
+          state: state || '',
+          parcelStatus,
         };
       }
+      contact.state = state || contact.state;
+      if (parcelStatus) contact.parcelStatus = parcelStatus;
 
       const scoring = scoreContact(contact);
       contact.score = scoring.score;
       contact.tier = scoring.tier;
       contact.tags = scoring.tags;
 
-      if (usePg) {
-        await pgUpsertContact(contact);
-      } else {
-        const contacts = await readContacts();
-        const idx = contacts.findIndex(c => c.id === contact!.id);
-        if (idx >= 0) contacts[idx] = contact;
-        else contacts.push(contact);
-        await writeContacts(contacts);
+      let stored = true;
+      try {
+        await saveBeeContact(contact);
+      } catch (error) {
+        stored = false;
+        console.error('contact save failed', error);
       }
 
       await forwardToWebhook('contact_search', contact as unknown as Record<string, unknown>);
@@ -298,42 +167,25 @@ export async function POST(req: NextRequest) {
         headers: req.headers,
       }, { reuseRecentMs: CONTACT_SEARCH_REUSE_MS });
 
-      // Fire admin notification (non-blocking). Contacts row above is unchanged.
-      notifyFromRequest(req, 'address_searched', {
-        address: contact.address,
-        county: contact.county,
-        acres: contact.acres || undefined,
-        estimatedSavings: contact.estimatedSavings || undefined,
-        referrer: visitReferrer || undefined,
-      });
+      if (sendAlert) {
+        await notifyFromRequest(req, 'address_searched', {
+          address: contact.address,
+          county: contact.county,
+          state: state || undefined,
+          parcelStatus: parcelStatus || undefined,
+          acres: contact.acres || undefined,
+          estimatedSavings: contact.estimatedSavings || undefined,
+          referrer: visitReferrer || undefined,
+        });
+      }
 
-      return NextResponse.json({ ok: true, id: contact.id, tier: contact.tier });
+      return NextResponse.json({ ok: true, id: contact.id, tier: contact.tier, stored });
     }
 
     if (action === 'engage') {
       const { sessionId, event, timeMs } = body;
-
-      if (usePg) {
-        const result = await sql`SELECT * FROM contacts WHERE session_id = ${sessionId} LIMIT 1`;
-        if (result.rows.length > 0) {
-          const contact = rowToContact(result.rows[0]);
-          contact.lastSeen = new Date().toISOString();
-          if (event === 'viewed_results') contact.viewedResults = true;
-          if (event === 'viewed_details') contact.viewedDetails = true;
-          if (event === 'adjusted_estimate') contact.adjustedEstimate = true;
-          if (event === 'started_signup') contact.startedSignup = true;
-          if (event === 'completed_signup') contact.completedSignup = true;
-          if (event === 'viewed_guide') contact.viewedGuide = true;
-          if (event === 'time_on_results' && timeMs) contact.timeOnResultsMs += timeMs;
-          const scoring = scoreContact(contact);
-          contact.score = scoring.score;
-          contact.tier = scoring.tier;
-          contact.tags = scoring.tags;
-          await pgUpsertContact(contact);
-        }
-      } else {
-        const contacts = await readContacts();
-        const contact = contacts.find(c => c.sessionId === sessionId);
+      if (sessionId) {
+        const contact = await findBeeContactBySession(sessionId);
         if (contact) {
           contact.lastSeen = new Date().toISOString();
           if (event === 'viewed_results') contact.viewedResults = true;
@@ -347,7 +199,7 @@ export async function POST(req: NextRequest) {
           contact.score = scoring.score;
           contact.tier = scoring.tier;
           contact.tags = scoring.tags;
-          await writeContacts(contacts);
+          await saveBeeContact(contact);
         }
       }
       return NextResponse.json({ ok: true });
@@ -355,26 +207,8 @@ export async function POST(req: NextRequest) {
 
     if (action === 'identify') {
       const { sessionId, firstName, lastName, email, phone } = body;
-
-      if (usePg) {
-        const result = await sql`SELECT * FROM contacts WHERE session_id = ${sessionId} LIMIT 1`;
-        if (result.rows.length > 0) {
-          const contact = rowToContact(result.rows[0]);
-          if (firstName) contact.firstName = firstName;
-          if (lastName) contact.lastName = lastName;
-          if (email) contact.email = email;
-          if (phone) contact.phone = phone;
-          contact.completedSignup = true;
-          contact.lastSeen = new Date().toISOString();
-          const scoring = scoreContact(contact);
-          contact.score = scoring.score;
-          contact.tier = scoring.tier;
-          contact.tags = scoring.tags;
-          await pgUpsertContact(contact);
-        }
-      } else {
-        const contacts = await readContacts();
-        const contact = contacts.find(c => c.sessionId === sessionId);
+      if (sessionId) {
+        const contact = await findBeeContactBySession(sessionId);
         if (contact) {
           if (firstName) contact.firstName = firstName;
           if (lastName) contact.lastName = lastName;
@@ -386,7 +220,7 @@ export async function POST(req: NextRequest) {
           contact.score = scoring.score;
           contact.tier = scoring.tier;
           contact.tags = scoring.tags;
-          await writeContacts(contacts);
+          await saveBeeContact(contact);
         }
       }
       const context = readServerSearchContext(req);
@@ -414,15 +248,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const usePg = isPostgresConfigured();
-  if (usePg) await ensureDB();
-
-  let contacts: Contact[];
-  if (usePg) {
-    contacts = await pgGetAllContacts();
-  } else {
-    contacts = await readContacts();
-  }
+  const contacts = await listBeeContacts();
 
   const tier = searchParams.get('tier');
   const format = searchParams.get('format');

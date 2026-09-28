@@ -1,4 +1,3 @@
-import texasCounties from '@/data/texas-counties.json';
 import {
   blankToNull,
   cleanCounty,
@@ -8,16 +7,12 @@ import {
   hashIp,
   isNorthTexas,
 } from '@/lib/address-search';
+import { loadTexasCounties } from '@/lib/county-rules';
 import { entryFromContext, SITE_SOURCE } from '@/lib/lead-source';
 import type { SearchContext } from '@/lib/search-attribution';
 import { supabaseInsert, supabaseLatestId, supabasePatchById, supabaseServiceKey } from '@/lib/supabase-rest';
 
 const TABLE = 'address_searches';
-
-type CountyRule = { name: string; minAcres: number };
-const TEXAS_MIN_ACRES = new Map(
-  (texasCounties as CountyRule[]).map((county) => [county.name.toLowerCase(), county.minAcres]),
-);
 
 export type AddressSearchEntry = {
   rawAddress: string;
@@ -39,11 +34,12 @@ export type AddressSearchEntry = {
   phone?: string | null;
 };
 
-export function texasEligibility(county: string | null | undefined, acres: number | null | undefined): string | null {
+export async function texasEligibility(county: string | null | undefined, acres: number | null | undefined): Promise<string | null> {
   const cleaned = cleanCounty(county);
   const acreage = finiteOrNull(acres ?? null);
   if (!cleaned || acreage == null) return null;
-  const minAcres = TEXAS_MIN_ACRES.get(cleaned.toLowerCase());
+  const { counties } = await loadTexasCounties();
+  const minAcres = counties.find((countyRule) => countyRule.name.toLowerCase() === cleaned.toLowerCase())?.minAcres;
   if (minAcres == null) return null;
   const agEligible = Math.max(0, acreage - 1);
   return agEligible >= minAcres ? 'eligible' : 'not_eligible';
@@ -53,13 +49,13 @@ function utmValue(context: SearchContext): string | null {
   return entryFromContext(context).code;
 }
 
-function searchRow(entry: AddressSearchEntry): Record<string, unknown> {
+async function searchRow(entry: AddressSearchEntry): Promise<Record<string, unknown>> {
   const state = blankToNull(entry.state, 40);
   const county = cleanCounty(entry.county);
   const ip = clientIpFromHeaders(entry.headers);
   const entryPoint = entryFromContext(entry.context);
   const eligibility = blankToNull(entry.eligibility, 200)
-    || texasEligibility(county, entry.acres)
+    || await texasEligibility(county, entry.acres)
     || blankToNull(entry.resultShown, 200);
 
   return {
@@ -100,7 +96,7 @@ function searchRow(entry: AddressSearchEntry): Record<string, unknown> {
 }
 
 export async function insertAddressSearch(entry: AddressSearchEntry): Promise<Record<string, unknown> | null> {
-  return supabaseInsert(TABLE, searchRow(entry));
+  return supabaseInsert(TABLE, await searchRow(entry));
 }
 
 const CONTACT_REUSE_MS = 2 * 60 * 1000;
@@ -154,7 +150,7 @@ export async function logAddressSearch(
         if (reuseMs > 0 && lat != null && lng != null && supabaseServiceKey()) {
           const id = await recentCoordinateId(lat, lng, reuseMs);
           if (id) {
-            const patch = enrichPatch(searchRow(entry));
+            const patch = enrichPatch(await searchRow(entry));
             if (Object.keys(patch).length > 0) await supabasePatchById(TABLE, id, patch);
             return;
           }
@@ -228,7 +224,7 @@ export async function recordSearchFollowUp(input: {
     const county = cleanCounty(input.county);
     const acres = finiteOrNull(input.acres);
     const marketValue = finiteOrNull(input.marketValue);
-    const eligibility = blankToNull(input.eligibility, 200) || texasEligibility(county, acres);
+    const eligibility = blankToNull(input.eligibility, 200) || await texasEligibility(county, acres);
     if (!email && !phone && savings == null && !parcelId && !eligibility && acres == null && marketValue == null) return;
 
     const id = await recentSearchId(input);

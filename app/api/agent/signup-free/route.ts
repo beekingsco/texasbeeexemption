@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     await createAgent(agent);
     await redeemCoupon(couponCode, agent.id);
 
-    notifyFromRequest(req, 'agent_trial_started', {
+    await notifyFromRequest(req, 'agent_trial_started', {
       agentName: agent.name,
       agentEmail: agent.email,
       tier: 'agent_free',

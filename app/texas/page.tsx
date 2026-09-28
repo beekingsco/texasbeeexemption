@@ -1,9 +1,12 @@
 'use client';
 
-import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import countiesData from '@/data/texas-counties.json';
 import DeadlineCountdown from '@/app/components/DeadlineCountdown';
 import StateBadge from '@/app/components/StateBadge';
+import { requiredHivesFor } from '@/lib/hive-requirement';
+import { beginSearch, cancelSearch, completeSearch } from '@/lib/search-submit-guard';
+import { normalizeAlertAddress } from '@/lib/normalize-address';
 
 interface County {
   name: string;
@@ -15,6 +18,7 @@ interface County {
   avgTaxRate: number;
   agProductivityValue: number;
   notes: string;
+  hiveScaleRule?: string;
 }
 
 interface Suggestion {
@@ -37,6 +41,7 @@ interface GeocodedAddress {
 
 interface ParcelData {
   found: boolean;
+  status?: 'ok' | 'no_parcel' | 'lookup_failed';
   propertyId?: string;
   ownerName?: string;
   legalArea?: number;
@@ -89,6 +94,8 @@ export default function Home() {
   const [appraisedValue, setAppraisedValue] = useState('');
   const [lead, setLead] = useState<LeadData>({ firstName: '', lastName: '', email: '', phone: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [leadError, setLeadError] = useState('');
+  const [parcelNote, setParcelNote] = useState('');
   const [searchError, setSearchError] = useState('');
 
   const [agentRef, setAgentRef] = useState<string | null>(null);
@@ -99,7 +106,21 @@ export default function Home() {
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
   const resultsTimeRef = useRef<number>(0);
   const sessionIdRef = useRef<string>(`s_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`);
-  const counties = useMemo(() => countiesData as County[], []);
+  const [counties, setCounties] = useState<County[]>(() => countiesData as County[]);
+  const countiesRef = useRef<County[]>(countiesData as County[]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/counties?state=TX')
+      .then((response) => response.json())
+      .then((data) => {
+        if (cancelled || !Array.isArray(data.counties) || data.counties.length === 0) return;
+        countiesRef.current = data.counties;
+        setCounties(data.counties);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
 
   // Simple analytics tracking
   const track = useCallback((event: string, data?: Record<string, unknown>) => {
@@ -207,13 +228,18 @@ export default function Home() {
 
   // Full pipeline: geocode → find county → fetch parcel data → show results
   const processAddress = async (addressText: string, magicKey?: string) => {
+    const claim = beginSearch(addressText);
+    if (claim === 'ignore') return;
+    let alertSearch = claim === 'run';
+    let accepted = false;
+    let resolvedAddress = '';
     setIsSearching(true);
     setSearchError('');
+    setParcelNote('');
     setShowSuggestions(false);
     setSearchInput(addressText.replace(/, USA$/, ''));
 
     try {
-      // Step 1: Geocode to get lat/lng and county
       const geoUrl = `/api/geocode?q=${encodeURIComponent(addressText)}&mode=geocode${magicKey ? `&magicKey=${encodeURIComponent(magicKey)}` : ''}`;
       const geoResp = await fetch(geoUrl);
       const geoData = await geoResp.json();
@@ -225,18 +251,25 @@ export default function Home() {
       }
 
       const geo: GeocodedAddress = geoData.results[0];
+      if (normalizeAlertAddress(geo.address) !== normalizeAlertAddress(addressText)) {
+        const resolvedClaim = beginSearch(geo.address);
+        if (resolvedClaim === 'ignore') {
+          setIsSearching(false);
+          return;
+        }
+        if (resolvedClaim === 'run-silent') alertSearch = false;
+      }
+      resolvedAddress = geo.address;
 
-      // Check it's Texas
       if (geo.state && !['TX', 'Texas'].includes(geo.state)) {
         setSearchError('We currently only cover Texas properties. More states coming soon!');
         setIsSearching(false);
         return;
       }
 
-      // Match county
       const countyClean = (geo.county || '').replace(/ County$/i, '').trim();
-      const matchedCounty = counties.find(c => c.name.toLowerCase() === countyClean.toLowerCase());
-      
+      const matchedCounty = countiesRef.current.find(c => c.name.toLowerCase() === countyClean.toLowerCase());
+
       if (!matchedCounty) {
         setSearchError(`Couldn't identify the county for this address. Please try a more specific address.`);
         setIsSearching(false);
@@ -252,46 +285,57 @@ export default function Home() {
       track('address_searched', { county: matchedCounty.name, address: geo.address });
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      // Step 2: Fetch parcel data from TNRIS using coordinates
+      let parcel: ParcelData = { found: false, status: 'lookup_failed' };
       try {
         const parcelResp = await fetch(`/api/parcel?lat=${geo.lat}&lng=${geo.lng}`);
-        const parcel: ParcelData = await parcelResp.json();
-        setParcelData(parcel.found ? parcel : null);
-        
-        // Auto-fill acres and appraised value from parcel data
-        if (parcel.found) {
-          if (parcel.legalArea && parcel.legalArea > 0) {
-            setAcres(parcel.legalArea.toString());
-          }
-          if (parcel.marketValue && parcel.marketValue > 0) {
-            setAppraisedValue(parcel.marketValue.toString());
-          }
+        const body = await parcelResp.json().catch(() => null);
+        if (body && typeof body === 'object') {
+          parcel = body as ParcelData;
+          if (!parcel.status) parcel.status = parcelResp.ok ? (parcel.found ? 'ok' : 'no_parcel') : 'lookup_failed';
         }
-        // Save contact to spreadsheet
+        if (!parcelResp.ok && parcel.status !== 'no_parcel') parcel.status = 'lookup_failed';
+      } catch {
+        parcel = { found: false, status: 'lookup_failed' };
+      }
+
+      const parcelOk = parcel.status === 'ok' && parcel.found;
+      setParcelData(parcelOk ? parcel : null);
+      if (parcel.status === 'no_parcel') {
+        setParcelNote('No parcel was found at this pin. Enter your acres and appraised value below.');
+      } else if (parcel.status === 'lookup_failed') {
+        setParcelNote('Parcel lookup failed. Enter your acres and appraised value below.');
+      }
+      if (parcelOk) {
+        if (parcel.legalArea && parcel.legalArea > 0) setAcres(parcel.legalArea.toString());
+        if (parcel.marketValue && parcel.marketValue > 0) setAppraisedValue(parcel.marketValue.toString());
+      }
+      if (alertSearch) {
         trackContact('search', {
           address: geo.address,
           county: countyClean,
           lat: geo.lat,
           lng: geo.lng,
-          ownerName: parcel.found ? parcel.ownerName || '' : '',
-          acres: parcel.found ? parcel.legalArea : null,
-          marketValue: parcel.found ? parcel.marketValue : null,
-          landValue: parcel.found ? parcel.landValue : null,
-          improvementValue: parcel.found ? parcel.improvementValue : null,
+          ownerName: parcelOk ? parcel.ownerName || '' : '',
+          acres: parcelOk ? parcel.legalArea : null,
+          marketValue: parcelOk ? parcel.marketValue : null,
+          landValue: parcelOk ? parcel.landValue : null,
+          improvementValue: parcelOk ? parcel.improvementValue : null,
+          parcelStatus: parcel.status || 'lookup_failed',
           referrer: document.referrer,
         });
-      } catch {
-        setParcelData(null);
-      } finally {
-        setIsLoadingParcel(false);
-        track('results_viewed', { county: matchedCounty.name });
-        resultsTimeRef.current = Date.now();
       }
-
-      // Track contact for every search — use parcel data already fetched above
+      accepted = true;
+      setIsLoadingParcel(false);
+      track('results_viewed', { county: matchedCounty.name });
+      resultsTimeRef.current = Date.now();
     } catch {
       setSearchError('Something went wrong. Please try again.');
       setIsSearching(false);
+      setIsLoadingParcel(false);
+    } finally {
+      const finish = accepted ? completeSearch : cancelSearch;
+      finish(addressText);
+      if (resolvedAddress) finish(resolvedAddress);
     }
   };
 
@@ -353,10 +397,7 @@ export default function Home() {
     const qualifies = agEligibleAcres >= selectedCounty.minAcres;
 
     // Hive requirements based on ag-eligible acres
-    let requiredHives = selectedCounty.minHives;
-    if (agEligibleAcres > selectedCounty.minAcres) {
-      requiredHives += Math.ceil((agEligibleAcres - selectedCounty.minAcres) / selectedCounty.additionalHivesPer);
-    }
+    const requiredHives = requiredHivesFor(selectedCounty, agEligibleAcres);
 
     // Investment costs
     const hiveCost = 197;
@@ -405,6 +446,7 @@ export default function Home() {
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setLeadError('');
     try {
       const payload = {
         ...lead,
@@ -426,7 +468,14 @@ export default function Home() {
         source: 'calculator',
         agentRef: agentRef || undefined,
       };
-      await fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const leadResp = await fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (!leadResp.ok) {
+        const leadBody = await leadResp.json().catch(() => null);
+        const message = leadBody && typeof leadBody.error === 'string' ? leadBody.error : 'We could not save your information. Please try again.';
+        setLeadError(message);
+        setIsSubmitting(false);
+        return;
+      }
 
       // If agent ref, also create a lead for the agent
       if (agentRef) {
@@ -460,12 +509,13 @@ export default function Home() {
       track('lead_captured', { county: selectedCounty?.name, savings: results?.annualSavings });
       trackContact('identify', { firstName: lead.firstName, lastName: lead.lastName, email: lead.email, phone: lead.phone });
       trackContact('engage', { event: 'completed_signup' });
+      setStep('thankyou');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
       console.error('Lead save error:', err);
+      setLeadError('We could not save your information. Please try again.');
     }
-    setStep('thankyou');
     setIsSubmitting(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const startOver = () => {
@@ -473,6 +523,8 @@ export default function Home() {
     setSelectedCounty(null); setSuggestions([]); setAcres(''); setAppraisedValue('');
     setSearchError(''); setShowCustomize(false);
     setLead({ firstName: '', lastName: '', email: '', phone: '' });
+    setLeadError('');
+    setParcelNote('');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -601,12 +653,12 @@ export default function Home() {
                     type="text" value={searchInput}
                     onChange={(e) => handleInputChange(e.target.value)}
                     onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
-                    onKeyDown={(e) => { if (e.key === 'Enter' && searchInput.trim()) handleSearch(); }}
+                    onKeyDown={(e) => { if (e.key === 'Enter' && searchInput.trim()) { e.preventDefault(); handleSearch(); } }}
                     placeholder="Enter your address"
                     style={{ flex: 1, fontSize: 16, fontWeight: 500, color: C.navy, border: 'none', outline: 'none', background: 'transparent', padding: '14px 0', fontFamily: 'inherit', minWidth: 0 }}
                   />
                   </div>
-                  <button onClick={handleSearch} disabled={!searchInput.trim() || isSearching} className="r-pill-btn" style={{
+                  <button type="button" onClick={handleSearch} disabled={!searchInput.trim() || isSearching} className="r-pill-btn" style={{
                     background: searchInput.trim() && !isSearching ? C.blue : '#93C5FD', color: C.white, fontWeight: 700, border: 'none',
                     cursor: searchInput.trim() && !isSearching ? 'pointer' : 'not-allowed', fontFamily: 'inherit',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
@@ -628,7 +680,7 @@ export default function Home() {
                       const street = parts[0] || '';
                       const rest = parts.slice(1).join(', ');
                       return (
-                        <button key={i} onClick={() => handleSuggestionSelect(s)}
+                        <button type="button" key={i} onClick={() => handleSuggestionSelect(s)}
                           style={{ width: '100%', padding: '14px 20px', textAlign: 'left', background: 'transparent', border: 'none', borderBottom: '1px solid #f1f5f9', cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 12 }}
                           onMouseEnter={(e) => (e.currentTarget.style.background = C.sky)}
                           onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
@@ -851,6 +903,7 @@ export default function Home() {
                       We verified your address but couldn&apos;t pull acreage data from county records. This can happen with rural properties or if the data source was temporarily unavailable.
                     </p>
                     <button
+                      type="button"
                       onClick={() => handleSearch()}
                       style={{ background: C.blue, color: C.white, fontWeight: 700, fontSize: 14, padding: '10px 24px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'inherit', marginBottom: 20 }}
                     >
@@ -911,6 +964,12 @@ export default function Home() {
             )}
 
             {/* Property Details from TNRIS */}
+            {parcelNote && !isLoadingParcel && (
+              <div style={{ marginBottom: 24, padding: '12px 16px', background: '#FFF7ED', border: '1px solid #FDBA74', borderRadius: 12 }}>
+                <p style={{ fontSize: 14, color: '#9A3412', fontWeight: 600 }}>{parcelNote}</p>
+              </div>
+            )}
+
             {isLoadingParcel && (
               <div style={{ background: C.white, borderRadius: 16, padding: 24, marginBottom: 24, border: '1px solid #e2e8f0' }}>
                 <p style={{ fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 16 }}>Loading property data...</p>
@@ -1190,6 +1249,11 @@ export default function Home() {
                   <input type="tel" value={lead.phone} onChange={(e) => setLead({ ...lead, phone: e.target.value })} placeholder="(903) 555-1234"
                     style={{ width: '100%', padding: '12px 16px', border: '2px solid #e2e8f0', borderRadius: 10, fontSize: 16, fontWeight: 500, color: C.navy, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }} />
                 </div>
+                {leadError && (
+                  <div style={{ marginBottom: 16, padding: '12px 16px', background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 12 }}>
+                    <p style={{ fontSize: 14, color: '#991B1B', fontWeight: 600 }}>{leadError}</p>
+                  </div>
+                )}
                 <button type="submit" disabled={isSubmitting || !lead.firstName || !lead.lastName || !lead.email}
                   style={{ width: '100%', padding: '16px 32px', borderRadius: 12, background: !isSubmitting && lead.firstName && lead.lastName && lead.email ? C.blue : '#93C5FD', color: C.white, fontWeight: 700, fontSize: 17, border: 'none', cursor: !isSubmitting && lead.firstName && lead.lastName && lead.email ? 'pointer' : 'not-allowed', fontFamily: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
                   {isSubmitting ? <><span className="spinner" /> Sending...</> : 'Email My Free Guide'}

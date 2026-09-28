@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
         if (tier === 'single') {
           // $14.99 one-time report purchase
-          notifyAdmin('report_purchased', {
+          await notifyAdmin('report_purchased', {
             name: customerName,
             email: customerEmail || undefined,
             county: session.metadata?.county,
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
           });
         } else if (tier === 'unlimited') {
           // $29.99/mo unlimited subscription
-          notifyAdmin('unlimited_signup', {
+          await notifyAdmin('unlimited_signup', {
             name: customerName,
             email: customerEmail || undefined,
             amount: session.amount_total || 2999,
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
             ? session.customer
             : session.customer?.id;
 
-          notifyAdmin('agent_trial_started', {
+          await notifyAdmin('agent_trial_started', {
             agentName,
             agentEmail: agentEmail || undefined,
             tier: 'agent',
@@ -131,7 +131,7 @@ export async function POST(req: NextRequest) {
           }
         } else {
           // Generic purchase notification
-          notifyAdmin('report_purchased', {
+          await notifyAdmin('report_purchased', {
             name: customerName,
             email: customerEmail || undefined,
             amount: session.amount_total || 0,
@@ -169,7 +169,7 @@ export async function POST(req: NextRequest) {
                 const agent = await getAgentByEmail(customer.email);
                 if (agent && agent.subscription?.status === 'trial') {
                   // Trial → Active conversion
-                  notifyAdmin('agent_trial_converted', {
+                  await notifyAdmin('agent_trial_converted', {
                     agentName: agent.name,
                     agentEmail: agent.email,
                     tier: 'agent',

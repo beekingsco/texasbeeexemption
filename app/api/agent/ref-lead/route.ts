@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
 
     // Notify admin and agent
     const attribution = leadAttribution(req);
-    notifyFromRequest(req, 'new_lead_captured', {
+    await notifyFromRequest(req, 'new_lead_captured', {
       name: ownerName,
       address: propertyAddress,
       county,

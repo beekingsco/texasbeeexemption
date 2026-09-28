@@ -104,7 +104,7 @@ export async function POST(req: NextRequest) {
     };
 
     await createAgent(agent);
-    notifyFromRequest(req, 'new_lead_captured', {
+    await notifyFromRequest(req, 'new_lead_captured', {
       name,
       email,
       phone,

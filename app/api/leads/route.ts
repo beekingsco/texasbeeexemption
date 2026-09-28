@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { put, list } from '@vercel/blob';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { leadAttribution } from '@/lib/lead-source';
 import { notifyFromRequest } from '@/lib/notify';
+import { listBeeLeads, saveBeeLead, type BeeLead } from '@/lib/bee-store';
 
 // Telegram lead alert
 const TG_BOT_TOKEN = process.env.TG_BOT_TOKEN || '';
@@ -12,87 +12,7 @@ const TG_CHAT_ID = process.env.TG_ALERT_CHAT_ID || '';
 const OPENCLAW_GATEWAY = process.env.OPENCLAW_GATEWAY_URL || '';
 const OPENCLAW_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN || '';
 
-interface Lead {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  address: string;
-  county: string;
-  lat: number | null;
-  lng: number | null;
-  acres: number | null;
-  appraisedValue: number | null;
-  estimatedSavings: number | null;
-  parcelData: Record<string, unknown> | null;
-  source: string;
-  entry?: string;
-  channel?: string;
-  agentRef?: string;
-  createdAt: string;
-}
-
-/* ─── Blob helpers (individual files per lead) ─── */
-
-async function saveLead(lead: Lead): Promise<void> {
-  // Save as individual file — no read-modify-write race condition
-  const key = `leads/${lead.id}.json`;
-  await put(key, JSON.stringify(lead), {
-    access: 'public',
-    addRandomSuffix: false,
-    contentType: 'application/json',
-  });
-}
-
-async function readAllLeads(): Promise<Lead[]> {
-  const leads: Lead[] = [];
-  let cursor: string | undefined;
-
-  // Paginate through all lead blobs
-  do {
-    const result = await list({
-      prefix: 'leads/lead_',
-      cursor,
-      limit: 1000,
-    });
-    for (const blob of result.blobs) {
-      try {
-        const resp = await fetch(blob.url);
-        if (resp.ok) {
-          const lead = await resp.json();
-          leads.push(lead);
-        }
-      } catch {
-        // Skip corrupt blobs
-      }
-    }
-    cursor = result.hasMore ? result.cursor : undefined;
-  } while (cursor);
-
-  // Also check legacy all-leads.json
-  try {
-    const { blobs } = await list({ prefix: 'leads/all-leads' });
-    const legacy = blobs.find(b => b.pathname === 'leads/all-leads.json');
-    if (legacy) {
-      const resp = await fetch(legacy.url);
-      if (resp.ok) {
-        const legacyLeads: Lead[] = await resp.json();
-        // Merge legacy leads (avoid duplicates by id)
-        const existingIds = new Set(leads.map(l => l.id));
-        for (const ll of legacyLeads) {
-          if (!existingIds.has(ll.id)) {
-            leads.push(ll);
-          }
-        }
-      }
-    }
-  } catch {
-    // Ignore legacy read errors
-  }
-
-  return leads;
-}
+type Lead = BeeLead;
 
 /* ─── Telegram alert ─── */
 async function sendTelegramAlert(lead: Lead): Promise<void> {
@@ -152,6 +72,7 @@ export async function POST(req: NextRequest) {
       phone: phone || '',
       address: address || '',
       county: county || '',
+      state: typeof body.state === 'string' ? body.state : '',
       lat: lat || null,
       lng: lng || null,
       acres: acres || null,
@@ -165,12 +86,10 @@ export async function POST(req: NextRequest) {
       createdAt: new Date().toISOString(),
     };
 
-    // Save lead as individual blob (reliable, no race conditions)
-    await saveLead(lead);
+    await saveBeeLead(lead);
 
-    // Fire alerts (non-blocking)
-    sendTelegramAlert(lead).catch(() => {});
-    notifyFromRequest(req, 'new_lead_captured', {
+    await sendTelegramAlert(lead);
+    await notifyFromRequest(req, 'new_lead_captured', {
       name: `${lead.firstName} ${lead.lastName}`.trim(),
       email: lead.email,
       phone: lead.phone || undefined,
@@ -196,7 +115,7 @@ export async function GET(req: NextRequest) {
   }
   const { searchParams } = new URL(req.url);
 
-  const leads = await readAllLeads();
+  const leads = await listBeeLeads();
 
   const county = searchParams.get('county');
   const filtered = county ? leads.filter(l => l.county.toLowerCase() === county.toLowerCase()) : leads;
