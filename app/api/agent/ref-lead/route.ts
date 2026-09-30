@@ -3,6 +3,7 @@ import { getAgentById, addAgentLead } from '@/lib/agent-storage';
 import { AgentLead } from '@/lib/types/agent';
 import { notifyFromRequest } from '@/lib/notify';
 import { leadAttribution } from '@/lib/lead-source';
+import { contactLeadBlockReason } from '@/lib/lead-qualification';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 // POST — create a lead from a branded link referral (no auth needed, called from client)
@@ -19,10 +20,19 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { agentId, propertyAddress, county, ownerName, acres, appraisedValue, estimatedSavings } = body;
+    const { agentId, propertyAddress, county, ownerName, acres, appraisedValue, estimatedSavings, email } = body;
 
     if (!agentId || !propertyAddress) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+    const blockReason = contactLeadBlockReason({
+      name: typeof ownerName === 'string' ? ownerName : '',
+      email: typeof email === 'string' ? email : '',
+      address: typeof propertyAddress === 'string' ? propertyAddress : '',
+    });
+    if (blockReason) {
+      return NextResponse.json({ error: blockReason }, { status: 400 });
     }
 
     // Verify agent exists and is active
@@ -54,6 +64,7 @@ export async function POST(req: NextRequest) {
     const attribution = leadAttribution(req);
     await notifyFromRequest(req, 'new_lead_captured', {
       name: ownerName,
+      email,
       address: propertyAddress,
       county,
       acres,

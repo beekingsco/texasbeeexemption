@@ -3,7 +3,6 @@ import { sql } from '@vercel/postgres';
 import { ensureDB, isPostgresConfigured } from '@/lib/db';
 import { readJSON, writeJSON, forwardToWebhook } from '@/lib/storage';
 import { leadAttribution } from '@/lib/lead-source';
-import { notifyFromRequest } from '@/lib/notify';
 
 interface StateInterest {
   state: string;
@@ -65,7 +64,8 @@ export async function POST(req: NextRequest) {
       source: attribution.source,
       entry: attribution.entryLabel,
     });
-    await notifyFromRequest(req, 'new_lead_captured', { name: String(state), address: String(state) });
+    // A state click is not a property lead. Name and address were both the
+    // state, which sent a New Lead Captured email for every homepage visit.
 
     return NextResponse.json({ success: true });
   } catch (error) {

@@ -340,6 +340,9 @@ export default function LouisianaCalculator() {
     try {
       const payload = {
         ...lead,
+        address: geocodedAddress?.address || searchInput,
+        lat: geocodedAddress?.lat,
+        lng: geocodedAddress?.lng,
         parish: selectedParish?.name,
         state: 'LA',
         acres: acres ? parseFloat(acres) : null,
