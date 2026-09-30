@@ -346,6 +346,9 @@ export default function FloridaCalculator() {
     try {
       const payload = {
         ...lead,
+        address: geocodedAddress?.address || searchInput,
+        lat: geocodedAddress?.lat,
+        lng: geocodedAddress?.lng,
         county: selectedCounty?.name,
         state: 'FL',
         acres: acres ? parseFloat(acres) : null,

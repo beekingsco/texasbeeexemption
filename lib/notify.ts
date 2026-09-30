@@ -1,5 +1,6 @@
 import { clientIpFromHeaders, decodeGeoHeader } from '@/lib/address-search';
 import { entryPoint, externalReferrer, leadAttribution, SITE_SOURCE } from '@/lib/lead-source';
+import { shouldDeliverNewLeadAlert } from '@/lib/lead-qualification';
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM_EMAIL = process.env.FROM_EMAIL || 'hello@beeexemption.com';
@@ -221,6 +222,11 @@ export async function notifyFromRequest(request: RequestLike, event: NotifyEvent
 }
 
 async function deliverAlerts(event: NotifyEvent, stamped: NotifyData): Promise<void> {
+  if (event === 'new_lead_captured' && !shouldDeliverNewLeadAlert(stamped)) {
+    console.info('Skipped New Lead Captured alert: state-only, county-only, or missing street and email');
+    return;
+  }
+
   const jobs: Promise<void>[] = [];
 
   if (RESEND_API_KEY) {

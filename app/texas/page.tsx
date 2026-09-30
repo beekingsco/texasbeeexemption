@@ -476,6 +476,7 @@ export default function Home() {
             propertyAddress: geocodedAddress?.address || searchInput,
             county: selectedCounty?.name,
             ownerName: `${lead.firstName} ${lead.lastName}`.trim(),
+            email: lead.email,
             acres: acres ? parseFloat(acres) : parcelData?.legalArea || 0,
             appraisedValue: appraisedValue ? parseFloat(appraisedValue) : parcelData?.marketValue || 0,
             estimatedSavings: results?.annualSavings || 0,

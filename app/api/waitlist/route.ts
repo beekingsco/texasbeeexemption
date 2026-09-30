@@ -3,7 +3,6 @@ import { sql } from '@vercel/postgres';
 import { ensureDB, isPostgresConfigured } from '@/lib/db';
 import { readJSON, writeJSON, forwardToWebhook } from '@/lib/storage';
 import { leadAttribution } from '@/lib/lead-source';
-import { notifyFromRequest } from '@/lib/notify';
 
 interface WaitlistEntry {
   email: string;
@@ -67,7 +66,8 @@ export async function POST(req: NextRequest) {
       source: attribution.source,
       entry: attribution.entryLabel,
     });
-    await notifyFromRequest(req, 'new_lead_captured', { name, email, address: state });
+    // Launch waitlist rows stay. They have no street address (the state is
+    // the location), so they must not send a New Lead Captured email.
 
     return NextResponse.json({ success: true });
   } catch (error) {

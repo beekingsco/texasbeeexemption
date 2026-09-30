@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { leadAttribution } from '@/lib/lead-source';
 import { notifyFromRequest } from '@/lib/notify';
+import { contactLeadBlockReason } from '@/lib/lead-qualification';
 import { listBeeLeads, saveBeeLead, type BeeLead } from '@/lib/bee-store';
 
 // OpenClaw notification (Scout → Chris)
@@ -29,6 +30,16 @@ export async function POST(req: NextRequest) {
 
     if (!firstName || !lastName || !email) {
       return NextResponse.json({ error: 'First name, last name, and email are required' }, { status: 400 });
+    }
+
+    const blockReason = contactLeadBlockReason({
+      firstName: typeof firstName === 'string' ? firstName : '',
+      lastName: typeof lastName === 'string' ? lastName : '',
+      email: typeof email === 'string' ? email : '',
+      address: typeof address === 'string' ? address : '',
+    });
+    if (blockReason) {
+      return NextResponse.json({ error: blockReason }, { status: 400 });
     }
 
     const lead: Lead = {
