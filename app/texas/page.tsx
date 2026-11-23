@@ -6,6 +6,7 @@ import DeadlineCountdown from '@/app/components/DeadlineCountdown';
 import StateBadge from '@/app/components/StateBadge';
 import { requiredHivesFor } from '@/lib/hive-requirement';
 import { finishSearch, startSearch } from '@/lib/search-submit-guard';
+import ResultsEmailGate from '@/app/components/ResultsEmailGate';
 
 interface County {
   name: string;
@@ -521,6 +522,15 @@ export default function Home() {
   const fmt = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 0 });
   const fmtMoney = (n: number) => '$' + fmt(n);
 
+  const rememberLead = (info: { email: string; firstName: string; lastName: string }) => {
+    setLead((prev) => ({
+      ...prev,
+      email: info.email || prev.email,
+      firstName: info.firstName || prev.firstName,
+      lastName: info.lastName || prev.lastName,
+    }));
+  };
+
   const gradientText = {
     background: `linear-gradient(to bottom, ${C.blue}, ${C.blueDark})`,
     WebkitBackgroundClip: 'text' as const,
@@ -689,7 +699,7 @@ export default function Home() {
               </div>
 
               <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginTop: 12, fontWeight: 500 }}>
-                Instant estimate — no phone calls, no spam
+                Free — just enter your email to see your full results
               </p>
 
               <div className="r-vprops" style={{ marginTop: 16 }}>
@@ -834,7 +844,7 @@ export default function Home() {
               <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ background: C.green, color: C.navy, fontWeight: 700, fontSize: 18, padding: '16px 40px', borderRadius: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(212,168,67,0.4)' }}>
                 Get My Free Savings Estimate →
               </button>
-              <p style={{ color: '#5A7A8A', fontSize: 13, marginTop: 12 }}>Free • Instant • No spam</p>
+              <p style={{ color: '#5A7A8A', fontSize: 13, marginTop: 12 }}>Free — enter your email to see full results</p>
             </div>
           </section>
         </>
@@ -882,6 +892,29 @@ export default function Home() {
               <button onClick={startOver} style={{ fontSize: 13, fontWeight: 600, color: C.blue, background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>Change</button>
             </div>
 
+            <ResultsEmailGate
+              county={selectedCounty.name}
+              stateCode="TX"
+              stateName="Texas"
+              qualifies={results ? results.qualifies : null}
+              acresKnown={!!results && results.totalAcres > 0}
+              annualSavings={results?.annualSavings ?? null}
+              address={geocodedAddress?.address || searchInput}
+              lat={geocodedAddress?.lat}
+              lng={geocodedAddress?.lng}
+              acres={results?.totalAcres ?? null}
+              appraisedValue={results?.totalValue ?? null}
+              parcelData={parcelData?.found ? {
+                propertyId: parcelData.propertyId,
+                ownerName: parcelData.ownerName,
+                marketValue: parcelData.marketValue,
+                legalArea: parcelData.legalArea,
+                landValue: parcelData.landValue,
+                improvementValue: parcelData.improvementValue,
+              } : null}
+              loading={isLoadingParcel}
+              onUnlocked={rememberLead}
+            >
             {/* Not Qualified or Missing Data Message */}
             {results && !results.qualifies && (
               <div style={{ background: C.white, borderRadius: '0 0 16px 16px', padding: '32px 24px', textAlign: 'center', marginBottom: 24, border: '1px solid #D5EAFF', borderTop: '1px solid #e2e8f0' }}>
@@ -1183,6 +1216,7 @@ export default function Home() {
                 </button>
               </>
             )}
+            </ResultsEmailGate>
           </div>
         </section>
       )}

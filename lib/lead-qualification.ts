@@ -180,6 +180,29 @@ export function contactLeadBlockReason(input: LeadFields): string | null {
   return null;
 }
 
+/**
+ * Email gate for search results. Name is optional.
+ * A state name is still rejected. A missing street does not block the unlock;
+ * the mailer decides separately whether the row is worth an alert.
+ */
+export function resultsUnlockBlockReason(input: {
+  name?: string | null;
+  email?: string | null;
+}): string | null {
+  const email = asText(input.email);
+  if (!isValidLeadEmail(email)) return 'Enter a valid email address.';
+  const name = asText(input.name);
+  if (!name) return null;
+  if (isBareUsState(name)) {
+    return 'Enter your name, or leave it blank. A state name is not a contact.';
+  }
+  const parts = name.split(/\s+/).filter(Boolean);
+  if (parts.length > 0 && parts.every((part) => isBareUsState(part))) {
+    return 'Enter your name, or leave it blank. A state name is not a contact.';
+  }
+  return null;
+}
+
 /** Last line of defense in the mailer. Agent signups are not property leads. */
 export function shouldDeliverNewLeadAlert(data: {
   name?: unknown;
@@ -189,7 +212,7 @@ export function shouldDeliverNewLeadAlert(data: {
   address?: unknown;
   tier?: unknown;
 }): boolean {
-  if (data.tier === 'agent_signup') return true;
+  if (data.tier === 'agent_signup' || data.tier === 'report_unlock') return true;
   return contactLeadBlockReason({
     name: asText(data.name),
     firstName: asText(data.firstName),

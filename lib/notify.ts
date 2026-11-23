@@ -62,7 +62,16 @@ function leadName(data: NotifyData): string {
   return 'Unknown';
 }
 
-const VISITOR_KEYS = new Set(['source', 'entry', 'city', 'region', 'country', 'ip']);
+const VISITOR_KEYS = new Set([
+  'source',
+  'entry',
+  'city',
+  'region',
+  'country',
+  'ip',
+  'idempotencyKey',
+  'searchIdempotencyKey',
+]);
 
 /** America/Chicago wall time with CST or CDT, whichever is in effect. */
 export function centralTimeLabel(date = new Date()): string {
@@ -230,9 +239,9 @@ async function deliverAlerts(event: NotifyEvent, stamped: NotifyData): Promise<v
   const jobs: Promise<void>[] = [];
 
   if (RESEND_API_KEY) {
-    const idempotencyKey = typeof stamped.searchIdempotencyKey === 'string'
-      ? stamped.searchIdempotencyKey.trim()
-      : '';
+    const explicitKey = typeof stamped.idempotencyKey === 'string' ? stamped.idempotencyKey.trim() : '';
+    const searchKey = typeof stamped.searchIdempotencyKey === 'string' ? stamped.searchIdempotencyKey.trim() : '';
+    const idempotencyKey = explicitKey || searchKey;
     jobs.push(fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {

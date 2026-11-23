@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useMemo, useState, useEffect, useCallback } from 'react';
+import { Suspense, useMemo, useState, useEffect, useCallback, useRef } from 'react';
 import countiesData from '@/data/texas-counties.json';
 import { requiredHivesFor } from '@/lib/hive-requirement';
 import suppliersData from '@/data/texas-nuc-suppliers.json';
@@ -9,6 +9,8 @@ import amazonProducts from '@/data/amazon-products.json';
 import verifiedProducts from '@/data/verified-products.json';
 import BlurredSection from '@/app/components/BlurredSection';
 import StickyUnlockBar from '@/app/components/StickyUnlockBar';
+import { isValidLeadEmail } from '@/lib/lead-qualification';
+import { readStoredUnlock, writeStoredUnlock } from '@/lib/results-unlock';
 
 /* ─────────────────────────── Types ─────────────────────────── */
 interface County {
@@ -286,14 +288,43 @@ function ReportContent() {
   const isLocked = accessChecked && !hasAccess && !isDemo;
   const isDemoLocked = isDemo; // demo shows headlines but blurs detail sections
 
-  const handleUnlock = useCallback(async () => {
+  const visitorName = name && name !== 'Property Owner' ? name : '';
+  const [checkoutEmail, setCheckoutEmail] = useState(email);
+  const [checkoutName, setCheckoutName] = useState(visitorName);
+  const [emailPromptOpen, setEmailPromptOpen] = useState(false);
+  const [emailPromptError, setEmailPromptError] = useState('');
+  const [checkoutBusy, setCheckoutBusy] = useState(false);
+  const checkoutBusyRef = useRef(false);
+
+  useEffect(() => {
+    const saved = readStoredUnlock();
+    if (!email && saved?.email) setCheckoutEmail(saved.email);
+    if (!visitorName && saved?.name) setCheckoutName(saved.name);
+  }, [email, visitorName]);
+
+  const startCheckout = useCallback(async (emailToUse: string, nameToUse: string) => {
+    const trimmedEmail = emailToUse.trim();
+    const trimmedName = nameToUse.trim();
+    if (!isValidLeadEmail(trimmedEmail)) {
+      setEmailPromptError('Enter a valid email address.');
+      setEmailPromptOpen(true);
+      return;
+    }
+    if (checkoutBusyRef.current) return;
+    checkoutBusyRef.current = true;
+    setCheckoutBusy(true);
+    setEmailPromptError('');
     try {
-      const propertyData: Record<string, string> = {};
-      if (name) propertyData.name = name;
-      if (email) propertyData.email = email;
+      const saved = readStoredUnlock();
+      const propertyData: Record<string, string> = { email: trimmedEmail };
+      if (trimmedName) propertyData.name = trimmedName;
+      if (saved?.address) propertyData.address = saved.address;
+      if (saved?.state) propertyData.state = saved.state;
+      if (saved?.county && !countyName) propertyData.county = saved.county;
       if (acres) propertyData.acres = String(acres);
       if (propertyValue) propertyData.propertyValue = String(propertyValue);
       if (taxRateParam) propertyData.taxRate = taxRateParam;
+      if (annualSavings) propertyData.estimatedSavings = String(Math.round(annualSavings));
 
       const res = await fetch('/api/stripe/create-checkout', {
         method: 'POST',
@@ -302,18 +333,48 @@ function ReportContent() {
           tier: 'single',
           propertyData,
           county: countyName,
+          customerEmail: trimmedEmail,
+          customerName: trimmedName,
         }),
       });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert('Something went wrong. Please try again.');
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.url) {
+        const message = data && typeof data.error === 'string'
+          ? data.error
+          : 'Enter a valid email to continue to checkout.';
+        setEmailPromptError(message);
+        setEmailPromptOpen(true);
+        checkoutBusyRef.current = false;
+        setCheckoutBusy(false);
+        return;
       }
+      writeStoredUnlock({
+        email: trimmedEmail,
+        name: trimmedName,
+        address: saved?.address,
+        county: countyName || saved?.county,
+        state: saved?.state,
+      });
+      window.location.href = data.url;
     } catch {
-      alert('Failed to start checkout. Please try again.');
+      setEmailPromptError('Failed to start checkout. Please try again.');
+      setEmailPromptOpen(true);
+      checkoutBusyRef.current = false;
+      setCheckoutBusy(false);
     }
-  }, [name, email, acres, propertyValue, taxRateParam, countyName]);
+  }, [acres, propertyValue, taxRateParam, countyName, annualSavings]);
+
+  const handleUnlock = useCallback(() => {
+    const saved = readStoredUnlock();
+    const knownEmail = checkoutEmail || saved?.email || '';
+    const knownName = checkoutName || saved?.name || '';
+    if (!isValidLeadEmail(knownEmail)) {
+      setEmailPromptError('');
+      setEmailPromptOpen(true);
+      return;
+    }
+    void startCheckout(knownEmail, knownName);
+  }, [checkoutEmail, checkoutName, startCheckout]);
 
   return (
     <div className="report-wrapper" style={{ background: colors.cream, fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif' }}>
@@ -1350,6 +1411,106 @@ function ReportContent() {
           </div>
         </div>
       </footer>
+
+      {emailPromptOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="checkout-email-title"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(13,27,42,0.55)',
+            zIndex: 80,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 16,
+          }}
+        >
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              void startCheckout(checkoutEmail, checkoutName);
+            }}
+            style={{
+              background: '#fff',
+              borderRadius: 16,
+              padding: 28,
+              width: '100%',
+              maxWidth: 420,
+              boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
+            }}
+          >
+            <h2 id="checkout-email-title" style={{ fontSize: 22, fontWeight: 800, color: '#0D1B2A', marginBottom: 8 }}>
+              Where should we send the report?
+            </h2>
+            <p style={{ fontSize: 14, color: '#5A6A7A', lineHeight: 1.5, marginBottom: 16 }}>
+              Enter your email to continue to the $14.99 checkout. We&apos;ll save it with your property.
+            </p>
+            <label style={{ display: 'block', fontSize: 14, fontWeight: 700, color: '#0D1B2A', marginBottom: 6 }}>
+              Name <span style={{ fontWeight: 400, color: '#5A6A7A' }}>(optional)</span>
+            </label>
+            <input
+              type="text"
+              value={checkoutName}
+              onChange={(event) => setCheckoutName(event.target.value)}
+              autoComplete="name"
+              style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '2px solid #e2e8f0', marginBottom: 12, fontSize: 16, boxSizing: 'border-box' }}
+            />
+            <label htmlFor="checkout-email" style={{ display: 'block', fontSize: 14, fontWeight: 700, color: '#0D1B2A', marginBottom: 6 }}>
+              Email
+            </label>
+            <input
+              id="checkout-email"
+              type="email"
+              required
+              value={checkoutEmail}
+              onChange={(event) => setCheckoutEmail(event.target.value)}
+              autoComplete="email"
+              placeholder="you@example.com"
+              style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '2px solid #e2e8f0', marginBottom: 12, fontSize: 16, boxSizing: 'border-box' }}
+            />
+            {emailPromptError && (
+              <p style={{ fontSize: 14, color: '#991B1B', fontWeight: 600, marginBottom: 12 }}>{emailPromptError}</p>
+            )}
+            <button
+              type="submit"
+              disabled={checkoutBusy}
+              style={{
+                width: '100%',
+                background: '#d4a843',
+                color: '#0D1B2A',
+                fontWeight: 800,
+                fontSize: 16,
+                padding: '14px 24px',
+                borderRadius: 12,
+                border: 'none',
+                cursor: checkoutBusy ? 'wait' : 'pointer',
+              }}
+            >
+              {checkoutBusy ? 'Starting checkout…' : 'Continue to checkout'}
+            </button>
+            <button
+              type="button"
+              onClick={() => setEmailPromptOpen(false)}
+              style={{
+                width: '100%',
+                marginTop: 8,
+                background: 'transparent',
+                color: '#5A6A7A',
+                fontWeight: 600,
+                fontSize: 14,
+                padding: '10px',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+      )}
 
       {/* Sticky unlock bar — only shows when locked */}
       <StickyUnlockBar

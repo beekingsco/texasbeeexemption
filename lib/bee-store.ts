@@ -22,6 +22,7 @@ export interface BeeLead {
   entry?: string;
   channel?: string;
   agentRef?: string;
+  addressSearchId?: string;
   createdAt: string;
 }
 
@@ -100,6 +101,7 @@ function leadRow(lead: BeeLead): Record<string, unknown> {
     channel: lead.channel || null,
     agent_ref: lead.agentRef || null,
     created_at: lead.createdAt,
+    ...(lead.addressSearchId ? { address_search_id: lead.addressSearchId } : {}),
   };
 }
 
@@ -124,6 +126,7 @@ function leadFromRow(row: Record<string, unknown>): BeeLead {
     entry: text(row.entry) || undefined,
     channel: text(row.channel) || undefined,
     agentRef: text(row.agent_ref) || undefined,
+    addressSearchId: text(row.address_search_id) || undefined,
     createdAt: text(row.created_at) || new Date().toISOString(),
   };
 }
@@ -206,6 +209,40 @@ function contactFromRow(row: Record<string, unknown>): BeeContact {
     lastName: text(row.last_name),
     parcelStatus: text(row.parcel_status),
   };
+}
+
+export async function findBeeLeadByEmail(email: string): Promise<BeeLead | null> {
+  const normalized = email.trim().toLowerCase();
+  if (!normalized) return null;
+  const rows = await supabaseSelect(
+    LEADS,
+    `select=*&email=ilike.${encodeURIComponent(normalized)}&order=created_at.desc&limit=5`,
+  );
+  if (!rows) {
+    throw new Error('Could not look up an existing lead.');
+  }
+  return rows.map(leadFromRow).find((lead) => lead.email.trim().toLowerCase() === normalized) ?? null;
+}
+
+export async function updateBeeLead(id: string, patch: Partial<BeeLead>): Promise<void> {
+  const row: Record<string, unknown> = {};
+  if (patch.firstName) row.first_name = patch.firstName;
+  if (patch.lastName) row.last_name = patch.lastName;
+  if (patch.phone) row.phone = patch.phone;
+  if (patch.address) row.address = patch.address;
+  if (patch.county) row.county = patch.county;
+  if (patch.state) row.state = patch.state;
+  if (patch.lat != null) row.lat = patch.lat;
+  if (patch.lng != null) row.lng = patch.lng;
+  if (patch.acres != null) row.acres = patch.acres;
+  if (patch.appraisedValue != null) row.appraised_value = patch.appraisedValue;
+  if (patch.estimatedSavings != null) row.estimated_savings = patch.estimatedSavings;
+  if (patch.parcelData) row.parcel_data = patch.parcelData;
+  if (patch.channel) row.channel = patch.channel;
+  if (patch.addressSearchId) row.address_search_id = patch.addressSearchId;
+  if (Object.keys(row).length === 0) return;
+  const updated = await supabasePatchById(LEADS, id, row);
+  if (!updated) throw new Error('Could not update lead.');
 }
 
 export async function saveBeeLead(lead: BeeLead): Promise<void> {

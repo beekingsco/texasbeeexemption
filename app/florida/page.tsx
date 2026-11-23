@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { finishSearch, startSearch } from '@/lib/search-submit-guard';
+import ResultsEmailGate from '@/app/components/ResultsEmailGate';
 import countiesData from '@/data/florida-counties.json';
 import DeadlineCountdown from '@/app/components/DeadlineCountdown';
 import StateBadge from '@/app/components/StateBadge';
@@ -364,6 +365,19 @@ export default function FloridaCalculator() {
         return;
       }
       track('lead_captured', { county: selectedCounty?.name, savings: results?.annualSavings, state: 'FL' });
+      fetch('/api/send-guide', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: lead.email,
+          firstName: lead.firstName,
+          county: selectedCounty?.name,
+          stateName: 'Florida',
+          estimatedSavings: results?.annualSavings,
+          acres: acres ? parseFloat(acres) : null,
+          requiredHives: results?.requiredHives,
+        }),
+      }).catch(() => {});
       trackContact('identify', { firstName: lead.firstName, lastName: lead.lastName, email: lead.email, phone: lead.phone });
       trackContact('engage', { event: 'completed_signup' });
       setStep('thankyou');
@@ -387,6 +401,15 @@ export default function FloridaCalculator() {
 
   const fmt = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 0 });
   const fmtMoney = (n: number) => '$' + fmt(n);
+
+  const rememberLead = (info: { email: string; firstName: string; lastName: string }) => {
+    setLead((prev) => ({
+      ...prev,
+      email: info.email || prev.email,
+      firstName: info.firstName || prev.firstName,
+      lastName: info.lastName || prev.lastName,
+    }));
+  };
 
   const gradientText = {
     background: `linear-gradient(to bottom, ${C.blue}, ${C.blueDark})`,
@@ -544,7 +567,7 @@ export default function FloridaCalculator() {
               </div>
 
               <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginTop: 12, fontWeight: 500 }}>
-                Instant estimate — no phone calls, no spam
+                Free — just enter your email to see your full results
               </p>
 
               <div className="r-vprops" style={{ marginTop: 16 }}>
@@ -783,10 +806,10 @@ export default function FloridaCalculator() {
               </svg>
               <div style={{ flex: 1 }}>
                 <p style={{ fontSize: 14, fontWeight: 700, color: C.navy }}>
-                  {geocodedAddress ? geocodedAddress.address.replace(/, USA$/, '') : `${selectedCounty.name} County, Florida`} — {acres} acres
+                  {geocodedAddress ? geocodedAddress.address.replace(/, USA$/, '') : `${selectedCounty.name} County, Florida`}
                 </p>
                 <p style={{ fontSize: 13, color: C.gray }}>
-                  {geocodedAddress ? `${selectedCounty.name} County · ` : ''}Assessed value: {fmtMoney(parseFloat(appraisedValue))} · Millage rate: {selectedCounty.avgMillageRate} mills
+                  {selectedCounty.name} County, Florida
                 </p>
               </div>
               <button onClick={startOver} style={{ fontSize: 13, fontWeight: 600, color: C.blue, background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>Change</button>
@@ -794,6 +817,20 @@ export default function FloridaCalculator() {
 
             {/* Main savings display */}
             {results && (
+              <ResultsEmailGate
+                county={selectedCounty.name}
+                stateCode="FL"
+                stateName="Florida"
+                qualifies={results.agEligibleAcres > 0}
+                acresKnown={results.totalAcres > 0}
+                annualSavings={results.annualSavings}
+                address={geocodedAddress?.address || searchInput}
+                lat={geocodedAddress?.lat}
+                lng={geocodedAddress?.lng}
+                acres={results.totalAcres}
+                appraisedValue={results.totalValue}
+                onUnlocked={rememberLead}
+              >
               <>
                 <div style={{ background: C.white, borderRadius: '0 0 16px 16px', padding: '28px 20px', textAlign: 'center', marginBottom: 24, border: '1px solid #D5EAFF', borderTop: '1px solid #e2e8f0' }}>
                   <p style={{ fontSize: 15, fontWeight: 700, color: C.navy, marginBottom: 4 }}>Estimated Annual Savings</p>
@@ -979,6 +1016,7 @@ export default function FloridaCalculator() {
                   Free PDF with step-by-step filing instructions for {selectedCounty.name} County
                 </p>
               </>
+              </ResultsEmailGate>
             )}
           </div>
         </section>

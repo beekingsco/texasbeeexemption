@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { stripe, getOrCreatePrice, TierKey, TIERS } from '@/lib/stripe';
 import { validateCoupon, redeemCoupon } from '@/lib/coupons';
+import { captureBeeLead, LeadInputError } from '@/lib/capture-bee-lead';
+import { isValidLeadEmail } from '@/lib/lead-qualification';
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,6 +19,39 @@ export async function POST(req: NextRequest) {
 
     if (!tier || !TIERS[tier]) {
       return NextResponse.json({ error: 'Invalid tier' }, { status: 400 });
+    }
+
+    let checkoutEmail = typeof customerEmail === 'string' ? customerEmail.trim() : '';
+    if (!checkoutEmail && typeof propertyData?.email === 'string') checkoutEmail = propertyData.email.trim();
+
+    if (tier === 'single') {
+      if (!isValidLeadEmail(checkoutEmail)) {
+        return NextResponse.json(
+          { error: 'Enter a valid email to continue to checkout.', code: 'email_required' },
+          { status: 400 },
+        );
+      }
+      try {
+        await captureBeeLead(req, {
+          email: checkoutEmail,
+          name: customerName || propertyData?.name || '',
+          address: propertyData?.address || '',
+          county: county || '',
+          state: propertyData?.state || '',
+          acres: propertyData?.acres,
+          appraisedValue: propertyData?.propertyValue,
+          estimatedSavings: propertyData?.estimatedSavings,
+          lat: propertyData?.lat,
+          lng: propertyData?.lng,
+        }, 'report_checkout');
+      } catch (error) {
+        if (error instanceof LeadInputError) {
+          return NextResponse.json({ error: error.message, code: 'email_required' }, { status: 400 });
+        }
+        console.error('report lead save failed', error);
+        return NextResponse.json({ error: 'We could not save your email. Please try again.' }, { status: 500 });
+      }
+      if (propertyData) propertyData.email = checkoutEmail;
     }
 
     const priceId = await getOrCreatePrice(tier);
@@ -109,8 +144,10 @@ export async function POST(req: NextRequest) {
       } : undefined,
     };
 
-    // If we have an email, prefill it (customerEmail takes priority for agent tier)
-    if (customerEmail) {
+    // Prefill Stripe with the captured lead email. An explicit customerEmail still wins for agent checkout.
+    if (tier === 'single' && checkoutEmail) {
+      sessionParams.customer_email = checkoutEmail;
+    } else if (customerEmail) {
       sessionParams.customer_email = customerEmail;
     } else if (propertyData?.email) {
       sessionParams.customer_email = propertyData.email;

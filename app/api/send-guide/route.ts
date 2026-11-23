@@ -12,6 +12,7 @@ interface GuideEmailRequest {
   acres: number;
   requiredHives: number;
   guideUrl: string;
+  stateName?: string;
 }
 
 function buildGuideEmail(data: GuideEmailRequest): string {
@@ -29,7 +30,7 @@ function buildGuideEmail(data: GuideEmailRequest): string {
     <!-- Header -->
     <div style="background:#053249;border-radius:16px 16px 0 0;padding:32px;text-align:center;">
       <h1 style="color:#ffffff;font-size:24px;font-weight:800;margin:0 0 8px;">🐝 Your Bee Exemption Guide</h1>
-      <p style="color:#8DA4B5;font-size:14px;margin:0;">${data.county} County, Texas</p>
+      <p style="color:#8DA4B5;font-size:14px;margin:0;">${data.county} County, ${data.stateName || 'Texas'}</p>
     </div>
     
     <!-- Savings Banner -->
@@ -120,6 +121,9 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { to, firstName, county, estimatedSavings, acres, requiredHives } = body;
+    const stateName = typeof body.stateName === 'string' && body.stateName.trim()
+      ? body.stateName.trim()
+      : 'Texas';
 
     if (!to || !firstName || !county) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -135,6 +139,7 @@ export async function POST(req: NextRequest) {
       acres: acres || 0,
       requiredHives: requiredHives || 6,
       guideUrl,
+      stateName,
     });
 
     const resp = await fetch('https://api.resend.com/emails', {
