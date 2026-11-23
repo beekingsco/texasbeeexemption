@@ -362,7 +362,7 @@ export default function NationalLanding() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
             {[
               { n: '1', title: 'Check your property', desc: 'Enter your address and we\'ll pull your real property data — acreage, assessed value, and county-specific requirements.' },
-              { n: '2', title: 'See your estimated savings', desc: 'Our calculator compares your current taxes to what you\'d pay with an agricultural appraisal. Most landowners are surprised by the difference.' },
+              { n: '2', title: 'See your estimated savings', desc: 'Enter your email to see the full comparison of your current taxes and an agricultural appraisal. Most landowners are surprised by the difference.' },
               { n: '3', title: 'Get your county guide', desc: 'Download a free guide with your county\'s specific requirements, application deadlines, and step-by-step filing instructions.' },
               { n: '4', title: 'Set up your hives', desc: 'BeeKings can provide everything you need — hives, bees, equipment, and hands-on training. Or bring your own if you\'re already a beekeeper.' },
             ].map(step => (
@@ -520,7 +520,7 @@ export default function NationalLanding() {
               { q: 'Do I need beekeeping experience?', a: 'No. Honeybees are gentle and low-maintenance. BeeKings provides hives, bees, equipment, training, and ongoing support. Many of our customers had zero experience before starting.' },
               { q: 'How much does it cost to get started?', a: 'A typical setup runs about $450 per hive (equipment + bees). Most properties need 6-12 hives. Annual maintenance is roughly $75 per hive. The investment usually pays for itself within the first year through tax savings alone — plus you get honey.' },
               { q: 'How long until I start saving?', a: 'If your land already has agricultural history, you may qualify the same tax year. For new agricultural use, most states require a few years of qualifying activity. The sooner you start, the sooner you save — and your savings compound every year you maintain the exemption.' },
-              { q: 'Is the calculator really free?', a: 'Yes. No catches, no hidden fees. We built it to help landowners understand their options. If you decide you want help getting set up with hives, BeeKings is here — but there\'s zero obligation.' },
+              { q: 'Is the calculator really free?', a: 'Yes. The property check is free — enter your email to see the full results. There is no obligation to buy hives. An optional $14.99 written report is separate.' },
             ].map(faq => (
               <details key={faq.q} style={{ background: C.lightGray, borderRadius: 12, border: '1px solid #e2e8f0' }}>
                 <summary style={{ padding: '16px 24px', fontWeight: 700, color: C.navy, fontSize: 16, cursor: 'pointer', listStyle: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -545,7 +545,7 @@ export default function NationalLanding() {
               See what you could save
             </h2>
             <p style={{ fontSize: 16, color: C.gray, marginBottom: 32, lineHeight: 1.6 }}>
-              It takes 60 seconds to check your property. No signup required.
+              It takes 60 seconds to check your property. Free — just enter your email to see your full results.
             </p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <button

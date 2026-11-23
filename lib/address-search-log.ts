@@ -199,6 +199,7 @@ async function recentSearchId(input: {
 /**
  * Fills parcel, eligibility, email, phone, or savings onto the central search row
  * for this visitor. Used when a later request already has that information.
+ * Returns the address_searches id that was updated, or null when no row matched.
  */
 export async function recordSearchFollowUp(input: {
   sessionId?: string | null;
@@ -214,9 +215,9 @@ export async function recordSearchFollowUp(input: {
   acres?: number | null;
   marketValue?: number | null;
   eligibility?: string | null;
-}): Promise<void> {
+}): Promise<string | null> {
   try {
-    if (!supabaseServiceKey()) return;
+    if (!supabaseServiceKey()) return null;
     const email = blankToNull(input.email, 320);
     const phone = blankToNull(input.phone, 40);
     const savings = finiteOrNull(input.savings);
@@ -225,10 +226,10 @@ export async function recordSearchFollowUp(input: {
     const acres = finiteOrNull(input.acres);
     const marketValue = finiteOrNull(input.marketValue);
     const eligibility = blankToNull(input.eligibility, 200) || await texasEligibility(county, acres);
-    if (!email && !phone && savings == null && !parcelId && !eligibility && acres == null && marketValue == null) return;
+    if (!email && !phone && savings == null && !parcelId && !eligibility && acres == null && marketValue == null) return null;
 
     const id = await recentSearchId(input);
-    if (!id) return;
+    if (!id) return null;
 
     const patch: Record<string, unknown> = {};
     if (email) patch.email = email;
@@ -239,9 +240,10 @@ export async function recordSearchFollowUp(input: {
     if (acres != null) patch.acreage = acres;
     if (marketValue != null) patch.market_value = marketValue;
     if (eligibility) patch.eligibility = eligibility;
-    if (Object.keys(patch).length === 0) return;
-    await supabasePatchById(TABLE, id, patch);
+    if (Object.keys(patch).length > 0) await supabasePatchById(TABLE, id, patch);
+    return id;
   } catch (error) {
     console.error('address search follow-up failed', error);
+    return null;
   }
 }

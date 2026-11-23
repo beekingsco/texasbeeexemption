@@ -5,6 +5,7 @@ import {
   isBareUsState,
   isCountyOnlyAddress,
   isRealStreetAddress,
+  resultsUnlockBlockReason,
   shouldDeliverNewLeadAlert,
 } from '@/lib/lead-qualification';
 
@@ -141,6 +142,20 @@ test('a lead requires a person, a street, and an email', () => {
   );
 });
 
+test('the results gate requires an email and lets the name stay blank', () => {
+  assert.equal(resultsUnlockBlockReason({ email: 'ada@example.com' }), null);
+  assert.equal(resultsUnlockBlockReason({ name: '', email: 'ada@example.com' }), null);
+  assert.match(resultsUnlockBlockReason({ email: 'not-an-email' }) ?? '', /email/i);
+  assert.match(resultsUnlockBlockReason({ name: 'Florida', email: 'ada@example.com' }) ?? '', /state name/i);
+  assert.equal(
+    shouldDeliverNewLeadAlert({
+      email: 'ada@example.com',
+      address: '100 Broadway, New York, NY 10005',
+    }),
+    true,
+  );
+});
+
 test('the mailer drops state-picker junk and still sends a real lead', () => {
   assert.equal(
     shouldDeliverNewLeadAlert({ name: 'Indiana', address: 'Indiana' }),
@@ -171,6 +186,13 @@ test('the mailer drops state-picker junk and still sends a real lead', () => {
       name: 'Ada Agent',
       email: 'ada@brokerage.com',
       tier: 'agent_signup',
+    }),
+    true,
+  );
+  assert.equal(
+    shouldDeliverNewLeadAlert({
+      email: 'ada@example.com',
+      tier: 'report_unlock',
     }),
     true,
   );
